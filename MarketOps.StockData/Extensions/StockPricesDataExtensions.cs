@@ -1,7 +1,7 @@
 ﻿using System;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.StockData
+namespace MarketOps.StockData.Extensions
 {
     /// <summary>
     /// StockPricesData extension methods

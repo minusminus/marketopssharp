@@ -8,7 +8,7 @@ namespace MarketOps.StockData.Interfaces
     /// </summary>
     public interface IStockDataProvider
     {
-        StockPricesData GetPricesData(int StockID, DateTime TSFrom, DateTime TSTo);
-        StockDefinition GetStockDefinition(int StockID);
+        StockPricesData GetPricesData(int stockID, DateTime tsFrom, DateTime tsTo);
+        StockDefinition GetStockDefinition(int stockID);
     }
 }

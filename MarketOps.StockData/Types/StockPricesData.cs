@@ -8,6 +8,9 @@ namespace MarketOps.StockData.Types
     /// </summary>
     public class StockPricesData
     {
+        public StockDataRange Range;
+        public int IntrradayInterval;
+
         public float[] O;
         public float[] H;
         public float[] L;
@@ -19,6 +22,8 @@ namespace MarketOps.StockData.Types
 
         public StockPricesData(int length)
         {
+            Range = StockDataRange.Undefined;
+            IntrradayInterval = 0;
             O = new float[length];
             H = new float[length];
             L = new float[length];

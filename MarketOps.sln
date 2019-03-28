@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.StockData", "Mark
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.StockData.Tests", "MarketOps.StockData.Tests\MarketOps.StockData.Tests.csproj", "{60D54185-3E36-4A12-B740-9E7F5B44D11F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.DataProvider.Pg", "MarketOps.DataProvider.Pg\MarketOps.DataProvider.Pg.csproj", "{DC50B64A-8C80-4562-B705-ED9C0F850E3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.DataProvider.Pq.Tests", "MarketOps.DataProvider.Pq.Tests\MarketOps.DataProvider.Pq.Tests.csproj", "{74A25134-2C7D-4995-8B0F-5C6750FC2C1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{60D54185-3E36-4A12-B740-9E7F5B44D11F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60D54185-3E36-4A12-B740-9E7F5B44D11F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60D54185-3E36-4A12-B740-9E7F5B44D11F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC50B64A-8C80-4562-B705-ED9C0F850E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC50B64A-8C80-4562-B705-ED9C0F850E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC50B64A-8C80-4562-B705-ED9C0F850E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC50B64A-8C80-4562-B705-ED9C0F850E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A25134-2C7D-4995-8B0F-5C6750FC2C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A25134-2C7D-4995-8B0F-5C6750FC2C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A25134-2C7D-4995-8B0F-5C6750FC2C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A25134-2C7D-4995-8B0F-5C6750FC2C1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

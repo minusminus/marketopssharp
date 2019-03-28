@@ -5,11 +5,12 @@
     /// </summary>
     public enum StockType
     {
+        Undefined = -1,
         Stock = 0,
         Index = 1,
         Future = 2,
         InvestmentFund = 4,
-        NBPCurrencies = 5,
+        NBPCurrency = 5,
         Forex = 6
     }
 }

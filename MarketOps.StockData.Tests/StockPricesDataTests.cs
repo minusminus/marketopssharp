@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 using MarketOps.StockData.Types;
 
@@ -14,6 +9,8 @@ namespace MarketOps.StockData.Tests
     {
         private void CheckCreatedObject(StockPricesData obj, int expectedLength)
         {
+            obj.Range.ShouldBe(StockDataRange.Undefined);
+            obj.IntrradayInterval.ShouldBe(0);
             obj.O.Length.ShouldBe(expectedLength);
             obj.H.Length.ShouldBe(expectedLength);
             obj.L.Length.ShouldBe(expectedLength);

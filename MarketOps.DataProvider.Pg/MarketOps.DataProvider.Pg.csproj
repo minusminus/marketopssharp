@@ -65,7 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTableSelector.cs" />
+    <Compile Include="PgDataExtensions.cs" />
+    <Compile Include="PgDBConnectionString.cs" />
     <Compile Include="PgStockDataProvider.cs" />
+    <Compile Include="PricesTemporalData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -41,9 +41,22 @@ namespace MarketOps.DataProvider.Pg
                 if (!reader.HasRows)
                     throw new Exception($"No data for stock id={stockID}");
                 reader.Read();
-                res.ID = Convert.ToInt32(reader["id"]);
-                res.Type = (StockType)Convert.ToInt32(reader["typ"]);
-                res.Name = Convert.ToString(reader["nazwaspolki"]);
+                PgDataToStockDefinitionConverter.ToStockDefinition(reader, res);
+            });
+            return res;
+        }
+
+        public StockDefinition GetStockDefinition(string stockName)
+        {
+            StockDefinition res = new StockDefinition();
+
+            string qry = $"select * from at_spolki where nazwaspolki='{stockName.ToUpper()}'";
+            ProcessQuery(qry, (reader) =>
+            {
+                if (!reader.HasRows)
+                    throw new Exception($"No data for stock name={stockName}");
+                reader.Read();
+                PgDataToStockDefinitionConverter.ToStockDefinition(reader, res);
             });
             return res;
         }
@@ -65,6 +78,5 @@ namespace MarketOps.DataProvider.Pg
             res.IntrradayInterval = intradayInterval;
             return res;
         }
-
     }
 }

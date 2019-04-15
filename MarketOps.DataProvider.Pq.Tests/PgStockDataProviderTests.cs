@@ -12,6 +12,7 @@ namespace MarketOps.DataProvider.Pq.Tests
         private readonly PgStockDataProvider TestObj = new PgStockDataProvider();
 
         const int STOCKID_WIG = 288;
+        const string STOCKNAME_WIG = "WIG";
 
         [Test]
         public void GetStockDefinition_NonExistingID_Throws()
@@ -29,7 +30,27 @@ namespace MarketOps.DataProvider.Pq.Tests
 
             data = TestObj.GetStockDefinition(STOCKID_WIG);
             data.ID.ShouldBe(STOCKID_WIG);
-            data.Name.ShouldBe("WIG");
+            data.Name.ShouldBe(STOCKNAME_WIG);
+            data.Type.ShouldBe(StockType.Index);
+        }
+
+        [Test]
+        public void GetStockDefinition_NonExistingName_Throws()
+        {
+            Should.Throw<Exception>(() => TestObj.GetStockDefinition("non existing stock name"));
+        }
+
+        [Test]
+        public void GetStockDefinition_ExistingName_GetsData()
+        {
+            StockDefinition data = TestObj.GetStockDefinition("TRITON");
+            data.ID.ShouldBe(1);
+            data.Name.ShouldBe("TRITON");
+            data.Type.ShouldBe(StockType.Stock);
+
+            data = TestObj.GetStockDefinition(STOCKNAME_WIG);
+            data.ID.ShouldBe(STOCKID_WIG);
+            data.Name.ShouldBe(STOCKNAME_WIG);
             data.Type.ShouldBe(StockType.Index);
         }
 

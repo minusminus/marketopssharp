@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="DataTableSelector.cs" />
     <Compile Include="PgDataExtensions.cs" />
+    <Compile Include="PgDataToStockDefinitionConverter.cs" />
     <Compile Include="PgDBConnectionString.cs" />
     <Compile Include="PgStockDataProvider.cs" />
     <Compile Include="PricesTemporalData.cs" />

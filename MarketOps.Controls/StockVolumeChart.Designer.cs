@@ -46,11 +46,16 @@
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisX.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.AxisY.IsLabelAutoFit = false;
+            chartArea1.AxisY.IsStartedFromZero = false;
             chartArea1.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             chartArea1.AxisY.LabelStyle.ForeColor = System.Drawing.Color.DarkGray;
             chartArea1.AxisY.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
+            chartArea1.CursorX.IsUserEnabled = true;
+            chartArea1.CursorX.LineColor = System.Drawing.Color.IndianRed;
+            chartArea1.CursorY.IsUserEnabled = true;
+            chartArea1.CursorY.LineColor = System.Drawing.Color.IndianRed;
             chartArea1.Name = "areaPrices";
             chartArea1.Position.Auto = false;
             chartArea1.Position.Height = 80F;
@@ -71,6 +76,9 @@
             chartArea2.AxisY.LineColor = System.Drawing.Color.DarkGray;
             chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea2.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
+            chartArea2.CursorX.IsUserEnabled = true;
+            chartArea2.CursorX.LineColor = System.Drawing.Color.IndianRed;
+            chartArea2.CursorY.LineColor = System.Drawing.Color.IndianRed;
             chartArea2.Name = "areaVolume";
             chartArea2.Position.Auto = false;
             chartArea2.Position.Height = 20F;
@@ -100,9 +108,10 @@
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
             this.SVChart.Series.Add(series1);
             this.SVChart.Series.Add(series2);
-            this.SVChart.Size = new System.Drawing.Size(899, 565);
+            this.SVChart.Size = new System.Drawing.Size(430, 302);
             this.SVChart.TabIndex = 0;
             this.SVChart.Text = "chart1";
+            this.SVChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SVChart_MouseMove);
             // 
             // StockVolumeChart
             // 
@@ -110,7 +119,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.SVChart);
             this.Name = "StockVolumeChart";
-            this.Size = new System.Drawing.Size(899, 565);
+            this.Size = new System.Drawing.Size(430, 302);
             ((System.ComponentModel.ISupportInitialize)(this.SVChart)).EndInit();
             this.ResumeLayout(false);
 

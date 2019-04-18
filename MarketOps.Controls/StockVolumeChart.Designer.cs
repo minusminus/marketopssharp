@@ -53,9 +53,9 @@
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.CursorX.IsUserEnabled = true;
-            chartArea1.CursorX.LineColor = System.Drawing.Color.IndianRed;
+            chartArea1.CursorX.LineColor = System.Drawing.Color.Gray;
             chartArea1.CursorY.IsUserEnabled = true;
-            chartArea1.CursorY.LineColor = System.Drawing.Color.IndianRed;
+            chartArea1.CursorY.LineColor = System.Drawing.Color.Gray;
             chartArea1.Name = "areaPrices";
             chartArea1.Position.Auto = false;
             chartArea1.Position.Height = 80F;
@@ -77,8 +77,8 @@
             chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea2.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea2.CursorX.IsUserEnabled = true;
-            chartArea2.CursorX.LineColor = System.Drawing.Color.IndianRed;
-            chartArea2.CursorY.LineColor = System.Drawing.Color.IndianRed;
+            chartArea2.CursorX.LineColor = System.Drawing.Color.Gray;
+            chartArea2.CursorY.LineColor = System.Drawing.Color.Gray;
             chartArea2.Name = "areaVolume";
             chartArea2.Position.Auto = false;
             chartArea2.Position.Height = 20F;

@@ -26,22 +26,15 @@ namespace MarketOps.Controls
 
         private void SVChart_MouseMove(object sender, MouseEventArgs e)
         {
-            Point p = new Point(e.X, e.Y);
-
             foreach (var area in SVChart.ChartAreas)
             {
                 if (area.CursorX.IsUserEnabled)
-                    area.CursorX.SetCursorPixelPosition(p, true);
+                    area.CursorX.SetCursorPixelPosition(e.Location, true);
                 if (area.CursorY.IsUserEnabled)
-                    area.CursorY.SetCursorPixelPosition(p, true);
+                    area.CursorY.SetCursorPixelPosition(e.Location, true);
             }
 
-            HitTestResult hit = SVChart.HitTest(e.X, e.Y, ChartElementType.DataPoint);
-            if (hit.ChartElementType == ChartElementType.DataPoint)
-            {
-                //DataPoint dp = hit.Object as DataPoint;
-                OnChartValueSelected?.Invoke(hit.PointIndex);
-            }
+            OnChartValueSelected?.Invoke((int)SVChart.ChartAreas["areaPrices"].CursorX.Position - 1);
         }
     }
 }

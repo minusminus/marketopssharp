@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MarketOps.StockData.Types;
 using MarketOps.StockData.Interfaces;
+using MarketOps.StockData.Extensions;
 using MarketOps.DataProvider.Pg;
 using MarketOps.Controls.Extensions;
 using MarketOps.Extensions;
@@ -35,8 +36,18 @@ namespace MarketOps
         {
             IStockDataProvider data = new PgStockDataProvider();
             currentStock.stock = data.GetStockDefinition("WIG");
-            currentStock.prices = data.GetPricesData(currentStock.stock, StockDataRange.Day, 0, new DateTime(2018, 01, 01), DateTime.Now.Date);
+            DateTime ts = DateTime.Now.Date;
+            currentStock.prices = data.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
             stockVolumeChart1.LoadStockData(currentStock.prices);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            IStockDataProvider data = new PgStockDataProvider();
+            DateTime ts = currentStock.prices.TS[0].AddDays(-1);
+            StockPricesData newdata = data.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
+            stockVolumeChart1.PrependStockData(newdata);
+            currentStock.prices = currentStock.prices.Merge(newdata);   //merger adds to earlier - needs change
         }
     }
 }

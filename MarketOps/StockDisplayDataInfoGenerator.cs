@@ -27,7 +27,7 @@ namespace MarketOps
 
         public string GetInfo(StockDisplayData data, int selectedIndex)
         {
-            return $"{data.stock.Name} - {FormatTSAccordingToDataRange(data.prices.TS[selectedIndex], data.prices.Range)} OHLC({data.prices.O[selectedIndex]}, {data.prices.H[selectedIndex]}, {data.prices.L[selectedIndex]}, {data.prices.C[selectedIndex]})";
+            return $"{data.stock.Name} - {FormatTSAccordingToDataRange(data.prices.TS[selectedIndex], data.prices.Range)} OHLC({data.prices.O[selectedIndex]}, {data.prices.H[selectedIndex]}, {data.prices.L[selectedIndex]}, {data.prices.C[selectedIndex]}) V={data.prices.V[selectedIndex]}";
         }
     }
 }

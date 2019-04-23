@@ -53,6 +53,7 @@
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.CursorX.IsUserEnabled = true;
+            chartArea1.CursorX.IsUserSelectionEnabled = true;
             chartArea1.CursorX.LineColor = System.Drawing.Color.Gray;
             chartArea1.CursorY.IsUserEnabled = true;
             chartArea1.CursorY.LineColor = System.Drawing.Color.Gray;

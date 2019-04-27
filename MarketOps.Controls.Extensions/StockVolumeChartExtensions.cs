@@ -14,7 +14,7 @@ namespace MarketOps.Controls.Extensions
     {
         public static void ClearStockData(this StockVolumeChart chart)
         {
-            chart.Prices.Points.Clear();
+            chart.PricesCandles.Points.Clear();
             chart.Volume.Points.Clear();
         }
 
@@ -28,11 +28,12 @@ namespace MarketOps.Controls.Extensions
         {
             for (int i = 0; i < data.Length; i++)
             {
-                int ix = chart.Prices.Points.AddXY(data.TS[i], data.H[i]);
-                chart.Prices.Points[ix].YValues[1] = data.L[i];
-                chart.Prices.Points[ix].YValues[2] = data.O[i];
-                chart.Prices.Points[ix].YValues[3] = data.C[i];
+                int ix = chart.PricesCandles.Points.AddXY(data.TS[i], data.H[i]);
+                chart.PricesCandles.Points[ix].YValues[1] = data.L[i];
+                chart.PricesCandles.Points[ix].YValues[2] = data.O[i];
+                chart.PricesCandles.Points[ix].YValues[3] = data.C[i];
 
+                chart.PricesLine.Points.AddXY(data.TS[i], data.C[i]);
                 chart.Volume.Points.AddXY(data.TS[i], data.V[i]);
             }
         }
@@ -41,11 +42,12 @@ namespace MarketOps.Controls.Extensions
         {
             for (int i = 0; i < data.Length; i++)
             {
-                chart.Prices.Points.InsertXY(i, data.TS[i], data.H[i]);
-                chart.Prices.Points[i].YValues[1] = data.L[i];
-                chart.Prices.Points[i].YValues[2] = data.O[i];
-                chart.Prices.Points[i].YValues[3] = data.C[i];
+                chart.PricesCandles.Points.InsertXY(i, data.TS[i], data.H[i]);
+                chart.PricesCandles.Points[i].YValues[1] = data.L[i];
+                chart.PricesCandles.Points[i].YValues[2] = data.O[i];
+                chart.PricesCandles.Points[i].YValues[3] = data.C[i];
 
+                chart.PricesLine.Points.InsertXY(i, data.TS[i], data.C[i]);
                 chart.Volume.Points.InsertXY(i, data.TS[i], data.V[i]);
             }
         }

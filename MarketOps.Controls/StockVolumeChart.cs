@@ -18,7 +18,8 @@ namespace MarketOps.Controls
             InitializeComponent();
         }
 
-        public Series Prices => SVChart.Series["dataPrices"];
+        public Series PricesCandles => SVChart.Series["dataPricesCandles"];
+        public Series PricesLine => SVChart.Series["dataPricesLine"];
         public Series Volume => SVChart.Series["dataVolume"];
 
         public delegate void ChartValueSelected(int selectedIndex);

@@ -49,5 +49,11 @@ namespace MarketOps
             currentStock.prices = currentStock.prices.Merge(newdata);
             stockVolumeChart1.PrependStockData(newdata);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            stockVolumeChart1.PricesCandles.Enabled = !stockVolumeChart1.PricesCandles.Enabled;
+            stockVolumeChart1.PricesLine.Enabled = !stockVolumeChart1.PricesLine.Enabled;
+        }
     }
 }

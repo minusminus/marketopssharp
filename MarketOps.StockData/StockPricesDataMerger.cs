@@ -5,7 +5,8 @@ namespace MarketOps.StockData
 {
     /// <summary>
     /// merger of data prices objects
-    /// adds one object to another, resulting data is still sorted in ascending order on TS
+    /// adds one object to another, returns new object
+    /// resulting data is still sorted in ascending order on TS
     /// doesn't merge overlapping data
     /// </summary>
     public class StockPricesDataMerger
@@ -24,21 +25,20 @@ namespace MarketOps.StockData
                 throw new Exception("Overlapping data");
         }
 
-        private void ResizeAndCopyArray<T>(ref T[] arrLeft, ref T[] arrRight)
+        private void CopyBothToResult<T>(ref T[] arrResult, ref T[] arrLeft, ref T[] arrRight)
         {
-            int rightstart = arrLeft.Length;
-            Array.Resize<T>(ref arrLeft, arrLeft.Length + arrRight.Length);
-            Array.Copy(arrRight, 0, arrLeft, rightstart, arrRight.Length);
+            Array.Copy(arrLeft, arrResult, arrLeft.Length);
+            Array.Copy(arrRight, 0, arrResult, arrLeft.Length, arrRight.Length);
         }
 
-        private void AddRightToLeft(StockPricesData dataLeft, StockPricesData dataRight)
+        private void AddRightToLeft(StockPricesData dataResult, StockPricesData dataLeft, StockPricesData dataRight)
         {
-            ResizeAndCopyArray<float>(ref dataLeft.O, ref dataRight.O);
-            ResizeAndCopyArray<float>(ref dataLeft.H, ref dataRight.H);
-            ResizeAndCopyArray<float>(ref dataLeft.L, ref dataRight.L);
-            ResizeAndCopyArray<float>(ref dataLeft.C, ref dataRight.C);
-            ResizeAndCopyArray<Int64>(ref dataLeft.V, ref dataRight.V);
-            ResizeAndCopyArray<DateTime>(ref dataLeft.TS, ref dataRight.TS);
+            CopyBothToResult<float>(ref dataResult.O, ref dataLeft.O, ref dataRight.O);
+            CopyBothToResult<float>(ref dataResult.H, ref dataLeft.H, ref dataRight.H);
+            CopyBothToResult<float>(ref dataResult.L, ref dataLeft.L, ref dataRight.L);
+            CopyBothToResult<float>(ref dataResult.C, ref dataLeft.C, ref dataRight.C);
+            CopyBothToResult<Int64>(ref dataResult.V, ref dataLeft.V, ref dataRight.V);
+            CopyBothToResult<DateTime>(ref dataResult.TS, ref dataLeft.TS, ref dataRight.TS);
         }
 
         public StockPricesData Merge(StockPricesData data1, StockPricesData data2)
@@ -49,8 +49,9 @@ namespace MarketOps.StockData
 
             SwapIfLeftAfterRight(ref data1, ref data2);
             ThrowIfOverlappingData(data1, data2);
-            AddRightToLeft(data1, data2);
-            return data1;
+            StockPricesData res = new StockPricesData(data1, data1.Length + data2.Length);
+            AddRightToLeft(res, data1, data2);
+            return res;
         }
     }
 }

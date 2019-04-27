@@ -20,16 +20,28 @@ namespace MarketOps.StockData.Types
 
         public int Length => O.Length;
 
-        public StockPricesData(int length)
+        private void CreateTables(int length)
         {
-            Range = StockDataRange.Undefined;
-            IntrradayInterval = 0;
             O = new float[length];
             H = new float[length];
             L = new float[length];
             C = new float[length];
             V = new Int64[length];
             TS = new DateTime[length];
+        }
+
+        public StockPricesData(int length)
+        {
+            Range = StockDataRange.Undefined;
+            IntrradayInterval = 0;
+            CreateTables(length);
+        }
+
+        public StockPricesData(StockPricesData data, int length)
+        {
+            Range = data.Range;
+            IntrradayInterval = data.IntrradayInterval;
+            CreateTables(length);
         }
     }
 }

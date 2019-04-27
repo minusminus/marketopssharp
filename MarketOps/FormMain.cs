@@ -46,8 +46,8 @@ namespace MarketOps
             IStockDataProvider data = new PgStockDataProvider();
             DateTime ts = currentStock.prices.TS[0].AddDays(-1);
             StockPricesData newdata = data.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
+            currentStock.prices = currentStock.prices.Merge(newdata);
             stockVolumeChart1.PrependStockData(newdata);
-            currentStock.prices = currentStock.prices.Merge(newdata);   //merger adds to earlier - needs change
         }
     }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MarketOps.StockData.Types;
+using MarketOps.Controls.Types;
 
 namespace MarketOps
 {
     /// <summary>
-    /// generates label inforamtion of selected point in stock data
+    /// generates label information of selected point in stock data
     /// </summary>
-    internal class StockDisplayDataInfoGenerator
+    internal class StockDisplayDataInfoGenerator : IStockInfoGenerator
     {
         private string FormatTSAccordingToDataRange(DateTime ts, StockDataRange range)
         {
@@ -25,9 +26,14 @@ namespace MarketOps
             return ts.ToString(formatStrings[range]);
         }
 
-        public string GetInfo(StockDisplayData data, int selectedIndex)
+        public string GetStockInfo(StockDisplayData data)
         {
-            return $"{data.stock.Name} - {FormatTSAccordingToDataRange(data.prices.TS[selectedIndex], data.prices.Range)} OHLC({data.prices.O[selectedIndex]}, {data.prices.H[selectedIndex]}, {data.prices.L[selectedIndex]}, {data.prices.C[selectedIndex]}) V={data.prices.V[selectedIndex]}";
+            return $"{data.stock.Name} [{FormatTSAccordingToDataRange(data.prices.TS[0], data.prices.Range)} - {FormatTSAccordingToDataRange(data.prices.TS[data.prices.Length - 1], data.prices.Range)}]";
+        }
+
+        public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex)
+        {
+            return $"{FormatTSAccordingToDataRange(data.prices.TS[selectedIndex], data.prices.Range)} OHLC({data.prices.O[selectedIndex]}, {data.prices.H[selectedIndex]}, {data.prices.L[selectedIndex]}, {data.prices.C[selectedIndex]}) V={data.prices.V[selectedIndex]}";
         }
     }
 }

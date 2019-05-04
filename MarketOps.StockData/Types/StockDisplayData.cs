@@ -10,7 +10,7 @@ namespace MarketOps
     /// <summary>
     /// gathers stock data to be displayed
     /// </summary>
-    internal class StockDisplayData
+    public class StockDisplayData
     {
         public StockDefinition stock;
         public StockPricesData prices;

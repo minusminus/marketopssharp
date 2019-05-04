@@ -62,7 +62,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockDisplayDataInfoGenerator.cs" />
-    <Compile Include="StockDisplayData.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -87,10 +86,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MarketOps.Controls.Extensions\MarketOps.Controls.Extensions.csproj">
-      <Project>{fa1ac149-bd20-4f76-97d9-6a23ea030afa}</Project>
-      <Name>MarketOps.Controls.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MarketOps.Controls\MarketOps.Controls.csproj">
       <Project>{107a7493-bf4d-48fc-aad4-b9d291ff8011}</Project>
       <Name>MarketOps.Controls</Name>

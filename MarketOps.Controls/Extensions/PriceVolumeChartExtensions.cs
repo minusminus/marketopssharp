@@ -8,23 +8,23 @@ using MarketOps.StockData.Types;
 namespace MarketOps.Controls.Extensions
 {
     /// <summary>
-    /// extensions for StockVolumeChart
+    /// extensions for PriceVolumeChart
     /// </summary>
-    public static class StockVolumeChartExtensions
+    public static class PriceVolumeChartExtensions
     {
-        public static void ClearStockData(this StockVolumeChart chart)
+        public static void ClearStockData(this PriceVolumeChart chart)
         {
             chart.PricesCandles.Points.Clear();
             chart.Volume.Points.Clear();
         }
 
-        public static void LoadStockData(this StockVolumeChart chart, StockPricesData data)
+        public static void LoadStockData(this PriceVolumeChart chart, StockPricesData data)
         {
             ClearStockData(chart);
             AppendStockData(chart, data);
         }
 
-        public static void AppendStockData(this StockVolumeChart chart, StockPricesData data)
+        public static void AppendStockData(this PriceVolumeChart chart, StockPricesData data)
         {
             for (int i = 0; i < data.Length; i++)
             {
@@ -38,7 +38,7 @@ namespace MarketOps.Controls.Extensions
             }
         }
 
-        public static void PrependStockData(this StockVolumeChart chart, StockPricesData data)
+        public static void PrependStockData(this PriceVolumeChart chart, StockPricesData data)
         {
             for (int i = 0; i < data.Length; i++)
             {

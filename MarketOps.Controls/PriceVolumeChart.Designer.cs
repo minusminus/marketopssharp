@@ -1,6 +1,6 @@
 ﻿namespace MarketOps.Controls
 {
-    partial class StockVolumeChart
+    partial class PriceVolumeChart
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -33,11 +33,11 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.SVChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.SVChart)).BeginInit();
+            this.PVChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.PVChart)).BeginInit();
             this.SuspendLayout();
             // 
-            // SVChart
+            // PVChart
             // 
             chartArea1.AxisX.IsLabelAutoFit = false;
             chartArea1.AxisX.IsStartedFromZero = false;
@@ -86,11 +86,11 @@
             chartArea2.Position.Height = 20F;
             chartArea2.Position.Width = 100F;
             chartArea2.Position.Y = 80F;
-            this.SVChart.ChartAreas.Add(chartArea1);
-            this.SVChart.ChartAreas.Add(chartArea2);
-            this.SVChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SVChart.Location = new System.Drawing.Point(0, 0);
-            this.SVChart.Name = "SVChart";
+            this.PVChart.ChartAreas.Add(chartArea1);
+            this.PVChart.ChartAreas.Add(chartArea2);
+            this.PVChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PVChart.Location = new System.Drawing.Point(0, 0);
+            this.PVChart.Name = "PVChart";
             series1.BorderColor = System.Drawing.Color.Black;
             series1.ChartArea = "areaPrices";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
@@ -109,7 +109,6 @@
             series2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             series2.IsXValueIndexed = true;
             series2.Name = "dataPricesLine";
-            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
             series3.ChartArea = "areaVolume";
             series3.Color = System.Drawing.Color.RoyalBlue;
@@ -117,28 +116,28 @@
             series3.Name = "dataVolume";
             series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
             series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int64;
-            this.SVChart.Series.Add(series1);
-            this.SVChart.Series.Add(series2);
-            this.SVChart.Series.Add(series3);
-            this.SVChart.Size = new System.Drawing.Size(430, 302);
-            this.SVChart.TabIndex = 0;
-            this.SVChart.Text = "chart1";
-            this.SVChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SVChart_MouseMove);
+            this.PVChart.Series.Add(series1);
+            this.PVChart.Series.Add(series2);
+            this.PVChart.Series.Add(series3);
+            this.PVChart.Size = new System.Drawing.Size(430, 302);
+            this.PVChart.TabIndex = 0;
+            this.PVChart.Text = "chart1";
+            this.PVChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SVChart_MouseMove);
             // 
-            // StockVolumeChart
+            // PriceVolumeChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.SVChart);
-            this.Name = "StockVolumeChart";
+            this.Controls.Add(this.PVChart);
+            this.Name = "PriceVolumeChart";
             this.Size = new System.Drawing.Size(430, 302);
-            ((System.ComponentModel.ISupportInitialize)(this.SVChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PVChart)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart SVChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart PVChart;
     }
 }

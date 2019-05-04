@@ -11,9 +11,9 @@ namespace MarketOps.Extensions
     /// </summary>
     internal static class StockDisplayDataExtensions
     {
-        public static string GetInfo(this StockDisplayData data, int selectedIndex)
-        {
-            return (new StockDisplayDataInfoGenerator()).GetInfo(data, selectedIndex);
-        }
+        //public static string GetInfo(this StockDisplayData data, int selectedIndex)
+        //{
+        //    return (new StockDisplayDataInfoGenerator()).GetInfo(data, selectedIndex);
+        //}
     }
 }

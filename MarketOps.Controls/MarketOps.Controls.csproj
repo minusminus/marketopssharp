@@ -43,19 +43,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StockVolumeChart.cs">
+    <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
+    <Compile Include="PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StockVolumeChart.Designer.cs">
-      <DependentUpon>StockVolumeChart.cs</DependentUpon>
+    <Compile Include="PriceVolumeChart.Designer.cs">
+      <DependentUpon>PriceVolumeChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceVolumeChartMode.cs" />
+    <Compile Include="PriceVolumePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceVolumePanel.Designer.cs">
+      <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\IStockInfoGenerator.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="StockVolumeChart.resx">
-      <DependentUpon>StockVolumeChart.cs</DependentUpon>
+    <EmbeddedResource Include="PriceVolumeChart.resx">
+      <DependentUpon>PriceVolumeChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PriceVolumePanel.resx">
+      <DependentUpon>PriceVolumePanel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
+      <Name>MarketOps.StockData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

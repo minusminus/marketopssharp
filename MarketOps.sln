@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps", "MarketOps\Mark
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.Controls", "MarketOps.Controls\MarketOps.Controls.csproj", "{107A7493-BF4D-48FC-AAD4-B9D291FF8011}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.Controls.Extensions", "MarketOps.Controls.Extensions\MarketOps.Controls.Extensions.csproj", "{FA1AC149-BD20-4F76-97D9-6A23EA030AFA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{107A7493-BF4D-48FC-AAD4-B9D291FF8011}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{107A7493-BF4D-48FC-AAD4-B9D291FF8011}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{107A7493-BF4D-48FC-AAD4-B9D291FF8011}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA1AC149-BD20-4F76-97D9-6A23EA030AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA1AC149-BD20-4F76-97D9-6A23EA030AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA1AC149-BD20-4F76-97D9-6A23EA030AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA1AC149-BD20-4F76-97D9-6A23EA030AFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

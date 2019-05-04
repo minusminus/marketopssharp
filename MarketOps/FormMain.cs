@@ -21,39 +21,26 @@ namespace MarketOps
         public FormMain()
         {
             InitializeComponent();
-            stockVolumeChart1.OnChartValueSelected += OnChartValueSelected;
+            pnlPV.OnPrependData += OnPrependChartData;
         }
 
-        private StockDisplayData currentStock = new StockDisplayData();
-
-        private void OnChartValueSelected(int selectedIndex)
+        private StockPricesData OnPrependChartData(StockDisplayData currentData)
         {
-            if ((selectedIndex >= 0) && (selectedIndex < currentStock.prices?.Length))
-                lblStockSelectedPointInfo.Text = currentStock.GetInfo(selectedIndex);
+            DateTime ts = currentData.prices.TS[0].AddDays(-1);
+            IStockDataProvider dataProvider = new PgStockDataProvider();
+            StockPricesData newdata = dataProvider.GetPricesData(currentData.stock, currentData.prices.Range, 0, ts.AddYears(-1), ts);
+            return newdata;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            IStockDataProvider data = new PgStockDataProvider();
-            currentStock.stock = data.GetStockDefinition("WIG");
             DateTime ts = DateTime.Now.Date;
-            currentStock.prices = data.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
-            stockVolumeChart1.LoadStockData(currentStock.prices);
+            StockDisplayData currentStock = new StockDisplayData();
+            IStockDataProvider dataProvider = new PgStockDataProvider();
+            currentStock.stock = dataProvider.GetStockDefinition("WIG");
+            currentStock.prices = dataProvider.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
+            pnlPV.LoadData(currentStock, new StockDisplayDataInfoGenerator());
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            IStockDataProvider data = new PgStockDataProvider();
-            DateTime ts = currentStock.prices.TS[0].AddDays(-1);
-            StockPricesData newdata = data.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
-            currentStock.prices = currentStock.prices.Merge(newdata);
-            stockVolumeChart1.PrependStockData(newdata);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            stockVolumeChart1.PricesCandles.Enabled = !stockVolumeChart1.PricesCandles.Enabled;
-            stockVolumeChart1.PricesLine.Enabled = !stockVolumeChart1.PricesLine.Enabled;
-        }
     }
 }

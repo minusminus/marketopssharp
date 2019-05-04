@@ -47,6 +47,7 @@
     <Compile Include="StockPricesDataMerger.cs" />
     <Compile Include="Types\StockDataRange.cs" />
     <Compile Include="Types\StockDefinition.cs" />
+    <Compile Include="Types\StockDisplayData.cs" />
     <Compile Include="Types\StockPricesData.cs" />
     <Compile Include="Types\StockType.cs" />
   </ItemGroup>

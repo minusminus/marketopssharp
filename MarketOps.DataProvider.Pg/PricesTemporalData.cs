@@ -21,14 +21,27 @@ namespace MarketOps.DataProvider.Pg
         private List<Int64> v = new List<Int64>();
         private List<DateTime> ts = new List<DateTime>();
 
-        public void AddRecord(NpgsqlDataReader reader)
+        public void AddAllRecords(NpgsqlDataReader reader)
         {
-            o.Add(Convert.ToSingle(reader["open"]));
-            h.Add(Convert.ToSingle(reader["high"]));
-            l.Add(Convert.ToSingle(reader["low"]));
-            c.Add(Convert.ToSingle(reader["close"]));
-            v.Add(Convert.ToInt64(reader["volume"]));
-            ts.Add(Convert.ToDateTime(reader["ts"]));
+            int iopen = reader.GetOrdinal("open");
+            int ihigh = reader.GetOrdinal("high");
+            int ilow = reader.GetOrdinal("low");
+            int iclose = reader.GetOrdinal("close");
+            int ivolume = reader.GetOrdinal("volume");
+            int its = reader.GetOrdinal("ts");
+
+            while (reader.Read())
+                AddRecord(reader, iopen, ihigh, ilow, iclose, ivolume, its);
+        }
+
+        public void AddRecord(NpgsqlDataReader reader, int iopen, int ihigh, int ilow, int iclose, int ivolume, int its)
+        {
+            o.Add(reader.GetFieldValue<Single>(iopen));
+            h.Add(reader.GetFieldValue<Single>(ihigh));
+            l.Add(reader.GetFieldValue<Single>(ilow));
+            c.Add(reader.GetFieldValue<Single>(iclose));
+            v.Add(reader.GetFieldValue<Int64>(ivolume));
+            ts.Add(reader.GetFieldValue<DateTime>(its));
         }
 
         public StockPricesData ToStockPricesData()

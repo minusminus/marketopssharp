@@ -44,6 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
+    <Compile Include="FormSelectDataRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectDataRange.Designer.cs">
+      <DependentUpon>FormSelectDataRange.cs</DependentUpon>
+    </Compile>
     <Compile Include="PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -62,6 +68,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FormSelectDataRange.resx">
+      <DependentUpon>FormSelectDataRange.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PriceVolumeChart.resx">
       <DependentUpon>PriceVolumeChart.cs</DependentUpon>
     </EmbeddedResource>

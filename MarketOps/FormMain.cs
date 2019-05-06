@@ -11,8 +11,6 @@ using MarketOps.StockData.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Extensions;
 using MarketOps.DataProvider.Pg;
-using MarketOps.Controls.Extensions;
-using MarketOps.Extensions;
 
 namespace MarketOps
 {
@@ -22,6 +20,13 @@ namespace MarketOps
         {
             InitializeComponent();
             pnlPV.OnPrependData += OnPrependChartData;
+            pnlPV.OnGetData += OnGetChartData;
+        }
+
+        private StockPricesData OnGetChartData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo)
+        {
+            IStockDataProvider dataProvider = new PgStockDataProvider();
+            return dataProvider.GetPricesData(currentData.stock, currentData.prices.Range, 0, tsFrom.AddDays(-1), tsTo);
         }
 
         private StockPricesData OnPrependChartData(StockDisplayData currentData)
@@ -32,7 +37,7 @@ namespace MarketOps
             return newdata;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnLoad_Click(object sender, EventArgs e)
         {
             DateTime ts = DateTime.Now.Date;
             StockDisplayData currentStock = new StockDisplayData();

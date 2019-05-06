@@ -69,8 +69,7 @@ namespace MarketOps.DataProvider.Pg
             ProcessQuery(qry, (reader) =>
             {
                 if (!reader.HasRows) return;
-                while (reader.Read())
-                    tmp.AddRecord(reader);
+                tmp.AddAllRecords(reader);
             });
 
             StockPricesData res = tmp.ToStockPricesData();

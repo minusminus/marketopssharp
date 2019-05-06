@@ -33,6 +33,8 @@ namespace MarketOps.Controls
         public delegate StockPricesData GetAdditionalData(StockDisplayData currentData);
         public event GetAdditionalData OnPrependData;
         //public event GetAdditionalData OnAppendData;
+        public delegate StockPricesData GetData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo);
+        public event GetData OnGetData;
 
 
         public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator)
@@ -70,6 +72,16 @@ namespace MarketOps.Controls
             StockPricesData newData = OnPrependData.Invoke(currentData);
             currentData.prices = currentData.prices.Merge(newData);
             chartPV.PrependStockData(newData);
+            lblStockInfo.Text = currentInfoGenerator.GetStockInfo(currentData);
+        }
+
+        private void btnDataRange_Click(object sender, EventArgs e)
+        {
+            if (OnGetData == null) return;
+            FormSelectDataRange frm = new FormSelectDataRange();
+            if (!frm.Execute(currentData.prices.TS[0], currentData.prices.TS.Last())) return;
+            currentData.prices = OnGetData.Invoke(currentData, frm.TSFrom, frm.TSTo);
+            chartPV.LoadStockData(currentData.prices);
             lblStockInfo.Text = currentInfoGenerator.GetStockInfo(currentData);
         }
     }

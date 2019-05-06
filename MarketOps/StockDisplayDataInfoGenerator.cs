@@ -28,7 +28,7 @@ namespace MarketOps
 
         public string GetStockInfo(StockDisplayData data)
         {
-            return $"{data.stock.Name} [{FormatTSAccordingToDataRange(data.prices.TS[0], data.prices.Range)} - {FormatTSAccordingToDataRange(data.prices.TS[data.prices.Length - 1], data.prices.Range)}]";
+            return $"{data.stock.Name} [{FormatTSAccordingToDataRange(data.prices.TS.First(), data.prices.Range)} - {FormatTSAccordingToDataRange(data.prices.TS.Last(), data.prices.Range)}]";
         }
 
         public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex)

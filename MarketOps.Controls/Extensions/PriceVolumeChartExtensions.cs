@@ -15,6 +15,7 @@ namespace MarketOps.Controls.Extensions
         public static void ClearStockData(this PriceVolumeChart chart)
         {
             chart.PricesCandles.Points.Clear();
+            chart.PricesLine.Points.Clear();
             chart.Volume.Points.Clear();
         }
 

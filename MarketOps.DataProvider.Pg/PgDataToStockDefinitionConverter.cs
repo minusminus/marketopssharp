@@ -15,9 +15,9 @@ namespace MarketOps.DataProvider.Pg
     {
         public static void ToStockDefinition(NpgsqlDataReader reader, StockDefinition data)
         {
-            data.ID = Convert.ToInt32(reader["id"]);
-            data.Type = (StockType)Convert.ToInt32(reader["typ"]);
-            data.Name = Convert.ToString(reader["nazwaspolki"]);
+            data.ID = reader.GetFieldValue<int>(reader.GetOrdinal("id"));
+            data.Type = (StockType)reader.GetFieldValue<int>(reader.GetOrdinal("typ"));
+            data.Name = reader.GetFieldValue<string>(reader.GetOrdinal("nazwaspolki"));
         }
     }
 }

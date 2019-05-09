@@ -20,8 +20,10 @@ namespace MarketOps.Controls
         public DateTime TSFrom => dtFrom.Value;
         public DateTime TSTo => dtTo.Value;
 
-        public bool Execute(DateTime tsFrom, DateTime tsTo)
+        public bool Execute(DateTime tsFrom, DateTime tsTo, string tsFormat)
         {
+            dtFrom.CustomFormat = tsFormat;
+            dtTo.CustomFormat = tsFormat;
             dtFrom.Value = tsFrom;
             dtTo.Value = tsTo;
             return (ShowDialog() == DialogResult.OK);

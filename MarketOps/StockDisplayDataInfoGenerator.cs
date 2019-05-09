@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MarketOps.StockData.Types;
 using MarketOps.Controls.Types;
+using MarketOps.StockData.Extensions;
 
 namespace MarketOps
 {
@@ -13,27 +14,17 @@ namespace MarketOps
     /// </summary>
     internal class StockDisplayDataInfoGenerator : IStockInfoGenerator
     {
-        private string FormatTSAccordingToDataRange(DateTime ts, StockDataRange range)
-        {
-            Dictionary<StockDataRange, string> formatStrings = new Dictionary<StockDataRange, string>()
-            {
-                { StockDataRange.Day, "yyyy-MM-dd" },
-                { StockDataRange.Week, "yyyy-MM-dd" },
-                { StockDataRange.Month, "yyyy-MM-dd" },
-                { StockDataRange.Intraday, "yyyy-MM-dd hh:mm" },
-                { StockDataRange.Tick, "yyyy-MM-dd hh:mm:ss" },
-            };
-            return ts.ToString(formatStrings[range]);
-        }
-
         public string GetStockInfo(StockDisplayData data)
         {
-            return $"{data.stock.Name} [{FormatTSAccordingToDataRange(data.prices.TS.First(), data.prices.Range)} - {FormatTSAccordingToDataRange(data.prices.TS.Last(), data.prices.Range)}]";
+            string nodatainfo = "";
+            if (data.Prices.Length == 0)
+                nodatainfo = " - no data";
+            return $"{data.Stock.Name} {data.Prices.DataRangeToString()} [{data.TsFrom.ToString(data.Prices.DataRangeFormatString())} - {data.TsTo.ToString(data.Prices.DataRangeFormatString())}{nodatainfo}]";
         }
 
         public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex)
         {
-            return $"{FormatTSAccordingToDataRange(data.prices.TS[selectedIndex], data.prices.Range)} OHLC({data.prices.O[selectedIndex]}, {data.prices.H[selectedIndex]}, {data.prices.L[selectedIndex]}, {data.prices.C[selectedIndex]}) V={data.prices.V[selectedIndex]}";
+            return $"{data.Prices.TS[selectedIndex].ToString(data.Prices.DataRangeFormatString())} OHLC({data.Prices.O[selectedIndex]}, {data.Prices.H[selectedIndex]}, {data.Prices.L[selectedIndex]}, {data.Prices.C[selectedIndex]}) V={data.Prices.V[selectedIndex]}";
         }
     }
 }

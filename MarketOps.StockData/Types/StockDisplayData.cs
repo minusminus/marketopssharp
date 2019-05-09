@@ -1,18 +1,15 @@
-﻿using MarketOps.StockData.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace MarketOps
+namespace MarketOps.StockData.Types
 {
     /// <summary>
     /// gathers stock data to be displayed
     /// </summary>
     public class StockDisplayData
     {
-        public StockDefinition stock;
-        public StockPricesData prices;
+        public DateTime TsFrom;
+        public DateTime TsTo;
+        public StockDefinition Stock;
+        public StockPricesData Prices;
     }
 }

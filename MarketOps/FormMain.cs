@@ -26,24 +26,30 @@ namespace MarketOps
         private StockPricesData OnGetChartData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo)
         {
             IStockDataProvider dataProvider = new PgStockDataProvider();
-            return dataProvider.GetPricesData(currentData.stock, currentData.prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            currentData.TsFrom = tsFrom;
+            currentData.TsTo = tsTo;
+            return dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
         }
 
         private StockPricesData OnPrependChartData(StockDisplayData currentData)
         {
-            DateTime ts = currentData.prices.TS[0].AddDays(-1);
+            DateTime ts = currentData.TsFrom;
+            currentData.TsFrom = currentData.TsFrom.AddDays(-1).AddYears(-1);
             IStockDataProvider dataProvider = new PgStockDataProvider();
-            StockPricesData newdata = dataProvider.GetPricesData(currentData.stock, currentData.prices.Range, 0, ts.AddYears(-1), ts);
+            StockPricesData newdata = dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, currentData.TsFrom, ts);
             return newdata;
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            DateTime ts = DateTime.Now.Date;
-            StockDisplayData currentStock = new StockDisplayData();
             IStockDataProvider dataProvider = new PgStockDataProvider();
-            currentStock.stock = dataProvider.GetStockDefinition("WIG");
-            currentStock.prices = dataProvider.GetPricesData(currentStock.stock, StockDataRange.Day, 0, ts.AddYears(-1), ts);
+            StockDisplayData currentStock = new StockDisplayData()
+            {
+                TsFrom = DateTime.Now.Date.AddYears(-1),
+                TsTo = DateTime.Now.Date,
+                Stock = dataProvider.GetStockDefinition("WIG")
+            };
+            currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, StockDataRange.Day, 0, currentStock.TsFrom, currentStock.TsTo);
             pnlPV.LoadData(currentStock, new StockDisplayDataInfoGenerator());
         }
 

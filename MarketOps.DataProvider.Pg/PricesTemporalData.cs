@@ -14,12 +14,12 @@ namespace MarketOps.DataProvider.Pg
     /// </summary>
     internal class PricesTemporalData
     {
-        private List<float> o = new List<float>();
-        private List<float> h = new List<float>();
-        private List<float> l = new List<float>();
-        private List<float> c = new List<float>();
-        private List<Int64> v = new List<Int64>();
-        private List<DateTime> ts = new List<DateTime>();
+        private readonly List<float> _o = new List<float>();
+        private readonly List<float> _h = new List<float>();
+        private readonly List<float> _l = new List<float>();
+        private readonly List<float> _c = new List<float>();
+        private readonly List<Int64> _v = new List<Int64>();
+        private readonly List<DateTime> _ts = new List<DateTime>();
 
         public void AddAllRecords(NpgsqlDataReader reader)
         {
@@ -36,23 +36,23 @@ namespace MarketOps.DataProvider.Pg
 
         public void AddRecord(NpgsqlDataReader reader, int iopen, int ihigh, int ilow, int iclose, int ivolume, int its)
         {
-            o.Add(reader.GetFieldValue<Single>(iopen));
-            h.Add(reader.GetFieldValue<Single>(ihigh));
-            l.Add(reader.GetFieldValue<Single>(ilow));
-            c.Add(reader.GetFieldValue<Single>(iclose));
-            v.Add(reader.GetFieldValue<Int64>(ivolume));
-            ts.Add(reader.GetFieldValue<DateTime>(its));
+            _o.Add(reader.GetFieldValue<Single>(iopen));
+            _h.Add(reader.GetFieldValue<Single>(ihigh));
+            _l.Add(reader.GetFieldValue<Single>(ilow));
+            _c.Add(reader.GetFieldValue<Single>(iclose));
+            _v.Add(reader.GetFieldValue<Int64>(ivolume));
+            _ts.Add(reader.GetFieldValue<DateTime>(its));
         }
 
         public StockPricesData ToStockPricesData()
         {
-            StockPricesData data = new StockPricesData(o.Count);
-            Array.Copy(o.ToArray(), data.O, data.Length);
-            Array.Copy(h.ToArray(), data.H, data.Length);
-            Array.Copy(l.ToArray(), data.L, data.Length);
-            Array.Copy(c.ToArray(), data.C, data.Length);
-            Array.Copy(v.ToArray(), data.V, data.Length);
-            Array.Copy(ts.ToArray(), data.TS, data.Length);
+            StockPricesData data = new StockPricesData(_o.Count);
+            Array.Copy(_o.ToArray(), data.O, data.Length);
+            Array.Copy(_h.ToArray(), data.H, data.Length);
+            Array.Copy(_l.ToArray(), data.L, data.Length);
+            Array.Copy(_c.ToArray(), data.C, data.Length);
+            Array.Copy(_v.ToArray(), data.V, data.Length);
+            Array.Copy(_ts.ToArray(), data.TS, data.Length);
             return data;
         }
     }

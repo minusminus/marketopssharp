@@ -80,7 +80,7 @@ namespace MarketOps.Controls
             if (OnGetData == null) return;
             FormSelectDataRange frm = new FormSelectDataRange();
             if (!frm.Execute(_currentData.TsFrom, _currentData.TsTo, _currentData.Prices.DataRangeDateTimeInputFormat())) return;
-            _currentData.Prices = OnGetData.Invoke(_currentData, frm.TSFrom, frm.TSTo);
+            _currentData.Prices = OnGetData.Invoke(_currentData, frm.TsFrom, frm.TsTo);
             chartPV.LoadStockData(_currentData.Prices);
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }

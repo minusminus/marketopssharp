@@ -14,7 +14,7 @@ namespace MarketOps.DataProvider.Pg
     /// </summary>
     public class PgStockDataProvider : IStockDataProvider
     {
-        private DataTableSelector tblSelector = new DataTableSelector();
+        private readonly DataTableSelector _tblSelector = new DataTableSelector();
 
         private NpgsqlConnection OpenConnection()
         {
@@ -65,7 +65,7 @@ namespace MarketOps.DataProvider.Pg
         {
             PricesTemporalData tmp = new PricesTemporalData();
 
-            string qry = $"select open, high, low, close, volume, ts from {tblSelector.GetTableName(stockDef.Type, dataRange, intradayInterval)} where fk_id_spolki={stockDef.ID} and ts >= {tsFrom.ToTimestampQueryValue()} and ts <= {tsTo.ToTimestampQueryValue()} order by ts";
+            string qry = $"select open, high, low, close, volume, ts from {_tblSelector.GetTableName(stockDef.Type, dataRange, intradayInterval)} where fk_id_spolki={stockDef.ID} and ts >= {tsFrom.ToTimestampQueryValue()} and ts <= {tsTo.ToTimestampQueryValue()} order by ts";
             ProcessQuery(qry, (reader) =>
             {
                 if (!reader.HasRows) return;

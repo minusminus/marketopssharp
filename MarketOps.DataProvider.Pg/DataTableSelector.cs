@@ -19,7 +19,7 @@ namespace MarketOps.DataProvider.Pg
                 throw new Exception("Undefined intraday interval");
         }
 
-        private readonly Dictionary<StockDataRange, string> TableNameByDataRange = new Dictionary<StockDataRange, string>()
+        private readonly Dictionary<StockDataRange, string> _tableNameByDataRange = new Dictionary<StockDataRange, string>()
         {
             { StockDataRange.Day, "at_dzienne" },
             { StockDataRange.Week, "at_tyg" },
@@ -29,7 +29,7 @@ namespace MarketOps.DataProvider.Pg
 
         private string GetStdTableName(StockType stockType, StockDataRange dataRange)
         {
-            return TableNameByDataRange[dataRange] + ((int)stockType).ToString();
+            return _tableNameByDataRange[dataRange] + ((int)stockType).ToString();
         }
 
         private string GetIntradayTableName(StockType stockType, int intradayInterval)

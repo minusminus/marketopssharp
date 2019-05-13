@@ -17,8 +17,8 @@ namespace MarketOps.Controls
             InitializeComponent();
         }
 
-        public DateTime TSFrom => dtFrom.Value;
-        public DateTime TSTo => dtTo.Value;
+        public DateTime TsFrom => dtFrom.Value;
+        public DateTime TsTo => dtTo.Value;
 
         public bool Execute(DateTime tsFrom, DateTime tsTo, string tsFormat)
         {

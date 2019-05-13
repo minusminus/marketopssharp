@@ -122,7 +122,9 @@
             this.PVChart.Size = new System.Drawing.Size(430, 302);
             this.PVChart.TabIndex = 0;
             this.PVChart.Text = "chart1";
-            this.PVChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SVChart_MouseMove);
+            this.PVChart.MouseEnter += new System.EventHandler(this.PVChart_MouseEnter);
+            this.PVChart.MouseLeave += new System.EventHandler(this.PVChart_MouseLeave);
+            this.PVChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PVChart_MouseMove);
             // 
             // PriceVolumeChart
             // 

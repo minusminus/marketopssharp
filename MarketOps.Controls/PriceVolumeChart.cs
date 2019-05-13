@@ -17,6 +17,7 @@ namespace MarketOps.Controls
         {
             InitializeComponent();
             SetChartMode(PriceVolumeChartMode.Candles);
+            PVChart.MouseWheel += PVChart_MouseWheel;
         }
 
         public PriceVolumeChartMode ChartMode { get; private set; }
@@ -35,7 +36,7 @@ namespace MarketOps.Controls
         public delegate void ChartValueSelected(int selectedIndex);
         public event ChartValueSelected OnChartValueSelected;
 
-        private void SVChart_MouseMove(object sender, MouseEventArgs e)
+        private void PVChart_MouseMove(object sender, MouseEventArgs e)
         {
             foreach (var area in PVChart.ChartAreas)
             {
@@ -46,6 +47,43 @@ namespace MarketOps.Controls
             }
 
             OnChartValueSelected?.Invoke((int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1);
+        }
+
+
+        public void ResetZoom()
+        {
+            PVChart.ChartAreas["areaPrices"].AxisX.ScaleView.ZoomReset();
+        }
+
+        private void PVChart_MouseWheel(object sender, MouseEventArgs e)
+        {
+            Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
+            double xmin = ax.ScaleView.ViewMinimum;
+            double xmax = ax.ScaleView.ViewMaximum;
+            double xpos = ax.PixelPositionToValue(e.Location.X);
+
+            const double zoomScale = 0.1;
+            double addition = Math.Sign(e.Delta)*(xmax - xmin)*zoomScale;
+            double halfzoomwidth = ((xmax - xmin)/2);
+            //double zoomstart = Math.Max(xmin + addition, 0);
+            //double zoomend = Math.Min(xmax - addition, ax.Maximum);
+            double zoomstart = Math.Max(xpos - halfzoomwidth + addition, 0);
+            double zoomend = Math.Min(xpos + halfzoomwidth - addition, ax.Maximum);
+            ax.ScaleView.Zoom(zoomstart, zoomend);
+
+            PVChart_MouseMove(sender, e);
+        }
+
+        private void PVChart_MouseEnter(object sender, EventArgs e)
+        {
+            if (!PVChart.Focused)
+                PVChart.Focus();
+        }
+
+        private void PVChart_MouseLeave(object sender, EventArgs e)
+        {
+            if (PVChart.Focused)
+                PVChart.Parent.Focus();
         }
     }
 }

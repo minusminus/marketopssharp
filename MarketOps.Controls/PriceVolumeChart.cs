@@ -58,19 +58,11 @@ namespace MarketOps.Controls
         private void PVChart_MouseWheel(object sender, MouseEventArgs e)
         {
             Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
-            double xmin = ax.ScaleView.ViewMinimum;
-            double xmax = ax.ScaleView.ViewMaximum;
-            double xpos = ax.PixelPositionToValue(e.Location.X);
 
-            const double zoomScale = 0.1;
-            double addition = Math.Sign(e.Delta)*(xmax - xmin)*zoomScale;
-            double halfzoomwidth = ((xmax - xmin)/2);
-            //double zoomstart = Math.Max(xmin + addition, 0);
-            //double zoomend = Math.Min(xmax - addition, ax.Maximum);
-            double zoomstart = Math.Max(xpos - halfzoomwidth + addition, 0);
-            double zoomend = Math.Min(xpos + halfzoomwidth - addition, ax.Maximum);
-            ax.ScaleView.Zoom(zoomstart, zoomend);
+            Tuple<double, double> zoom = (new ChartZoomCalculator()).CalculateZoom(e.Delta < 0,
+                ModifierKeys.HasFlag(Keys.Control), ax, e.Location);
 
+            ax.ScaleView.Zoom(zoom.Item1, zoom.Item2);
             PVChart_MouseMove(sender, e);
         }
 

@@ -16,6 +16,7 @@ namespace MarketOps.Controls
         public PriceVolumeChart()
         {
             InitializeComponent();
+            DoubleBuffered = true;
             SetChartMode(PriceVolumeChartMode.Candles);
             PVChart.MouseWheel += PVChart_MouseWheel;
         }

@@ -31,6 +31,7 @@
             this.btnLoad = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlPV = new MarketOps.Controls.PriceVolumePanel();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -59,11 +60,22 @@
             this.pnlPV.Size = new System.Drawing.Size(628, 426);
             this.pnlPV.TabIndex = 6;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(33, 222);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pnlPV);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLoad);
@@ -79,6 +91,7 @@
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Label label1;
         private Controls.PriceVolumePanel pnlPV;
+        private System.Windows.Forms.Button button1;
     }
 }
 

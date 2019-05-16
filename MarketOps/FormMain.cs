@@ -53,5 +53,9 @@ namespace MarketOps
             pnlPV.LoadData(currentStock, new StockDisplayDataInfoGenerator());
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show($"{pnlPV.Chart.ChartAreas["areaPrices"].AxisX.ScaleView.ViewMinimum}, {pnlPV.Chart.ChartAreas["areaPrices"].AxisX.ScaleView.ViewMaximum}");
+        }
     }
 }

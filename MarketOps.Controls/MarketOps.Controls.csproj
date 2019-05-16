@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChartYViewRangeCalculator.cs" />
     <Compile Include="ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
     <Compile Include="FormSelectDataRange.cs">

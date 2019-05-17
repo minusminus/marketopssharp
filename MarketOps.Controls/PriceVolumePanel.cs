@@ -25,9 +25,12 @@ namespace MarketOps.Controls
             chartPV.OnChartValueSelected += OnChartValueSelected;
         }
 
+        #region internal data
         private StockDisplayData _currentData;
         private IStockInfoGenerator _currentInfoGenerator;
+        #endregion
 
+        #region public properties and events
         public PriceVolumeChart Chart => chartPV;
 
         public delegate StockPricesData GetAdditionalData(StockDisplayData currentData);
@@ -35,25 +38,9 @@ namespace MarketOps.Controls
         //public event GetAdditionalData OnAppendData;
         public delegate StockPricesData GetData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo);
         public event GetData OnGetData;
+        #endregion
 
-
-        public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator)
-        {
-            _currentData = data;
-            _currentInfoGenerator = infoGenerator;
-            using (new SuspendDrawingUpdate(chartPV))
-                chartPV.LoadStockData(_currentData.Prices);
-            chartPV.ResetZoom();
-            lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
-        }
-
-        private void OnChartValueSelected(int selectedIndex)
-        {
-            if (_currentData == null) return;
-            if ((selectedIndex >= 0) && (selectedIndex < _currentData.Prices.Length))
-                lblSelectedInfo.Text = _currentInfoGenerator.GetStockSelectedInfo(_currentData, selectedIndex);
-        }
-
+        #region button actions
         private void btnPriceChartLine_CheckedChanged(object sender, EventArgs e)
         {
             if (!btnPriceChartLine.Checked) return;
@@ -94,6 +81,24 @@ namespace MarketOps.Controls
         private void btnMirrorChart_CheckedChanged(object sender, EventArgs e)
         {
             chartPV.ReversePricesYAxis(btnMirrorChart.Checked);
+        }
+        #endregion
+
+        private void OnChartValueSelected(int selectedIndex)
+        {
+            if (_currentData == null) return;
+            if ((selectedIndex >= 0) && (selectedIndex < _currentData.Prices.Length))
+                lblSelectedInfo.Text = _currentInfoGenerator.GetStockSelectedInfo(_currentData, selectedIndex);
+        }
+
+        public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator)
+        {
+            _currentData = data;
+            _currentInfoGenerator = infoGenerator;
+            using (new SuspendDrawingUpdate(chartPV))
+                chartPV.LoadStockData(_currentData.Prices);
+            chartPV.ResetZoom();
+            lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }
     }
 }

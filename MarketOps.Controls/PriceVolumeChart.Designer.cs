@@ -88,6 +88,7 @@
             chartArea2.Position.Y = 80F;
             this.PVChart.ChartAreas.Add(chartArea1);
             this.PVChart.ChartAreas.Add(chartArea2);
+            this.PVChart.Cursor = System.Windows.Forms.Cursors.Cross;
             this.PVChart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PVChart.Location = new System.Drawing.Point(0, 0);
             this.PVChart.Name = "PVChart";

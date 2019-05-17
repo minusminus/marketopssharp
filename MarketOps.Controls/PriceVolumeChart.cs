@@ -21,14 +21,8 @@ namespace MarketOps.Controls
             PVChart.MouseWheel += PVChart_MouseWheel;
         }
 
+        #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
-        public void SetChartMode(PriceVolumeChartMode newMode)
-        {
-            ChartMode = newMode;
-            PricesCandles.Enabled = (newMode == PriceVolumeChartMode.Candles);
-            PricesLine.Enabled = (newMode == PriceVolumeChartMode.Lines);
-            PricesLine.XValueType = ChartValueType.Date;
-        }
 
         public Series PricesCandles => PVChart.Series["dataPricesCandles"];
         public Series PricesLine => PVChart.Series["dataPricesLine"];
@@ -36,7 +30,9 @@ namespace MarketOps.Controls
 
         public delegate void ChartValueSelected(int selectedIndex);
         public event ChartValueSelected OnChartValueSelected;
+        #endregion
 
+        #region internal events
         private void PVChart_MouseMove(object sender, MouseEventArgs e)
         {
             foreach (var area in PVChart.ChartAreas)
@@ -50,12 +46,6 @@ namespace MarketOps.Controls
             OnChartValueSelected?.Invoke((int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1);
         }
 
-
-        public void ResetZoom()
-        {
-            PVChart.ChartAreas["areaPrices"].AxisX.ScaleView.ZoomReset();
-            SetYViewRange();
-        }
 
         private void PVChart_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -82,6 +72,28 @@ namespace MarketOps.Controls
                 PVChart.Parent.Focus();
         }
 
+        private void PVChart_AxisViewChanged(object sender, ViewEventArgs e)
+        {
+            if (e.Axis != PVChart.ChartAreas["areaPrices"].AxisX) return;
+            using (new SuspendDrawingUpdate(PVChart))
+                SetYViewRange();
+        }
+        #endregion
+
+        public void SetChartMode(PriceVolumeChartMode newMode)
+        {
+            ChartMode = newMode;
+            PricesCandles.Enabled = (newMode == PriceVolumeChartMode.Candles);
+            PricesLine.Enabled = (newMode == PriceVolumeChartMode.Lines);
+            PricesLine.XValueType = ChartValueType.Date;
+        }
+
+        public void ResetZoom()
+        {
+            PVChart.ChartAreas["areaPrices"].AxisX.ScaleView.ZoomReset();
+            SetYViewRange();
+        }
+
         private void SetYViewRange()
         {
             Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
@@ -89,13 +101,6 @@ namespace MarketOps.Controls
             Tuple<double, double> range = (new ChartYViewRangeCalculator()).CalculateRange(ax, PricesCandles.Points);
             ay.Minimum = range.Item1;
             ay.Maximum = range.Item2;
-        }
-
-        private void PVChart_AxisViewChanged(object sender, ViewEventArgs e)
-        {
-            if (e.Axis != PVChart.ChartAreas["areaPrices"].AxisX) return;
-            using (new SuspendDrawingUpdate(PVChart))
-                SetYViewRange();
         }
 
         public void ReversePricesYAxis(bool reversed)

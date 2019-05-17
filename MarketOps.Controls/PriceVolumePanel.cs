@@ -23,6 +23,8 @@ namespace MarketOps.Controls
             lblStockInfo.Text = "";
             lblSelectedInfo.Text = "";
             chartPV.OnChartValueSelected += OnChartValueSelected;
+            chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
+            chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
         }
 
         #region internal data
@@ -89,6 +91,19 @@ namespace MarketOps.Controls
             if (_currentData == null) return;
             if ((selectedIndex >= 0) && (selectedIndex < _currentData.Prices.Length))
                 lblSelectedInfo.Text = _currentInfoGenerator.GetStockSelectedInfo(_currentData, selectedIndex);
+        }
+
+        private string OnGetAxisXToolTip(int selectedIndex)
+        {
+            if (_currentData == null) return "";
+            if ((selectedIndex < 0) || (selectedIndex >= _currentData.Prices.Length)) return "";
+            return _currentInfoGenerator.GetAxisXToolTip(_currentData, selectedIndex);
+        }
+
+        private string OnGetAxisYToolTip(double selectedValue)
+        {
+            if (_currentData == null) return "";
+            return _currentInfoGenerator.GetAxisYToolTip(_currentData, selectedValue);
         }
 
         public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator)

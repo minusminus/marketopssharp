@@ -14,5 +14,7 @@ namespace MarketOps.Controls.Types
     {
         string GetStockInfo(StockDisplayData data);
         string GetStockSelectedInfo(StockDisplayData data, int selectedIndex);
+        string GetAxisXToolTip(StockDisplayData data, int selectedIndex);
+        string GetAxisYToolTip(StockDisplayData data, double selectedValue);
     }
 }

@@ -20,8 +20,8 @@ namespace MarketOps.Controls
                 maxy = Math.Max(maxy, dataPoints[i].YValues[0]);    //H
                 miny = Math.Min(miny, dataPoints[i].YValues[1]);    //L
             }
-            double addition = (maxy - miny) * 0.1;
-            return new Tuple<double, double>(Math.Floor(miny - addition), Math.Ceiling(maxy + 2 * addition));
+            double addition = (maxy - miny) * 0.05;
+            return new Tuple<double, double>(Math.Floor(miny - addition), Math.Ceiling(maxy + addition));
         }
     }
 }

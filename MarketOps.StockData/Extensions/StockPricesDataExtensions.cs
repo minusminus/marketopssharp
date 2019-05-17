@@ -45,14 +45,7 @@ namespace MarketOps.StockData.Extensions
             return "yyyy-MM-dd";
         }
 
-        /// <summary>
-        /// returns format string to convert datetime acording to range
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        public static string DataRangeFormatString(this StockPricesData data)
-        {
-            Dictionary<StockDataRange, string> formatStrings = new Dictionary<StockDataRange, string>()
+        private static Dictionary<StockDataRange, string> _dataRangeFormatStrings = new Dictionary<StockDataRange, string>()
             {
                 { StockDataRange.Undefined, "yyyy-MM-dd" },
                 { StockDataRange.Day, "yyyy-MM-dd" },
@@ -61,7 +54,15 @@ namespace MarketOps.StockData.Extensions
                 { StockDataRange.Intraday, "yyyy-MM-dd hh:mm" },
                 { StockDataRange.Tick, "yyyy-MM-dd hh:mm:ss" },
             };
-            return formatStrings[data.Range];
+
+        /// <summary>
+        /// returns format string to convert datetime acording to range
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string DataRangeFormatString(this StockPricesData data)
+        {
+            return _dataRangeFormatStrings[data.Range];
         }
 
         /// <summary>

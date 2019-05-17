@@ -90,5 +90,10 @@ namespace MarketOps.Controls
             chartPV.ResetZoom();
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }
+
+        private void btnMirrorChart_CheckedChanged(object sender, EventArgs e)
+        {
+            chartPV.ReversePricesYAxis(btnMirrorChart.Checked);
+        }
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlButtons = new System.Windows.Forms.Panel();
+            this.btnDataRange = new System.Windows.Forms.Button();
             this.btnPrependData = new System.Windows.Forms.Button();
             this.btnPriceChartCandle = new System.Windows.Forms.CheckBox();
             this.btnPriceChartLine = new System.Windows.Forms.CheckBox();
@@ -37,13 +38,14 @@
             this.pnlInfo = new System.Windows.Forms.Panel();
             this.lblSelectedInfo = new System.Windows.Forms.Label();
             this.lblStockInfo = new System.Windows.Forms.Label();
-            this.btnDataRange = new System.Windows.Forms.Button();
+            this.btnMirrorChart = new System.Windows.Forms.CheckBox();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlButtons
             // 
+            this.pnlButtons.Controls.Add(this.btnMirrorChart);
             this.pnlButtons.Controls.Add(this.btnDataRange);
             this.pnlButtons.Controls.Add(this.btnPrependData);
             this.pnlButtons.Controls.Add(this.btnPriceChartCandle);
@@ -54,6 +56,18 @@
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Size = new System.Drawing.Size(606, 32);
             this.pnlButtons.TabIndex = 0;
+            // 
+            // btnDataRange
+            // 
+            this.btnDataRange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDataRange.Location = new System.Drawing.Point(96, 4);
+            this.btnDataRange.Name = "btnDataRange";
+            this.btnDataRange.Size = new System.Drawing.Size(32, 24);
+            this.btnDataRange.TabIndex = 6;
+            this.btnDataRange.TabStop = false;
+            this.btnDataRange.Text = "range";
+            this.btnDataRange.UseVisualStyleBackColor = true;
+            this.btnDataRange.Click += new System.EventHandler(this.btnDataRange_Click);
             // 
             // btnPrependData
             // 
@@ -142,17 +156,18 @@
             this.lblStockInfo.TabIndex = 0;
             this.lblStockInfo.Text = "label1";
             // 
-            // btnDataRange
+            // btnMirrorChart
             // 
-            this.btnDataRange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDataRange.Location = new System.Drawing.Point(96, 4);
-            this.btnDataRange.Name = "btnDataRange";
-            this.btnDataRange.Size = new System.Drawing.Size(32, 24);
-            this.btnDataRange.TabIndex = 6;
-            this.btnDataRange.TabStop = false;
-            this.btnDataRange.Text = "range";
-            this.btnDataRange.UseVisualStyleBackColor = true;
-            this.btnDataRange.Click += new System.EventHandler(this.btnDataRange_Click);
+            this.btnMirrorChart.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnMirrorChart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMirrorChart.Location = new System.Drawing.Point(268, 4);
+            this.btnMirrorChart.Name = "btnMirrorChart";
+            this.btnMirrorChart.Size = new System.Drawing.Size(32, 24);
+            this.btnMirrorChart.TabIndex = 7;
+            this.btnMirrorChart.TabStop = false;
+            this.btnMirrorChart.Text = "Yrev";
+            this.btnMirrorChart.UseVisualStyleBackColor = true;
+            this.btnMirrorChart.CheckedChanged += new System.EventHandler(this.btnMirrorChart_CheckedChanged);
             // 
             // PriceVolumePanel
             // 
@@ -182,5 +197,6 @@
         private System.Windows.Forms.Label lblSelectedInfo;
         private System.Windows.Forms.Button btnPrependData;
         private System.Windows.Forms.Button btnDataRange;
+        private System.Windows.Forms.CheckBox btnMirrorChart;
     }
 }

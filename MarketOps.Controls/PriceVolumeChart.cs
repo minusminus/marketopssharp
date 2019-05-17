@@ -97,5 +97,10 @@ namespace MarketOps.Controls
             using (new SuspendDrawingUpdate(PVChart))
                 SetYViewRange();
         }
+
+        public void ReversePricesYAxis(bool reversed)
+        {
+            PVChart.ChartAreas["areaPrices"].AxisY.IsReversed = reversed;
+        }
     }
 }

@@ -62,8 +62,11 @@ namespace MarketOps.Controls
             Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
             Tuple<double, double> zoom = (new ChartZoomCalculator()).CalculateZoom(e.Delta < 0,
                 ModifierKeys.HasFlag(Keys.Control), ax, e.Location);
-            ax.ScaleView.Zoom(zoom.Item1, zoom.Item2);
-            SetYViewRange();
+            using (new SuspendDrawingUpdate(PVChart))
+            {
+                ax.ScaleView.Zoom(zoom.Item1, zoom.Item2);
+                SetYViewRange();
+            }
             PVChart_MouseMove(sender, e);
         }
 
@@ -79,7 +82,7 @@ namespace MarketOps.Controls
                 PVChart.Parent.Focus();
         }
 
-        public void SetYViewRange()
+        private void SetYViewRange()
         {
             Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
             Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
@@ -91,7 +94,8 @@ namespace MarketOps.Controls
         private void PVChart_AxisViewChanged(object sender, ViewEventArgs e)
         {
             if (e.Axis != PVChart.ChartAreas["areaPrices"].AxisX) return;
-            SetYViewRange();
+            using (new SuspendDrawingUpdate(PVChart))
+                SetYViewRange();
         }
     }
 }

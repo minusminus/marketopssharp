@@ -41,7 +41,8 @@ namespace MarketOps.Controls
         {
             _currentData = data;
             _currentInfoGenerator = infoGenerator;
-            chartPV.LoadStockData(_currentData.Prices);
+            using (new SuspendDrawingUpdate(chartPV))
+                chartPV.LoadStockData(_currentData.Prices);
             chartPV.ResetZoom();
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }
@@ -72,7 +73,8 @@ namespace MarketOps.Controls
             if (OnPrependData == null) return;
             StockPricesData newData = OnPrependData.Invoke(_currentData);
             _currentData.Prices = _currentData.Prices.Merge(newData);
-            chartPV.PrependStockData(newData);
+            using (new SuspendDrawingUpdate(chartPV))
+                chartPV.PrependStockData(newData);
             chartPV.ResetZoom();
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }
@@ -83,7 +85,8 @@ namespace MarketOps.Controls
             FormSelectDataRange frm = new FormSelectDataRange();
             if (!frm.Execute(_currentData.TsFrom, _currentData.TsTo, _currentData.Prices.DataRangeDateTimeInputFormat())) return;
             _currentData.Prices = OnGetData.Invoke(_currentData, frm.TsFrom, frm.TsTo);
-            chartPV.LoadStockData(_currentData.Prices);
+            using (new SuspendDrawingUpdate(chartPV))
+                chartPV.LoadStockData(_currentData.Prices);
             chartPV.ResetZoom();
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }

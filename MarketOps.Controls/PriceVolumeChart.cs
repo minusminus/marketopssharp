@@ -118,23 +118,23 @@ namespace MarketOps.Controls
             PVChart.ChartAreas["areaPrices"].AxisY.IsReversed = reversed;
         }
 
-        private ToolTip _tooltipAxisX = new ToolTip();
-        private ToolTip _tooltipAxisY = new ToolTip();
-
         private void SetPriceAreaToolTips(Point cursorLocation)
         {
             int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
+            int xAxisRoundedPosition = (int)PVChart.ChartAreas["areaPrices"].AxisX.ValueToPixelPosition(PVChart.ChartAreas["areaPrices"].CursorX.Position);
 
-            //_tooltipAxisY.RemoveAll();
-            //Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
             Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
             if (cursorLocation.Y >= 0)
             {
+                tooltipAxisY.RemoveAll();
                 double yval = ay.PixelPositionToValue(cursorLocation.Y);
-                _tooltipAxisY.Show(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, cursorLocation.Y - 10);
+                tooltipAxisY.Show(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, cursorLocation.Y - 10);
             }
             if (xSelectedIndex >= 0)
-                _tooltipAxisX.Show(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, cursorLocation.X, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
+            {
+                tooltipAxisX.RemoveAll();
+                tooltipAxisX.Show(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
+            }
         }
     }
 }

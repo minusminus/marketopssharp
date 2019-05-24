@@ -52,6 +52,7 @@
     <Compile Include="FormSelectDataRange.Designer.cs">
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </Compile>
+    <Compile Include="PositionChangeChecker.cs" />
     <Compile Include="PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -12,7 +12,6 @@ namespace MarketOps.Controls
 {
     public partial class ToolTipExtended : ToolTip
     {
-
         public ToolTipExtended()
         {
             InitializeComponent();
@@ -20,16 +19,14 @@ namespace MarketOps.Controls
             Draw += OnDraw;
             Popup += OnPopup;
 
-            TooltipFontColor = Color.DimGray;
-            TooltipBackgroundColor = Color.WhiteSmoke;
+            ForeColor = Color.DimGray;
+            BackColor = Color.WhiteSmoke;
         }
 
         [Category("Custom")]
         public Font TooltipFont { get; set; }
-        [Category("Custom")]
-        public Color TooltipFontColor { get; set; }
-        [Category("Custom")]
-        public Color TooltipBackgroundColor { get; set; }
+
+        private readonly PositionChangeChecker _positionChangeChecker = new PositionChangeChecker();
 
         private const int Margin = 4;
 
@@ -40,15 +37,22 @@ namespace MarketOps.Controls
 
         private void OnDraw(object sender, DrawToolTipEventArgs e)
         {
-            e.Graphics.FillRectangle(new SolidBrush(TooltipBackgroundColor), e.Bounds);
+            e.DrawBackground();
             e.DrawBorder();
             using (StringFormat sf = new StringFormat())
             {
                 sf.Alignment = StringAlignment.Center;
                 sf.LineAlignment = StringAlignment.Center;
                 sf.FormatFlags = StringFormatFlags.NoWrap;
-                e.Graphics.DrawString(e.ToolTipText, TooltipFont, new SolidBrush(TooltipFontColor), e.Bounds, sf);
+                e.Graphics.DrawString(e.ToolTipText, TooltipFont, new SolidBrush(ForeColor), e.Bounds, sf);
             }
+        }
+
+        public void ShowIfPosChanged(string text, IWin32Window window, int x, int y)
+        {
+            if (!_positionChangeChecker.SetAndCheckChange(x, y)) return;
+            RemoveAll();
+            Show(text, window, x, y);
         }
     }
 }

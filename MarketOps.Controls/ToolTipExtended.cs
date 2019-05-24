@@ -17,7 +17,7 @@ namespace MarketOps.Controls
             InitializeComponent();
             OwnerDraw = true;
             Draw += OnDraw;
-            Popup += OnPopup;
+            //Popup += OnPopup;
 
             ForeColor = Color.DimGray;
             BackColor = Color.WhiteSmoke;
@@ -28,12 +28,12 @@ namespace MarketOps.Controls
 
         private readonly PositionChangeChecker _positionChangeChecker = new PositionChangeChecker();
 
-        private const int Margin = 4;
+        //private const int Margin = 4;
 
-        private void OnPopup(object sender, PopupEventArgs e)
-        {
-            e.ToolTipSize = TextRenderer.MeasureText(GetToolTip(e.AssociatedControl), TooltipFont) + new Size(Margin, Margin);
-        }
+        //private void OnPopup(object sender, PopupEventArgs e)
+        //{
+        //    e.ToolTipSize = TextRenderer.MeasureText(GetToolTip(e.AssociatedControl), TooltipFont) + new Size(Margin, Margin);
+        //}
 
         private void OnDraw(object sender, DrawToolTipEventArgs e)
         {

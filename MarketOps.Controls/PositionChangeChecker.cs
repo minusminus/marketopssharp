@@ -12,8 +12,8 @@ namespace MarketOps.Controls
     /// </summary>
     internal class PositionChangeChecker
     {
-        private int _lastX = -1;
-        private int _lastY = -1;
+        private int _lastX = Int32.MinValue;
+        private int _lastY = Int32.MinValue;
 
         public bool SetAndCheckChange(int x, int y)
         {

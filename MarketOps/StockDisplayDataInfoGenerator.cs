@@ -25,10 +25,10 @@ namespace MarketOps
         public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex)
         {
             return $"{data.Prices.TS[selectedIndex].ToString(data.Prices.DataRangeFormatString())} OHLC(" +
-                $"{data.Stock.FormatValue(data.Prices.O[selectedIndex])}, " +
-                $"{data.Stock.FormatValue(data.Prices.H[selectedIndex])}, " +
-                $"{data.Stock.FormatValue(data.Prices.L[selectedIndex])}, " +
-                $"{data.Stock.FormatValue(data.Prices.C[selectedIndex])}) " +
+                $"{data.Stock.FormatPrice(data.Prices.O[selectedIndex])}, " +
+                $"{data.Stock.FormatPrice(data.Prices.H[selectedIndex])}, " +
+                $"{data.Stock.FormatPrice(data.Prices.L[selectedIndex])}, " +
+                $"{data.Stock.FormatPrice(data.Prices.C[selectedIndex])}) " +
                 $"V={data.Prices.V[selectedIndex]}";
         }
 
@@ -39,7 +39,7 @@ namespace MarketOps
 
         public string GetAxisYToolTip(StockDisplayData data, double selectedValue)
         {
-            return data.Stock.FormatValue(selectedValue);
+            return data.Stock.FormatPrice(selectedValue);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketOps.Stats.Calculators
 {
@@ -18,9 +15,7 @@ namespace MarketOps.Stats.Calculators
 
         private float CalcStdDev(float[] data, float avg, int ixStart, int width)
         {
-            float val = 0;
-            for (int i = ixStart; i < ixStart + width; i++)
-                val += (data[i] - avg)*(data[i] - avg);
+            float val = data.Skip(ixStart).Take(width).Sum(x => (x - avg)*(x - avg));
             return (float) Math.Sqrt(val/(float) width);
         }
 

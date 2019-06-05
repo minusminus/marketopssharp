@@ -54,6 +54,7 @@ namespace MarketOps.Stats.Tests
 
         [TestCase(-1)]
         [TestCase(0)]
+        [TestCase(11)]
         public void Calculate_IncorrectPeriod__EmptyResult(int period)
         {
             TestBBEmpty(new float[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, period, 2f);

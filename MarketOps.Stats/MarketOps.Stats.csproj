@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculators\ATR.cs" />
     <Compile Include="Calculators\BBData.cs" />
     <Compile Include="Calculators\BB.cs" />
+    <Compile Include="Calculators\CumulativeDataCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -13,30 +13,25 @@ namespace MarketOps.Stats.Calculators
     {
         private bool CanCalculate(float[] data, int period)
         {
-            return data.Length >= period;
+            return (data.Length >= period) && (period > 0);
         }
 
         private float GetInitialSum(float[] data, int period)
         {
             return data.Take(period).Sum();
-            //float sum = 0;
-            //for (int i = 0; i < period; i++)
-            //    sum += data[i];
-            //return sum;
         }
 
         private float[] CalculateSMA(float[] data, int period)
         {
             float[] res = new float[data.Length - period + 1];
-            float currentSum = GetInitialSum(data, period);
 
-            for (int i = 0; i < res.Length - 1; i++)
+            float currentSum = GetInitialSum(data, period - 1);
+            for (int i = 0; i < res.Length; i++)
             {
-                res[i] = currentSum/(float) period;
+                currentSum += data[i + period - 1];
+                res[i] = currentSum / (float)period;
                 currentSum -= data[i];
-                currentSum += data[i + period];
             }
-            res[res.Length - 1] = currentSum / (float)period;
 
             return res;
         }

@@ -51,6 +51,7 @@
     <Compile Include="Types\StockDefinition.cs" />
     <Compile Include="Types\StockDisplayData.cs" />
     <Compile Include="Types\StockPricesData.cs" />
+    <Compile Include="Types\StockStat.cs" />
     <Compile Include="Types\StockType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

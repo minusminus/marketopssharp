@@ -46,6 +46,13 @@
     <Compile Include="Calculators\CumulativeDataCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\StatSMA.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
+      <Name>MarketOps.StockData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

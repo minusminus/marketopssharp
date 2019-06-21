@@ -8,9 +8,21 @@ namespace MarketOps.StockData.Types
     public abstract class StockStat
     {
         protected float[][] _data;
+        protected StockStatParams _statParams = new StockStatParams();
 
-        public int Count => _data.Length;
+        public int DataCount => _data.Length;
         public float[] Data(int index) => _data[index];
+        public StockStatParams StatParams => _statParams;
+
+        public StockStat()
+        {
+            InitializeData();
+            InitializeStatParams();
+        }
+
+        protected abstract void InitializeData();
+        protected abstract void InitializeStatParams();
+
         public abstract void Calculate(StockPricesData data);
     }
 }

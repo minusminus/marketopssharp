@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MarketOps.StockData.Types
 {
@@ -11,5 +12,6 @@ namespace MarketOps.StockData.Types
         public DateTime TsTo;
         public StockDefinition Stock;
         public StockPricesData Prices;
+        public List<StockStat> Stats = new List<StockStat>();
     }
 }

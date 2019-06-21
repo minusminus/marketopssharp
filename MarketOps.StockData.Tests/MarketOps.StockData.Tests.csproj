@@ -55,6 +55,7 @@
     <Compile Include="StockPricesDataFindByTSTests.cs" />
     <Compile Include="StockPricesDataMergerTests.cs" />
     <Compile Include="StockPricesDataTests.cs" />
+    <Compile Include="StockStatParamsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

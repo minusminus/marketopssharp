@@ -12,12 +12,13 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeData()
         {
-            _data = new float[1][];
+            CreateDataStructures(1);
+            _dataColors[0] = Color.Red;
         }
 
         protected override void InitializeStatParams()
         {
-            _statParams.Set(ParamPeriod, new StockStatParam() { Name = ParamPeriod, Value = 20, StatColor = Color.Red });
+            _statParams.Set(ParamPeriod, new StockStatParam() { Name = ParamPeriod, Value = 20 });
         }
 
         public override void Calculate(StockPricesData data)

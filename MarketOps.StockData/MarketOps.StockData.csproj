@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="DataFormatting.cs" />
     <Compile Include="Extensions\StockDefinitionExtensions.cs" />
+    <Compile Include="Extensions\StockStatExtensions.cs" />
     <Compile Include="Extensions\StockStatParamExtensions.cs" />
     <Compile Include="Interfaces\IStockDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

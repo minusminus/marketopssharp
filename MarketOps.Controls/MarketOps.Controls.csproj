@@ -67,6 +67,7 @@
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StockStatSeriesCreator.cs" />
     <Compile Include="SuspendDrawingUpdate.cs" />
     <Compile Include="ToolTipExtended.cs">
       <SubType>Component</SubType>

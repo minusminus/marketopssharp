@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace MarketOps.StockData.Types
 {
@@ -10,6 +9,5 @@ namespace MarketOps.StockData.Types
     {
         public string Name;
         public object Value;
-        public Color StatColor;
     }
 }

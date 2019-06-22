@@ -34,12 +34,16 @@ namespace MarketOps.Controls
 
         #region public properties and events
         public PriceVolumeChart Chart => chartPV;
+        public StockDisplayData CurrentData => _currentData;
 
         public delegate StockPricesData GetAdditionalData(StockDisplayData currentData);
         public event GetAdditionalData OnPrependData;
-        //public event GetAdditionalData OnAppendData;
+
         public delegate StockPricesData GetData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo);
         public event GetData OnGetData;
+
+        public delegate void RecalculateStockStats(StockDisplayData currentData);
+        public event RecalculateStockStats OnRecalculateStockStats;
         #endregion
 
         #region button actions
@@ -62,10 +66,11 @@ namespace MarketOps.Controls
             if (OnPrependData == null) return;
             StockPricesData newData = OnPrependData.Invoke(_currentData);
             _currentData.Prices = _currentData.Prices.Merge(newData);
+            RecalculateStats();
             using (new SuspendDrawingUpdate(chartPV))
                 chartPV.PrependStockData(newData);
             chartPV.ResetZoom();
-            lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
+            DisplayCurrentStockInfo();
         }
 
         private void btnDataRange_Click(object sender, EventArgs e)
@@ -74,15 +79,20 @@ namespace MarketOps.Controls
             FormSelectDataRange frm = new FormSelectDataRange();
             if (!frm.Execute(_currentData.TsFrom, _currentData.TsTo, _currentData.Prices.DataRangeDateTimeInputFormat())) return;
             _currentData.Prices = OnGetData.Invoke(_currentData, frm.TsFrom, frm.TsTo);
-            using (new SuspendDrawingUpdate(chartPV))
-                chartPV.LoadStockData(_currentData.Prices);
+            RecalculateStats();
+            ReloadCurrentData();
             chartPV.ResetZoom();
-            lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
+            DisplayCurrentStockInfo();
         }
 
         private void btnMirrorChart_CheckedChanged(object sender, EventArgs e)
         {
             chartPV.ReversePricesYAxis(btnMirrorChart.Checked);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshData();
         }
         #endregion
 
@@ -106,14 +116,45 @@ namespace MarketOps.Controls
             return _currentInfoGenerator.GetAxisYToolTip(_currentData, selectedValue);
         }
 
+        private void RecalculateStats()
+        {
+            if (OnRecalculateStockStats == null) return;
+            OnRecalculateStockStats.Invoke(_currentData);
+        }
+
+        private void ReloadCurrentData()
+        {
+            using (new SuspendDrawingUpdate(chartPV))
+            {
+                chartPV.LoadStockData(_currentData.Prices);
+                foreach (var stat in _currentData.Stats)
+                    chartPV.AppendStockStatData(_currentData.Prices, stat);
+            }
+        }
+
+        private void DisplayCurrentStockInfo()
+        {
+            lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
+        }
+
         public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator)
         {
             _currentData = data;
             _currentInfoGenerator = infoGenerator;
-            using (new SuspendDrawingUpdate(chartPV))
-                chartPV.LoadStockData(_currentData.Prices);
+            ReloadCurrentData();
             chartPV.ResetZoom();
-            lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
+            DisplayCurrentStockInfo();
+        }
+
+        public void RefreshData()
+        {
+            ReloadCurrentData();
+        }
+
+        public void AddStat(StockStat stat)
+        {
+            chartPV.AddPriceAreaStatSeries(stat);
+            _currentData.Stats.Add(stat);
         }
     }
 }

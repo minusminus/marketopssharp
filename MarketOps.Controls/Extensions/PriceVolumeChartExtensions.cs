@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MarketOps.StockData.Types;
+using System.Windows.Forms.DataVisualization.Charting;
+using MarketOps.StockData.Extensions;
 
 namespace MarketOps.Controls.Extensions
 {
@@ -14,9 +12,7 @@ namespace MarketOps.Controls.Extensions
     {
         public static void ClearStockData(this PriceVolumeChart chart)
         {
-            chart.PricesCandles.Points.Clear();
-            chart.PricesLine.Points.Clear();
-            chart.Volume.Points.Clear();
+            chart.ClearAllSeriesData();
         }
 
         public static void LoadStockData(this PriceVolumeChart chart, StockPricesData data)
@@ -36,6 +32,23 @@ namespace MarketOps.Controls.Extensions
 
                 chart.PricesLine.Points.AddXY(data.TS[i], data.C[i]);
                 chart.Volume.Points.AddXY(data.TS[i], data.V[i]);
+            }
+        }
+
+        public static void AppendStockStatData(this PriceVolumeChart chart, StockPricesData data, StockStat stat)
+        {
+            for (int i = 0; i < stat.DataCount; i++)
+            {
+                Series s = chart.GetSeries(stat.ChartSeriesName(i));
+                float[] currdata = stat.Data(i);
+                int tsstartindex = data.Length - currdata.Length;
+                for (int j = 0; j < tsstartindex; j++)
+                {
+                    int ix = s.Points.AddXY(data.TS[j], 0);
+                    s.Points[ix].IsEmpty = true;
+                }
+                for (int j = 0; j < currdata.Length; j++)
+                    s.Points.AddXY(data.TS[tsstartindex + j], currdata[j]);
             }
         }
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MarketOps.StockData.Types;
 
 namespace MarketOps.Controls
 {
@@ -89,6 +90,24 @@ namespace MarketOps.Controls
                 SetYViewRange();
         }
         #endregion
+
+        public void ClearAllSeriesData()
+        {
+            foreach (var series in PVChart.Series)
+                series.Points.Clear();
+        }
+
+        public Series GetSeries(string seriesName)
+        {
+            return PVChart.Series[seriesName];
+        }
+
+        public void AddPriceAreaStatSeries(StockStat stat)
+        {
+            StockStatSeriesCreator factory = new StockStatSeriesCreator();
+            for (int i = 0; i < stat.DataCount; i++)
+                PVChart.Series.Add(factory.CreatePriceAreaSeries(stat, i));
+        }
 
         public void SetChartMode(PriceVolumeChartMode newMode)
         {

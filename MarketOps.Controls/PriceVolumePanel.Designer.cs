@@ -35,10 +35,10 @@
             this.btnPriceChartCandle = new System.Windows.Forms.CheckBox();
             this.btnPriceChartLine = new System.Windows.Forms.CheckBox();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.chartPV = new MarketOps.Controls.PriceVolumeChart();
             this.pnlInfo = new System.Windows.Forms.Panel();
             this.lblSelectedInfo = new System.Windows.Forms.Label();
             this.lblStockInfo = new System.Windows.Forms.Label();
+            this.chartPV = new MarketOps.Controls.PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
             this.SuspendLayout();
@@ -128,18 +128,9 @@
             this.btnRefresh.Size = new System.Drawing.Size(32, 24);
             this.btnRefresh.TabIndex = 0;
             this.btnRefresh.TabStop = false;
-            this.btnRefresh.Text = "s";
+            this.btnRefresh.Text = "refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
-            // 
-            // chartPV
-            // 
-            this.chartPV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chartPV.Location = new System.Drawing.Point(0, 63);
-            this.chartPV.Name = "chartPV";
-            this.chartPV.Size = new System.Drawing.Size(606, 312);
-            this.chartPV.TabIndex = 1;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // pnlInfo
             // 
@@ -170,6 +161,16 @@
             this.lblStockInfo.Size = new System.Drawing.Size(29, 12);
             this.lblStockInfo.TabIndex = 0;
             this.lblStockInfo.Text = "label1";
+            // 
+            // chartPV
+            // 
+            this.chartPV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chartPV.Location = new System.Drawing.Point(0, 63);
+            this.chartPV.Name = "chartPV";
+            this.chartPV.Size = new System.Drawing.Size(606, 312);
+            this.chartPV.TabIndex = 1;
             // 
             // PriceVolumePanel
             // 

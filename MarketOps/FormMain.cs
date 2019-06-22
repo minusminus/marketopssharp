@@ -11,6 +11,7 @@ using MarketOps.StockData.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Extensions;
 using MarketOps.DataProvider.Pg;
+using MarketOps.Stats.Stats;
 
 namespace MarketOps
 {
@@ -21,6 +22,7 @@ namespace MarketOps
             InitializeComponent();
             pnlPV.OnPrependData += OnPrependChartData;
             pnlPV.OnGetData += OnGetChartData;
+            pnlPV.OnRecalculateStockStats += OnRecalculateStockStats;
         }
 
         private StockPricesData OnGetChartData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo)
@@ -40,6 +42,12 @@ namespace MarketOps
             return newdata;
         }
 
+        private void OnRecalculateStockStats(StockDisplayData currentData)
+        {
+            foreach (var stat in currentData.Stats)
+                stat.Calculate(currentData.Prices);
+        }
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             IStockDataProvider dataProvider = new PgStockDataProvider();
@@ -55,7 +63,11 @@ namespace MarketOps
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show($"{pnlPV.Chart.ChartAreas["areaPrices"].AxisX.ScaleView.ViewMinimum}, {pnlPV.Chart.ChartAreas["areaPrices"].AxisX.ScaleView.ViewMaximum}");
+            StatSMA stat = new StatSMA();
+            stat.Calculate(pnlPV.CurrentData.Prices);
+            pnlPV.AddStat(stat);
+            pnlPV.RefreshData();
+            pnlPV.Refresh();
         }
     }
 }

@@ -67,8 +67,7 @@ namespace MarketOps.Controls
             StockPricesData newData = OnPrependData.Invoke(_currentData);
             _currentData.Prices = _currentData.Prices.Merge(newData);
             RecalculateStats();
-            using (new SuspendDrawingUpdate(chartPV))
-                chartPV.PrependStockData(newData);
+            PrependData(newData);
             chartPV.ResetZoom();
             DisplayCurrentStockInfo();
         }
@@ -129,6 +128,16 @@ namespace MarketOps.Controls
                 chartPV.LoadStockData(_currentData.Prices);
                 foreach (var stat in _currentData.Stats)
                     chartPV.AppendStockStatData(_currentData.Prices, stat);
+            }
+        }
+
+        private void PrependData(StockPricesData newData)
+        {
+            using (new SuspendDrawingUpdate(chartPV))
+            {
+                chartPV.PrependStockData(newData);
+                foreach (var stat in _currentData.Stats)
+                    chartPV.PrependStockStatData(_currentData.Prices, stat);
             }
         }
 

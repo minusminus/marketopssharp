@@ -127,7 +127,14 @@ namespace MarketOps.Controls
         {
             Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
             Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
-            Tuple<double, double> range = (new ChartYViewRangeCalculator()).CalculateRange(ax, PricesCandles.Points);
+
+            ChartYViewRangeCalculator calc = new ChartYViewRangeCalculator();
+            Tuple<double, double> range = calc.CalculateRangeCandles(ax, PricesCandles.Points, calc.InitialRange());
+            var list = PVChart.Series.Where(x => (x.ChartArea == "areaPrices") && (x.Name != "dataPricesCandles") && (x.Name != "dataPricesLines")).ToList();
+            foreach (var s in list)
+                range = calc.CalculateRangeLine(ax, s.Points, range);
+            range = calc.PostprocessRange(range);
+
             ay.Minimum = range.Item1;
             ay.Maximum = range.Item2;
         }

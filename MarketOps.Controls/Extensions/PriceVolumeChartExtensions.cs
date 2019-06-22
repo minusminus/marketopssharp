@@ -35,6 +35,20 @@ namespace MarketOps.Controls.Extensions
             }
         }
 
+        public static void PrependStockData(this PriceVolumeChart chart, StockPricesData data)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                chart.PricesCandles.Points.InsertXY(i, data.TS[i], data.H[i]);
+                chart.PricesCandles.Points[i].YValues[1] = data.L[i];
+                chart.PricesCandles.Points[i].YValues[2] = data.O[i];
+                chart.PricesCandles.Points[i].YValues[3] = data.C[i];
+
+                chart.PricesLine.Points.InsertXY(i, data.TS[i], data.C[i]);
+                chart.Volume.Points.InsertXY(i, data.TS[i], data.V[i]);
+            }
+        }
+
         public static void AppendStockStatData(this PriceVolumeChart chart, StockPricesData data, StockStat stat)
         {
             for (int i = 0; i < stat.DataCount; i++)
@@ -52,18 +66,14 @@ namespace MarketOps.Controls.Extensions
             }
         }
 
-        public static void PrependStockData(this PriceVolumeChart chart, StockPricesData data)
+        public static void PrependStockStatData(this PriceVolumeChart chart, StockPricesData data, StockStat stat)
         {
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < stat.DataCount; i++)
             {
-                chart.PricesCandles.Points.InsertXY(i, data.TS[i], data.H[i]);
-                chart.PricesCandles.Points[i].YValues[1] = data.L[i];
-                chart.PricesCandles.Points[i].YValues[2] = data.O[i];
-                chart.PricesCandles.Points[i].YValues[3] = data.C[i];
-
-                chart.PricesLine.Points.InsertXY(i, data.TS[i], data.C[i]);
-                chart.Volume.Points.InsertXY(i, data.TS[i], data.V[i]);
+                Series s = chart.GetSeries(stat.ChartSeriesName(i));
+                s.Points.Clear();
             }
+            AppendStockStatData(chart, data, stat);
         }
     }
 }

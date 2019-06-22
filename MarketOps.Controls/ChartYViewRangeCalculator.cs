@@ -9,19 +9,45 @@ namespace MarketOps.Controls
     /// </summary>
     internal class ChartYViewRangeCalculator
     {
-        public Tuple<double, double> CalculateRange(Axis xAxis, DataPointCollection dataPoints)
+        public Tuple<double, double> InitialRange()
+        {
+            return new Tuple<double, double>(double.MaxValue, double.MinValue);
+        }
+
+        public Tuple<double, double> PostprocessRange(Tuple<double, double> currRange)
+        {
+            double addition = (currRange.Item2 - currRange.Item1) * 0.05;
+            return new Tuple<double, double>(Math.Floor(currRange.Item1 - addition), Math.Ceiling(currRange.Item2 + addition));
+        }
+
+        public Tuple<double, double> CalculateRangeCandles(Axis xAxis, DataPointCollection dataPoints, Tuple<double, double> currRange)
         {
             int istart = (int)xAxis.ScaleView.ViewMinimum;
             int istop = Math.Min((int)xAxis.ScaleView.ViewMaximum, dataPoints.Count);
-            double maxy = double.MinValue;
-            double miny = double.MaxValue;
+            double maxy = currRange.Item2;
+            double miny = currRange.Item1;
             for (int i = istart; i < istop; i++)
-            {
-                maxy = Math.Max(maxy, dataPoints[i].YValues[0]);    //H
-                miny = Math.Min(miny, dataPoints[i].YValues[1]);    //L
-            }
-            double addition = (maxy - miny) * 0.05;
-            return new Tuple<double, double>(Math.Floor(miny - addition), Math.Ceiling(maxy + addition));
+                if (!dataPoints[i].IsEmpty)
+                {
+                    maxy = Math.Max(maxy, dataPoints[i].YValues[0]);    //H
+                    miny = Math.Min(miny, dataPoints[i].YValues[1]);    //L
+                }
+            return new Tuple<double, double>(miny, maxy);
+        }
+
+        public Tuple<double, double> CalculateRangeLine(Axis xAxis, DataPointCollection dataPoints, Tuple<double, double> currRange)
+        {
+            int istart = (int)xAxis.ScaleView.ViewMinimum;
+            int istop = Math.Min((int)xAxis.ScaleView.ViewMaximum, dataPoints.Count);
+            double maxy = currRange.Item2;
+            double miny = currRange.Item1;
+            for (int i = istart; i < istop; i++)
+                if (!dataPoints[i].IsEmpty)
+                {
+                    maxy = Math.Max(maxy, dataPoints[i].YValues[0]);
+                    miny = Math.Min(miny, dataPoints[i].YValues[0]);
+                }
+            return new Tuple<double, double>(miny, maxy);
         }
     }
 }

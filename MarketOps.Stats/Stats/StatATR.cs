@@ -7,9 +7,9 @@ using System.Drawing;
 namespace MarketOps.Stats.Stats
 {
     /// <summary>
-    /// SMA stock stat
+    /// ATR stock stat
     /// </summary>
-    public class StatSMA : StockStat
+    public class StatATR : StockStat
     {
         private const string ParamPeriod = "Period";
 
@@ -26,7 +26,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            _data[0] = (new SMA()).Calculate(data.C, _statParams.Get(ParamPeriod).As<int>());
+            _data[0] = (new ATR()).Calculate(data.H, data.L, data.C, _statParams.Get(ParamPeriod).As<int>());
         }
     }
 }

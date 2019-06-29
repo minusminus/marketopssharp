@@ -123,7 +123,7 @@ namespace MarketOps.Controls
             SetYViewRange();
         }
 
-        private void SetYViewRange()
+        public void SetYViewRange()
         {
             Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
             Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;

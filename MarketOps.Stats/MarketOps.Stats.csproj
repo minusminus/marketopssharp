@@ -47,6 +47,8 @@
     <Compile Include="Calculators\CumulativeDataCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\StatATR.cs" />
+    <Compile Include="Stats\StatBB.cs" />
     <Compile Include="Stats\StatSMA.cs" />
   </ItemGroup>
   <ItemGroup>

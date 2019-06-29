@@ -128,6 +128,7 @@ namespace MarketOps.Controls
                 chartPV.LoadStockData(_currentData.Prices);
                 foreach (var stat in _currentData.Stats)
                     chartPV.AppendStockStatData(_currentData.Prices, stat);
+                chartPV.SetYViewRange();
             }
         }
 

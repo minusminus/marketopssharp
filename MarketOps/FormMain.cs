@@ -63,7 +63,7 @@ namespace MarketOps
 
         private void button1_Click(object sender, EventArgs e)
         {
-            StatSMA stat = new StatSMA();
+            StockStat stat = new StatBB();
             stat.Calculate(pnlPV.CurrentData.Prices);
             pnlPV.AddStat(stat);
             pnlPV.RefreshData();

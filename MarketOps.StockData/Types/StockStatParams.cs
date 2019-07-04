@@ -22,5 +22,7 @@ namespace MarketOps.StockData.Types
                 throw new Exception($"Undefined parameter {paramName}");
             return value;
         }
+
+        public IEnumerator<StockStatParam> GetEnumerator() => (IEnumerator<StockStatParam>) _params.Values.GetEnumerator();
     }
 }

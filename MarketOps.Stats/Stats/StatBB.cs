@@ -16,6 +16,7 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeData()
         {
+            _name = "BB";
             CreateDataStructures(3);
             _dataColors[0] = Color.SaddleBrown;
             _dataColors[1] = Color.DarkRed;

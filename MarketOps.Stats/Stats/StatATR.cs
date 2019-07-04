@@ -15,6 +15,7 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeData()
         {
+            _name = "ATR";
             CreateDataStructures(1);
             _dataColors[0] = Color.Red;
         }

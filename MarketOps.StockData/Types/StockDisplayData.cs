@@ -12,6 +12,6 @@ namespace MarketOps.StockData.Types
         public DateTime TsTo;
         public StockDefinition Stock;
         public StockPricesData Prices;
-        public List<StockStat> Stats = new List<StockStat>();
+        public readonly List<StockStat> Stats = new List<StockStat>();
     }
 }

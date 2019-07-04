@@ -15,6 +15,7 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeData()
         {
+            _name = "SMA";
             CreateDataStructures(1);
             _dataColors[0] = Color.Red;
         }

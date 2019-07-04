@@ -9,11 +9,13 @@ namespace MarketOps.StockData.Types
     public abstract class StockStat
     {
         private string _uid;
+        protected string _name;
         protected float[][] _data;
         protected Color[] _dataColors;
-        protected StockStatParams _statParams = new StockStatParams();
+        protected readonly StockStatParams _statParams = new StockStatParams();
 
         public string UID => _uid;
+        public string Name => _name;
         public int DataCount => _data.Length;
         public float[] Data(int index) => _data[index];
         public Color DataColor(int index) => _dataColors[index];

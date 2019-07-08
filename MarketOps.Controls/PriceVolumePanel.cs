@@ -22,6 +22,7 @@ namespace MarketOps.Controls
             btnPriceChartCandle.Checked = true;
             lblStockInfo.Text = "";
             lblSelectedInfo.Text = "";
+            lblStatSelectedInfo.Text = "";
             chartPV.OnChartValueSelected += OnChartValueSelected;
             chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
             chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
@@ -30,6 +31,7 @@ namespace MarketOps.Controls
         #region internal data
         private StockDisplayData _currentData;
         private IStockInfoGenerator _currentInfoGenerator;
+        private IStockStatsInfoGenerator _currentStatsInfoGenerator;
         #endregion
 
         #region public properties and events
@@ -99,7 +101,10 @@ namespace MarketOps.Controls
         {
             if (_currentData == null) return;
             if ((selectedIndex >= 0) && (selectedIndex < _currentData.Prices.Length))
+            {
                 lblSelectedInfo.Text = _currentInfoGenerator.GetStockSelectedInfo(_currentData, selectedIndex);
+                lblStatSelectedInfo.Text = _currentStatsInfoGenerator.GetStatsSelectedInfo(_currentData, selectedIndex);
+            }
         }
 
         private string OnGetAxisXToolTip(int selectedIndex)
@@ -147,10 +152,11 @@ namespace MarketOps.Controls
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }
 
-        public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator)
+        public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator, IStockStatsInfoGenerator statsInfoGenerator)
         {
             _currentData = data;
             _currentInfoGenerator = infoGenerator;
+            _currentStatsInfoGenerator = statsInfoGenerator;
             ReloadCurrentData();
             chartPV.ResetZoom();
             DisplayCurrentStockInfo();

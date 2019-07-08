@@ -38,6 +38,7 @@
             this.pnlInfo = new System.Windows.Forms.Panel();
             this.lblSelectedInfo = new System.Windows.Forms.Label();
             this.lblStockInfo = new System.Windows.Forms.Label();
+            this.lblStatSelectedInfo = new System.Windows.Forms.Label();
             this.chartPV = new MarketOps.Controls.PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
@@ -134,12 +135,13 @@
             // 
             // pnlInfo
             // 
+            this.pnlInfo.Controls.Add(this.lblStatSelectedInfo);
             this.pnlInfo.Controls.Add(this.lblSelectedInfo);
             this.pnlInfo.Controls.Add(this.lblStockInfo);
             this.pnlInfo.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlInfo.Location = new System.Drawing.Point(0, 32);
             this.pnlInfo.Name = "pnlInfo";
-            this.pnlInfo.Size = new System.Drawing.Size(606, 32);
+            this.pnlInfo.Size = new System.Drawing.Size(606, 45);
             this.pnlInfo.TabIndex = 2;
             // 
             // lblSelectedInfo
@@ -148,9 +150,9 @@
             this.lblSelectedInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblSelectedInfo.Location = new System.Drawing.Point(2, 16);
             this.lblSelectedInfo.Name = "lblSelectedInfo";
-            this.lblSelectedInfo.Size = new System.Drawing.Size(29, 12);
+            this.lblSelectedInfo.Size = new System.Drawing.Size(66, 12);
             this.lblSelectedInfo.TabIndex = 1;
-            this.lblSelectedInfo.Text = "label1";
+            this.lblSelectedInfo.Text = "lblSelectedInfo";
             // 
             // lblStockInfo
             // 
@@ -158,18 +160,25 @@
             this.lblStockInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblStockInfo.Location = new System.Drawing.Point(2, 2);
             this.lblStockInfo.Name = "lblStockInfo";
-            this.lblStockInfo.Size = new System.Drawing.Size(29, 12);
+            this.lblStockInfo.Size = new System.Drawing.Size(54, 12);
             this.lblStockInfo.TabIndex = 0;
-            this.lblStockInfo.Text = "label1";
+            this.lblStockInfo.Text = "lblStockInfo";
+            // 
+            // lblStatSelectedInfo
+            // 
+            this.lblStatSelectedInfo.AutoSize = true;
+            this.lblStatSelectedInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblStatSelectedInfo.Location = new System.Drawing.Point(2, 30);
+            this.lblStatSelectedInfo.Name = "lblStatSelectedInfo";
+            this.lblStatSelectedInfo.Size = new System.Drawing.Size(83, 12);
+            this.lblStatSelectedInfo.TabIndex = 2;
+            this.lblStatSelectedInfo.Text = "lblStatSelectedInfo";
             // 
             // chartPV
             // 
-            this.chartPV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chartPV.Location = new System.Drawing.Point(0, 63);
+            this.chartPV.Location = new System.Drawing.Point(0, 77);
             this.chartPV.Name = "chartPV";
-            this.chartPV.Size = new System.Drawing.Size(606, 312);
+            this.chartPV.Size = new System.Drawing.Size(606, 300);
             this.chartPV.TabIndex = 1;
             // 
             // PriceVolumePanel
@@ -201,5 +210,6 @@
         private System.Windows.Forms.Button btnPrependData;
         private System.Windows.Forms.Button btnDataRange;
         private System.Windows.Forms.CheckBox btnMirrorChart;
+        private System.Windows.Forms.Label lblStatSelectedInfo;
     }
 }

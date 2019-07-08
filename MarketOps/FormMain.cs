@@ -58,7 +58,7 @@ namespace MarketOps
                 Stock = dataProvider.GetStockDefinition("WIG")
             };
             currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, StockDataRange.Day, 0, currentStock.TsFrom, currentStock.TsTo);
-            pnlPV.LoadData(currentStock, new StockDisplayDataInfoGenerator());
+            pnlPV.LoadData(currentStock, new StockDisplayDataInfoGenerator(), new StockStatsInfoGenerator());
         }
 
         private void button1_Click(object sender, EventArgs e)

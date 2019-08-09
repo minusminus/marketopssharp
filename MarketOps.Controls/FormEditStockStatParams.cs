@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MarketOps.Controls.Types;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.Controls
@@ -27,7 +28,7 @@ namespace MarketOps.Controls
         private void LoadStatParams(StockStatParams statParams)
         {
             foreach (var param in statParams)
-                srcParams.Add(param);
+                srcParams.Add(new StockStatParamEditMapper(param));
         }
     }
 }

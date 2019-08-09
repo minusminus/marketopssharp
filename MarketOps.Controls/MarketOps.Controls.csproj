@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Types\IStockInfoGenerator.cs" />
     <Compile Include="Types\IStockStatsInfoGenerator.cs" />
+    <Compile Include="Types\StockStatParamEditMapper.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>

@@ -22,7 +22,7 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeStatParams()
         {
-            _statParams.Set(ParamPeriod, new StockStatParam() { Name = ParamPeriod, Value = 20 });
+            _statParams.Set(ParamPeriod, new StockStatParamInt() { Name = ParamPeriod, Value = 20 });
         }
 
         public override void Calculate(StockPricesData data)

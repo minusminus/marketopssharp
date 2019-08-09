@@ -66,8 +66,8 @@ namespace MarketOps
         {
             StockStat stat = new StatBB();
 
-            //FormEditStockStatParams frm = new FormEditStockStatParams();
-            //if (!frm.Execute(stat.StatParams)) return;
+            FormEditStockStatParams frm = new FormEditStockStatParams();
+            if (!frm.Execute(stat.StatParams)) return;
 
             stat.Calculate(pnlPV.CurrentData.Prices);
             pnlPV.AddStat(stat);

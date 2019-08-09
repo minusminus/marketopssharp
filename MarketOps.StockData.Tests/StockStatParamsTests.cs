@@ -14,17 +14,17 @@ namespace MarketOps.StockData.Tests
         {
             StockStatParams testObj = new StockStatParams();
             const int testValue = 123;
-            testObj.Set("test", new StockStatParam() { Value = testValue });
+            testObj.Set("test", new StockStatParamInt() { Value = testValue });
             testObj.Get("test").As<int>().ShouldBe(testValue);
         }
 
         [Test]
-        public void Set_Double__GetsCorrectValue()
+        public void Set_Float__GetsCorrectValue()
         {
             StockStatParams testObj = new StockStatParams();
-            const double testValue = 123.123;
-            testObj.Set("test", new StockStatParam() { Value = testValue });
-            testObj.Get("test").As<double>().ShouldBe(testValue);
+            const float testValue = 123.123f;
+            testObj.Set("test", new StockStatParamFloat() { Value = testValue });
+            testObj.Get("test").As<float>().ShouldBe(testValue);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace MarketOps.StockData.Tests
         {
             StockStatParams testObj = new StockStatParams();
             const string testValue = "abcdefkgofdsa dfgsdfg";
-            testObj.Set("test", new StockStatParam() { Value = testValue });
+            testObj.Set("test", new StockStatParamString() { Value = testValue });
             testObj.Get("test").As<string>().ShouldBe(testValue);
         }
 
@@ -42,8 +42,8 @@ namespace MarketOps.StockData.Tests
             StockStatParams testObj = new StockStatParams();
             const int val1 = 123;
             const int val2 = 987;
-            testObj.Set("param1", new StockStatParam() { Value = val1 });
-            testObj.Set("param2", new StockStatParam() { Value = val2 });
+            testObj.Set("param1", new StockStatParamInt() { Value = val1 });
+            testObj.Set("param2", new StockStatParamInt() { Value = val2 });
             testObj.Get("param1").As<int>().ShouldBe(val1);
             testObj.Get("param2").As<int>().ShouldBe(val2);
         }
@@ -54,9 +54,9 @@ namespace MarketOps.StockData.Tests
             StockStatParams testObj = new StockStatParams();
             const int val1 = 123;
             const int val2 = 987;
-            testObj.Set("test", new StockStatParam() { Value = val1 });
+            testObj.Set("test", new StockStatParamInt() { Value = val1 });
             testObj.Get("test").As<int>().ShouldBe(val1);
-            testObj.Set("test", new StockStatParam() { Value = val2 });
+            testObj.Set("test", new StockStatParamInt() { Value = val2 });
             testObj.Get("test").As<int>().ShouldBe(val2);
         }
 

@@ -56,7 +56,10 @@
     <Compile Include="Types\StockPricesData.cs" />
     <Compile Include="Types\StockStat.cs" />
     <Compile Include="Types\StockStatParam.cs" />
+    <Compile Include="Types\StockStatParamFloat.cs" />
+    <Compile Include="Types\StockStatParamInt.cs" />
     <Compile Include="Types\StockStatParams.cs" />
+    <Compile Include="Types\StockStatParamString.cs" />
     <Compile Include="Types\StockType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

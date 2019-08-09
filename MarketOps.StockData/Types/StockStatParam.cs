@@ -5,9 +5,17 @@ namespace MarketOps.StockData.Types
     /// <summary>
     /// Statistics parameter definition
     /// </summary>
-    public class StockStatParam
+    public abstract class StockStatParam
     {
-        public string Name { get; set; }
-        public object Value { get; set; }
+        public string Name;
+        public object Value;
+
+        public string ValueString
+        {
+            get { return Value.ToString(); }
+            set { SetValueString(value); }
+        }
+
+        protected abstract void SetValueString(string value);
     }
 }

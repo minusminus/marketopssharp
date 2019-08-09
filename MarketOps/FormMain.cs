@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MarketOps.Controls;
 using MarketOps.StockData.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Extensions;
@@ -64,6 +65,10 @@ namespace MarketOps
         private void button1_Click(object sender, EventArgs e)
         {
             StockStat stat = new StatBB();
+
+            //FormEditStockStatParams frm = new FormEditStockStatParams();
+            //if (!frm.Execute(stat.StatParams)) return;
+
             stat.Calculate(pnlPV.CurrentData.Prices);
             pnlPV.AddStat(stat);
             pnlPV.RefreshData();

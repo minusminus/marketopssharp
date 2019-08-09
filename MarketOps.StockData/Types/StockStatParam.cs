@@ -7,7 +7,7 @@ namespace MarketOps.StockData.Types
     /// </summary>
     public class StockStatParam
     {
-        public string Name;
-        public object Value;
+        public string Name { get; set; }
+        public object Value { get; set; }
     }
 }

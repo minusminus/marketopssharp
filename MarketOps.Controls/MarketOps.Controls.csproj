@@ -46,6 +46,12 @@
     <Compile Include="ChartYViewRangeCalculator.cs" />
     <Compile Include="ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
+    <Compile Include="FormEditStockStatParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEditStockStatParams.Designer.cs">
+      <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectDataRange.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +86,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FormEditStockStatParams.resx">
+      <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSelectDataRange.resx">
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </EmbeddedResource>

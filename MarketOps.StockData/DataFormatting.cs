@@ -9,7 +9,7 @@ namespace MarketOps.StockData
     /// </summary>
     public class DataFormatting
     {
-        private static readonly Dictionary<StockType, string> _priceValueFormats = new Dictionary<StockType, string>()
+        private static readonly Dictionary<StockType, string> PriceValueFormats = new Dictionary<StockType, string>()
             {
                 { StockType.Stock, "F4" },
                 { StockType.Index, "F4" },
@@ -27,7 +27,7 @@ namespace MarketOps.StockData
         /// <returns></returns>
         public static string FormatPrice(StockType stockType, double value)
         {
-            return value.ToString(_priceValueFormats[stockType]);
+            return value.ToString(PriceValueFormats[stockType]);
         }
 
         public static string FormatStatValue(float value)
@@ -35,7 +35,7 @@ namespace MarketOps.StockData
             return value.ToString("F2");
         }
 
-        private static readonly Dictionary<StockDataRange, string> _dataRangeFormatStrings = new Dictionary<StockDataRange, string>()
+        private static readonly Dictionary<StockDataRange, string> DataRangeFormatStrings = new Dictionary<StockDataRange, string>()
             {
                 { StockDataRange.Undefined, "yyyy-MM-dd" },
                 { StockDataRange.Day, "yyyy-MM-dd" },
@@ -52,7 +52,7 @@ namespace MarketOps.StockData
         /// <returns></returns>
         public static string DataRangeFormatString(StockDataRange dataRange)
         {
-            return _dataRangeFormatStrings[dataRange];
+            return DataRangeFormatStrings[dataRange];
         }
 
         /// <summary>

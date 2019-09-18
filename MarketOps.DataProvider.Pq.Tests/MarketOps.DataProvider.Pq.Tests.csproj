@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTableSelectorTests.cs" />
+    <Compile Include="PgDataPumpProviderTests.cs" />
     <Compile Include="PgStockDataProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,42 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
-using Npgsql;
 
 namespace MarketOps.DataProvider.Pg
 {
     /// <summary>
-    /// stock prices data provider for AT database on postgres
+    /// stock prices database provider for AT database on postgres
     /// </summary>
-    public class PgStockDataProvider : IStockDataProvider
+    public class PgStockDataProvider : PgBaseProvider, IStockDataProvider
     {
         private readonly DataTableSelector _tblSelector = new DataTableSelector();
-
-        private NpgsqlConnection OpenConnection()
-        {
-            NpgsqlConnection res = new NpgsqlConnection(PgDBConnectionString.ConnectionString);
-            res.Open();
-            return res;
-        }
-
-        private void ProcessQuery(string qry, Action<NpgsqlDataReader> rowsProcessor)
-        {
-            using (NpgsqlConnection conn = OpenConnection())
-            using (NpgsqlCommand cmd = new NpgsqlCommand(qry, conn))
-            using (NpgsqlDataReader reader = cmd.ExecuteReader())
-                rowsProcessor(reader);
-        }
 
         public StockDefinition GetStockDefinition(int stockID)
         {
             StockDefinition res = new StockDefinition();
 
             string qry = $"select * from at_spolki where id={stockID}";
-            ProcessQuery(qry, (reader) =>
+            ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows)
                     throw new Exception($"No data for stock id={stockID}");
@@ -51,7 +31,7 @@ namespace MarketOps.DataProvider.Pg
             StockDefinition res = new StockDefinition();
 
             string qry = $"select * from at_spolki where nazwaspolki='{stockName.ToUpper()}'";
-            ProcessQuery(qry, (reader) =>
+            ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows)
                     throw new Exception($"No data for stock name={stockName}");
@@ -66,7 +46,7 @@ namespace MarketOps.DataProvider.Pg
             PricesTemporalData tmp = new PricesTemporalData();
 
             string qry = $"select open, high, low, close, volume, ts from {_tblSelector.GetTableName(stockDef.Type, dataRange, intradayInterval)} where fk_id_spolki={stockDef.ID} and ts >= {tsFrom.ToTimestampQueryValue()} and ts <= {tsTo.ToTimestampQueryValue()} order by ts";
-            ProcessQuery(qry, (reader) =>
+            ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows) return;
                 tmp.AddAllRecords(reader);

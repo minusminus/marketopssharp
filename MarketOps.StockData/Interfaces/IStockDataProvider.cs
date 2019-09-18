@@ -4,7 +4,7 @@ using MarketOps.StockData.Types;
 namespace MarketOps.StockData.Interfaces
 {
     /// <summary>
-    /// Interface for external source data provider
+    /// Interface for stock data database provider
     /// </summary>
     public interface IStockDataProvider
     {

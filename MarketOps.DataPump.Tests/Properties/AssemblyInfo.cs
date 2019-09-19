@@ -5,15 +5,14 @@ using System.Runtime.InteropServices;
 // Ogólne informacje o zestawie są kontrolowane poprzez następujący 
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
-[assembly: AssemblyTitle("MarketOps.DataPump")]
+[assembly: AssemblyTitle("MarketOps.DataPump.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MarketOps.DataPump")]
+[assembly: AssemblyProduct("MarketOps.DataPump.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("MarketOps.DataPump.Tests")]
 
 // Ustawienie elementu ComVisible na wartość false sprawia, że typy w tym zestawie są niewidoczne
 // dla składników COM. Jeśli potrzebny jest dostęp do typu w tym zestawie z
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Następujący identyfikator GUID jest identyfikatorem biblioteki typów w przypadku udostępnienia tego projektu w modelu COM
-[assembly: Guid("f91f2b3e-be20-4500-ac9d-7fb3dd9464e4")]
+[assembly: Guid("7ab2e1b5-c7c0-4b65-a940-5a7ebc8da2f2")]
 
 // Informacje o wersji zestawu zawierają następujące cztery wartości:
 //

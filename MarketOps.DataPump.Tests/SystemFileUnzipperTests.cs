@@ -14,14 +14,6 @@ namespace MarketOps.DataPump.Tests
         private string _zipDir;
         private string _testZipPath;
 
-        private void ClearZipDir(bool recreateDir)
-        {
-            if (Directory.Exists(_zipDir))
-                Directory.Delete(_zipDir, true);
-            if (recreateDir)
-                Directory.CreateDirectory(_zipDir);
-        }
-
         [SetUp]
         public void SetUp()
         {
@@ -29,13 +21,13 @@ namespace MarketOps.DataPump.Tests
             _zipDir = Path.Combine(_baseDir, "SystemFileUnzipperTests");
             _testZipPath = Path.Combine(_baseDir, "testzip.zip");
 
-            ClearZipDir(true);
+            DirectoryUtils.ClearDir(_zipDir, true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            ClearZipDir(false);
+            DirectoryUtils.ClearDir(_zipDir, false);
         }
 
         [Test]

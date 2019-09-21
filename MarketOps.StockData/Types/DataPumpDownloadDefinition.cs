@@ -9,6 +9,7 @@ namespace MarketOps.StockData.Types
     {
         public StockType Type;
         public string PathDaily;
+        public string FileNameDaily;
         public string PathIntra;
     }
 }

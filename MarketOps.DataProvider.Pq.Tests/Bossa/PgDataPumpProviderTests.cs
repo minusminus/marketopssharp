@@ -1,10 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 using Shouldly;
-using MarketOps.DataProvider.Pg;
+using MarketOps.DataProvider.Pg.Bossa;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.DataProvider.Pq.Tests
+namespace MarketOps.DataProvider.Pq.Tests.Bossa
 {
     [TestFixture]
     public class PgDataPumpProviderTests

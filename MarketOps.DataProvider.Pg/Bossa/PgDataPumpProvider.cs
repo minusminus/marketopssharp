@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.DataProvider.Pg
+namespace MarketOps.DataProvider.Pg.Bossa
 {
     /// <summary>
     /// data pump database provider for AT database on postgres

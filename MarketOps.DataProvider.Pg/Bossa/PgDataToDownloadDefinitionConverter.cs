@@ -2,7 +2,7 @@
 using MarketOps.StockData.Types;
 using Npgsql;
 
-namespace MarketOps.DataProvider.Pg
+namespace MarketOps.DataProvider.Pg.Bossa
 {
     /// <summary>
     /// converts data from postgres db reader to DataPumpDownloadDefinition object
@@ -20,6 +20,7 @@ namespace MarketOps.DataProvider.Pg
         {
             data.Type = (StockType)reader.GetFieldValue<int>(reader.GetOrdinal("typ"));
             data.PathDaily = GetStringOrEmpty(reader, "path_dzienne");
+            data.FileNameDaily = GetStringOrEmpty(reader, "file_dzienne");
             data.PathIntra = GetStringOrEmpty(reader, "path_intra");
         }
     }

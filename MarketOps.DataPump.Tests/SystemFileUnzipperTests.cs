@@ -19,7 +19,7 @@ namespace MarketOps.DataPump.Tests
         {
             _baseDir = Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
             _zipDir = Path.Combine(_baseDir, "SystemFileUnzipperTests");
-            _testZipPath = Path.Combine(_baseDir, "testzip.zip");
+            _testZipPath = Path.Combine(_baseDir, "TestFiles", "testzip.zip");
 
             DirectoryUtils.ClearDir(_zipDir, true);
         }

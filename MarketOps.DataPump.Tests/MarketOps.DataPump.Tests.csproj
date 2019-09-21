@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bossa\DownloadDirectoriesTests.cs" />
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemFileUnzipperTests.cs" />
@@ -60,10 +61,14 @@
       <Project>{f91f2b3e-be20-4500-ac9d-7fb3dd9464e4}</Project>
       <Name>MarketOps.DataPump</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
+      <Name>MarketOps.StockData</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="testzip.zip">
+    <None Include="TestFiles\testzip.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

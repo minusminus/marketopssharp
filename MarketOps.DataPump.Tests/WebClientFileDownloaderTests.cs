@@ -10,21 +10,21 @@ namespace MarketOps.DataPump.Tests
     {
         private readonly WebClientFileDownloader TestObj = new WebClientFileDownloader();
 
-        private readonly string DownloadPath = Path.Combine(Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath), "WebClientFileDownloaderTests");
-        private readonly string DownloadUrl = @"https://info.bossa.pl/pub/metastock/mstock/mstall.lst";
+        private readonly string _downloadPath = Path.Combine(Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath), "WebClientFileDownloaderTests");
+        private const string DownloadUrl = @"https://info.bossa.pl/pub/metastock/mstock/mstall.lst";
         private string _downloadFileName;
 
         [SetUp]
         public void SetUp()
         {
-            _downloadFileName = Path.Combine(DownloadPath, "mstall.lst");
-            DirectoryUtils.ClearDir(DownloadPath, true);
+            _downloadFileName = Path.Combine(_downloadPath, "mstall.lst");
+            DirectoryUtils.ClearDir(_downloadPath, true);
         }
 
         [TearDown]
         public void TearDown()
         {
-            DirectoryUtils.ClearDir(DownloadPath, false);
+            DirectoryUtils.ClearDir(_downloadPath, false);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace MarketOps.DataPump.Tests
         [Test]
         public void Download_NotExistingDownloadDir__Throws()
         {
-            Should.Throw<Exception>(() => TestObj.Download(DownloadUrl, Path.Combine(Path.Combine(DownloadPath, "notexistingdir"), "mstall.lst")));
+            Should.Throw<Exception>(() => TestObj.Download(DownloadUrl, Path.Combine(Path.Combine(_downloadPath, "notexistingdir"), "mstall.lst")));
         }
     }
 }

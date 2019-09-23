@@ -8,8 +8,8 @@ namespace MarketOps.DataPump.Bossa
     internal enum DownloadFileStage
     {
         Undefined,
-        ToDownload,
-        ToUnzip,
+        Download,
+        Unzip,
         Done
     }
 }

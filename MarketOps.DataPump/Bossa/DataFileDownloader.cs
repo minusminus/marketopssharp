@@ -8,14 +8,14 @@ namespace MarketOps.DataPump.Bossa
     /// </summary>
     internal class DataFileDownloader : IDataFileDownloader
     {
-        private readonly IFileDownloader _fileDownloader;
-        private readonly IFileUnzipper _fileUnzipper;
+        private readonly DownloadPipe _downloadPipe;
+        private readonly DownloadFilesQueue _downloadFilesQueue;
         private readonly DownloadDirectories _downloadDirectories;
 
-        public DataFileDownloader(IFileDownloader fileDownloader, IFileUnzipper fileUnzipper, DownloadDirectories downloadDirectories)
+        public DataFileDownloader(DownloadPipe downloadPipe, DownloadFilesQueue downloadFilesQueue, DownloadDirectories downloadDirectories)
         {
-            _fileDownloader = fileDownloader;
-            _fileUnzipper = fileUnzipper;
+            _downloadPipe = downloadPipe;
+            _downloadFilesQueue = downloadFilesQueue;
             _downloadDirectories = downloadDirectories;
         }
     }

@@ -4,6 +4,7 @@ using Shouldly;
 using System.IO;
 using MarketOps.DataPump.Bossa;
 using MarketOps.StockData.Types;
+using MarketOps.DataPump.Types;
 
 namespace MarketOps.DataPump.Tests.Bossa
 {
@@ -30,14 +31,14 @@ namespace MarketOps.DataPump.Tests.Bossa
         [Test]
         public void PreparePath_Std__PreparesPath()
         {
-            TestObj.PreparePath(StockType.Index, false);
+            TestObj.PreparePath(StockType.Index, DataPumpDownloadRange.Daily);
             Directory.Exists(Path.Combine(_rootPath, StockType.Index.ToString())).ShouldBeTrue();
         }
 
         [Test]
         public void PreparePath_Intra__PreparesPath()
         {
-            TestObj.PreparePath(StockType.Index, true);
+            TestObj.PreparePath(StockType.Index, DataPumpDownloadRange.Ticks);
             Directory.Exists(Path.Combine(_rootPath, StockType.Index.ToString() + "_intra")).ShouldBeTrue();
         }
 

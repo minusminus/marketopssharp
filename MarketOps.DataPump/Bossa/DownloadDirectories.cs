@@ -1,6 +1,7 @@
 ﻿using System;
 using MarketOps.StockData.Types;
 using System.IO;
+using MarketOps.DataPump.Types;
 
 namespace MarketOps.DataPump.Bossa
 {
@@ -16,9 +17,10 @@ namespace MarketOps.DataPump.Bossa
             _rootPath = rootPath;
         }
 
-        public string PreparePath(StockType stockType, bool intraDay)
+        public string PreparePath(StockType stockType, DataPumpDownloadRange downloadRange)
         {
-            string path = Path.Combine(_rootPath, stockType.ToString() + (intraDay ? "_intra" : ""));
+            string path = Path.Combine(_rootPath,
+                stockType.ToString() + (downloadRange == DataPumpDownloadRange.Ticks ? "_intra" : ""));
             Directory.CreateDirectory(path);
             return path;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using MarketOps.DataPump.Types;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.DataPump
@@ -8,5 +9,7 @@ namespace MarketOps.DataPump
     /// </summary>
     internal interface IDataFileDownloader
     {
+        string InitializeDownload(StockDefinition stockDefinition, DataPumpDownloadRange downloadRange);
+        void WaitForDownload(string downloadFilePath);
     }
 }

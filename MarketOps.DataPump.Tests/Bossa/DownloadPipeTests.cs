@@ -18,6 +18,7 @@ namespace MarketOps.DataPump.Tests.Bossa
 
         private const string DL1 = @"https://bossa.pl/pub/metastock/mstock/mstall.lst";
         private readonly string DestPath = Path.Combine(Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath), "DownloadPipeTests", "test.zip");
+        private readonly string UnzipPath = Path.Combine(Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath), "DownloadPipeTests", "test");
 
         [SetUp]
         public void SetUp()
@@ -34,10 +35,10 @@ namespace MarketOps.DataPump.Tests.Bossa
         [Test]
         public void Process__ProcessesFile()
         {
-            TestObj.Process(DL1, DestPath);
+            TestObj.Process(DL1, DestPath, UnzipPath);
             _downloadFilesQueue.GetStage(DL1).ShouldBe(DownloadFileStage.Done);
             _fileDownloader.Received().Download(DL1, DestPath);
-            _fileUnzipper.Received().Unzip(DestPath, Path.GetDirectoryName(DestPath));
+            _fileUnzipper.Received().Unzip(DestPath, UnzipPath);
         }
     }
 }

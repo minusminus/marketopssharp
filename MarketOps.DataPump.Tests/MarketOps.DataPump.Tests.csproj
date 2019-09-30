@@ -65,8 +65,10 @@
   <ItemGroup>
     <Compile Include="Bossa\DataFileDownloaderTests.cs" />
     <Compile Include="Bossa\DownloadDirectoriesTests.cs" />
+    <Compile Include="Bossa\DownloadFilePathPreparatorTests.cs" />
     <Compile Include="Bossa\DownloadFilesQueueTests.cs" />
     <Compile Include="Bossa\DownloadPipeTests.cs" />
+    <Compile Include="Bossa\DownloadUnzipPathPreparatorTests.cs" />
     <Compile Include="Bossa\DownloadUrlPreparatorTests.cs" />
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

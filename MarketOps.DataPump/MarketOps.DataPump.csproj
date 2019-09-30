@@ -49,8 +49,10 @@
     <Compile Include="Bossa\DataFileDownloader.cs" />
     <Compile Include="Bossa\DataPump.cs" />
     <Compile Include="Bossa\DownloadDirectories.cs" />
+    <Compile Include="Bossa\DownloadFilePathPreparator.cs" />
     <Compile Include="Bossa\DownloadFileStage.cs" />
     <Compile Include="Bossa\DownloadPipe.cs" />
+    <Compile Include="Bossa\DownloadUnzipPathPreparator.cs" />
     <Compile Include="Bossa\DownloadUrlPrepator.cs" />
     <Compile Include="DataPumpFactory.cs" />
     <Compile Include="Bossa\DownloadFilesQueue.cs" />

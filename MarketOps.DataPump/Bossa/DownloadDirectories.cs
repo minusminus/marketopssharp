@@ -1,7 +1,5 @@
 ﻿using System;
-using MarketOps.StockData.Types;
 using System.IO;
-using MarketOps.DataPump.Types;
 
 namespace MarketOps.DataPump.Bossa
 {
@@ -17,10 +15,14 @@ namespace MarketOps.DataPump.Bossa
             _rootPath = rootPath;
         }
 
-        public string PreparePath(StockType stockType, DataPumpDownloadRange downloadRange)
+        public string GetDownloadPath(string downloadFileName)
         {
-            string path = Path.Combine(_rootPath,
-                stockType.ToString() + (downloadRange == DataPumpDownloadRange.Ticks ? "_intra" : ""));
+            return Path.Combine(_rootPath, downloadFileName);
+        }
+
+        public string GetUnzipPath(string downloadFileName)
+        {
+            string path = Path.Combine(_rootPath, Path.GetFileNameWithoutExtension(downloadFileName));
             Directory.CreateDirectory(path);
             return path;
         }

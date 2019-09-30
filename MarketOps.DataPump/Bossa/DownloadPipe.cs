@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace MarketOps.DataPump.Bossa
 {
@@ -20,12 +19,12 @@ namespace MarketOps.DataPump.Bossa
             _downloadFilesQueue = downloadFilesQueue;
         }
 
-        public void Process(string downloadUrl, string destFilePath)
+        public void Process(string downloadUrl, string destFilePath, string unzipPath)
         {
             _downloadFilesQueue.SetStage(downloadUrl, DownloadFileStage.Download);
             Download(downloadUrl, destFilePath);
             _downloadFilesQueue.SetStage(downloadUrl, DownloadFileStage.Unzip);
-            Unzip(destFilePath);
+            Unzip(destFilePath, unzipPath);
             _downloadFilesQueue.SetStage(downloadUrl, DownloadFileStage.Done);
         }
 
@@ -34,9 +33,9 @@ namespace MarketOps.DataPump.Bossa
             _fileDownloader.Download(downloadUrl, destFilePath);
         }
 
-        private void Unzip(string zipFilePath)
+        private void Unzip(string zipFilePath, string unzipPath)
         {
-            _fileUnzipper.Unzip(zipFilePath, Path.GetDirectoryName(zipFilePath));
+            _fileUnzipper.Unzip(zipFilePath, unzipPath);
         }
     }
 }

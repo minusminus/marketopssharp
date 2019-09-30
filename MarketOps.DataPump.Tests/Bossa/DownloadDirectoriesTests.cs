@@ -29,17 +29,19 @@ namespace MarketOps.DataPump.Tests.Bossa
         }
 
         [Test]
-        public void PreparePath_Std__PreparesPath()
+        public void GetDownloadPath__ReturnsPathInRoot()
         {
-            TestObj.PreparePath(StockType.Index, DataPumpDownloadRange.Daily);
-            Directory.Exists(Path.Combine(_rootPath, StockType.Index.ToString())).ShouldBeTrue();
+            const string fileName = "mstall.zip";
+            TestObj.GetDownloadPath(fileName).ShouldBe(Path.Combine(_rootPath, fileName));
         }
 
         [Test]
-        public void PreparePath_Intra__PreparesPath()
+        public void GetUnzipPath__CreatesSubdirectoryInRoot()
         {
-            TestObj.PreparePath(StockType.Index, DataPumpDownloadRange.Ticks);
-            Directory.Exists(Path.Combine(_rootPath, StockType.Index.ToString() + "_intra")).ShouldBeTrue();
+            const string fileName = "mstall.zip";
+            string expectedPath = Path.Combine(_rootPath, "mstall");
+            TestObj.GetUnzipPath(fileName).ShouldBe(expectedPath);
+            Directory.Exists(expectedPath).ShouldBeTrue();
         }
 
         [Test]

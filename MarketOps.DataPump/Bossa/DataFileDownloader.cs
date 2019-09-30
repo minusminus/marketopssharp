@@ -1,6 +1,7 @@
 ﻿using System;
 using MarketOps.DataPump.Types;
 using MarketOps.StockData.Types;
+using System.IO;
 
 namespace MarketOps.DataPump.Bossa
 {
@@ -13,24 +14,27 @@ namespace MarketOps.DataPump.Bossa
     {
         private readonly DownloadPipe _downloadPipe;
         private readonly DownloadFilesQueue _downloadFilesQueue;
-        private readonly DownloadDirectories _downloadDirectories;
         private readonly DownloadUrlPrepator _downloadUrlPrepator;
+        private readonly DownloadFilePathPreparator _downloadFilePathPreparator;
+        private readonly DownloadUnzipPathPreparator _downloadUnzipPathPreparator;
 
-        public DataFileDownloader(DownloadPipe downloadPipe, DownloadFilesQueue downloadFilesQueue, DownloadDirectories downloadDirectories, DownloadUrlPrepator downloadUrlPrepator)
+        public DataFileDownloader(DownloadPipe downloadPipe, DownloadFilesQueue downloadFilesQueue, DownloadUrlPrepator downloadUrlPrepator, DownloadFilePathPreparator downloadFilePathPreparator, DownloadUnzipPathPreparator downloadUnzipPathPreparator)
         {
             _downloadPipe = downloadPipe;
             _downloadFilesQueue = downloadFilesQueue;
-            _downloadDirectories = downloadDirectories;
             _downloadUrlPrepator = downloadUrlPrepator;
+            _downloadFilePathPreparator = downloadFilePathPreparator;
+            _downloadUnzipPathPreparator = downloadUnzipPathPreparator;
         }
 
         public string InitializeDownload(StockDefinition stockDefinition, DataPumpDownloadRange downloadRange)
         {
             string downloadFilePath = GetDownloadFilePath(stockDefinition, downloadRange);
+            string unzipPath = GetUnzipPath(downloadFilePath);
             string downloadUrl = GetDownloadUrl(stockDefinition, downloadRange);
 
             if (!AlreadyDownloaded(downloadUrl))
-                DownloadAndProcess(downloadUrl, downloadFilePath);
+                DownloadAndProcess(downloadUrl, downloadFilePath, unzipPath);
 
             return downloadFilePath;
         }
@@ -42,7 +46,12 @@ namespace MarketOps.DataPump.Bossa
 
         private string GetDownloadFilePath(StockDefinition stockDefinition, DataPumpDownloadRange downloadRange)
         {
-            return _downloadDirectories.PreparePath(stockDefinition.Type, downloadRange);
+            return _downloadFilePathPreparator.Prepare(stockDefinition, downloadRange);
+        }
+
+        private string GetUnzipPath(string downloadFilePath)
+        {
+            return _downloadUnzipPathPreparator.Prepare(downloadFilePath);
         }
 
         private string GetDownloadUrl(StockDefinition stockDefinition, DataPumpDownloadRange downloadRange)
@@ -55,11 +64,11 @@ namespace MarketOps.DataPump.Bossa
             return (_downloadFilesQueue.GetStage(downloadUrl) == DownloadFileStage.Done);
         }
 
-        private void DownloadAndProcess(string downloadUrl, string downloadFilePath)
+        private void DownloadAndProcess(string downloadUrl, string downloadFilePath, string unzipPath)
         {
             _downloadFilesQueue.AddToDownload(downloadUrl);
             _downloadFilesQueue.Next();
-            _downloadPipe.Process(downloadUrl, downloadFilePath);
+            _downloadPipe.Process(downloadUrl, downloadFilePath, unzipPath);
         }
     }
 }

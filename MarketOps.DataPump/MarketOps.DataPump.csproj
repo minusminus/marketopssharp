@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bossa\DailyDataFileLineToStockData.cs" />
     <Compile Include="Bossa\DataFileDownloader.cs" />
     <Compile Include="Bossa\DataPump.cs" />
     <Compile Include="Bossa\DownloadDirectories.cs" />
@@ -59,10 +60,12 @@
     <Compile Include="IDataFileDownloader.cs" />
     <Compile Include="IDataPump.cs" />
     <Compile Include="IFileDownloader.cs" />
+    <Compile Include="IDataFileLineToStockData.cs" />
     <Compile Include="IFileUnzipper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemFileUnzipper.cs" />
     <Compile Include="Types\DataPumpDownloadRange.cs" />
+    <Compile Include="Types\DataPumpStockData.cs" />
     <Compile Include="Types\DataPumpType.cs" />
     <Compile Include="WebClientFileDownloader.cs" />
   </ItemGroup>

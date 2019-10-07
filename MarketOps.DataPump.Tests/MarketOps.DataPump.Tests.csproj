@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bossa\DailyDataFileLineToStockDataTests.cs" />
     <Compile Include="Bossa\DataFileDownloaderTests.cs" />
     <Compile Include="Bossa\DownloadDirectoriesTests.cs" />
     <Compile Include="Bossa\DownloadFilePathPreparatorTests.cs" />

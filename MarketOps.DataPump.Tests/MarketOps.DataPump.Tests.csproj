@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bossa\DataFileTSSearcherTests.cs" />
     <Compile Include="Bossa\DailyDataFileLineToStockDataTests.cs" />
     <Compile Include="Bossa\DataFileDownloaderTests.cs" />
     <Compile Include="Bossa\DownloadDirectoriesTests.cs" />
@@ -90,6 +91,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="TestFiles\testzip.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestFiles\USDPLN.mst">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

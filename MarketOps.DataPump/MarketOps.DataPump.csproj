@@ -46,8 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bossa\DailyDataFileIterator.cs" />
     <Compile Include="Bossa\DailyDataFileLineToStockData.cs" />
     <Compile Include="Bossa\DataFileDownloader.cs" />
+    <Compile Include="Bossa\DataFileTSSearcher.cs" />
     <Compile Include="Bossa\DataPump.cs" />
     <Compile Include="Bossa\DownloadDirectories.cs" />
     <Compile Include="Bossa\DownloadFilePathPreparator.cs" />
@@ -58,6 +60,7 @@
     <Compile Include="DataPumpFactory.cs" />
     <Compile Include="Bossa\DownloadFilesQueue.cs" />
     <Compile Include="IDataFileDownloader.cs" />
+    <Compile Include="IDataFileIterator.cs" />
     <Compile Include="IDataPump.cs" />
     <Compile Include="IFileDownloader.cs" />
     <Compile Include="IDataFileLineToStockData.cs" />

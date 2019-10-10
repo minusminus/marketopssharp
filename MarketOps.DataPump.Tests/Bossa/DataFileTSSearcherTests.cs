@@ -65,9 +65,11 @@ namespace MarketOps.DataPump.Tests.Bossa
         }
 
         [Test]
-        public void Find_TSBelowLowerBound__ReturnsFalse()
+        public void Find_TSBelowLowerBound__SetsToFirstLine()
         {
-            TestObj.Find(new DateTime(1990, 01, 01)).ShouldBeFalse();
+            TestObj.Find(new DateTime(1990, 01, 01)).ShouldBeTrue();
+            _fileReader.EndOfStream.ShouldBeFalse();
+            _fileReader.ReadLine().ShouldBe("USDPLN,19990104,3.4861,3.4862,3.445,3.45,0");
         }
 
         [Test]

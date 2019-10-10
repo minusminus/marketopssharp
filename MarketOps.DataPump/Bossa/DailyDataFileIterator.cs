@@ -25,8 +25,8 @@ namespace MarketOps.DataPump.Bossa
 
         public void Close()
         {
-            _fileReader.Dispose();
-            _file.Dispose();
+            _fileReader?.Dispose();
+            _file?.Dispose();
         }
 
         public bool Eof()

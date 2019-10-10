@@ -5,7 +5,7 @@ using System.Linq;
 namespace MarketOps.DataPump.Bossa
 {
     /// <summary>
-    /// Sets stream on next line with ts greater than specified.
+    /// Sets stream on next line where ts is greater than specified.
     /// </summary>
     internal class DataFileTSSearcher
     {
@@ -22,7 +22,11 @@ namespace MarketOps.DataPump.Bossa
             string firstLine = ReadLine();
             string searchHeader = PrepareSearchHeader(firstLine, ts);
             int x = LineGreaterThanTS(firstLine, searchHeader);
-            if (x < 0) return false;
+            if (x < 0)
+            {
+                ResetStreamToFirstDataLine();
+                return true;
+            }
             if (x == 0) return true;
 
             return FindToEndOfFile(searchHeader);

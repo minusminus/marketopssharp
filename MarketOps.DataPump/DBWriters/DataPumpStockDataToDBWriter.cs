@@ -1,6 +1,6 @@
 ﻿using System;
-using MarketOps.DataPump.Types;
 using MarketOps.StockData.Interfaces;
+using MarketOps.DataPump.Types;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.DataPump.DBWriters

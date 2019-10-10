@@ -60,6 +60,7 @@
     <Compile Include="DataPumpFactory.cs" />
     <Compile Include="Bossa\DownloadFilesQueue.cs" />
     <Compile Include="DBWriters\DataPumpStockDataToDBWriter.cs" />
+    <Compile Include="DBWriters\InsertCommandGenerator.cs" />
     <Compile Include="IDataFileDownloader.cs" />
     <Compile Include="IDataFileIterator.cs" />
     <Compile Include="IDataPump.cs" />

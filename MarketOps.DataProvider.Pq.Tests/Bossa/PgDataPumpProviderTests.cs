@@ -3,13 +3,21 @@ using NUnit.Framework;
 using Shouldly;
 using MarketOps.DataProvider.Pg.Bossa;
 using MarketOps.StockData.Types;
+using MarketOps.DataProvider.Pg;
 
 namespace MarketOps.DataProvider.Pq.Tests.Bossa
 {
     [TestFixture]
     public class PgDataPumpProviderTests
     {
-        private readonly PgDataPumpProvider TestObj = new PgDataPumpProvider();
+        private readonly DataTableSelector dataTableSelector = new DataTableSelector();
+        private PgDataPumpProvider TestObj;// = new PgDataPumpProvider(dataTableSelector);
+
+        [SetUp]
+        public void SetUp()
+        {
+            TestObj = new PgDataPumpProvider(dataTableSelector);
+        }
 
         [Test]
         public void GetAllStockDefinitions__GetsData()

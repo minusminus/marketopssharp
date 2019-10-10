@@ -10,6 +10,13 @@ namespace MarketOps.DataProvider.Pg.Bossa
     /// </summary>
     public class PgDataPumpProvider : PgBaseProvider, IDataPumpProvider
     {
+        private readonly DataTableSelector _dataTableSelector;
+
+        public PgDataPumpProvider(DataTableSelector dataTableSelector)
+        {
+            _dataTableSelector = dataTableSelector;
+        }
+
         public List<StockDefinition> GetAllStockDefinitions()
         {
             List<StockDefinition> res = new List<StockDefinition>();
@@ -44,6 +51,11 @@ namespace MarketOps.DataProvider.Pg.Bossa
                 }
             });
             return res;
+        }
+
+        public string GetTableName(StockType stockType, StockDataRange dataRange, int intradayInterval)
+        {
+            return _dataTableSelector.GetTableName(stockType, dataRange, intradayInterval);
         }
 
         public void ExecuteSQL(string qry)

@@ -75,6 +75,7 @@
     <Compile Include="Bossa\DownloadUrlPreparatorTests.cs" />
     <Compile Include="DBWriter\DataPumpStockDataToDBWriterTests.cs" />
     <Compile Include="DBWriter\InsertCommandGeneratorTests.cs" />
+    <Compile Include="DBWriter\StartTSUpdaterTests.cs" />
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemFileUnzipperTests.cs" />

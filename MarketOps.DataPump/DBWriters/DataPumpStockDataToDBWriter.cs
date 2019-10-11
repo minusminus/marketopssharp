@@ -11,10 +11,12 @@ namespace MarketOps.DataPump.DBWriters
     internal class DataPumpStockDataToDBWriter : IDataPumpStockDataToDBWriter
     {
         private readonly IDataPumpProvider _dataPumpProvider;
+        private readonly InsertCommandGenerator _commandGenerator;
 
-        public DataPumpStockDataToDBWriter(IDataPumpProvider dataPumpProvider)
+        public DataPumpStockDataToDBWriter(IDataPumpProvider dataPumpProvider, InsertCommandGenerator commandGenerator)
         {
             _dataPumpProvider = dataPumpProvider;
+            _commandGenerator = commandGenerator;
         }
 
         public void StartSession()
@@ -27,7 +29,7 @@ namespace MarketOps.DataPump.DBWriters
 
         public void WriteDaily(DataPumpStockData data, StockDefinition stockDefinition)
         {
-            throw new NotImplementedException();
+            _dataPumpProvider.ExecuteSQL(_commandGenerator.InsertDaily(data, stockDefinition));
         }
     }
 }

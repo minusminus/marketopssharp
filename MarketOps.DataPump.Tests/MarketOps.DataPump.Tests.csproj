@@ -73,6 +73,7 @@
     <Compile Include="Bossa\DownloadPipeTests.cs" />
     <Compile Include="Bossa\DownloadUnzipPathPreparatorTests.cs" />
     <Compile Include="Bossa\DownloadUrlPreparatorTests.cs" />
+    <Compile Include="DBWriter\DataPumpStockDataToDBWriterTests.cs" />
     <Compile Include="DBWriter\InsertCommandGeneratorTests.cs" />
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

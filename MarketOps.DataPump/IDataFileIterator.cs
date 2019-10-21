@@ -13,6 +13,7 @@ namespace MarketOps.DataPump
         void Close();
         bool Eof();
         string ReadLine();
+        string PreviousLine();
         bool SetOnLineAfterTS(DateTime ts);
     }
 }

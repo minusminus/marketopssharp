@@ -32,16 +32,16 @@ namespace MarketOps.DataPump.Tests.DBWriter
         public void StartSession__DoesNothing()
         {
             TestObj.StartSession();
-            _dataPumpProvider.DidNotReceiveWithAnyArgs().ExecuteSQL(Arg.Any<string>());
-            _dataPumpProvider.DidNotReceiveWithAnyArgs().GetTableName(Arg.Any<StockType>(), Arg.Any<StockDataRange>(), Arg.Any<int>());
+            _dataPumpProvider.DidNotReceiveWithAnyArgs().ExecuteSQL(Arg.Compat.Any<string>());
+            _dataPumpProvider.DidNotReceiveWithAnyArgs().GetTableName(Arg.Compat.Any<StockType>(), Arg.Compat.Any<StockDataRange>(), Arg.Compat.Any<int>());
         }
 
         [Test]
         public void EndSession__DoesNothing()
         {
             TestObj.EndSession();
-            _dataPumpProvider.DidNotReceiveWithAnyArgs().ExecuteSQL(Arg.Any<string>());
-            _dataPumpProvider.DidNotReceiveWithAnyArgs().GetTableName(Arg.Any<StockType>(), Arg.Any<StockDataRange>(), Arg.Any<int>());
+            _dataPumpProvider.DidNotReceiveWithAnyArgs().ExecuteSQL(Arg.Compat.Any<string>());
+            _dataPumpProvider.DidNotReceiveWithAnyArgs().GetTableName(Arg.Compat.Any<StockType>(), Arg.Compat.Any<StockDataRange>(), Arg.Compat.Any<int>());
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         {
             TestObj.WriteDaily(stockData, stockDefinition);
             _dataPumpProvider.Received().GetTableName(stockDefinition.Type, StockDataRange.Day, 0);
-            _dataPumpProvider.Received().ExecuteSQL(Arg.Any<string>());
+            _dataPumpProvider.Received().ExecuteSQL(Arg.Compat.Any<string>());
         }
     }
 }

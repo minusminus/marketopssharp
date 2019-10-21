@@ -16,20 +16,12 @@ namespace MarketOps.DataPump.Bossa
             _fileReader = fileReader;
         }
 
-        public bool Find(DateTime ts)
+        public bool Find(DateTime ts, out string prevLine)
         {
             ResetStreamToFirstDataLine();
-            string firstLine = ReadLine();
-            string searchHeader = PrepareSearchHeader(firstLine, ts);
-            int x = LineGreaterThanTS(firstLine, searchHeader);
-            if (x < 0)
-            {
-                ResetStreamToFirstDataLine();
-                return true;
-            }
-            if (x == 0) return true;
-
-            return FindToEndOfFile(searchHeader);
+            string searchHeader = PrepareSearchHeader(ReadLine(), ts);
+            ResetStreamToFirstDataLine();
+            return FindToEndOfFile(searchHeader, out prevLine);
         }
 
         private void ResetStreamToBeginning()
@@ -67,13 +59,20 @@ namespace MarketOps.DataPump.Bossa
             return String.CompareOrdinal(search, current);
         }
 
-        private bool FindToEndOfFile(string searchHeader)
+        private bool FindToEndOfFile(string searchHeader, out string prevLine)
         {
-            int linesRead = 1;
+            int linesRead = 0;
+            string currLine = null;
             while (!_fileReader.EndOfStream)
             {
-                int x = LineGreaterThanTS(ReadLine(), searchHeader);
-                if (x == 0) return true;
+                prevLine = currLine;
+                currLine = ReadLine();
+                int x = LineGreaterThanTS(currLine, searchHeader);
+                if (x == 0)
+                {
+                    prevLine = currLine;
+                    return true;
+                }
                 if (x < 0)
                 {
                     ResetStreamToDataLine(linesRead);
@@ -81,6 +80,7 @@ namespace MarketOps.DataPump.Bossa
                 }
                 linesRead++;
             }
+            prevLine = null;
             return false;
         }
     }

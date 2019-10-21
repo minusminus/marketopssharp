@@ -13,6 +13,6 @@ namespace MarketOps.DataPump
     /// </summary>
     internal interface IDataFileLineToStockData
     {
-        void Map(string dataFileLine, DataPumpStockData stockData);
+        void Map(string currFileLine, string prevFileLine, DataPumpStockData stockData);
     }
 }

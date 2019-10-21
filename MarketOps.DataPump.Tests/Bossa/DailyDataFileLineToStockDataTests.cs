@@ -13,15 +13,32 @@ namespace MarketOps.DataPump.Tests.Bossa
         private readonly DataPumpStockData _mappedData = new DataPumpStockData();
 
         [Test]
-        public void Map_CorrectData__MapsCorrectly()
+        public void Map_CorrectData_NoPrevLine__MapsCorrectly()
         {
             const string line = "KGHM,20191004,74.0200,74.9400,73.6200,74.9000,439632";
 
-            TestObj.Map(line, _mappedData);
+            TestObj.Map(line, null, _mappedData);
             _mappedData.O.ShouldBe("74.0200");
             _mappedData.H.ShouldBe("74.9400");
             _mappedData.L.ShouldBe("73.6200");
             _mappedData.C.ShouldBe("74.9000");
+            _mappedData.RefCourse.ShouldBe("0");
+            _mappedData.V.ShouldBe("439632");
+            _mappedData.TS.ShouldBe(new DateTime(2019, 10, 04));
+        }
+
+        [Test]
+        public void Map_CorrectData_WithPrevLine__MapsCorrectly()
+        {
+            const string line = "KGHM,20191004,74.0200,74.9400,73.6200,74.9000,439632";
+            const string prevLine = "KGHM,20191003,74.0200,74.9400,73.6200,75.8000,439632";
+
+            TestObj.Map(line, prevLine, _mappedData);
+            _mappedData.O.ShouldBe("74.0200");
+            _mappedData.H.ShouldBe("74.9400");
+            _mappedData.L.ShouldBe("73.6200");
+            _mappedData.C.ShouldBe("74.9000");
+            _mappedData.RefCourse.ShouldBe("75.8000");
             _mappedData.V.ShouldBe("439632");
             _mappedData.TS.ShouldBe(new DateTime(2019, 10, 04));
         }
@@ -30,35 +47,35 @@ namespace MarketOps.DataPump.Tests.Bossa
         public void Map_NotEnoughColumns__Throws()
         {
             const string line = "KGHM,20191004,74.0200,74.9400";
-            Should.Throw<Exception>(() => TestObj.Map(line, _mappedData));
+            Should.Throw<Exception>(() => TestObj.Map(line, null, _mappedData));
         }
 
         [Test]
         public void Map_TooMuchColumns__Throws()
         {
             const string line = "KGHM,20191004,74.0200,74.9400,73.6200,74.9000,439632,12314";
-            Should.Throw<Exception>(() => TestObj.Map(line, _mappedData));
+            Should.Throw<Exception>(() => TestObj.Map(line, null, _mappedData));
         }
 
         [Test]
         public void Map_IncorrectFloatSeparator__Throws()
         {
             const string line = "KGHM,20191004,74_0200,74.9400,73.6200,74.9000,439632";
-            Should.Throw<Exception>(() => TestObj.Map(line, _mappedData));
+            Should.Throw<Exception>(() => TestObj.Map(line, null, _mappedData));
         }
 
         [Test]
         public void Map_NonNumericValue__Throws()
         {
             const string line = "KGHM,20191004,abcdefgh,74.9400,73.6200,74.9000,439632";
-            Should.Throw<Exception>(() => TestObj.Map(line, _mappedData));
+            Should.Throw<Exception>(() => TestObj.Map(line, null, _mappedData));
         }
 
         [Test]
         public void Map_IncorrectDateValue__Throws()
         {
             const string line = "KGHM,201910041,74.0200,74.9400,73.6200,74.9000,439632";
-            Should.Throw<Exception>(() => TestObj.Map(line, _mappedData));
+            Should.Throw<Exception>(() => TestObj.Map(line, null, _mappedData));
         }
     }
 }

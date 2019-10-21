@@ -16,7 +16,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
 
         private IDataPumpProvider _dataPumpProvider;
         private readonly StockDefinition stockDefinition = new StockDefinition() { ID = 1, Type = StockType.Stock };
-        private readonly DataPumpStockData stockData = new DataPumpStockData() { O = "1.1", H = "5,5", L = "0.4", C = "4.3", V = "123456", TS = new DateTime(2019, 01, 30) };
+        private readonly DataPumpStockData stockData = new DataPumpStockData() { O = "1.1", H = "5,5", L = "0.4", C = "4.3", RefCourse = "7.8", V = "123456", TS = new DateTime(2019, 01, 30) };
 
         [SetUp]
         public void SetUp()
@@ -29,7 +29,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         [Test]
         public void InsertDaily__ReturnsQuery()
         {
-            const string expectedQuery = "insert into test_dzienne(fk_id_spolki, ts, open, high, low, close, volume) values (1, to_date('2019-01-30', 'YYYY-MM-DD'), 1.1, 5.5, 0.4, 4.3, 123456)";
+            const string expectedQuery = "insert into test_dzienne(fk_id_spolki, ts, open, high, low, close, refcourse, volume) values (1, to_date('2019-01-30', 'YYYY-MM-DD'), 1.1, 5.5, 0.4, 4.3, 7.8, 123456)";
             TestObj.InsertDaily(stockData, stockDefinition).ShouldBe(expectedQuery);
         }
     }

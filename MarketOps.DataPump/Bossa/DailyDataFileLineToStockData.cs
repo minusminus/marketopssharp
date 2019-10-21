@@ -12,37 +12,40 @@ namespace MarketOps.DataPump.Bossa
     /// </summary>
     internal class DailyDataFileLineToStockData : IDataFileLineToStockData
     {
-        public void Map(string dataFileLine, DataPumpStockData stockData)
+        public void Map(string currFileLine, string prevFileLine, DataPumpStockData stockData)
         {
-            var cols = SplitLineToCols(dataFileLine);
-            VerifyLineData(cols);
-            FillStockData(stockData, cols);
+            var currData = SplitLineToCols(currFileLine);
+            var prevData = SplitLineToCols(prevFileLine);
+            VerifyLineData(currData);
+            FillStockData(stockData, currData, prevData);
         }
 
         private string[] SplitLineToCols(string dataFileLine)
         {
+            if (String.IsNullOrEmpty(dataFileLine)) return null;
             return dataFileLine.Split(',');
         }
 
-        private void VerifyLineData(string[] cols)
+        private void VerifyLineData(string[] lineData)
         {
-            if (cols.Length != 7) throw new Exception($"Incorrect line length: {cols.Length} columns");
+            if (lineData.Length != 7) throw new Exception($"Incorrect line length: {lineData.Length} columns");
             for (int i = 1; i <= 6; i++)
             {
                 Int64 t;
-                if (!Int64.TryParse(cols[i].Replace(".", ""), out t))
-                    throw new Exception($"Incorrect value format in column {i}: {cols[i]}");
+                if (!Int64.TryParse(lineData[i].Replace(".", ""), out t))
+                    throw new Exception($"Incorrect value format in column {i}: {lineData[i]}");
             }
         }
 
-        private void FillStockData(DataPumpStockData stockData, string[] cols)
+        private void FillStockData(DataPumpStockData stockData, string[] currLineData, string[] prevLineData)
         {
-            stockData.O = cols[2];
-            stockData.H = cols[3];
-            stockData.L = cols[4];
-            stockData.C = cols[5];
-            stockData.V = cols[6];
-            stockData.TS = DateTime.ParseExact(cols[1], "yyyyMMdd", null);
+            stockData.O = currLineData[2];
+            stockData.H = currLineData[3];
+            stockData.L = currLineData[4];
+            stockData.C = currLineData[5];
+            stockData.V = currLineData[6];
+            stockData.RefCourse = prevLineData != null ? prevLineData[5] : "0";
+            stockData.TS = DateTime.ParseExact(currLineData[1], "yyyyMMdd", null);
         }
     }
 }

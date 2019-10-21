@@ -28,7 +28,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         {
             TestObj.Update(StockType.Stock);
             _dataPumpProvider.Received().GetTableName(StockType.Stock, StockDataRange.Day, 0);
-            _dataPumpProvider.Received().ExecuteSQL(Arg.Any<string>());
+            _dataPumpProvider.Received().ExecuteSQL(Arg.Compat.Any<string>());
         }
     }
 }

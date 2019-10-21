@@ -11,9 +11,17 @@ namespace MarketOps.DataPump.Bossa
         private FileStream _file;
         private StreamReader _fileReader;
 
+        private string _previousLine, _currentLine;
+
         private void SkipHeader()
         {
             _fileReader.ReadLine();
+        }
+
+        private void InitLineVars()
+        {
+            _previousLine = null;
+            _currentLine = null;
         }
 
         public void Open(string fileName)
@@ -21,12 +29,14 @@ namespace MarketOps.DataPump.Bossa
             _file = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             _fileReader = new StreamReader(_file);
             SkipHeader();
+            InitLineVars();
         }
 
         public void Close()
         {
             _fileReader?.Dispose();
             _file?.Dispose();
+            InitLineVars();
         }
 
         public bool Eof()
@@ -36,12 +46,19 @@ namespace MarketOps.DataPump.Bossa
 
         public string ReadLine()
         {
-            return _fileReader.ReadLine();
+            _previousLine = _currentLine;
+            _currentLine = _fileReader.ReadLine();
+            return _currentLine;
+        }
+
+        public string PreviousLine()
+        {
+            return _previousLine;
         }
 
         public bool SetOnLineAfterTS(DateTime ts)
         {
-            return (new DataFileTSSearcher(_fileReader)).Find(ts);
+            return (new DataFileTSSearcher(_fileReader)).Find(ts, out _previousLine);
         }
     }
 }

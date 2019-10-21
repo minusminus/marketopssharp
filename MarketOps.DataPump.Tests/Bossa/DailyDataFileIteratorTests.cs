@@ -46,6 +46,7 @@ namespace MarketOps.DataPump.Tests.Bossa
         {
             TestObj.Open(_testFilePath);
             CheckTestFileOpened().ShouldBeTrue();
+            TestObj.PreviousLine().ShouldBeNullOrEmpty();
         }
 
         [Test]
@@ -56,6 +57,7 @@ namespace MarketOps.DataPump.Tests.Bossa
             CheckTestFileOpened().ShouldBeTrue();
             obj.Close();
             CheckTestFileOpened().ShouldBeFalse();
+            TestObj.PreviousLine().ShouldBeNullOrEmpty();
         }
 
         [Test]
@@ -89,6 +91,26 @@ namespace MarketOps.DataPump.Tests.Bossa
         {
             ReadLine__ReturnsLine();
             TestObj.ReadLine().ShouldBeNull();
+        }
+
+        [Test]
+        public void PreviousLine__ReturnsPreviousLine()
+        {
+            string prevLine = null;
+            TestObj.Open(_testFilePath);
+            while (!TestObj.Eof())
+            {
+                string currLine = TestObj.ReadLine();
+                TestObj.PreviousLine().ShouldBe(prevLine);
+                prevLine = currLine;
+            }
+        }
+
+        [Test]
+        public void PreviousLine_AfterLastLine__ReturnsOneBeforeLastLine()
+        {
+            ReadLine__ReturnsLine();
+            TestObj.PreviousLine().ShouldBe("USDPLN,20191004,3.9478,3.9499,3.9299,3.9299,0");
         }
 
         [Test]

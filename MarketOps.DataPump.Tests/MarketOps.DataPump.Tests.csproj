@@ -67,6 +67,7 @@
     <Compile Include="Bossa\DataFileTSSearcherTests.cs" />
     <Compile Include="Bossa\DailyDataFileLineToStockDataTests.cs" />
     <Compile Include="Bossa\DataFileDownloaderTests.cs" />
+    <Compile Include="Bossa\DataPumpWithoutDBWritesTests.cs" />
     <Compile Include="Bossa\DownloadDirectoriesTests.cs" />
     <Compile Include="Bossa\DownloadFilePathPreparatorTests.cs" />
     <Compile Include="Bossa\DownloadFilesQueueTests.cs" />

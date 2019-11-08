@@ -58,6 +58,20 @@ namespace MarketOps.DataProvider.Pg.Bossa
             return _dataTableSelector.GetTableName(stockType, dataRange, intradayInterval);
         }
 
+        public DateTime GetMaxTS(StockDefinition stockDefinition, StockDataRange dataRange, int intradayInterval)
+        {
+            DateTime res = DateTime.MinValue;
+
+            string qry = $"select max(ts) from {GetTableName(stockDefinition.Type, dataRange, intradayInterval)} where fk_id_spolki={stockDefinition.ID}";
+            ProcessSelectQuery(qry, (reader) =>
+            {
+                if (!reader.HasRows) return;
+                reader.Read();
+                res = reader.GetFieldValue<DateTime>(0);
+            });
+            return res;
+        }
+
         public void ExecuteSQL(string qry)
         {
             ExecuteQuery(qry);

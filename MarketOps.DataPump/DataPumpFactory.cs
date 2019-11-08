@@ -10,7 +10,7 @@ namespace MarketOps.DataPump
     {
         public static IDataPump Get(DataPumpType dataPumpType)
         {
-            return new Bossa.DataPump();
+            return new Bossa.DataPump(null, null, null, null, null, null);
         }
     }
 }

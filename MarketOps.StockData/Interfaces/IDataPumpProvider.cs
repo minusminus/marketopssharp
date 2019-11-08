@@ -12,6 +12,7 @@ namespace MarketOps.StockData.Interfaces
         List<StockDefinition> GetAllStockDefinitions();
         Dictionary<StockType, DataPumpDownloadDefinition> GetDownloadDefinitions();
         string GetTableName(StockType stockType, StockDataRange dataRange, int intradayInterval);
+        DateTime GetMaxTS(StockDefinition stockDefinition, StockDataRange dataRange, int intradayInterval);
         void ExecuteSQL(string qry);
     }
 }

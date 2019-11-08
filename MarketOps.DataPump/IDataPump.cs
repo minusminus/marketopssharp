@@ -1,4 +1,5 @@
 ﻿using System;
+using MarketOps.StockData.Types;
 
 namespace MarketOps.DataPump
 {
@@ -7,5 +8,7 @@ namespace MarketOps.DataPump
     /// </summary>
     public interface IDataPump
     {
+        void UpdateStartTS(StockType stockType);
+        void PumpDaily(StockDefinition stockDefinition);
     }
 }

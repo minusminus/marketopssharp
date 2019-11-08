@@ -35,7 +35,7 @@ namespace MarketOps.DataPump.Tests.Bossa
                 using (FileStream fs = new FileStream(_testFilePath, FileMode.Open, FileAccess.Read, FileShare.None))
                     return false;
             }
-            catch (IOException e)
+            catch (IOException)
             {
                 return true;
             }

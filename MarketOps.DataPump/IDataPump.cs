@@ -8,6 +8,7 @@ namespace MarketOps.DataPump
     /// </summary>
     public interface IDataPump
     {
+        void Cleanup();
         void UpdateStartTS(StockType stockType);
         void PumpDaily(StockDefinition stockDefinition);
     }

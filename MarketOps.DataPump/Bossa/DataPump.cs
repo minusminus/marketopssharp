@@ -31,6 +31,11 @@ namespace MarketOps.DataPump.Bossa
             _downloadDirectories = downloadDirectories;
         }
 
+        public void Cleanup()
+        {
+            _downloadDirectories.ClearAll();
+        }
+
         public void UpdateStartTS(StockType stockType)
         {
             new StartTSUpdater(_dataPumpProvider).Update(stockType);

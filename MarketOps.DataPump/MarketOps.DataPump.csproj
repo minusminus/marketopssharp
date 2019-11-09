@@ -64,7 +64,6 @@
     <Compile Include="DBWriters\StartTSUpdater.cs" />
     <Compile Include="IDataFileDownloader.cs" />
     <Compile Include="IDataFileIterator.cs" />
-    <Compile Include="IDataPump.cs" />
     <Compile Include="IDataPumpStockDataToDBWriter.cs" />
     <Compile Include="IFileDownloader.cs" />
     <Compile Include="IDataFileLineToStockData.cs" />

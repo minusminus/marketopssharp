@@ -1,7 +1,7 @@
 ﻿using System;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.DataPump
+namespace MarketOps.StockData.Interfaces
 {
     /// <summary>
     /// Interface for data pump mechanism

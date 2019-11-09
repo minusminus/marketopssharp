@@ -62,11 +62,11 @@ namespace MarketOps.DataPump.Bossa
                 _dataFileIterator.Open(fileName);
                 try
                 {
-                    _dataFileIterator.SetOnLineAfterTS(_dataPumpProvider.GetMaxTS(stockDefinition, StockDataRange.Day, 0));
+                    if (!_dataFileIterator.SetOnLineAfterTS(_dataPumpProvider.GetMaxTS(stockDefinition, StockDataRange.Day, 0))) return;
                     while (!_dataFileIterator.Eof())
                     {
-                        string prevLine = _dataFileIterator.PreviousLine();
-                        _lineToStockData.Map(_dataFileIterator.ReadLine(), prevLine, data);
+                        string currLine = _dataFileIterator.ReadLine();
+                        _lineToStockData.Map(currLine, _dataFileIterator.PreviousLine(), data);
                         _stockDataToDBWriter.WriteDaily(data, stockDefinition);
                     }
                 }

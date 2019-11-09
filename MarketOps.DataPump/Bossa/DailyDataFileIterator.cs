@@ -58,7 +58,8 @@ namespace MarketOps.DataPump.Bossa
 
         public bool SetOnLineAfterTS(DateTime ts)
         {
-            return (new DataFileTSSearcher(_fileReader)).Find(ts, out _previousLine);
+            //return (new DataFileTSSearcher(_fileReader)).Find(ts, out _previousLine);
+            return (new DataFileTSSearcher(_fileReader)).Find(ts, out _currentLine);
         }
     }
 }

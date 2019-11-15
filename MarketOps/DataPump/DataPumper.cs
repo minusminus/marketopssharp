@@ -16,6 +16,8 @@ namespace MarketOps.DataPump
 
         private List<StockDefinition> _stocks;
         private Action<DataPumperDailyProcessingInfo> _onStockStartProcessing;
+        private Action<DataPumperDailyProcessingInfo, Exception> _onStockProcessingException;
+        private Action<string, Exception> _onProcessingException;
         private DataPumperDailyProcessingInfo _processingInfo;
 
         public DataPumper(IDataPumpProvider dataPumpProvider, IDataPump dataPump)
@@ -24,9 +26,13 @@ namespace MarketOps.DataPump
             _dataPump = dataPump;
         }
 
-        public void StartSession(Action<DataPumperDailyProcessingInfo> onStockStartProcessing)
+        public void StartSession(Action<DataPumperDailyProcessingInfo> onStockStartProcessing,
+            Action<DataPumperDailyProcessingInfo, Exception> onStockProcessingException,
+            Action<string, Exception> onProcessingException)
         {
             _onStockStartProcessing = onStockStartProcessing;
+            _onStockProcessingException = onStockProcessingException;
+            _onProcessingException = onProcessingException;
             _stocks = _dataPumpProvider.GetAllStockDefinitions();
             _processingInfo = new DataPumperDailyProcessingInfo();
         }
@@ -35,6 +41,8 @@ namespace MarketOps.DataPump
         {
             _processingInfo = null;
             _stocks = null;
+            _onProcessingException = null;
+            _onStockProcessingException = null;
             _onStockStartProcessing = null;
         }
 
@@ -54,8 +62,27 @@ namespace MarketOps.DataPump
         {
             _processingInfo.Stock = stockDefinition;
             _processingInfo.CurrentPosition++;
-            _onStockStartProcessing(_processingInfo);
-            _dataPump.PumpDaily(stockDefinition);
+            _onStockStartProcessing?.Invoke(_processingInfo);
+            try
+            {
+                _dataPump.PumpDaily(stockDefinition);
+            }
+            catch (Exception e)
+            {
+                _onStockProcessingException?.Invoke(_processingInfo, e);
+            }
+        }
+
+        private void PumpDailyUpdateStartTS(StockType stockType)
+        {
+            try
+            {
+                _dataPump.UpdateStartTS(stockType);
+            }
+            catch (Exception e)
+            {
+                _onProcessingException?.Invoke("UpdateStartTS", e);
+            }
         }
     }
 }

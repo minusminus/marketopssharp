@@ -25,6 +25,8 @@ namespace MarketOps.DataPump.Forms
         {
             UpdateControls(false);
             ClearPumpProgress();
+            tcDataPumpParams.SelectedIndex = 0;
+
             ShowDialog();
         }
 
@@ -35,12 +37,21 @@ namespace MarketOps.DataPump.Forms
             pnlImportProgress.Enabled = stateLocked;
         }
 
+        private void AddLog(string msg)
+        {
+            edtLog.AppendText(msg);
+            edtLog.AppendText(Environment.NewLine);
+        }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
             UpdateControls(true);
             try
             {
+                edtLog.Clear();
                 ExecuteDataPumping();
+                if (edtLog.TextLength > 0)
+                    tcDataPumpParams.SelectedTab = tabLog;
             }
             finally
             {
@@ -62,6 +73,16 @@ namespace MarketOps.DataPump.Forms
             Application.DoEvents();
         }
 
+        private void OnStockProcessingException(DataPumperDailyProcessingInfo info, Exception e)
+        {
+            AddLog($"{info.Stock.Name} exception: {e.Message}");
+        }
+
+        private void OnProcessingException(string info, Exception e)
+        {
+            AddLog($"{info} exception: {e.Message}");
+        }
+
         private void ExecuteDataPumping()
         {
             List<Tuple<CheckBox, StockType>> defs = new List<Tuple<CheckBox, StockType>>()
@@ -74,7 +95,8 @@ namespace MarketOps.DataPump.Forms
                 new Tuple<CheckBox, StockType>(cbDPDailyTypeForex, StockType.Forex),
             };
 
-            _dataPumper.StartSession(OnStockStartProcessing);
+            AddLog($"Session start: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}");
+            _dataPumper.StartSession(OnStockStartProcessing, OnStockProcessingException, OnProcessingException);
             try
             {
                 foreach (var tuple in defs)
@@ -83,6 +105,7 @@ namespace MarketOps.DataPump.Forms
             finally
             {
                 _dataPumper.EndSession();
+                AddLog($"Session end: {DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}");
             }
         }
 

@@ -52,12 +52,15 @@
     <Compile Include="Charting\ChartAreaPreparatorVolume.cs" />
     <Compile Include="Charting\DataSeriesPreparatorStock.cs" />
     <Compile Include="Charting\DataSeriesPreparatorVolume.cs" />
+    <Compile Include="DataPump\DataPumper.cs" />
+    <Compile Include="DataPump\DataPumperDailyProcessingInfo.cs" />
     <Compile Include="DataPump\Forms\FormDataPump.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DataPump\Forms\FormDataPump.Designer.cs">
       <DependentUpon>FormDataPump.cs</DependentUpon>
     </Compile>
+    <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Extensions\StockDisplayDataExtensions.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -103,6 +106,10 @@
     <ProjectReference Include="..\MarketOps.DataProvider.Pg\MarketOps.DataProvider.Pg.csproj">
       <Project>{dc50b64a-8c80-4562-b705-ed9c0f850e3c}</Project>
       <Name>MarketOps.DataProvider.Pg</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.DataPump\MarketOps.DataPump.csproj">
+      <Project>{f91f2b3e-be20-4500-ac9d-7fb3dd9464e4}</Project>
+      <Name>MarketOps.DataPump</Name>
     </ProjectReference>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
       <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>

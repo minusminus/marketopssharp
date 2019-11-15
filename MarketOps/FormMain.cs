@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,10 @@ using MarketOps.StockData.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Extensions;
 using MarketOps.DataProvider.Pg;
+using MarketOps.DataProvider.Pg.Bossa;
+using MarketOps.DataPump;
+using MarketOps.DataPump.Forms;
+using MarketOps.DataPump.Types;
 using MarketOps.Stats.Stats;
 
 namespace MarketOps
@@ -73,6 +78,22 @@ namespace MarketOps
             pnlPV.AddStat(stat);
             pnlPV.RefreshData();
             pnlPV.Refresh();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string dlPath = Path.Combine(
+                Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath),
+                "DataPumpDownload");
+            DirectoryUtils.ClearDir(dlPath, true);
+
+            DataTableSelector selector = new DataTableSelector();
+            IDataPumpProvider dataPumpProvider = new PgDataPumpProvider(selector);
+            IDataPump dataPump = DataPumpFactory.Get(DataPumpType.Bossa, dataPumpProvider, dlPath);
+            DataPumper dataPumper = new DataPumper(dataPumpProvider, dataPump);
+
+            FormDataPump frm = new FormDataPump(dataPumper);
+            frm.Execute();
         }
     }
 }

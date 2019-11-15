@@ -8,5 +8,6 @@
         public int ID;
         public string Name;
         public StockType Type;
+        public bool Enabled;
     }
 }

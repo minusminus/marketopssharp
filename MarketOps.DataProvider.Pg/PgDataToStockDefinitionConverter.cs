@@ -15,6 +15,7 @@ namespace MarketOps.DataProvider.Pg
             data.Type = (StockType)reader.GetFieldValue<int>(reader.GetOrdinal("typ"));
             data.Name = reader.GetFieldValue<string>(reader.GetOrdinal("nazwaspolki"));
             data.Enabled = reader.GetFieldValue<bool>(reader.GetOrdinal("aktywna"));
+            data.StockName = reader.GetFieldValue<string>(reader.GetOrdinal("nazwaakcji"));
         }
     }
 }

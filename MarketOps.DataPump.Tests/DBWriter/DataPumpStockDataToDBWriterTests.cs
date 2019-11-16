@@ -17,7 +17,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         private IDataPumpProvider _dataPumpProvider;
         private InsertCommandGenerator _commandGenerator;
         private readonly StockDefinition stockDefinition = new StockDefinition() { ID = 1, Type = StockType.Stock };
-        private readonly DataPumpStockData stockData = new DataPumpStockData() { O = "1.1", H = "5,5", L = "0.4", C = "4.3", V = "123456", TS = new DateTime(2019, 01, 30) };
+        private readonly DataPumpStockData stockData = new DataPumpStockData() { O = "1.1", H = "5,5", L = "0.4", C = "4.3", RefCourse = "1.0", V = "123456", TS = new DateTime(2019, 01, 30) };
 
         [SetUp]
         public void Setup()

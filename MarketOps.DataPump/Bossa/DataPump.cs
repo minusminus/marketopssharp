@@ -55,7 +55,7 @@ namespace MarketOps.DataPump.Bossa
 
         private string GetDataFilePath(string zipFilePath, StockDefinition stockDefinition)
         {
-            return Path.Combine(_downloadDirectories.GetUnzipPath(zipFilePath), stockDefinition.Name + ".mst");
+            return Path.Combine(_downloadDirectories.GetUnzipPath(zipFilePath), stockDefinition.StockName + ".mst");
         }
 
         private void ProcessFileDaily(string fileName, StockDefinition stockDefinition)

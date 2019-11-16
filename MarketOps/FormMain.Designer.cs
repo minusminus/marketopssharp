@@ -32,7 +32,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.pnlPV = new MarketOps.Controls.PriceVolumePanel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.menuMain = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataPumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -66,34 +69,52 @@
             // 
             // pnlPV
             // 
-            this.pnlPV.Location = new System.Drawing.Point(160, 12);
+            this.pnlPV.Location = new System.Drawing.Point(160, 33);
             this.pnlPV.Name = "pnlPV";
             this.pnlPV.Size = new System.Drawing.Size(628, 426);
             this.pnlPV.TabIndex = 6;
             // 
-            // button2
+            // menuMain
             // 
-            this.button2.Location = new System.Drawing.Point(33, 267);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(83, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "test datapump";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.menuMain.Location = new System.Drawing.Point(0, 0);
+            this.menuMain.Name = "menuMain";
+            this.menuMain.Size = new System.Drawing.Size(800, 24);
+            this.menuMain.TabIndex = 9;
+            this.menuMain.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dataPumpToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+            this.toolStripMenuItem1.Text = "Data";
+            // 
+            // dataPumpToolStripMenuItem
+            // 
+            this.dataPumpToolStripMenuItem.Name = "dataPumpToolStripMenuItem";
+            this.dataPumpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dataPumpToolStripMenuItem.Text = "Data pump";
+            this.dataPumpToolStripMenuItem.Click += new System.EventHandler(this.dataPumpToolStripMenuItem_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(800, 474);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pnlPV);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLoad);
+            this.Controls.Add(this.menuMain);
+            this.MainMenuStrip = this.menuMain;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormMain";
+            this.Text = "MarketOps";
+            this.menuMain.ResumeLayout(false);
+            this.menuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -104,7 +125,9 @@
         private System.Windows.Forms.Label label1;
         private Controls.PriceVolumePanel pnlPV;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.MenuStrip menuMain;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem dataPumpToolStripMenuItem;
     }
 }
 

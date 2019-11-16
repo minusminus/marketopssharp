@@ -80,7 +80,7 @@ namespace MarketOps
             pnlPV.Refresh();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void dataPumpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string dlPath = Path.Combine(
                 Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath),

@@ -29,58 +29,48 @@
         private void InitializeComponent()
         {
             this.btnLoad = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.pnlPV = new MarketOps.Controls.PriceVolumePanel();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tcCharts = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pnlMain = new System.Windows.Forms.Panel();
+            this.edtStockName = new System.Windows.Forms.TextBox();
             this.menuMain.SuspendLayout();
+            this.tcCharts.SuspendLayout();
+            this.pnlMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(25, 33);
+            this.btnLoad.Location = new System.Drawing.Point(12, 51);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 1;
+            this.btnLoad.TabIndex = 2;
             this.btnLoad.Text = "load";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 124);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(33, 222);
+            this.button1.Location = new System.Drawing.Point(19, 430);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
+            this.button1.TabIndex = 3;
             this.button1.Text = "test";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // pnlPV
-            // 
-            this.pnlPV.Location = new System.Drawing.Point(160, 33);
-            this.pnlPV.Name = "pnlPV";
-            this.pnlPV.Size = new System.Drawing.Size(628, 426);
-            this.pnlPV.TabIndex = 6;
             // 
             // menuMain
             // 
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1});
+            this.menuMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
-            this.menuMain.Size = new System.Drawing.Size(800, 24);
+            this.menuMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.menuMain.Size = new System.Drawing.Size(953, 24);
             this.menuMain.TabIndex = 9;
             this.menuMain.Text = "menuStrip1";
             // 
@@ -89,25 +79,68 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dataPumpToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(42, 20);
             this.toolStripMenuItem1.Text = "Data";
             // 
             // dataPumpToolStripMenuItem
             // 
             this.dataPumpToolStripMenuItem.Name = "dataPumpToolStripMenuItem";
-            this.dataPumpToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dataPumpToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.dataPumpToolStripMenuItem.Text = "Data pump";
             this.dataPumpToolStripMenuItem.Click += new System.EventHandler(this.dataPumpToolStripMenuItem_Click);
+            // 
+            // tcCharts
+            // 
+            this.tcCharts.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tcCharts.Controls.Add(this.tabPage1);
+            this.tcCharts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcCharts.Location = new System.Drawing.Point(195, 24);
+            this.tcCharts.Multiline = true;
+            this.tcCharts.Name = "tcCharts";
+            this.tcCharts.SelectedIndex = 0;
+            this.tcCharts.Size = new System.Drawing.Size(758, 509);
+            this.tcCharts.TabIndex = 10;
+            this.tcCharts.TabStop = false;
+            this.tcCharts.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tcCharts_MouseClick);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(750, 480);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // pnlMain
+            // 
+            this.pnlMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMain.Controls.Add(this.edtStockName);
+            this.pnlMain.Controls.Add(this.btnLoad);
+            this.pnlMain.Controls.Add(this.button1);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlMain.Location = new System.Drawing.Point(0, 24);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(195, 509);
+            this.pnlMain.TabIndex = 0;
+            // 
+            // edtStockName
+            // 
+            this.edtStockName.Location = new System.Drawing.Point(12, 25);
+            this.edtStockName.Name = "edtStockName";
+            this.edtStockName.Size = new System.Drawing.Size(162, 20);
+            this.edtStockName.TabIndex = 1;
+            this.edtStockName.Text = "WIG";
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 474);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.pnlPV);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnLoad);
+            this.ClientSize = new System.Drawing.Size(953, 533);
+            this.Controls.Add(this.tcCharts);
+            this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.menuMain);
             this.MainMenuStrip = this.menuMain;
             this.Name = "FormMain";
@@ -115,6 +148,9 @@
             this.Text = "MarketOps";
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
+            this.tcCharts.ResumeLayout(false);
+            this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,12 +158,14 @@
 
         #endregion
         private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.Label label1;
-        private Controls.PriceVolumePanel pnlPV;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem dataPumpToolStripMenuItem;
+        private System.Windows.Forms.TabControl tcCharts;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Panel pnlMain;
+        private System.Windows.Forms.TextBox edtStockName;
     }
 }
 

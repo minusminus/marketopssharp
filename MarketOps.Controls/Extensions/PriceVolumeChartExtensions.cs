@@ -1,6 +1,7 @@
 ﻿using System;
 using MarketOps.StockData.Types;
 using System.Windows.Forms.DataVisualization.Charting;
+using MarketOps.Controls.PriceChart;
 using MarketOps.StockData.Extensions;
 
 namespace MarketOps.Controls.Extensions

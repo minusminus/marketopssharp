@@ -17,24 +17,6 @@ namespace MarketOps.DataProvider.Pg.Bossa
             _dataTableSelector = dataTableSelector;
         }
 
-        public List<StockDefinition> GetAllStockDefinitions()
-        {
-            List<StockDefinition> res = new List<StockDefinition>();
-
-            string qry = $"select * from at_spolki";
-            ProcessSelectQuery(qry, (reader) =>
-            {
-                if (!reader.HasRows) return;
-                while (reader.Read())
-                {
-                    StockDefinition def = new StockDefinition();
-                    PgDataToStockDefinitionConverter.ToStockDefinition(reader, def);
-                    res.Add(def);
-                }
-            });
-            return res;
-        }
-
         public Dictionary<StockType, DataPumpDownloadDefinition> GetDownloadDefinitions()
         {
             Dictionary<StockType, DataPumpDownloadDefinition> res = new Dictionary<StockType, DataPumpDownloadDefinition>();

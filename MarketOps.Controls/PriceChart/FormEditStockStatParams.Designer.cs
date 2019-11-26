@@ -1,4 +1,4 @@
-﻿namespace MarketOps.Controls
+﻿namespace MarketOps.Controls.PriceChart
 {
     partial class FormEditStockStatParams
     {

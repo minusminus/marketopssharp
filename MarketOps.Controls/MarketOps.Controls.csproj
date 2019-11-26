@@ -43,33 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChartYViewRangeCalculator.cs" />
-    <Compile Include="ChartZoomCalculator.cs" />
+    <Compile Include="PriceChart\ChartYViewRangeCalculator.cs" />
+    <Compile Include="PriceChart\ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
-    <Compile Include="FormEditStockStatParams.cs">
+    <Compile Include="PriceChart\FormEditStockStatParams.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormEditStockStatParams.Designer.cs">
+    <Compile Include="PriceChart\FormEditStockStatParams.Designer.cs">
       <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSelectDataRange.cs">
+    <Compile Include="PriceChart\FormSelectDataRange.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSelectDataRange.Designer.cs">
+    <Compile Include="PriceChart\FormSelectDataRange.Designer.cs">
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </Compile>
     <Compile Include="PositionChangeChecker.cs" />
-    <Compile Include="PriceVolumeChart.cs">
+    <Compile Include="PriceChart\PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PriceVolumeChart.Designer.cs">
+    <Compile Include="PriceChart\PriceVolumeChart.Designer.cs">
       <DependentUpon>PriceVolumeChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="PriceVolumeChartMode.cs" />
-    <Compile Include="PriceVolumePanel.cs">
+    <Compile Include="PriceChart\PriceVolumeChartMode.cs" />
+    <Compile Include="PriceChart\PriceVolumePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PriceVolumePanel.Designer.cs">
+    <Compile Include="PriceChart\PriceVolumePanel.Designer.cs">
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,16 +87,16 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormEditStockStatParams.resx">
+    <EmbeddedResource Include="PriceChart\FormEditStockStatParams.resx">
       <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSelectDataRange.resx">
+    <EmbeddedResource Include="PriceChart\FormSelectDataRange.resx">
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PriceVolumeChart.resx">
+    <EmbeddedResource Include="PriceChart\PriceVolumeChart.resx">
       <DependentUpon>PriceVolumeChart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PriceVolumePanel.resx">
+    <EmbeddedResource Include="PriceChart\PriceVolumePanel.resx">
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

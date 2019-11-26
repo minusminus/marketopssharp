@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MarketOps.Controls
+namespace MarketOps.Controls.PriceChart
 {
     /// <summary>
     /// Calculates zoom start and end for selected chart.

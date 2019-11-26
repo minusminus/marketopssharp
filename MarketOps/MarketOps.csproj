@@ -52,6 +52,7 @@
     <Compile Include="Charting\ChartAreaPreparatorVolume.cs" />
     <Compile Include="Charting\DataSeriesPreparatorStock.cs" />
     <Compile Include="Charting\DataSeriesPreparatorVolume.cs" />
+    <Compile Include="DataProvidersFactory.cs" />
     <Compile Include="DataPump\DataPumper.cs" />
     <Compile Include="DataPump\DataPumperDailyProcessingInfo.cs" />
     <Compile Include="DataPump\Forms\FormDataPump.cs">
@@ -62,6 +63,7 @@
     </Compile>
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Extensions\StockDisplayDataExtensions.cs" />
+    <Compile Include="Extensions\TabControlExtensions.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

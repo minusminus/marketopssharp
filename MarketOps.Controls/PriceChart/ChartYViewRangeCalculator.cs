@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MarketOps.Controls
+namespace MarketOps.Controls.PriceChart
 {
     /// <summary>
     /// Calculates Y axis range for current X axis selection.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.StockData.Interfaces
@@ -8,6 +9,7 @@ namespace MarketOps.StockData.Interfaces
     /// </summary>
     public interface IStockDataProvider
     {
+        List<StockDefinition> GetAllStockDefinitions();
         StockDefinition GetStockDefinition(int stockID);
         StockDefinition GetStockDefinition(string stockName);
         StockPricesData GetPricesData(StockDefinition stockDef, StockDataRange dataRange, int intradayInterval, DateTime tsFrom, DateTime tsTo);

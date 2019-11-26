@@ -1,4 +1,4 @@
-﻿namespace MarketOps.Controls
+﻿namespace MarketOps.Controls.PriceChart
 {
     partial class PriceVolumePanel
     {
@@ -36,10 +36,10 @@
             this.btnPriceChartLine = new System.Windows.Forms.CheckBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.pnlInfo = new System.Windows.Forms.Panel();
+            this.lblStatSelectedInfo = new System.Windows.Forms.Label();
             this.lblSelectedInfo = new System.Windows.Forms.Label();
             this.lblStockInfo = new System.Windows.Forms.Label();
-            this.lblStatSelectedInfo = new System.Windows.Forms.Label();
-            this.chartPV = new MarketOps.Controls.PriceVolumeChart();
+            this.chartPV = new PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
             this.SuspendLayout();
@@ -144,6 +144,16 @@
             this.pnlInfo.Size = new System.Drawing.Size(606, 45);
             this.pnlInfo.TabIndex = 2;
             // 
+            // lblStatSelectedInfo
+            // 
+            this.lblStatSelectedInfo.AutoSize = true;
+            this.lblStatSelectedInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblStatSelectedInfo.Location = new System.Drawing.Point(2, 30);
+            this.lblStatSelectedInfo.Name = "lblStatSelectedInfo";
+            this.lblStatSelectedInfo.Size = new System.Drawing.Size(83, 12);
+            this.lblStatSelectedInfo.TabIndex = 2;
+            this.lblStatSelectedInfo.Text = "lblStatSelectedInfo";
+            // 
             // lblSelectedInfo
             // 
             this.lblSelectedInfo.AutoSize = true;
@@ -164,29 +174,20 @@
             this.lblStockInfo.TabIndex = 0;
             this.lblStockInfo.Text = "lblStockInfo";
             // 
-            // lblStatSelectedInfo
-            // 
-            this.lblStatSelectedInfo.AutoSize = true;
-            this.lblStatSelectedInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblStatSelectedInfo.Location = new System.Drawing.Point(2, 30);
-            this.lblStatSelectedInfo.Name = "lblStatSelectedInfo";
-            this.lblStatSelectedInfo.Size = new System.Drawing.Size(83, 12);
-            this.lblStatSelectedInfo.TabIndex = 2;
-            this.lblStatSelectedInfo.Text = "lblStatSelectedInfo";
-            // 
             // chartPV
             // 
+            this.chartPV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartPV.Location = new System.Drawing.Point(0, 77);
             this.chartPV.Name = "chartPV";
-            this.chartPV.Size = new System.Drawing.Size(606, 300);
+            this.chartPV.Size = new System.Drawing.Size(606, 298);
             this.chartPV.TabIndex = 1;
             // 
             // PriceVolumePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.pnlInfo);
             this.Controls.Add(this.chartPV);
+            this.Controls.Add(this.pnlInfo);
             this.Controls.Add(this.pnlButtons);
             this.Name = "PriceVolumePanel";
             this.Size = new System.Drawing.Size(606, 375);

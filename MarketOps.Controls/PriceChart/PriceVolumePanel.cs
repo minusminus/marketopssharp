@@ -115,8 +115,7 @@ namespace MarketOps.Controls.PriceChart
 
         private void RecalculateStats()
         {
-            if (OnRecalculateStockStats == null) return;
-            OnRecalculateStockStats.Invoke(_currentData);
+            OnRecalculateStockStats?.Invoke(_currentData);
         }
 
         private void ReloadCurrentData()

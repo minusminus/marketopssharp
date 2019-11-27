@@ -23,7 +23,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         public void Setup()
         {
             _dataPumpProvider = Substitute.For<IDataPumpProvider>();
-            _dataPumpProvider.GetTableName(StockType.Stock, StockDataRange.Day, 0).Returns("test_dzienne");
+            _dataPumpProvider.GetTableName(StockType.Stock, StockDataRange.Daily, 0).Returns("test_dzienne");
             _commandGenerator = new InsertCommandGenerator(_dataPumpProvider);
             TestObj = new DataPumpStockDataToDBWriter(_dataPumpProvider, _commandGenerator);
         }
@@ -48,7 +48,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         public void WriteDaily__ExecutesSql()
         {
             TestObj.WriteDaily(stockData, stockDefinition);
-            _dataPumpProvider.Received().GetTableName(stockDefinition.Type, StockDataRange.Day, 0);
+            _dataPumpProvider.Received().GetTableName(stockDefinition.Type, StockDataRange.Daily, 0);
             _dataPumpProvider.Received().ExecuteSQL(Arg.Compat.Any<string>());
         }
     }

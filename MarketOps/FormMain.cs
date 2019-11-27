@@ -64,15 +64,15 @@ namespace MarketOps
                 TsTo = DateTime.Now.Date,
                 Stock = dataProvider.GetStockDefinition(edtStockName.Text.Trim())
             };
-            currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, StockDataRange.Day, 0, currentStock.TsFrom, currentStock.TsTo);
+            currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, StockDataRange.Daily, 0, currentStock.TsFrom, currentStock.TsTo);
             AddTabWithChart(currentStock);
         }
 
         private void AddTabWithChart(StockDisplayData currentStock)
         {
-            TabPage tab = new TabPage(currentStock.Stock.Name) {BorderStyle = BorderStyle.FixedSingle};
+            TabPage tab = new TabPage($"{currentStock.Stock.Name} ({currentStock.Prices.Range})") {BorderStyle = BorderStyle.FixedSingle};
             tcCharts.TabPages.Add(tab);
-            PriceVolumePanel pvp = new PriceVolumePanel {Dock = DockStyle.Fill};
+            PriceVolumePanel pvp = new PriceVolumePanel {Name = "pvp", Dock = DockStyle.Fill};
             pvp.OnPrependData += OnPrependChartData;
             pvp.OnGetData += OnGetChartData;
             pvp.OnRecalculateStockStats += OnRecalculateStockStats;
@@ -114,6 +114,13 @@ namespace MarketOps
 
             FormDataPump frm = new FormDataPump(dataPumper);
             frm.Execute();
+        }
+
+        private void tcCharts_Deselected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage == null) return;
+            var tbl = e.TabPage.Controls.Find("pvp", true);
+            ((PriceVolumePanel)tbl[0]).Chart.HidePriceAreaToolTips();
         }
     }
 }

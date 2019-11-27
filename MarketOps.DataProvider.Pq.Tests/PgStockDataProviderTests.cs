@@ -57,8 +57,8 @@ namespace MarketOps.DataProvider.Pq.Tests
         [Test]
         public void GetPricesData_TSInRange_GetsData()
         {
-            StockPricesData data = TestObj.GetPricesData(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Day, 0, new DateTime(2017, 1, 1), new DateTime(2018, 1, 1));
-            data.Range.ShouldBe(StockDataRange.Day);
+            StockPricesData data = TestObj.GetPricesData(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(2017, 1, 1), new DateTime(2018, 1, 1));
+            data.Range.ShouldBe(StockDataRange.Daily);
             data.IntrradayInterval.ShouldBe(0);
             data.Length.ShouldBeGreaterThan(0);
             for (int i = 1; i < data.Length; i++)
@@ -68,8 +68,8 @@ namespace MarketOps.DataProvider.Pq.Tests
         [Test]
         public void GetPricesData_TSOutOfRange_GetsEmptyObject()
         {
-            StockPricesData data = TestObj.GetPricesData(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Day, 0, new DateTime(1980, 1, 1), new DateTime(1981, 1, 1));
-            data.Range.ShouldBe(StockDataRange.Day);
+            StockPricesData data = TestObj.GetPricesData(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(1980, 1, 1), new DateTime(1981, 1, 1));
+            data.Range.ShouldBe(StockDataRange.Daily);
             data.IntrradayInterval.ShouldBe(0);
             data.Length.ShouldBe(0);
         }

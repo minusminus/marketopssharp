@@ -155,5 +155,11 @@ namespace MarketOps.Controls.PriceChart
                 tooltipAxisX.ShowIfPosChanged(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
             }
         }
+
+        public void HidePriceAreaToolTips()
+        {
+            tooltipAxisX.Hide(PVChart);
+            tooltipAxisY.Hide(PVChart);
+        }
     }
 }

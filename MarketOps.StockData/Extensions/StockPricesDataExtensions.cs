@@ -63,11 +63,11 @@ namespace MarketOps.StockData.Extensions
         {
             switch (data.Range)
             {
-                case StockDataRange.Month:
+                case StockDataRange.Monthly:
                     return "monthly";
-                case StockDataRange.Week:
+                case StockDataRange.Weekly:
                     return "weekly";
-                case StockDataRange.Day:
+                case StockDataRange.Daily:
                     return "daily";
                 case StockDataRange.Intraday:
                     return data.IntrradayInterval%60 == 0

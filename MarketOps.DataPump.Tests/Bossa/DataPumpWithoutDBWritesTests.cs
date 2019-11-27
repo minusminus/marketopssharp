@@ -61,8 +61,8 @@ namespace MarketOps.DataPump.Tests.Bossa
         {
             _executedQueries.Clear();
             _dataPumpProvider = Substitute.For<IDataPumpProvider>();
-            _dataPumpProvider.GetTableName(StockType.Stock, StockDataRange.Day, 0).Returns("at_dzienne0");
-            _dataPumpProvider.GetTableName(StockType.Index, StockDataRange.Day, 0).Returns("at_dzienne1");
+            _dataPumpProvider.GetTableName(StockType.Stock, StockDataRange.Daily, 0).Returns("at_dzienne0");
+            _dataPumpProvider.GetTableName(StockType.Index, StockDataRange.Daily, 0).Returns("at_dzienne1");
             _dataPumpProvider.ExecuteSQL(Arg.Compat.Do<string>(s => _executedQueries.Add(s)));
 
             _stockDataToDBWriter = new DataPumpStockDataToDBWriter(_dataPumpProvider, new InsertCommandGenerator(_dataPumpProvider));
@@ -81,7 +81,7 @@ namespace MarketOps.DataPump.Tests.Bossa
         {
             expectedFirst5Inserts.Count.ShouldBe(5);
             _executedQueries.Clear();
-            _dataPumpProvider.GetMaxTS(Arg.Compat.Any<StockDefinition>(), StockDataRange.Day, 0).Returns(initialDateTime);
+            _dataPumpProvider.GetMaxTS(Arg.Compat.Any<StockDefinition>(), StockDataRange.Daily, 0).Returns(initialDateTime);
             TestObj.PumpDaily(stock);
             Console.WriteLine($"{stock.Name}:");
             Console.WriteLine(String.Join(Environment.NewLine, _executedQueries.ToArray()));

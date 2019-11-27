@@ -21,9 +21,9 @@ namespace MarketOps.DataProvider.Pg
 
         private readonly Dictionary<StockDataRange, string> _tableNameByDataRange = new Dictionary<StockDataRange, string>()
         {
-            { StockDataRange.Day, "at_dzienne" },
-            { StockDataRange.Week, "at_tyg" },
-            { StockDataRange.Month, "at_mies" },
+            { StockDataRange.Daily, "at_dzienne" },
+            { StockDataRange.Weekly, "at_tyg" },
+            { StockDataRange.Monthly, "at_mies" },
             { StockDataRange.Tick, "at_ciagle" }
         };
 

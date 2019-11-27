@@ -67,7 +67,7 @@ namespace MarketOps.DataPump.Bossa
                 _dataFileIterator.Open(fileName);
                 try
                 {
-                    if (!_dataFileIterator.SetOnLineAfterTS(_dataPumpProvider.GetMaxTS(stockDefinition, StockDataRange.Day, 0))) return;
+                    if (!_dataFileIterator.SetOnLineAfterTS(_dataPumpProvider.GetMaxTS(stockDefinition, StockDataRange.Daily, 0))) return;
                     while (!_dataFileIterator.Eof())
                     {
                         string currLine = _dataFileIterator.ReadLine();

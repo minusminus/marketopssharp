@@ -38,9 +38,9 @@ namespace MarketOps.StockData
         private static readonly Dictionary<StockDataRange, string> DataRangeFormatStrings = new Dictionary<StockDataRange, string>()
             {
                 { StockDataRange.Undefined, "yyyy-MM-dd" },
-                { StockDataRange.Day, "yyyy-MM-dd" },
-                { StockDataRange.Week, "yyyy-MM-dd" },
-                { StockDataRange.Month, "yyyy-MM-dd" },
+                { StockDataRange.Daily, "yyyy-MM-dd" },
+                { StockDataRange.Weekly, "yyyy-MM-dd" },
+                { StockDataRange.Monthly, "yyyy-MM-dd" },
                 { StockDataRange.Intraday, "yyyy-MM-dd hh:mm" },
                 { StockDataRange.Tick, "yyyy-MM-dd hh:mm:ss" },
             };

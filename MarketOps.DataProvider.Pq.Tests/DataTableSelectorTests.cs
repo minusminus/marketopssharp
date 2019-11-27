@@ -14,7 +14,7 @@ namespace MarketOps.DataProvider.Pq.Tests
         [Test]
         public void UndefinedStockType_Throws()
         {
-            Should.Throw<Exception>(() => { TestObj.GetTableName(StockType.Undefined, StockDataRange.Day, 0); });
+            Should.Throw<Exception>(() => { TestObj.GetTableName(StockType.Undefined, StockDataRange.Daily, 0); });
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace MarketOps.DataProvider.Pq.Tests
         {
             string[] expected = new string[6] { "at_dzienne0", "at_dzienne1", "at_dzienne2", "at_dzienne4", "at_dzienne5", "at_dzienne6" };
             for (int i = 0; i < stdTestStockTypes.Length; i++)
-                TestObj.GetTableName(stdTestStockTypes[i], StockDataRange.Day, 0).ShouldBe(expected[i]);
+                TestObj.GetTableName(stdTestStockTypes[i], StockDataRange.Daily, 0).ShouldBe(expected[i]);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace MarketOps.DataProvider.Pq.Tests
         {
             string[] expected = new string[6] { "at_tyg0", "at_tyg1", "at_tyg2", "at_tyg4", "at_tyg5", "at_tyg6" };
             for (int i = 0; i < stdTestStockTypes.Length; i++)
-                TestObj.GetTableName(stdTestStockTypes[i], StockDataRange.Week, 0).ShouldBe(expected[i]);
+                TestObj.GetTableName(stdTestStockTypes[i], StockDataRange.Weekly, 0).ShouldBe(expected[i]);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace MarketOps.DataProvider.Pq.Tests
         {
             string[] expected = new string[6] { "at_mies0", "at_mies1", "at_mies2", "at_mies4", "at_mies5", "at_mies6" };
             for (int i = 0; i < stdTestStockTypes.Length; i++)
-                TestObj.GetTableName(stdTestStockTypes[i], StockDataRange.Month, 0).ShouldBe(expected[i]);
+                TestObj.GetTableName(stdTestStockTypes[i], StockDataRange.Monthly, 0).ShouldBe(expected[i]);
         }
 
         [Test]

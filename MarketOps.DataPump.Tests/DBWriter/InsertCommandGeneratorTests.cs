@@ -22,7 +22,7 @@ namespace MarketOps.DataPump.Tests.DBWriter
         public void SetUp()
         {
             _dataPumpProvider = Substitute.For<IDataPumpProvider>();
-            _dataPumpProvider.GetTableName(StockType.Stock, StockDataRange.Day, 0).Returns("test_dzienne");
+            _dataPumpProvider.GetTableName(StockType.Stock, StockDataRange.Daily, 0).Returns("test_dzienne");
             TestObj = new InsertCommandGenerator(_dataPumpProvider);
         }
 

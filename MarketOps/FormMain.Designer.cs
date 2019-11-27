@@ -48,7 +48,7 @@
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 2;
-            this.btnLoad.Text = "load";
+            this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
@@ -101,6 +101,7 @@
             this.tcCharts.Size = new System.Drawing.Size(758, 509);
             this.tcCharts.TabIndex = 10;
             this.tcCharts.TabStop = false;
+            this.tcCharts.Deselected += new System.Windows.Forms.TabControlEventHandler(this.tcCharts_Deselected);
             this.tcCharts.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tcCharts_MouseClick);
             // 
             // tabPage1

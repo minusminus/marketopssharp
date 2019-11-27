@@ -24,7 +24,7 @@ namespace MarketOps.DataPump.DBWriters
                 $"from " +
                 $"( " +
                 $"select fk_id_spolki, min(ts) as \"ts\" " +
-                $"from {_dataPumpProvider.GetTableName(stockType, StockDataRange.Day, 0)} " +
+                $"from {_dataPumpProvider.GetTableName(stockType, StockDataRange.Daily, 0)} " +
                 $"where fk_id_spolki in (select id from at_spolki where startts is null) " +
                 $"group by fk_id_spolki " +
                 $") t " +

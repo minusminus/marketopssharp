@@ -12,9 +12,9 @@ namespace MarketOps.StockData.Types
     public enum StockDataRange
     {
         Undefined,
-        Day,
-        Week,
-        Month,
+        Daily,
+        Weekly,
+        Monthly,
         Intraday,
         Tick
     }

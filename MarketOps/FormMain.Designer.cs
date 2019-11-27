@@ -37,6 +37,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.edtStockName = new System.Windows.Forms.TextBox();
+            this.cbStockDataRange = new System.Windows.Forms.ComboBox();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlMain.SuspendLayout();
@@ -47,7 +48,7 @@
             this.btnLoad.Location = new System.Drawing.Point(12, 51);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 2;
+            this.btnLoad.TabIndex = 3;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
@@ -57,7 +58,7 @@
             this.button1.Location = new System.Drawing.Point(19, 430);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
+            this.button1.TabIndex = 4;
             this.button1.Text = "test";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -79,13 +80,13 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dataPumpToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(42, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
             this.toolStripMenuItem1.Text = "Data";
             // 
             // dataPumpToolStripMenuItem
             // 
             this.dataPumpToolStripMenuItem.Name = "dataPumpToolStripMenuItem";
-            this.dataPumpToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.dataPumpToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.dataPumpToolStripMenuItem.Text = "Data pump";
             this.dataPumpToolStripMenuItem.Click += new System.EventHandler(this.dataPumpToolStripMenuItem_Click);
             // 
@@ -118,6 +119,7 @@
             // pnlMain
             // 
             this.pnlMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMain.Controls.Add(this.cbStockDataRange);
             this.pnlMain.Controls.Add(this.edtStockName);
             this.pnlMain.Controls.Add(this.btnLoad);
             this.pnlMain.Controls.Add(this.button1);
@@ -131,9 +133,18 @@
             // 
             this.edtStockName.Location = new System.Drawing.Point(12, 25);
             this.edtStockName.Name = "edtStockName";
-            this.edtStockName.Size = new System.Drawing.Size(162, 20);
+            this.edtStockName.Size = new System.Drawing.Size(82, 20);
             this.edtStockName.TabIndex = 1;
             this.edtStockName.Text = "WIG";
+            // 
+            // cbStockDataRange
+            // 
+            this.cbStockDataRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbStockDataRange.FormattingEnabled = true;
+            this.cbStockDataRange.Location = new System.Drawing.Point(100, 25);
+            this.cbStockDataRange.Name = "cbStockDataRange";
+            this.cbStockDataRange.Size = new System.Drawing.Size(75, 21);
+            this.cbStockDataRange.TabIndex = 2;
             // 
             // FormMain
             // 
@@ -167,6 +178,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.TextBox edtStockName;
+        private System.Windows.Forms.ComboBox cbStockDataRange;
     }
 }
 

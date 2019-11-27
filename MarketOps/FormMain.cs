@@ -25,13 +25,17 @@ namespace MarketOps
     {
         private readonly IStockInfoGenerator _stockInfoGenerator = new StockDisplayDataInfoGenerator();
         private readonly IStockStatsInfoGenerator _stockStatsInfoGenerator = new StockStatsInfoGenerator();
+        private readonly MsgDisplay _msgDisplay;
 
         public FormMain()
         {
             InitializeComponent();
+            _msgDisplay = new MsgDisplay(this, "MarketOps");
             tcCharts.TabPages.Clear();
+            PrepareStockDataRangeSource();
         }
 
+        #region price chart events
         private StockPricesData OnGetChartData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo)
         {
             IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
@@ -54,17 +58,45 @@ namespace MarketOps
             foreach (var stat in currentData.Stats)
                 stat.Calculate(currentData.Prices);
         }
+        #endregion
+
+        private void PrepareStockDataRangeSource()
+        {
+            List<StockDataRange> dct = new List<StockDataRange>()
+            {
+                StockDataRange.Daily,
+                StockDataRange.Weekly,
+                StockDataRange.Monthly
+            };
+            cbStockDataRange.DataSource = dct;
+        }
+
+        private bool GetStockDefinition(IStockDataProvider dataProvider, out StockDefinition stockDef)
+        {
+            stockDef = null;
+            try
+            {
+                stockDef = dataProvider.GetStockDefinition(edtStockName.Text.Trim());
+                return true;
+            } catch(Exception e)
+            {
+                _msgDisplay.Error(e.Message);
+                return false;
+            }
+        }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
             IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
+            StockDefinition stockDef;
+            if (!GetStockDefinition(dataProvider, out stockDef)) return;
             StockDisplayData currentStock = new StockDisplayData()
             {
                 TsFrom = DateTime.Now.Date.AddYears(-1),
                 TsTo = DateTime.Now.Date,
-                Stock = dataProvider.GetStockDefinition(edtStockName.Text.Trim())
+                Stock = stockDef
             };
-            currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, StockDataRange.Daily, 0, currentStock.TsFrom, currentStock.TsTo);
+            currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, (StockDataRange)cbStockDataRange.SelectedItem, 0, currentStock.TsFrom, currentStock.TsTo);
             AddTabWithChart(currentStock);
         }
 
@@ -86,6 +118,13 @@ namespace MarketOps
         {
             if (e.Button == MouseButtons.Middle)
                 tcCharts.RemoveClickedTab(e);
+        }
+
+        private void tcCharts_Deselected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage == null) return;
+            var tbl = e.TabPage.Controls.Find("pvp", true);
+            ((PriceVolumePanel)tbl[0]).Chart.HidePriceAreaToolTips();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -114,13 +153,6 @@ namespace MarketOps
 
             FormDataPump frm = new FormDataPump(dataPumper);
             frm.Execute();
-        }
-
-        private void tcCharts_Deselected(object sender, TabControlEventArgs e)
-        {
-            if (e.TabPage == null) return;
-            var tbl = e.TabPage.Controls.Find("pvp", true);
-            ((PriceVolumePanel)tbl[0]).Chart.HidePriceAreaToolTips();
         }
     }
 }

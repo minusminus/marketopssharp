@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MarketOps.Controls.Extensions;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
+using MarketOps.Stats;
 
 namespace MarketOps.Controls.PriceChart
 {
@@ -19,6 +21,7 @@ namespace MarketOps.Controls.PriceChart
             chartPV.OnChartValueSelected += OnChartValueSelected;
             chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
             chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
+            PrepareStatsContextMenuItems();
         }
 
         #region internal data
@@ -163,6 +166,40 @@ namespace MarketOps.Controls.PriceChart
         {
             chartPV.AddPriceAreaStatSeries(stat);
             _currentData.Stats.Add(stat);
+        }
+
+        private void PrepareStatsContextMenuItems()
+        {
+            PrepareSingleStatContextMenuItems(miStatsOnPriceChart, StatsFactories.PriceChart.GetList(), OnClickPriceChartStat);
+            PrepareSingleStatContextMenuItems(miAdditionalStats, StatsFactories.Additional.GetList(), OnClickAdditionalStat);
+        }
+
+        private void PrepareSingleStatContextMenuItems(ToolStripMenuItem menu, List<string> statsNames, EventHandler onClick)
+        {
+            ((ToolStripDropDownMenu) menu.DropDown).ShowImageMargin = false;
+            foreach (string statName in statsNames)
+            {
+                ToolStripItem item = menu.DropDownItems.Add(statName);
+                item.Click += onClick;
+            }
+        }
+
+        private void OnClickPriceChartStat(object sender, EventArgs e)
+        {
+            StockStat stat = StatsFactories.PriceChart.Get(sender.ToString());
+            FormEditStockStatParams frm = new FormEditStockStatParams();
+            if (!frm.Execute(stat.StatParams)) return;
+            stat.Calculate(CurrentData.Prices);
+            AddStat(stat);
+            RefreshData();
+            Refresh();
+        }
+
+        private void OnClickAdditionalStat(object sender, EventArgs e)
+        {
+            StockStat stat = StatsFactories.Additional.Get(sender.ToString());
+            FormEditStockStatParams frm = new FormEditStockStatParams();
+            if (!frm.Execute(stat.StatParams)) return;
         }
     }
 }

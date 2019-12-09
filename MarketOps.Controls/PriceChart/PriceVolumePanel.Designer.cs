@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.btnMirrorChart = new System.Windows.Forms.CheckBox();
             this.btnDataRange = new System.Windows.Forms.Button();
@@ -39,9 +40,13 @@
             this.lblStatSelectedInfo = new System.Windows.Forms.Label();
             this.lblSelectedInfo = new System.Windows.Forms.Label();
             this.lblStockInfo = new System.Windows.Forms.Label();
-            this.chartPV = new PriceVolumeChart();
+            this.cmnChart = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.miStatsOnPriceChart = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAdditionalStats = new System.Windows.Forms.ToolStripMenuItem();
+            this.chartPV = new MarketOps.Controls.PriceChart.PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
+            this.cmnChart.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlButtons
@@ -174,8 +179,30 @@
             this.lblStockInfo.TabIndex = 0;
             this.lblStockInfo.Text = "lblStockInfo";
             // 
+            // cmnChart
+            // 
+            this.cmnChart.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miStatsOnPriceChart,
+            this.miAdditionalStats});
+            this.cmnChart.Name = "cmnChart";
+            this.cmnChart.ShowImageMargin = false;
+            this.cmnChart.Size = new System.Drawing.Size(144, 70);
+            // 
+            // miStatsOnPriceChart
+            // 
+            this.miStatsOnPriceChart.Name = "miStatsOnPriceChart";
+            this.miStatsOnPriceChart.Size = new System.Drawing.Size(143, 22);
+            this.miStatsOnPriceChart.Text = "Stats on price chart";
+            // 
+            // miAdditionalStats
+            // 
+            this.miAdditionalStats.Name = "miAdditionalStats";
+            this.miAdditionalStats.Size = new System.Drawing.Size(143, 22);
+            this.miAdditionalStats.Text = "Additional stats";
+            // 
             // chartPV
             // 
+            this.chartPV.ContextMenuStrip = this.cmnChart;
             this.chartPV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartPV.Location = new System.Drawing.Point(0, 77);
             this.chartPV.Name = "chartPV";
@@ -194,6 +221,7 @@
             this.pnlButtons.ResumeLayout(false);
             this.pnlInfo.ResumeLayout(false);
             this.pnlInfo.PerformLayout();
+            this.cmnChart.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -212,5 +240,8 @@
         private System.Windows.Forms.Button btnDataRange;
         private System.Windows.Forms.CheckBox btnMirrorChart;
         private System.Windows.Forms.Label lblStatSelectedInfo;
+        private System.Windows.Forms.ContextMenuStrip cmnChart;
+        private System.Windows.Forms.ToolStripMenuItem miStatsOnPriceChart;
+        private System.Windows.Forms.ToolStripMenuItem miAdditionalStats;
     }
 }

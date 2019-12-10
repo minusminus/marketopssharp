@@ -129,15 +129,10 @@ namespace MarketOps
 
         private void button1_Click(object sender, EventArgs e)
         {
-            StockStat stat = new StatBB();
-
-            FormEditStockStatParams frm = new FormEditStockStatParams();
-            if (!frm.Execute(stat.StatParams)) return;
-
-            //stat.Calculate(pnlPV.CurrentData.Prices);
-            //pnlPV.AddStat(stat);
-            //pnlPV.RefreshData();
-            //pnlPV.Refresh();
+            PriceVolumePanel pvp = (PriceVolumePanel)tcCharts.TabPages[0].Controls.Find("pvp", true)[0];
+            StockStat stat = new StatATR();
+            stat.Calculate(pvp.CurrentData.Prices);
+            pvp.Chart.TestAddStat(stat);
         }
 
         private void dataPumpToolStripMenuItem_Click(object sender, EventArgs e)

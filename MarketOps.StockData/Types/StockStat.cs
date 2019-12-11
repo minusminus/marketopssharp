@@ -8,6 +8,7 @@ namespace MarketOps.StockData.Types
     /// </summary>
     public abstract class StockStat
     {
+        private readonly string _chartArea;
         private string _uid;
         protected string _name;
         protected float[][] _data;
@@ -19,10 +20,12 @@ namespace MarketOps.StockData.Types
         public int DataCount => _data.Length;
         public float[] Data(int index) => _data[index];
         public Color DataColor(int index) => _dataColors[index];
+        public string ChartArea => _chartArea;
         public StockStatParams StatParams => _statParams;
 
-        public StockStat()
+        public StockStat(string chartArea)
         {
+            _chartArea = chartArea;
             GenerateUID();
             InitializeData();
             InitializeStatParams();

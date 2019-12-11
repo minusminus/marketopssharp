@@ -13,8 +13,8 @@ namespace MarketOps.Stats
         {
             Stats = new Dictionary<string, Type>()
             {
-                {new StatSMA().Name, typeof (StatSMA)},
-                {new StatBB().Name, typeof (StatBB)},
+                {new StatSMA("").Name, typeof (StatSMA)},
+                {new StatBB("").Name, typeof (StatBB)},
             };
         }
     }

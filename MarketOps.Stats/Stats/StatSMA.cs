@@ -12,6 +12,7 @@ namespace MarketOps.Stats.Stats
     public class StatSMA : StockStat
     {
         private const string ParamPeriod = "Period";
+        public StatSMA(string chartArea) : base(chartArea) { }
 
         protected override void InitializeData()
         {

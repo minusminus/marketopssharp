@@ -11,10 +11,16 @@ namespace MarketOps.Controls.PriceChart
             InitializeComponent();
         }
 
-        public bool Execute(StockStatParams statParams)
+        public bool Execute(StockStatParams statParams, string statName)
         {
+            SetCaption(statName);
             LoadStatParams(statParams);
             return (ShowDialog() == DialogResult.OK);
+        }
+
+        private void SetCaption(string statName)
+        {
+            Text = $"{statName} parameters";
         }
 
         private void LoadStatParams(StockStatParams statParams)

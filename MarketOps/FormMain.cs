@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MarketOps.Controls;
+using MarketOps.Controls.Extensions;
 using MarketOps.Controls.PriceChart;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Types;
@@ -122,17 +123,15 @@ namespace MarketOps
 
         private void tcCharts_Deselected(object sender, TabControlEventArgs e)
         {
-            if (e.TabPage == null) return;
-            var tbl = e.TabPage.Controls.Find("pvp", true);
-            ((PriceVolumePanel)tbl[0]).Chart.HidePriceAreaToolTips();
+            e.TabPage?.HidePriceAreaToolTips();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            PriceVolumePanel pvp = (PriceVolumePanel)tcCharts.TabPages[0].Controls.Find("pvp", true)[0];
-            StockStat stat = new StatATR();
-            stat.Calculate(pvp.CurrentData.Prices);
-            pvp.Chart.TestAddStat(stat);
+            //PriceVolumePanel pvp = (PriceVolumePanel)tcCharts.TabPages[0].Controls.Find("pvp", true)[0];
+            //StockStat stat = new StatATR("");
+            //stat.Calculate(pvp.CurrentData.Prices);
+            //pvp.Chart.TestAddStat(stat);
         }
 
         private void dataPumpToolStripMenuItem_Click(object sender, EventArgs e)

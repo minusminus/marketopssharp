@@ -164,7 +164,7 @@ namespace MarketOps.Controls.PriceChart
 
         public void AddStat(StockStat stat)
         {
-            chartPV.AddPriceAreaStatSeries(stat);
+            chartPV.AddStatSeries(stat);
             _currentData.Stats.Add(stat);
         }
 
@@ -186,9 +186,9 @@ namespace MarketOps.Controls.PriceChart
 
         private void OnClickPriceChartStat(object sender, EventArgs e)
         {
-            StockStat stat = StatsFactories.PriceChart.Get(sender.ToString());
+            StockStat stat = StatsFactories.PriceChart.Get(sender.ToString(), "areaPrices");
             FormEditStockStatParams frm = new FormEditStockStatParams();
-            if (!frm.Execute(stat.StatParams)) return;
+            if (!frm.Execute(stat.StatParams, stat.Name)) return;
             stat.Calculate(CurrentData.Prices);
             AddStat(stat);
             RefreshData();
@@ -197,9 +197,16 @@ namespace MarketOps.Controls.PriceChart
 
         private void OnClickAdditionalStat(object sender, EventArgs e)
         {
-            StockStat stat = StatsFactories.Additional.Get(sender.ToString());
+            string newAreaName = $"Area{Guid.NewGuid().ToString("N")}";
+
+            StockStat stat = StatsFactories.Additional.Get(sender.ToString(), newAreaName);
             FormEditStockStatParams frm = new FormEditStockStatParams();
-            if (!frm.Execute(stat.StatParams)) return;
+            if (!frm.Execute(stat.StatParams, stat.Name)) return;
+            chartPV.CreateNewArea(newAreaName);
+            stat.Calculate(CurrentData.Prices);
+            AddStat(stat);
+            RefreshData();
+            Refresh();
         }
     }
 }

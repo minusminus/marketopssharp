@@ -13,7 +13,7 @@ namespace MarketOps.Stats
         {
             Stats = new Dictionary<string, Type>()
             {
-                {new StatATR().Name, typeof (StatATR)},
+                {new StatATR("").Name, typeof (StatATR)},
             };
         }
     }

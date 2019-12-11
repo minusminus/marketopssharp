@@ -17,13 +17,13 @@ namespace MarketOps.Stats
             return Stats.Keys.OrderBy(x => x).ToList();
         }
 
-        public StockStat Get(string statName)
+        public StockStat Get(string statName, string chartArea)
         {
             Type t;
             if (!Stats.TryGetValue(statName, out t))
                 throw new Exception($"Not found stat: {statName}");
 
-            return (StockStat)Activator.CreateInstance(t);
+            return (StockStat)Activator.CreateInstance(t, chartArea);
         }
     }
 }

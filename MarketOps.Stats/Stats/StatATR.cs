@@ -13,6 +13,8 @@ namespace MarketOps.Stats.Stats
     {
         private const string ParamPeriod = "Period";
 
+        public StatATR(string chartArea) : base(chartArea) { }
+
         protected override void InitializeData()
         {
             _name = "ATR";

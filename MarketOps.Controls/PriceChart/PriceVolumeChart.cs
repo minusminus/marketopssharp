@@ -97,11 +97,11 @@ namespace MarketOps.Controls.PriceChart
             return PVChart.Series[seriesName];
         }
 
-        public void AddPriceAreaStatSeries(StockStat stat)
+        public void AddStatSeries(StockStat stat)
         {
             StockStatSeriesCreator factory = new StockStatSeriesCreator();
             for (int i = 0; i < stat.DataCount; i++)
-                PVChart.Series.Add(factory.CreatePriceAreaSeries(stat, i));
+                PVChart.Series.Add(factory.CreateSeries(stat, i));
         }
 
         public void SetChartMode(PriceVolumeChartMode newMode)
@@ -162,42 +162,31 @@ namespace MarketOps.Controls.PriceChart
             tooltipAxisY.Hide(PVChart);
         }
 
-        public void TestAddStat(StockStat stat)
+        public void CreateNewArea(string areaName)
         {
-            ChartArea area = PVChart.ChartAreas.Add("areaNew");
-            SetNewAreaProperties(area);
-            area.Position.Auto = false;
-            area.Position.Height = 20F;
-            area.Position.Width = 100F;
-            area.Position.Y = 80F;
-
-            PVChart.ChartAreas["areaPrices"].Position.Height = 60F;
-            PVChart.ChartAreas["areaVolume"].Position.Y = 60F;
-
-            Series series = PVChart.Series.Add("seriesNew");
-            series.ChartArea = "areaNew";
-            series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series.Color = System.Drawing.Color.Black;
-            series.Enabled = false;
-            series.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            series.IsXValueIndexed = true;
-            series.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
+            ResizeAreasForNewArea();
+            ChartArea area = PVChart.ChartAreas.Add(areaName);
+            SetNewAreaProperties(area, 20F);
         }
 
-        private void SetNewAreaProperties(ChartArea area)
+        private void SetNewAreaProperties(ChartArea area, float areaHeight)
         {
+            Font fontLabel = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular,
+                System.Drawing.GraphicsUnit.Point, ((byte) (238)));
+
             area.AlignWithChartArea = "areaPrices";
             area.AxisX.IsLabelAutoFit = false;
             area.AxisX.IsStartedFromZero = false;
             area.AxisX.LabelStyle.Enabled = false;
-            area.AxisX.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            area.AxisX.LabelStyle.Font = fontLabel;
             area.AxisX.LabelStyle.ForeColor = System.Drawing.Color.DarkGray;
             area.AxisX.LineColor = System.Drawing.Color.DarkGray;
             area.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             area.AxisX.MajorTickMark.Enabled = false;
             area.AxisX.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             area.AxisY.IsLabelAutoFit = false;
-            area.AxisY.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            area.AxisY.IsStartedFromZero = false;
+            area.AxisY.LabelStyle.Font = fontLabel;
             area.AxisY.LabelStyle.ForeColor = System.Drawing.Color.DarkGray;
             area.AxisY.LineColor = System.Drawing.Color.DarkGray;
             area.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
@@ -205,6 +194,21 @@ namespace MarketOps.Controls.PriceChart
             area.CursorX.IsUserEnabled = true;
             area.CursorX.LineColor = System.Drawing.Color.Gray;
             area.CursorY.LineColor = System.Drawing.Color.Gray;
+            area.Position.Auto = false;
+            area.Position.Height = areaHeight;
+            area.Position.Width = 100F;
+            area.Position.Y = 100F - areaHeight;
+        }
+
+        private void ResizeAreasForNewArea()
+        {
+            foreach (ChartArea area in PVChart.ChartAreas)
+            {
+                if (area.Name == "areaPrices")
+                    area.Position.Height -= 20F;
+                else
+                    area.Position.Y -= 20F;
+            }
         }
     }
 }

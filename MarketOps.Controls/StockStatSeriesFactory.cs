@@ -6,9 +6,9 @@ using MarketOps.StockData.Extensions;
 namespace MarketOps.Controls
 {
     /// <summary>
-    /// Series creator for stock stats
+    /// Series factory for stock stats
     /// </summary>
-    internal class StockStatSeriesCreator
+    internal class StockStatSeriesFactory
     {
         public Series CreateSeries(StockStat stat, int seriesIndex)
         {

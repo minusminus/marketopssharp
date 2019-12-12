@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChartAreaFactory.cs" />
     <Compile Include="Extensions\TabPageExtensions.cs" />
     <Compile Include="PriceChart\ChartYViewRangeCalculator.cs" />
     <Compile Include="PriceChart\ChartZoomCalculator.cs" />
@@ -74,7 +75,7 @@
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockStatSeriesCreator.cs" />
+    <Compile Include="StockStatSeriesFactory.cs" />
     <Compile Include="SuspendDrawingUpdate.cs" />
     <Compile Include="ToolTipExtended.cs">
       <SubType>Component</SubType>

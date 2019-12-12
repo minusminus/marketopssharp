@@ -126,6 +126,7 @@
             this.PVChart.TabIndex = 0;
             this.PVChart.Text = "chart1";
             this.PVChart.AxisViewChanged += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ViewEventArgs>(this.PVChart_AxisViewChanged);
+            this.PVChart.DoubleClick += new System.EventHandler(this.PVChart_DoubleClick);
             this.PVChart.MouseEnter += new System.EventHandler(this.PVChart_MouseEnter);
             this.PVChart.MouseLeave += new System.EventHandler(this.PVChart_MouseLeave);
             this.PVChart.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PVChart_MouseMove);

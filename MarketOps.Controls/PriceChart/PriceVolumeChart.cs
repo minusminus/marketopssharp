@@ -31,6 +31,9 @@ namespace MarketOps.Controls.PriceChart
         public event GetAxisXToolTip OnGetAxisXToolTip;
         public delegate string GetAxisYToolTip(double selectedValue);
         public event GetAxisYToolTip OnGetAxisYToolTip;
+
+        public delegate void AreaDoubleClick(string areaName);
+        public event AreaDoubleClick OnAreaDoubleClck;
         #endregion
 
         #region internal events
@@ -38,19 +41,11 @@ namespace MarketOps.Controls.PriceChart
         {
             if (PricesCandles.Points.Count == 0) return;
 
-            foreach (var area in PVChart.ChartAreas)
-            {
-                if (area.CursorX.IsUserEnabled)
-                    area.CursorX.SetCursorPixelPosition(e.Location, true);
-                if (area.CursorY.IsUserEnabled)
-                    area.CursorY.SetCursorPixelPosition(e.Location, true);
-            }
-
+            UpdateAreasCursors(e.Location);
             int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
             OnChartValueSelected?.Invoke(xSelectedIndex);
             SetPriceAreaToolTips(e.Location);
         }
-
 
         private void PVChart_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -80,9 +75,16 @@ namespace MarketOps.Controls.PriceChart
 
         private void PVChart_AxisViewChanged(object sender, ViewEventArgs e)
         {
-            if (e.Axis != PVChart.ChartAreas["areaPrices"].AxisX) return;
+            if (!Equals(e.Axis, PVChart.ChartAreas["areaPrices"].AxisX)) return;
             using (new SuspendDrawingUpdate(PVChart))
                 SetYViewRange();
+        }
+
+        private void PVChart_DoubleClick(object sender, EventArgs e)
+        {
+            ChartArea currentArea = FindAreaUnderCursor(PVChart.PointToClient(Control.MousePosition));
+            if (currentArea == null) return;
+            OnAreaDoubleClck?.Invoke(currentArea.Name);
         }
         #endregion
 
@@ -99,7 +101,7 @@ namespace MarketOps.Controls.PriceChart
 
         public void AddStatSeries(StockStat stat)
         {
-            StockStatSeriesCreator factory = new StockStatSeriesCreator();
+            StockStatSeriesFactory factory = new StockStatSeriesFactory();
             for (int i = 0; i < stat.DataCount; i++)
                 PVChart.Series.Add(factory.CreateSeries(stat, i));
         }
@@ -139,21 +141,44 @@ namespace MarketOps.Controls.PriceChart
             PVChart.ChartAreas["areaPrices"].AxisY.IsReversed = reversed;
         }
 
+        private void UpdateAreasCursors(Point cursorLocation)
+        {
+            foreach (var area in PVChart.ChartAreas)
+            {
+                if (area.CursorX.IsUserEnabled)
+                    area.CursorX.SetCursorPixelPosition(cursorLocation, true);
+                if (area.CursorY.IsUserEnabled)
+                    area.CursorY.SetCursorPixelPosition(cursorLocation, true);
+            }
+        }
+
         private void SetPriceAreaToolTips(Point cursorLocation)
         {
             int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
+            ChartArea currentArea = FindAreaUnderCursor(cursorLocation);
+            if (currentArea == null)
+            {
+                HidePriceAreaToolTips();
+                return;
+            }
 
-            Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
             if (cursorLocation.Y >= 0)
             {
-                double yval = ay.PixelPositionToValue(cursorLocation.Y);
+                double yval = currentArea.AxisY.PixelPositionToValue(cursorLocation.Y);
                 tooltipAxisY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, cursorLocation.Y - 10);
             }
             if (xSelectedIndex >= 0)
             {
+                Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
                 int xAxisRoundedPosition = (int)PVChart.ChartAreas["areaPrices"].AxisX.ValueToPixelPosition(PVChart.ChartAreas["areaPrices"].CursorX.Position);
                 tooltipAxisX.ShowIfPosChanged(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
             }
+        }
+
+        private ChartArea FindAreaUnderCursor(Point cursorLocation)
+        {
+            float positionHeight = 100F*(float) cursorLocation.Y/(float) PVChart.Height;
+            return PVChart.ChartAreas.FirstOrDefault(area => positionHeight < (area.Position.Y + area.Position.Height));
         }
 
         public void HidePriceAreaToolTips()
@@ -165,39 +190,7 @@ namespace MarketOps.Controls.PriceChart
         public void CreateNewArea(string areaName)
         {
             ResizeAreasForNewArea();
-            ChartArea area = PVChart.ChartAreas.Add(areaName);
-            SetNewAreaProperties(area, 20F);
-        }
-
-        private void SetNewAreaProperties(ChartArea area, float areaHeight)
-        {
-            Font fontLabel = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular,
-                System.Drawing.GraphicsUnit.Point, ((byte) (238)));
-
-            area.AlignWithChartArea = "areaPrices";
-            area.AxisX.IsLabelAutoFit = false;
-            area.AxisX.IsStartedFromZero = false;
-            area.AxisX.LabelStyle.Enabled = false;
-            area.AxisX.LabelStyle.Font = fontLabel;
-            area.AxisX.LabelStyle.ForeColor = System.Drawing.Color.DarkGray;
-            area.AxisX.LineColor = System.Drawing.Color.DarkGray;
-            area.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            area.AxisX.MajorTickMark.Enabled = false;
-            area.AxisX.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
-            area.AxisY.IsLabelAutoFit = false;
-            area.AxisY.IsStartedFromZero = false;
-            area.AxisY.LabelStyle.Font = fontLabel;
-            area.AxisY.LabelStyle.ForeColor = System.Drawing.Color.DarkGray;
-            area.AxisY.LineColor = System.Drawing.Color.DarkGray;
-            area.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            area.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
-            area.CursorX.IsUserEnabled = true;
-            area.CursorX.LineColor = System.Drawing.Color.Gray;
-            area.CursorY.LineColor = System.Drawing.Color.Gray;
-            area.Position.Auto = false;
-            area.Position.Height = areaHeight;
-            area.Position.Width = 100F;
-            area.Position.Y = 100F - areaHeight;
+            PVChart.ChartAreas.Add((new ChartAreaFactory()).CreateArea(areaName, 20F));
         }
 
         private void ResizeAreasForNewArea()

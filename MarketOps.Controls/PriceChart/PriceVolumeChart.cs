@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -164,8 +165,14 @@ namespace MarketOps.Controls.PriceChart
 
             if (cursorLocation.Y >= 0)
             {
-                double yval = currentArea.AxisY.PixelPositionToValue(cursorLocation.Y);
-                tooltipAxisY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, cursorLocation.Y - 10);
+                int ypos = cursorLocation.Y;
+                double yval = currentArea.AxisY.PixelPositionToValue(ypos);
+                if (yval < currentArea.AxisY.ScaleView.ViewMinimum)
+                {
+                    yval = currentArea.AxisY.ScaleView.ViewMinimum;
+                    ypos = (int)((float)PVChart.Height * (currentArea.AxisY.ValueToPosition(yval)) / 100F);
+                }
+                tooltipAxisY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, ypos - 10);
             }
             if (xSelectedIndex >= 0)
             {

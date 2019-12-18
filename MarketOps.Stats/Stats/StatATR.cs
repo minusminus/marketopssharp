@@ -20,6 +20,7 @@ namespace MarketOps.Stats.Stats
             _name = "ATR";
             CreateDataStructures(1);
             _dataColors[0] = Color.Red;
+            _dataNames[0] = "Indicator";
         }
 
         protected override void InitializeStatParams()

@@ -22,6 +22,9 @@ namespace MarketOps.Stats.Stats
             _dataColors[0] = Color.SaddleBrown;
             _dataColors[1] = Color.DarkRed;
             _dataColors[2] = Color.SaddleBrown;
+            _dataNames[0] = "High band";
+            _dataNames[1] = "SMA band";
+            _dataNames[2] = "Low band";
         }
 
         protected override void InitializeStatParams()

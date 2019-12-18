@@ -13,13 +13,15 @@ namespace MarketOps.StockData.Types
         protected string _name;
         protected float[][] _data;
         protected Color[] _dataColors;
+        protected string[] _dataNames;
         protected readonly StockStatParams _statParams = new StockStatParams();
 
         public string UID => _uid;
         public string Name => _name;
         public int DataCount => _data.Length;
         public float[] Data(int index) => _data[index];
-        public Color DataColor(int index) => _dataColors[index];
+        public Color[] DataColor => _dataColors;
+        public string DataName(int index) => _dataNames[index];
         public string ChartArea => _chartArea;
         public StockStatParams StatParams => _statParams;
 
@@ -40,6 +42,7 @@ namespace MarketOps.StockData.Types
         {
             _data = new float[seriesCount][];
             _dataColors = new Color[seriesCount];
+            _dataNames = new string[seriesCount];
         }
 
         protected abstract void InitializeData();

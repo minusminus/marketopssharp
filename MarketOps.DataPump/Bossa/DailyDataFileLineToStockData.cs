@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MarketOps.DataPump.Types;
 
 namespace MarketOps.DataPump.Bossa
@@ -28,11 +29,11 @@ namespace MarketOps.DataPump.Bossa
 
         private void VerifyLineData(string[] lineData)
         {
-            if (lineData.Length != 7) throw new Exception($"Incorrect line length: {lineData.Length} columns");
+            if ((lineData.Length != 7) && (lineData.Length != 8))
+                throw new Exception($"Incorrect line length: {lineData.Length} columns");
             for (int i = 1; i <= 6; i++)
             {
-                Int64 t;
-                if (!Int64.TryParse(lineData[i].Replace(".", ""), out t))
+                if (!lineData[i].All(c => char.IsDigit(c) || (c == '.')))
                     throw new Exception($"Incorrect value format in column {i}: {lineData[i]}");
             }
         }

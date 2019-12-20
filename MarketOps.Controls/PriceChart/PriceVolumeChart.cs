@@ -22,6 +22,7 @@ namespace MarketOps.Controls.PriceChart
         #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
 
+        public ChartAreaCollection ChartAreas => PVChart.ChartAreas;
         public Series PricesCandles => PVChart.Series["dataPricesCandles"];
         public Series PricesLine => PVChart.Series["dataPricesLine"];
         public Series Volume => PVChart.Series["dataVolume"];

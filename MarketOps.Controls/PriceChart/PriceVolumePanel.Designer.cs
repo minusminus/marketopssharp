@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PriceVolumePanel));
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.btnMirrorChart = new System.Windows.Forms.CheckBox();
+            this.ilIcons = new System.Windows.Forms.ImageList(this.components);
             this.btnDataRange = new System.Windows.Forms.Button();
             this.btnPrependData = new System.Windows.Forms.Button();
             this.btnPriceChartCandle = new System.Windows.Forms.CheckBox();
@@ -44,7 +45,6 @@
             this.cmnChart = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miStatsOnPriceChart = new System.Windows.Forms.ToolStripMenuItem();
             this.miAdditionalStats = new System.Windows.Forms.ToolStripMenuItem();
-            this.ilIcons = new System.Windows.Forms.ImageList(this.components);
             this.chartPV = new MarketOps.Controls.PriceChart.PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
@@ -78,6 +78,17 @@
             this.btnMirrorChart.TabStop = false;
             this.btnMirrorChart.UseVisualStyleBackColor = true;
             this.btnMirrorChart.CheckedChanged += new System.EventHandler(this.btnMirrorChart_CheckedChanged);
+            // 
+            // ilIcons
+            // 
+            this.ilIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilIcons.ImageStream")));
+            this.ilIcons.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilIcons.Images.SetKeyName(0, "candlestick-chart.png");
+            this.ilIcons.Images.SetKeyName(1, "line-chart.png");
+            this.ilIcons.Images.SetKeyName(2, "previous.png");
+            this.ilIcons.Images.SetKeyName(3, "refresh.png");
+            this.ilIcons.Images.SetKeyName(4, "revert-hand-drawn-arrows2.png");
+            this.ilIcons.Images.SetKeyName(5, "table-selection.png");
             // 
             // btnDataRange
             // 
@@ -208,17 +219,6 @@
             this.miAdditionalStats.Size = new System.Drawing.Size(143, 22);
             this.miAdditionalStats.Text = "Additional stats";
             // 
-            // ilIcons
-            // 
-            this.ilIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilIcons.ImageStream")));
-            this.ilIcons.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilIcons.Images.SetKeyName(0, "candlestick-chart.png");
-            this.ilIcons.Images.SetKeyName(1, "line-chart.png");
-            this.ilIcons.Images.SetKeyName(2, "previous.png");
-            this.ilIcons.Images.SetKeyName(3, "refresh.png");
-            this.ilIcons.Images.SetKeyName(4, "revert-hand-drawn-arrows2.png");
-            this.ilIcons.Images.SetKeyName(5, "table-selection.png");
-            // 
             // chartPV
             // 
             this.chartPV.ContextMenuStrip = this.cmnChart;
@@ -237,6 +237,7 @@
             this.Controls.Add(this.pnlButtons);
             this.Name = "PriceVolumePanel";
             this.Size = new System.Drawing.Size(606, 375);
+            this.Resize += new System.EventHandler(this.PriceVolumePanel_Resize);
             this.pnlButtons.ResumeLayout(false);
             this.pnlInfo.ResumeLayout(false);
             this.pnlInfo.PerformLayout();

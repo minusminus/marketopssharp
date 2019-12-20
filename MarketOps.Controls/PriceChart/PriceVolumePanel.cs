@@ -22,12 +22,16 @@ namespace MarketOps.Controls.PriceChart
             chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
             chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
             PrepareStatsContextMenuItems();
+
+            _stickerPositioner = new StockStatStickersPositioner(chartPV);
         }
 
         #region internal data
         private StockDisplayData _currentData;
         private IStockInfoGenerator _currentInfoGenerator;
         private IStockStatsInfoGenerator _currentStatsInfoGenerator;
+
+        private readonly StockStatStickersPositioner _stickerPositioner;
         #endregion
 
         #region public properties and events
@@ -90,6 +94,13 @@ namespace MarketOps.Controls.PriceChart
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             RefreshData();
+        }
+        #endregion
+
+        #region form events
+        private void PriceVolumePanel_Resize(object sender, EventArgs e)
+        {
+            _stickerPositioner.RepositionStickers();
         }
         #endregion
 
@@ -166,11 +177,7 @@ namespace MarketOps.Controls.PriceChart
         {
             chartPV.AddStatSeries(stat);
             _currentData.Stats.Add(stat);
-            StockStatSticker sticker = new StockStatSticker(stat, _currentStatsInfoGenerator);
-            sticker.Parent = chartPV;
-            //sticker.Left = 10;
-            //sticker.Top = 100;
-            sticker.BringToFront();
+            _stickerPositioner.Add(new StockStatSticker(stat, _currentStatsInfoGenerator));
         }
 
         private void PrepareStatsContextMenuItems()

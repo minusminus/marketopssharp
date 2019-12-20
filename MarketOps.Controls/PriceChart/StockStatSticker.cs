@@ -17,6 +17,8 @@ namespace MarketOps.Controls.PriceChart
         private readonly StockStat _stat;
         private readonly IStockStatsInfoGenerator _statsInfoGenerator;
 
+        public StockStat Stat => _stat;
+
         public StockStatSticker(StockStat stat, IStockStatsInfoGenerator statsInfoGenerator)
         {
             _stat = stat;

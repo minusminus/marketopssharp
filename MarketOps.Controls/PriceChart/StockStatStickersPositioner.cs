@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketOps.Controls.PriceChart
 {
@@ -27,9 +28,18 @@ namespace MarketOps.Controls.PriceChart
             RepositionStickers();
         }
 
-        private void RepositionStickers()
+        public void RepositionStickers()
         {
-            
+            const int stickerSpace = 2;
+            int[] nextStickerPos = Enumerable.Repeat(stickerSpace, _chart.ChartAreas.Count).ToArray();
+            foreach (StockStatSticker sticker in _stickers)
+            {
+                ChartArea area = _chart.ChartAreas[sticker.Stat.ChartArea];
+                int areaIndex = _chart.ChartAreas.IndexOf(area);
+                sticker.Left = nextStickerPos[areaIndex];
+                nextStickerPos[areaIndex] += stickerSpace + sticker.Width;
+                sticker.Top = (int) ((float) _chart.Height*area.Position.Y/100F) + stickerSpace;
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace MarketOps
             return string.Join(", ", values);
         }
 
-        private string GetStatHeader(StockStat stat)
+        public string GetStatHeader(StockStat stat)
         {
             return $"{stat.Name}({GetStatHeaderParams(stat.StatParams)})";
         }

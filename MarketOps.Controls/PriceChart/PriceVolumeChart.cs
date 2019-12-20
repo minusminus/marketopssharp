@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.Controls.PriceChart
@@ -105,6 +106,12 @@ namespace MarketOps.Controls.PriceChart
             StockStatSeriesFactory factory = new StockStatSeriesFactory();
             for (int i = 0; i < stat.DataCount; i++)
                 PVChart.Series.Add(factory.CreateSeries(stat, i));
+        }
+
+        public void RemoveStatSeries(StockStat stat)
+        {
+            for (int i = 0; i < stat.DataCount; i++)
+                PVChart.Series.Remove(PVChart.Series.FindByName(stat.ChartSeriesName(i)));
         }
 
         public void SetChartMode(PriceVolumeChartMode newMode)

@@ -9,5 +9,6 @@ namespace MarketOps.Controls.Types
     public interface IStockStatsInfoGenerator
     {
         string GetStatsSelectedInfo(StockDisplayData data, int selectedIndex);
+        string GetStatHeader(StockStat stat);
     }
 }

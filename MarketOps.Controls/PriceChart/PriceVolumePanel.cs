@@ -166,6 +166,11 @@ namespace MarketOps.Controls.PriceChart
         {
             chartPV.AddStatSeries(stat);
             _currentData.Stats.Add(stat);
+            StockStatSticker sticker = new StockStatSticker(stat, _currentStatsInfoGenerator);
+            sticker.Parent = chartPV;
+            //sticker.Left = 10;
+            //sticker.Top = 100;
+            sticker.BringToFront();
         }
 
         private void PrepareStatsContextMenuItems()

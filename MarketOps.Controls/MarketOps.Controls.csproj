@@ -45,6 +45,12 @@
   <ItemGroup>
     <Compile Include="ChartAreaFactory.cs" />
     <Compile Include="Extensions\TabPageExtensions.cs" />
+    <Compile Include="PriceChart\ChartAxisValueLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceChart\ChartAxisValueLabel.Designer.cs">
+      <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="PriceChart\ChartYViewRangeCalculator.cs" />
     <Compile Include="PriceChart\ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
@@ -101,6 +107,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="PriceChart\ChartAxisValueLabel.resx">
+      <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PriceChart\FormEditStockStatParams.resx">
       <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
     </EmbeddedResource>

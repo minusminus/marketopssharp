@@ -17,7 +17,11 @@ namespace MarketOps.Controls.PriceChart
             DoubleBuffered = true;
             SetChartMode(PriceVolumeChartMode.Candles);
             PVChart.MouseWheel += PVChart_MouseWheel;
+            axisLabelX = new ChartAxisValueLabel(PVChart);
+            axisLabelY = new ChartAxisValueLabel(PVChart);
         }
+
+        private ChartAxisValueLabel axisLabelX, axisLabelY;
 
         #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
@@ -180,13 +184,16 @@ namespace MarketOps.Controls.PriceChart
                     yval = currentArea.AxisY.ScaleView.ViewMinimum;
                     ypos = (int)((float)PVChart.Height * (currentArea.AxisY.ValueToPosition(yval)) / 100F);
                 }
-                tooltipAxisY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, ypos - 10);
+                //tooltipAxisY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, ypos - 10);
+                //axisLabelY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), 0, ypos - 10);
+                axisLabelY.ShowCenterOnValueVertically(OnGetAxisYToolTip?.Invoke(yval), 0, ypos);
             }
             if (xSelectedIndex >= 0)
             {
                 Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
                 int xAxisRoundedPosition = (int)PVChart.ChartAreas["areaPrices"].AxisX.ValueToPixelPosition(PVChart.ChartAreas["areaPrices"].CursorX.Position);
-                tooltipAxisX.ShowIfPosChanged(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
+                //tooltipAxisX.ShowIfPosChanged(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
+                axisLabelX.ShowCenterOnValueHorizontally(OnGetAxisXToolTip?.Invoke(xSelectedIndex), xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
             }
         }
 

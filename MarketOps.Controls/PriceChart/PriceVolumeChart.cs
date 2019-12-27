@@ -40,7 +40,7 @@ namespace MarketOps.Controls.PriceChart
         public event GetAxisYToolTip OnGetAxisYToolTip;
 
         public delegate void AreaDoubleClick(string areaName);
-        public event AreaDoubleClick OnAreaDoubleClck;
+        public event AreaDoubleClick OnAreaDoubleClick;
         #endregion
 
         #region internal events
@@ -91,7 +91,7 @@ namespace MarketOps.Controls.PriceChart
         {
             ChartArea currentArea = FindAreaUnderCursor(PVChart.PointToClient(Control.MousePosition));
             if (currentArea == null) return;
-            OnAreaDoubleClck?.Invoke(currentArea.Name);
+            OnAreaDoubleClick?.Invoke(currentArea.Name);
         }
         #endregion
 
@@ -184,15 +184,12 @@ namespace MarketOps.Controls.PriceChart
                     yval = currentArea.AxisY.ScaleView.ViewMinimum;
                     ypos = (int)((float)PVChart.Height * (currentArea.AxisY.ValueToPosition(yval)) / 100F);
                 }
-                //tooltipAxisY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), PVChart, 0, ypos - 10);
-                //axisLabelY.ShowIfPosChanged(OnGetAxisYToolTip?.Invoke(yval), 0, ypos - 10);
                 axisLabelY.ShowCenterOnValueVertically(OnGetAxisYToolTip?.Invoke(yval), 0, ypos);
             }
             if (xSelectedIndex >= 0)
             {
                 Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
                 int xAxisRoundedPosition = (int)PVChart.ChartAreas["areaPrices"].AxisX.ValueToPixelPosition(PVChart.ChartAreas["areaPrices"].CursorX.Position);
-                //tooltipAxisX.ShowIfPosChanged(OnGetAxisXToolTip?.Invoke(xSelectedIndex), PVChart, xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
                 axisLabelX.ShowCenterOnValueHorizontally(OnGetAxisXToolTip?.Invoke(xSelectedIndex), xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
             }
         }
@@ -205,8 +202,8 @@ namespace MarketOps.Controls.PriceChart
 
         public void HidePriceAreaToolTips()
         {
-            tooltipAxisX.Hide(PVChart);
-            tooltipAxisY.Hide(PVChart);
+            axisLabelX.Hide();
+            axisLabelY.Hide();
         }
 
         public void CreateNewArea(string areaName)

@@ -37,12 +37,13 @@
             this.lblInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
-            this.lblInfo.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.lblInfo.Margin = new System.Windows.Forms.Padding(0);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Padding = new System.Windows.Forms.Padding(2);
             this.lblInfo.Size = new System.Drawing.Size(58, 17);
             this.lblInfo.TabIndex = 0;
             this.lblInfo.Text = "ATR(20)";
+            this.lblInfo.DoubleClick += new System.EventHandler(this.lblInfo_DoubleClick);
             // 
             // StockStatSticker
             // 

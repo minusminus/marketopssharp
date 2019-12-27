@@ -177,7 +177,9 @@ namespace MarketOps.Controls.PriceChart
         {
             chartPV.AddStatSeries(stat);
             _currentData.Stats.Add(stat);
-            _stickerPositioner.Add(new StockStatSticker(stat, _currentStatsInfoGenerator));
+            StockStatSticker sticker = new StockStatSticker(stat, _currentStatsInfoGenerator);
+            sticker.OnStickerDoubleClick += OnStatStickerDoubleClick;
+            _stickerPositioner.Add(sticker);
         }
 
         private void PrepareStatsContextMenuItems()
@@ -199,12 +201,9 @@ namespace MarketOps.Controls.PriceChart
         private void OnClickPriceChartStat(object sender, EventArgs e)
         {
             StockStat stat = StatsFactories.PriceChart.Get(sender.ToString(), "areaPrices");
-            FormEditStockStatParams frm = new FormEditStockStatParams();
-            if (!frm.Execute(stat)) return;
-            stat.Calculate(CurrentData.Prices);
+            if (!EditStat(stat)) return;
             AddStat(stat);
-            RefreshData();
-            Refresh();
+            CalculateStatAndRefreshChartData(stat);
         }
 
         private void OnClickAdditionalStat(object sender, EventArgs e)
@@ -212,11 +211,28 @@ namespace MarketOps.Controls.PriceChart
             string newAreaName = $"Area{Guid.NewGuid().ToString("N")}";
 
             StockStat stat = StatsFactories.Additional.Get(sender.ToString(), newAreaName);
-            FormEditStockStatParams frm = new FormEditStockStatParams();
-            if (!frm.Execute(stat)) return;
+            if (!EditStat(stat)) return;
             chartPV.CreateNewArea(newAreaName);
-            stat.Calculate(CurrentData.Prices);
             AddStat(stat);
+            CalculateStatAndRefreshChartData(stat);
+        }
+
+        private void OnStatStickerDoubleClick(StockStat stat)
+        {
+            if (!EditStat(stat)) return;
+            CalculateStatAndRefreshChartData(stat);
+        }
+
+        private bool EditStat(StockStat stat)
+        {
+            using (FormEditStockStatParams frm = new FormEditStockStatParams())
+                if (!frm.Execute(stat)) return false;
+            return true;
+        }
+
+        private void CalculateStatAndRefreshChartData(StockStat stat)
+        {
+            stat.Calculate(CurrentData.Prices);
             RefreshData();
             Refresh();
         }

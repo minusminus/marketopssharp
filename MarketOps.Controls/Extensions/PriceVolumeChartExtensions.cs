@@ -76,5 +76,14 @@ namespace MarketOps.Controls.Extensions
             }
             AppendStockStatData(chart, data, stat);
         }
+
+        public static void UpdateStatSeriesDefinition(this PriceVolumeChart chart, StockStat stat)
+        {
+            for (int i = 0; i < stat.DataCount; i++)
+            {
+                Series s = chart.GetSeries(stat.ChartSeriesName(i));
+                s.Color = stat.DataColor[i];
+            }
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace MarketOps.StockData.Types
         }
 
         protected abstract void SetValueString(string value);
+
+        public abstract StockStatParam Clone();
     }
 }

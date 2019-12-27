@@ -208,18 +208,25 @@ namespace MarketOps.Controls.PriceChart
 
         public void CreateNewArea(string areaName)
         {
-            ResizeAreasForNewArea();
             PVChart.ChartAreas.Add((new ChartAreaFactory()).CreateArea(areaName, 20F));
+            ResizeAreas(20F);
         }
 
-        private void ResizeAreasForNewArea()
+        public void RemoveArea(string areaName)
         {
-            foreach (ChartArea area in PVChart.ChartAreas)
+            PVChart.ChartAreas.RemoveAt(PVChart.ChartAreas.IndexOf(areaName));
+            ResizeAreas(20F);
+        }
+
+        private void ResizeAreas(float positionModifier)
+        {
+            ChartArea areaPrices = PVChart.ChartAreas["areaPrices"];
+            areaPrices.Position.Height = 80F - (PVChart.ChartAreas.Count - 2) * positionModifier;
+            for (int i = 0; i < PVChart.ChartAreas.Count; i++)
             {
-                if (area.Name == "areaPrices")
-                    area.Position.Height -= 20F;
-                else
-                    area.Position.Y -= 20F;
+                ChartArea area = PVChart.ChartAreas[i];
+                if (area.Name == "areaPrices") continue;
+                area.Position.Y = areaPrices.Position.Height + (i - 1) * positionModifier;
             }
         }
     }

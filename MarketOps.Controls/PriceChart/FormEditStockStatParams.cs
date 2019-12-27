@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Types;
 
@@ -7,8 +6,6 @@ namespace MarketOps.Controls.PriceChart
 {
     public partial class FormEditStockStatParams : Form
     {
-        private StockStat _stat;
-
         public FormEditStockStatParams()
         {
             InitializeComponent();
@@ -16,11 +13,16 @@ namespace MarketOps.Controls.PriceChart
 
         public bool Execute(StockStat stat)
         {
-            _stat = stat;
             SetCaption(stat.Name);
             LoadStatParams(stat.StatParams);
             LoadStatDataColors(stat);
-            return (ShowDialog() == DialogResult.OK);
+            if (ShowDialog() == DialogResult.OK)
+            {
+                SaveStatParams(stat.StatParams);
+                SaveStatDataColors(stat);
+                return true;
+            }
+            return false;
         }
 
         private void SetCaption(string statName)
@@ -31,7 +33,17 @@ namespace MarketOps.Controls.PriceChart
         private void LoadStatParams(StockStatParams statParams)
         {
             foreach (var param in statParams)
-                srcParams.Add(new StockStatParamEditMapper(param));
+                srcParams.Add(new StockStatParamEditMapper(param.Clone()));
+        }
+
+        private void SaveStatParams(StockStatParams statParams)
+        {
+            var list = srcParams.GetEnumerator();
+            while (list.MoveNext())
+            {
+                StockStatParamEditMapper paramMapper = (StockStatParamEditMapper)list.Current;
+                statParams.Get(paramMapper.Name).ValueString = paramMapper.Value;
+            }
         }
 
         private void LoadStatDataColors(StockStat stat)
@@ -54,6 +66,16 @@ namespace MarketOps.Controls.PriceChart
             }
         }
 
+        private void SaveStatDataColors(StockStat stat)
+        {
+            foreach(var control in pnlTblLayoutColors.Controls)
+            {
+                if (!(control is Button)) continue;
+                Button btn = (Button)control;
+                stat.DataColor[(int)btn.Tag] = btn.BackColor;
+            }
+        }
+
         private void OnDataColorButtonClick(object sender, System.EventArgs e)
         {
             Button btn = (Button) sender;
@@ -61,7 +83,6 @@ namespace MarketOps.Controls.PriceChart
             dlgColor.Color = btn.BackColor;
             if (dlgColor.ShowDialog(this) != DialogResult.OK) return;
             btn.BackColor = dlgColor.Color;
-            _stat.DataColor[(int)btn.Tag] = dlgColor.Color;
         }
     }
 }

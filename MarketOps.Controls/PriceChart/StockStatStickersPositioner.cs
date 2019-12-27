@@ -28,6 +28,13 @@ namespace MarketOps.Controls.PriceChart
             RepositionStickers();
         }
 
+        public void Remove(StockStatSticker sticker)
+        {
+            sticker.Parent = null;
+            _stickers.Remove(sticker);
+            RepositionStickers();
+        }
+
         public void RepositionStickers()
         {
             const int stickerSpace = 2;

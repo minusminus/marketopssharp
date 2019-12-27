@@ -44,6 +44,7 @@
             this.lblInfo.TabIndex = 0;
             this.lblInfo.Text = "ATR(20)";
             this.lblInfo.DoubleClick += new System.EventHandler(this.lblInfo_DoubleClick);
+            this.lblInfo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lblInfo_MouseClick);
             // 
             // StockStatSticker
             // 

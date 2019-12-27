@@ -179,7 +179,15 @@ namespace MarketOps.Controls.PriceChart
             _currentData.Stats.Add(stat);
             StockStatSticker sticker = new StockStatSticker(stat, _currentStatsInfoGenerator);
             sticker.OnStickerDoubleClick += OnStatStickerDoubleClick;
+            sticker.OnStickerMouseClick += OnStatStickerClick;
             _stickerPositioner.Add(sticker);
+        }
+
+        public void RemoveStat(StockStatSticker sticker, StockStat stat)
+        {
+            chartPV.RemoveStatSeries(stat);
+            _currentData.Stats.Remove(stat);
+            _stickerPositioner.Remove(sticker);
         }
 
         private void PrepareStatsContextMenuItems()
@@ -217,10 +225,23 @@ namespace MarketOps.Controls.PriceChart
             CalculateStatAndRefreshChartData(stat);
         }
 
-        private void OnStatStickerDoubleClick(StockStat stat)
+        private void OnStatStickerDoubleClick(StockStatSticker sticker, StockStat stat)
         {
             if (!EditStat(stat)) return;
+            sticker.UpdateStatInfo();
+            chartPV.UpdateStatSeriesDefinition(stat);
             CalculateStatAndRefreshChartData(stat);
+        }
+
+        private void OnStatStickerClick(StockStatSticker sticker, StockStat stat, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                if (stat.ChartArea != "areaPrices")
+                    chartPV.RemoveArea(stat.ChartArea);
+                RemoveStat(sticker, stat);
+                Refresh();
+            }
         }
 
         private bool EditStat(StockStat stat)

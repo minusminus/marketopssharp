@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.StockData", "MarketOps.StockData\MarketOps.StockData.csproj", "{302B5831-ECE5-4043-A944-1D8814C8F78E}"
 EndProject
@@ -24,6 +24,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.DataPump", "MarketOps.DataPump\MarketOps.DataPump.csproj", "{F91F2B3E-BE20-4500-AC9D-7FB3DD9464E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.DataPump.Tests", "MarketOps.DataPump.Tests\MarketOps.DataPump.Tests.csproj", "{7AB2E1B5-C7C0-4B65-A940-5A7EBC8DA2F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.DataGen", "MarketOps.DataGen\MarketOps.DataGen.csproj", "{8D445ECA-BAA2-427A-9E6E-A27923DB0BFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.DataGen.Tests", "MarketOps.DataGen.Tests\MarketOps.DataGen.Tests.csproj", "{5E6F459A-311F-4DC9-BF75-41A751EAC0A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,14 @@ Global
 		{7AB2E1B5-C7C0-4B65-A940-5A7EBC8DA2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB2E1B5-C7C0-4B65-A940-5A7EBC8DA2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AB2E1B5-C7C0-4B65-A940-5A7EBC8DA2F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D445ECA-BAA2-427A-9E6E-A27923DB0BFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D445ECA-BAA2-427A-9E6E-A27923DB0BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D445ECA-BAA2-427A-9E6E-A27923DB0BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D445ECA-BAA2-427A-9E6E-A27923DB0BFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E6F459A-311F-4DC9-BF75-41A751EAC0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E6F459A-311F-4DC9-BF75-41A751EAC0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E6F459A-311F-4DC9-BF75-41A751EAC0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E6F459A-311F-4DC9-BF75-41A751EAC0A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

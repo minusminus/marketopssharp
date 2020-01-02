@@ -17,7 +17,7 @@ namespace MarketOps
         public static IDataPumpProvider GetDataPumpProvider()
         {
             DataTableSelector selector = new DataTableSelector();
-            return new PgDataPumpProvider(selector);
+            return new PgDataProvider(selector);
         }
     }
 }

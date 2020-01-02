@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{302B5831-ECE5-4043-A944-1D8814C8F78E}</ProjectGuid>
+    <ProjectGuid>{8D445ECA-BAA2-427A-9E6E-A27923DB0BFD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarketOps.StockData</RootNamespace>
-    <AssemblyName>MarketOps.StockData</AssemblyName>
+    <RootNamespace>MarketOps.DataGen</RootNamespace>
+    <AssemblyName>MarketOps.DataGen</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,28 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataFormatting.cs" />
-    <Compile Include="Extensions\StockDefinitionExtensions.cs" />
-    <Compile Include="Extensions\StockStatExtensions.cs" />
-    <Compile Include="Extensions\StockStatParamExtensions.cs" />
-    <Compile Include="Interfaces\IDataGenProvider.cs" />
-    <Compile Include="Interfaces\IDataPumpProvider.cs" />
-    <Compile Include="Interfaces\IStockDataProvider.cs" />
+    <Compile Include="DataGenerators\DataGenerator.cs" />
+    <Compile Include="IDataGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Extensions\StockPricesDataExtensions.cs" />
-    <Compile Include="StockPricesDataMerger.cs" />
-    <Compile Include="Types\DataPumpDownloadDefinition.cs" />
-    <Compile Include="Types\StockDataRange.cs" />
-    <Compile Include="Types\StockDefinition.cs" />
-    <Compile Include="Types\StockDisplayData.cs" />
-    <Compile Include="Types\StockPricesData.cs" />
-    <Compile Include="Types\StockStat.cs" />
-    <Compile Include="Types\StockStatParam.cs" />
-    <Compile Include="Types\StockStatParamFloat.cs" />
-    <Compile Include="Types\StockStatParamInt.cs" />
-    <Compile Include="Types\StockStatParams.cs" />
-    <Compile Include="Types\StockStatParamString.cs" />
-    <Compile Include="Types\StockType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
+      <Name>MarketOps.StockData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

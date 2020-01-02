@@ -85,7 +85,7 @@
     <Compile Include="DataTableSelector.cs" />
     <Compile Include="PgBaseProvider.cs" />
     <Compile Include="PgDataExtensions.cs" />
-    <Compile Include="Bossa\PgDataPumpProvider.cs" />
+    <Compile Include="Bossa\PgDataProvider.cs" />
     <Compile Include="Bossa\PgDataToDownloadDefinitionConverter.cs" />
     <Compile Include="PgDataToStockDefinitionConverter.cs" />
     <Compile Include="PgDBConnectionString.cs" />

@@ -8,11 +8,11 @@ namespace MarketOps.DataProvider.Pg.Bossa
     /// <summary>
     /// data pump database provider for AT database on postgres
     /// </summary>
-    public class PgDataPumpProvider : PgBaseProvider, IDataPumpProvider
+    public class PgDataProvider : PgBaseProvider, IDataPumpProvider, IDataGenProvider
     {
         private readonly DataTableSelector _dataTableSelector;
 
-        public PgDataPumpProvider(DataTableSelector dataTableSelector)
+        public PgDataProvider(DataTableSelector dataTableSelector)
         {
             _dataTableSelector = dataTableSelector;
         }

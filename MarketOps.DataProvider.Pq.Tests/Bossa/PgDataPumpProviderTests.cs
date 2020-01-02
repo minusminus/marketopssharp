@@ -11,12 +11,12 @@ namespace MarketOps.DataProvider.Pq.Tests.Bossa
     public class PgDataPumpProviderTests
     {
         private readonly DataTableSelector dataTableSelector = new DataTableSelector();
-        private PgDataPumpProvider TestObj;// = new PgDataPumpProvider(dataTableSelector);
+        private PgDataProvider TestObj;// = new PgDataPumpProvider(dataTableSelector);
 
         [SetUp]
         public void SetUp()
         {
-            TestObj = new PgDataPumpProvider(dataTableSelector);
+            TestObj = new PgDataProvider(dataTableSelector);
         }
 
         [Test]

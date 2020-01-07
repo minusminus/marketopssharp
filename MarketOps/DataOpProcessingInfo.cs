@@ -1,11 +1,11 @@
 ﻿using MarketOps.StockData.Types;
 
-namespace MarketOps.DataPump
+namespace MarketOps
 {
     /// <summary>
-    /// Daily data processing information.
+    /// Data operation processing information.
     /// </summary>
-    public class DataPumperDailyProcessingInfo
+    public class DataOpProcessingInfo
     {
         public StockDefinition Stock;
         public int CurrentPosition;

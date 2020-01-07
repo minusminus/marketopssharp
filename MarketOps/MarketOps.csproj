@@ -52,9 +52,11 @@
     <Compile Include="Charting\ChartAreaPreparatorVolume.cs" />
     <Compile Include="Charting\DataSeriesPreparatorStock.cs" />
     <Compile Include="Charting\DataSeriesPreparatorVolume.cs" />
+    <Compile Include="DataGen\DataGenerator.cs" />
+    <Compile Include="DataOp.cs" />
     <Compile Include="DataProvidersFactory.cs" />
     <Compile Include="DataPump\DataPumper.cs" />
-    <Compile Include="DataPump\DataPumperDailyProcessingInfo.cs" />
+    <Compile Include="DataOpProcessingInfo.cs" />
     <Compile Include="DataPump\Forms\FormDataPump.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +108,10 @@
       <Project>{107a7493-bf4d-48fc-aad4-b9d291ff8011}</Project>
       <Name>MarketOps.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketOps.DataGen\MarketOps.DataGen.csproj">
+      <Project>{8d445eca-baa2-427a-9e6e-a27923db0bfd}</Project>
+      <Name>MarketOps.DataGen</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.DataProvider.Pg\MarketOps.DataProvider.Pg.csproj">
       <Project>{dc50b64a-8c80-4562-b705-ed9c0f850e3c}</Project>
       <Name>MarketOps.DataProvider.Pg</Name>
@@ -123,6 +129,8 @@
       <Name>MarketOps.StockData</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataGen\Forms\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

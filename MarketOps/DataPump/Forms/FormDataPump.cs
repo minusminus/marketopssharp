@@ -67,13 +67,13 @@ namespace MarketOps.DataPump.Forms
             lblImportProgressProg.Text = "";
         }
 
-        private void OnStockStartProcessing(DataPumperDailyProcessingInfo info)
+        private void OnStockStartProcessing(DataOpProcessingInfo info)
         {
             lblImportProgressStock.Text = $"[{info.CurrentPosition} / {info.TotalCount}] {info.Stock.Name}";
             Application.DoEvents();
         }
 
-        private void OnStockProcessingException(DataPumperDailyProcessingInfo info, Exception e)
+        private void OnStockProcessingException(DataOpProcessingInfo info, Exception e)
         {
             AddLog($"{info.Stock.Name} exception: {e.Message}");
         }

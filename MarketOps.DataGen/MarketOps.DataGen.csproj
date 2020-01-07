@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataGenerators\DataGenerator.cs" />
+    <Compile Include="DataGenerators\DataAggregator.cs" />
+    <Compile Include="DataGenFactory.cs" />
     <Compile Include="IDataGen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

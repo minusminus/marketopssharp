@@ -7,11 +7,11 @@ namespace MarketOps.DataGen.DataGenerators
     /// <summary>
     /// Aggregate stock data generator.
     /// </summary>
-    internal class DataGenerator : IDataGen
+    internal class DataAggregator : IDataGen
     {
         private readonly IDataGenProvider _provider;
 
-        public DataGenerator(IDataGenProvider provider)
+        public DataAggregator(IDataGenProvider provider)
         {
             _provider = provider;
         }

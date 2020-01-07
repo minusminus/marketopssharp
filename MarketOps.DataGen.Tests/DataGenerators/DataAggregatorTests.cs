@@ -11,9 +11,9 @@ using MarketOps.StockData.Types;
 namespace MarketOps.DataGen.Tests.DataGenerators
 {
     [TestFixture]
-    public class DataGeneratorTests
+    public class DataAggregatorTests
     {
-        private DataGenerator TestObj;
+        private DataAggregator TestObj;
 
         private IDataGenProvider _dataGenProvider;
         private readonly StockDefinition _stockDefinition = new StockDefinition() { ID = 1, Type = StockType.Stock };
@@ -33,7 +33,7 @@ namespace MarketOps.DataGen.Tests.DataGenerators
             _dataGenProvider.GetTableName(StockType.Stock, StockDataRange.Monthly, 0).Returns(TblMonthly);
             _dataGenProvider.ExecuteSQL(Arg.Compat.Do<string>(s => _executedQueries.Add(s)));
 
-            TestObj = new DataGenerator(_dataGenProvider);
+            TestObj = new DataAggregator(_dataGenProvider);
         }
 
         private bool CheckQueryPart(int queryNo, string queryPart)

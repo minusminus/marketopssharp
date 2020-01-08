@@ -39,7 +39,7 @@ namespace MarketOps.DataGen.DataGenerators
 
         private void DeleteLastTSRow(int stockId, string destTableName, DateTime ts)
         {
-            string qry = $"delete {destTableName} where fk_id_spolki = {stockId} and ts = date '{ts.ToString("yyyy-MM-dd")}'";
+            string qry = $"delete from {destTableName} where fk_id_spolki = {stockId} and ts = date '{ts.ToString("yyyy-MM-dd")}'";
             _provider.ExecuteSQL(qry);
         }
 

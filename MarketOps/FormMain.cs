@@ -12,6 +12,7 @@ using MarketOps.Controls;
 using MarketOps.Controls.Extensions;
 using MarketOps.Controls.PriceChart;
 using MarketOps.Controls.Types;
+using MarketOps.DataGen;
 using MarketOps.StockData.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.DataPump;
@@ -146,6 +147,16 @@ namespace MarketOps
             DataPumper dataPumper = new DataPumper(dataPumpProvider, dataPump);
 
             FormDataPump frm = new FormDataPump(dataPumper);
+            frm.Execute();
+        }
+
+        private void dataGenerationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IDataGenProvider dataGenProvider = DataProvidersFactory.GetDataGenProvider();
+            IDataGen dataGen = DataGenFactory.Get(dataGenProvider);
+            DataGenerator dataGenerator = new DataGenerator(dataGenProvider, dataGen);
+
+            FormDataGen frm = new FormDataGen(dataGenerator);
             frm.Execute();
         }
     }

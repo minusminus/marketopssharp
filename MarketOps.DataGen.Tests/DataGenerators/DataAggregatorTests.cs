@@ -59,7 +59,7 @@ namespace MarketOps.DataGen.Tests.DataGenerators
                 .Returns(new DateTime(2019, 1, 1));
             TestObj.GenerateWeekly(_stockDefinition);
             _executedQueries.Count.ShouldBe(2);
-            CheckQueryPart(0, $"delete {TblWeekly}").ShouldBeTrue();
+            CheckQueryPart(0, $"delete from {TblWeekly}").ShouldBeTrue();
             CheckQueryPart(1, $"insert into {TblWeekly}").ShouldBeTrue();
             CheckQueryPart(1, $"from {TblDaily}").ShouldBeTrue();
         }
@@ -82,7 +82,7 @@ namespace MarketOps.DataGen.Tests.DataGenerators
                 .Returns(new DateTime(2019, 1, 1));
             TestObj.GenerateMonthly(_stockDefinition);
             _executedQueries.Count.ShouldBe(2);
-            CheckQueryPart(0, $"delete {TblMonthly}").ShouldBeTrue();
+            CheckQueryPart(0, $"delete from {TblMonthly}").ShouldBeTrue();
             CheckQueryPart(1, $"insert into {TblMonthly}").ShouldBeTrue();
             CheckQueryPart(1, $"from {TblDaily}").ShouldBeTrue();
         }

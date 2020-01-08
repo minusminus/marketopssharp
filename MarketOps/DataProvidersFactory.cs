@@ -19,5 +19,11 @@ namespace MarketOps
             DataTableSelector selector = new DataTableSelector();
             return new PgDataProvider(selector);
         }
+
+        public static IDataGenProvider GetDataGenProvider()
+        {
+            DataTableSelector selector = new DataTableSelector();
+            return new PgDataProvider(selector);
+        }
     }
 }

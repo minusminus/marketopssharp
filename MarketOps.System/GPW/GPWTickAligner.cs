@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using MarketOps.StockData.Types;
 using MarketOps.System.Interfaces;
 
@@ -64,16 +65,12 @@ namespace MarketOps.System.GPW
 
         private float StockUp(DateTime ts, float value)
         {
-            float tickSize = GetStockTickSize(ts, value);
-            float reducedToOne = value/tickSize;
-            return NoReminder(reducedToOne) ? value : BorderStockToMinValue((float) Math.Ceiling(reducedToOne)*tickSize);
+            return AlignValue(Math.Ceiling, value, GetStockTickSize(ts, value));
         }
 
         private float StockDown(DateTime ts, float value)
         {
-            float tickSize = GetStockTickSize(ts, value);
-            float reducedToOne = value / tickSize;
-            return NoReminder(reducedToOne) ? value : BorderStockToMinValue((float) Math.Floor(value/tickSize)*tickSize);
+            return AlignValue(Math.Floor, value, GetStockTickSize(ts, value));
         }
 
         private float GetStockTickSize(DateTime ts, float value)
@@ -96,6 +93,22 @@ namespace MarketOps.System.GPW
         private bool NoReminder(float value)
         {
             return value%1 == 0;
+        }
+
+        private float AlignValueWithProperAccuracy(Func<double, double> alignOp, float reducedToOne, float tickSize)
+        {
+            float invTickSize = 1F/tickSize;
+            return invTickSize > 1
+                ? (float) alignOp(reducedToOne)/invTickSize
+                : (float) alignOp(reducedToOne)*tickSize;
+        }
+
+        private float AlignValue(Func<double, double> alignOp, float value, float tickSize)
+        {
+            float reducedToOne = value/tickSize;
+            return NoReminder(reducedToOne)
+                ? value
+                : BorderStockToMinValue(AlignValueWithProperAccuracy(alignOp, reducedToOne, tickSize));
         }
     }
 }

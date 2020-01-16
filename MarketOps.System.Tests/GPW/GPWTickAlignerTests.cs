@@ -56,5 +56,108 @@ namespace MarketOps.System.Tests.GPW
         {
             _testObj.Down(StockType.Stock, new DateTime(2019, 03, 03), value).ShouldBe(expected);
         }
+
+        [TestCase(1, 1)]
+        [TestCase(0.99F, 0.99F)]
+        [TestCase(1.001F, 1.01F)]
+        [TestCase(0.991F, 1)]
+        [TestCase(1.991F, 2)]
+        public void Up_Index(float value, float expected)
+        {
+            _testObj.Up(StockType.Index, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(0.99F, 0.99F)]
+        [TestCase(1.001F, 1)]
+        [TestCase(0.991F, 0.99F)]
+        [TestCase(1.991F, 1.99F)]
+        public void Down_Index(float value, float expected)
+        {
+            _testObj.Down(StockType.Index, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(0.99F, 1)]
+        [TestCase(1.001F, 2)]
+        [TestCase(0.991F, 1)]
+        [TestCase(1.991F, 2)]
+        [TestCase(2.001F, 3)]
+        public void Up_Future(float value, float expected)
+        {
+            _testObj.Up(StockType.Future, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(0.99F, 1)]
+        [TestCase(1.001F, 1)]
+        [TestCase(0.991F, 1)]
+        [TestCase(1.991F, 1)]
+        [TestCase(2.001F, 2)]
+        public void Down_Future(float value, float expected)
+        {
+            _testObj.Down(StockType.Future, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(0.0001F, 0.0001F)]
+        [TestCase(0.001F, 0.001F)]
+        [TestCase(1, 1)]
+        [TestCase(0.99991F, 1)]
+        [TestCase(1.00001F, 1.0001F)]
+        public void Up_InvestmentFund(float value, float expected)
+        {
+            _testObj.Up(StockType.InvestmentFund, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(0.0001F, 0.0001F)]
+        [TestCase(0.001F, 0.001F)]
+        [TestCase(1, 1)]
+        [TestCase(0.99991F, 0.9999F)]
+        [TestCase(1.00001F, 1)]
+        public void Down_InvestmentFund(float value, float expected)
+        {
+            _testObj.Down(StockType.InvestmentFund, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(0.0001F, 0.0001F)]
+        [TestCase(0.001F, 0.001F)]
+        [TestCase(1, 1)]
+        [TestCase(0.99991F, 1)]
+        [TestCase(1.00001F, 1.0001F)]
+        public void Up_NBPCurrency(float value, float expected)
+        {
+            _testObj.Up(StockType.NBPCurrency, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(0.0001F, 0.0001F)]
+        [TestCase(0.001F, 0.001F)]
+        [TestCase(1, 1)]
+        [TestCase(0.99991F, 0.9999F)]
+        [TestCase(1.00001F, 1)]
+        public void Down_NBPCurrency(float value, float expected)
+        {
+            _testObj.Down(StockType.InvestmentFund, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(0.000001F, 0.000001F)]
+        [TestCase(0.001F, 0.001F)]
+        [TestCase(1, 1)]
+        [TestCase(0.9999991F, 1)]
+        [TestCase(1.000001F, 1.000001F)]
+        //[TestCase(1.0000001F, 1.000001F)] //out of float accuracy
+        public void Up_Forex(float value, float expected)
+        {
+            _testObj.Up(StockType.Forex, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
+
+        [TestCase(0.000001F, 0.000001F)]
+        [TestCase(0.001F, 0.001F)]
+        [TestCase(1, 1)]
+        [TestCase(0.9999991F, 0.999999F)]
+        [TestCase(1.000001F, 1.000001F)]
+        public void Down_Forex(float value, float expected)
+        {
+            _testObj.Down(StockType.Forex, new DateTime(2019, 12, 12), value).ShouldBe(expected);
+        }
     }
 }

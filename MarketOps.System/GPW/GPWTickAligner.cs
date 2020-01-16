@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using MarketOps.StockData.Types;
 using MarketOps.System.Interfaces;
 

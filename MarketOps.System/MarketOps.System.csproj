@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataLoaders\BufferedDataLoader.cs" />
+    <Compile Include="Interfaces\IDataLoader.cs" />
     <Compile Include="Interfaces\ITickAligner.cs" />
     <Compile Include="GPW\GPWTickAligner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

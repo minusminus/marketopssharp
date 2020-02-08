@@ -49,7 +49,7 @@ namespace MarketOps.DataGen.DataGenerators
             query pattern for monthly/weekly data generation:
 
             insert into at_mies_test(fk_id_spolki, ts, open, high, low, close, volume)
-            select 289 as "fk_id_spolki", data.grouper as "ts", (min(array[data.id, data.open]))[2] as "open", max(data.high) as "high", min(data.low) as "low", (max(array[data.id, data.close]))[2] as "close", sum(data.volume) as "volume"
+            select 289 as "fk_id_spolki", data.grouper as "ts", (min(array[extract(epoch from data.ts), data.open]))[2] as "open", max(data.high) as "high", min(data.low) as "low", (max(array[extract(epoch from data.ts), data.close]))[2] as "close", sum(data.volume) as "volume"
             from 
             (
             select *, date_trunc('month', ts) as "grouper" --, date_trunc('week', ts)
@@ -61,7 +61,7 @@ namespace MarketOps.DataGen.DataGenerators
              */
             string qry =
                 $"insert into {destTableName}(fk_id_spolki, ts, open, high, low, close, volume)" +
-                $"select {stockId} as \"fk_id_spolki\", data.grouper as \"ts\", (min(array[data.id, data.open]))[2] as \"open\", max(data.high) as \"high\", min(data.low) as \"low\", (max(array[data.id, data.close]))[2] as \"close\", sum(data.volume) as \"volume\" " +
+                $"select {stockId} as \"fk_id_spolki\", data.grouper as \"ts\", (min(array[extract(epoch from data.ts), data.open]))[2] as \"open\", max(data.high) as \"high\", min(data.low) as \"low\", (max(array[extract(epoch from data.ts), data.close]))[2] as \"close\", sum(data.volume) as \"volume\" " +
                 $"from " +
                 $"( " +
                 $"select *, date_trunc('{dataRange}', ts) as \"grouper\" " +

@@ -30,7 +30,7 @@ namespace MarketOps.DataProvider.Pg
         {
             StockDefinition res = new StockDefinition();
 
-            string qry = $"select * from at_spolki where nazwaspolki='{stockName.ToUpper()}'";
+            string qry = $"select * from at_spolki where nazwaspolki='{stockName}' or nazwaakcji='{stockName.ToUpper()}'";
             ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows)

@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
-    <Compile Include="Equity\Position.cs" />
-    <Compile Include="Equity\Positions.cs" />
+    <Compile Include="Position.cs" />
+    <Compile Include="PositionDir.cs" />
+    <Compile Include="System.cs" />
+    <Compile Include="Extensions\SystemExtensions.cs" />
+    <Compile Include="Extensions\SystemValueCalculator.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
     <Compile Include="Interfaces\ITickAligner.cs" />
     <Compile Include="GPW\GPWTickAligner.cs" />

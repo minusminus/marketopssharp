@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLoaders\BufferedDataLoaderTests.cs" />
+    <Compile Include="Extensions\SystemValueCalculatorTests.cs" />
     <Compile Include="GPW\GPWTickAlignerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

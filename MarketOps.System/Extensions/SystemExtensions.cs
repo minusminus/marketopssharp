@@ -9,7 +9,7 @@ namespace MarketOps.System.Extensions
     /// </summary>
     public static class SystemExtensions
     {
-        public static void Open(this System system, StockDefinition stock, PositionDir dir, DateTime ts, float price, StockDataRange dataRange, int intradayInterval)
+        public static void Open(this System system, StockDefinition stock, PositionDir dir, DateTime ts, float price, int volume, StockDataRange dataRange, int intradayInterval)
         {
             Position pos = new Position
             {
@@ -19,8 +19,10 @@ namespace MarketOps.System.Extensions
                 Direction = dir,
                 Open = price,
                 TSOpen = ts,
+                Volume = volume
             };
             system.PositionsActive.Add(pos);
+            system.Cash -= pos.OpenValue();
         }
 
         public static void Close(this System system, int positionIndex, DateTime ts, float price)
@@ -30,6 +32,7 @@ namespace MarketOps.System.Extensions
             pos.TSClose = ts;
             system.PositionsActive.RemoveAt(positionIndex);
             system.PositionsClosed.Add(pos);
+            system.Cash += pos.ClosedValue();
         }
 
         public static void CloseAll(this System system, DateTime ts, float price)
@@ -40,7 +43,7 @@ namespace MarketOps.System.Extensions
 
         public static void CalcCurrentValue(this System system, DateTime ts, IDataLoader dataLoader)
         {
-            system.Equity.Add(new SystemValueCalculator().Calc(system, ts, dataLoader));
+            system.Value.Add(new SystemValueCalculator().Calc(system, ts, dataLoader));
         }
     }
 }

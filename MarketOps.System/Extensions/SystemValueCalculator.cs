@@ -13,14 +13,14 @@ namespace MarketOps.System.Extensions
     {
         public float Calc(System system, DateTime ts, IDataLoader dataLoader)
         {
-            return CalcActive(system, ts, dataLoader) + CalcClosed(system, ts);
+            return CalcActive(system, ts, dataLoader) + CalcClosed(system, ts) + system.Cash;
         }
 
         private float CalcClosed(System system, DateTime ts)
         {
             return system.PositionsClosed
                 .Where(p => p.TSClose == ts)
-                .Sum(p => p.Direction == PositionDir.Long ? p.Close - p.Open : p.Open - p.Close);
+                .Sum(p => p.ClosedValue());
         }
 
         private float CalcActive(System system, DateTime ts, IDataLoader dataLoader)

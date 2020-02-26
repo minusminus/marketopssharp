@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Shouldly;
 using NSubstitute;
 using MarketOps.System.Extensions;
 using MarketOps.System.Interfaces;
+using MarketOps.StockData.Types;
 
 namespace MarketOps.System.Tests.Extensions
 {
@@ -16,6 +13,8 @@ namespace MarketOps.System.Tests.Extensions
     {
         private SystemValueCalculator _testObj;
         private IDataLoader _dataLoader;
+        private System _testSys;
+        private StockPricesData _stockPrices;
 
         const float CashValue = 100;
         const float PriceL = 100;
@@ -26,35 +25,34 @@ namespace MarketOps.System.Tests.Extensions
         [SetUp]
         public void SetUp()
         {
-            _testObj = new SystemValueCalculator();
             _dataLoader = Substitute.For<IDataLoader>();
+            _testSys = new System() { Cash = CashValue };
+            _stockPrices = new StockPricesData(1);
+            _testObj = new SystemValueCalculator();
+
+            _stockPrices.TS[0] = CurrentTS;
+            _stockPrices.C[0] = PriceL;
+            _dataLoader
+                .Get(Arg.Compat.Any<string>(), Arg.Compat.Any<StockDataRange>(), Arg.Compat.Any<int>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>())
+                .Returns<StockPricesData>(_stockPrices);
         }
 
         [Test]
         public void Calc_Empty__Returns0()
         {
-            System sys = new System();
-            _testObj.Calc(sys, DateTime.Now, _dataLoader).ShouldBe(0);
+            _testObj.Calc(new System(), DateTime.Now, _dataLoader).ShouldBe(0);
         }
 
         [Test]
         public void Calc_CashOnly__ReturnsCash()
         {
-            System sys = new System
-            {
-                Cash = CashValue
-            };
-            _testObj.Calc(sys, CurrentTS, _dataLoader).ShouldBe(CashValue);
+            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
         }
 
         [Test]
-        public void Calc_CurrentClosedPositionLong__ReturnsPositionValue()
+        public void Calc_WithClosedPosition__ClosedDoesNotCount()
         {
-            System sys = new System
-            {
-                Cash = 0
-            };
-            sys.PositionsClosed.Add(new Position()
+            _testSys.PositionsClosed.Add(new Position()
             {
                 Direction = PositionDir.Long,
                 TSOpen = CurrentTS.AddDays(-10),
@@ -63,7 +61,33 @@ namespace MarketOps.System.Tests.Extensions
                 Close = PriceH,
                 Volume = Vol
             });
-            _testObj.Calc(sys, CurrentTS, _dataLoader).ShouldBe((PriceH - PriceL) * Vol);
+            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
+        }
+
+        [Test]
+        public void Calc_WithActivePosition__ReturnsCashAndPositionValue()
+        {
+            _testSys.PositionsActive.Add(new Position()
+            {
+                Stock = new StockDefinition(),
+                Direction = PositionDir.Long,
+                Volume = Vol
+            });
+            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + PriceL * Vol);
+        }
+
+        [Test]
+        public void Calc_WithTwoActivePositions__ReturnsCashAndPositionsValue()
+        {
+            const int posCount = 2;
+            for (int i = 0; i < posCount; i++)
+                _testSys.PositionsActive.Add(new Position()
+                {
+                    Stock = new StockDefinition(),
+                    Direction = PositionDir.Long,
+                    Volume = Vol
+                });
+            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + (PriceL * Vol) * posCount);
         }
     }
 }

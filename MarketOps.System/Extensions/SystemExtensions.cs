@@ -1,6 +1,7 @@
 ﻿using MarketOps.StockData.Types;
 using MarketOps.System.Interfaces;
 using System;
+using System.Linq;
 
 namespace MarketOps.System.Extensions
 {
@@ -33,6 +34,7 @@ namespace MarketOps.System.Extensions
             system.PositionsActive.RemoveAt(positionIndex);
             system.PositionsClosed.Add(pos);
             system.Cash += pos.ClosedValue();
+            system.ValueOnPositions.Add(system.ValueOnPositions.LastOrDefault() + pos.ClosedValue());
         }
 
         public static void CloseAll(this System system, DateTime ts, float price)

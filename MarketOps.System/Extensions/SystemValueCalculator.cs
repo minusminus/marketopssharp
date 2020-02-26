@@ -7,20 +7,13 @@ using System.Linq;
 namespace MarketOps.System.Extensions
 {
     /// <summary>
-    /// Calculates system current equity value according to active and closed positions.
+    /// Calculates system current equity value.
     /// </summary>
     internal class SystemValueCalculator
     {
         public float Calc(System system, DateTime ts, IDataLoader dataLoader)
         {
-            return CalcActive(system, ts, dataLoader) + CalcClosed(system, ts) + system.Cash;
-        }
-
-        private float CalcClosed(System system, DateTime ts)
-        {
-            return system.PositionsClosed
-                .Where(p => p.TSClose == ts)
-                .Sum(p => p.ClosedValue());
+            return CalcActive(system, ts, dataLoader) + system.Cash;
         }
 
         private float CalcActive(System system, DateTime ts, IDataLoader dataLoader)

@@ -11,7 +11,7 @@ namespace MarketOps.System.Extensions
     /// </summary>
     public static class PositionExtensions
     {
-        public static float ClosedValue(this Position pos)
+        public static float Value(this Position pos)
         {
             return (pos.Direction == PositionDir.Long ? pos.Close - pos.Open : pos.Open - pos.Close) * pos.Volume;
         }
@@ -19,6 +19,11 @@ namespace MarketOps.System.Extensions
         public static float OpenValue(this Position pos)
         {
             return pos.Open * pos.Volume;
+        }
+
+        public static float CloseValue(this Position pos)
+        {
+            return pos.Close * pos.Volume;
         }
     }
 }

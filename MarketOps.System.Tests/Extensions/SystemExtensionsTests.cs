@@ -3,6 +3,8 @@ using NUnit.Framework;
 using Shouldly;
 using MarketOps.System.Extensions;
 using MarketOps.StockData.Types;
+using MarketOps.System.Interfaces;
+using NSubstitute;
 
 namespace MarketOps.System.Tests.Extensions
 {
@@ -12,6 +14,8 @@ namespace MarketOps.System.Tests.Extensions
         private System _testObj;
         private StockDefinition _stock;
         private StockDefinition _stock2;
+        private StockPricesData _stockPrices;
+        private IDataLoader _dataLoader;
 
         const float CashValue = 100;
         const float Price1 = 10;
@@ -28,9 +32,14 @@ namespace MarketOps.System.Tests.Extensions
             _stock = new StockDefinition();
             _stock2 = new StockDefinition();
             _testObj = new System() { Cash = CashValue };
+            _stockPrices = new StockPricesData(1);
+            _dataLoader = Substitute.For<IDataLoader>();
+            _dataLoader
+                .Get(Arg.Compat.Any<string>(), Arg.Compat.Any<StockDataRange>(), Arg.Compat.Any<int>(), Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>())
+                .Returns<StockPricesData>(_stockPrices);
         }
 
-        private void CheckOpenedPosition(Position pos, StockDefinition stock,  PositionDir dir, float open, int vol, DateTime ts, StockDataRange range, int interval)
+        private void CheckOpenedPosition(Position pos, StockDefinition stock, PositionDir dir, float open, int vol, DateTime ts, StockDataRange range, int interval)
         {
             pos.Stock.ShouldBe(stock);
             pos.Direction.ShouldBe(dir);
@@ -46,6 +55,7 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.PositionsClosed[index].Close.ShouldBe(close);
             _testObj.PositionsClosed[index].TSClose.ShouldBe(ts);
             _testObj.ValueOnPositions[index].ShouldBe(prevValueOnPosition + (close - open) * vol * (dir == PositionDir.Long ? 1 : -1));
+            _testObj.ValueOnPositionsTS[index].ShouldBe(ts);
         }
 
         [TestCase(PositionDir.Long, 100, 10, StockDataRange.Daily, 0)]
@@ -88,10 +98,11 @@ namespace MarketOps.System.Tests.Extensions
             };
             _testObj.PositionsActive.Add(pos);
             _testObj.Close(0, CurrentTS, close);
-            _testObj.Cash.ShouldBe(CashValue + (close - open) * vol * (dir == PositionDir.Long ? 1 : -1));
+            _testObj.Cash.ShouldBe(CashValue + close * vol);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(1);
             _testObj.ValueOnPositions.Count.ShouldBe(1);
+            _testObj.ValueOnPositionsTS.Count.ShouldBe(1);
             CheckClosedPosition(0, dir, open, close, vol, CurrentTS, 0);
         }
 
@@ -113,17 +124,19 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.PositionsActive.Add(pos);
             _testObj.PositionsActive.Add(pos2);
             _testObj.Close(0, CurrentTS, Close1);
-            _testObj.Cash.ShouldBe(CashValue + (Close1 - Price1) * Vol1);
+            _testObj.Cash.ShouldBe(CashValue + Close1 * Vol1);
             _testObj.PositionsActive.Count.ShouldBe(1);
             _testObj.PositionsClosed.Count.ShouldBe(1);
             _testObj.ValueOnPositions.Count.ShouldBe(1);
+            _testObj.ValueOnPositionsTS.Count.ShouldBe(1);
             CheckClosedPosition(0, PositionDir.Long, Price1, Close1, Vol1, CurrentTS, 0);
 
             _testObj.Close(0, CurrentTS2, Close1);
-            _testObj.Cash.ShouldBe(CashValue + (Close1 - Price1) * Vol1 + (Close1 - Price2) * Vol2);
+            _testObj.Cash.ShouldBe(CashValue + Close1 * Vol1 + Close1 * Vol2);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(2);
             _testObj.ValueOnPositions.Count.ShouldBe(2);
+            _testObj.ValueOnPositionsTS.Count.ShouldBe(2);
             CheckClosedPosition(0, PositionDir.Long, Price1, Close1, Vol1, CurrentTS, 0);
             CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, CurrentTS2, _testObj.ValueOnPositions[0]);
         }
@@ -156,12 +169,76 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.PositionsActive.Add(pos);
             _testObj.PositionsActive.Add(pos2);
             _testObj.CloseAll(CurrentTS, Close1);
-            _testObj.Cash.ShouldBe(CashValue + (Close1 - Price1) * Vol1 + (Close1 - Price2) * Vol2);
+            _testObj.Cash.ShouldBe(CashValue + Close1 * Vol1 + Close1 * Vol2);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(2);
             _testObj.ValueOnPositions.Count.ShouldBe(2);
             CheckClosedPosition(0, PositionDir.Long, Price1, Close1, Vol1, CurrentTS, 0);
             CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, CurrentTS, _testObj.ValueOnPositions[0]);
         }
+
+        [Test]
+        public void CalcCurrentValue_NoActivePositions__CalculatesOnlyCash()
+        {
+            _stockPrices.TS[0] = CurrentTS;
+            _stockPrices.C[0] = Close1;
+            _testObj.CalcCurrentValue(CurrentTS, _dataLoader);
+            _testObj.Value.Count.ShouldBe(1);
+            _testObj.ValueTS.Count.ShouldBe(1);
+            _testObj.Value[0].ShouldBe(CashValue);
+            _testObj.ValueTS[0].ShouldBe(CurrentTS);
+        }
+
+        [Test]
+        public void CalcCurrentValue_WithActivePositions__CalculatesCashAndPosition()
+        {
+            _testObj.PositionsActive.Add(new Position()
+            {
+                Stock = _stock,
+                Direction = PositionDir.Long,
+                Open = Price1,
+                Volume = Vol1
+            });
+
+            _stockPrices.TS[0] = CurrentTS;
+            _stockPrices.C[0] = Close1;
+            _testObj.CalcCurrentValue(CurrentTS, _dataLoader);
+            _testObj.Value.Count.ShouldBe(1);
+            _testObj.ValueTS.Count.ShouldBe(1);
+            _testObj.Value[0].ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.ValueTS[0].ShouldBe(CurrentTS);
+        }
+
+        [Test]
+        public void CalcCurrentValue_Multiple_MixedCase__CalculatesCashAndPosition()
+        {
+            _testObj.PositionsActive.Add(new Position()
+            {
+                Stock = _stock,
+                Direction = PositionDir.Long,
+                Open = Price1,
+                Volume = Vol1
+            });
+
+            _stockPrices.TS[0] = CurrentTS;
+            _stockPrices.C[0] = Close1;
+            _testObj.CalcCurrentValue(CurrentTS, _dataLoader);
+            _testObj.Value.Count.ShouldBe(1);
+            _testObj.ValueTS.Count.ShouldBe(1);
+            _testObj.Value[0].ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.ValueTS[0].ShouldBe(CurrentTS);
+
+            _testObj.CloseAll(CurrentTS2, Close1);
+            _stockPrices.TS[0] = CurrentTS2;
+            _stockPrices.C[0] = Close1;
+            _testObj.CalcCurrentValue(CurrentTS2, _dataLoader);
+            _testObj.Value.Count.ShouldBe(2);
+            _testObj.ValueTS.Count.ShouldBe(2);
+            _testObj.Value[0].ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.ValueTS[0].ShouldBe(CurrentTS);
+            _testObj.Value[1].ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.ValueTS[1].ShouldBe(CurrentTS2);
+        }
+
     }
 }

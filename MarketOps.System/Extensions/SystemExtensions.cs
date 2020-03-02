@@ -33,8 +33,9 @@ namespace MarketOps.System.Extensions
             pos.TSClose = ts;
             system.PositionsActive.RemoveAt(positionIndex);
             system.PositionsClosed.Add(pos);
-            system.Cash += pos.ClosedValue();
-            system.ValueOnPositions.Add(system.ValueOnPositions.LastOrDefault() + pos.ClosedValue());
+            system.Cash += pos.CloseValue();
+            system.ValueOnPositions.Add(system.ValueOnPositions.LastOrDefault() + pos.Value());
+            system.ValueOnPositionsTS.Add(ts);
         }
 
         public static void CloseAll(this System system, DateTime ts, float price)
@@ -46,6 +47,7 @@ namespace MarketOps.System.Extensions
         public static void CalcCurrentValue(this System system, DateTime ts, IDataLoader dataLoader)
         {
             system.Value.Add(new SystemValueCalculator().Calc(system, ts, dataLoader));
+            system.ValueTS.Add(ts);
         }
     }
 }

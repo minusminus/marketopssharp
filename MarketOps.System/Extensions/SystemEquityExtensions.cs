@@ -8,9 +8,9 @@ namespace MarketOps.System.Extensions
     /// <summary>
     /// Extensions to System class.
     /// </summary>
-    public static class SystemExtensions
+    public static class SystemEquityExtensions
     {
-        public static void Open(this System system, StockDefinition stock, PositionDir dir, DateTime ts, float price, int volume, StockDataRange dataRange, int intradayInterval)
+        public static void Open(this SystemEquity system, StockDefinition stock, PositionDir dir, DateTime ts, float price, int volume, StockDataRange dataRange, int intradayInterval)
         {
             Position pos = new Position
             {
@@ -26,7 +26,7 @@ namespace MarketOps.System.Extensions
             system.Cash -= pos.OpenValue();
         }
 
-        public static void Close(this System system, int positionIndex, DateTime ts, float price)
+        public static void Close(this SystemEquity system, int positionIndex, DateTime ts, float price)
         {
             Position pos = system.PositionsActive[positionIndex];
             pos.Close = price;
@@ -34,20 +34,26 @@ namespace MarketOps.System.Extensions
             system.PositionsActive.RemoveAt(positionIndex);
             system.PositionsClosed.Add(pos);
             system.Cash += pos.CloseValue();
-            system.ValueOnPositions.Add(system.ValueOnPositions.LastOrDefault() + pos.Value());
-            system.ValueOnPositionsTS.Add(ts);
+            system.ClosedPositionsValue.Add(new SystemValue()
+            {
+                Value = system.ClosedPositionsValue.LastOrDefault().Value + pos.Value(),
+                TS = ts
+            });
         }
 
-        public static void CloseAll(this System system, DateTime ts, float price)
+        public static void CloseAll(this SystemEquity system, DateTime ts, float price)
         {
             while (system.PositionsActive.Count > 0)
                 system.Close(0, ts, price);
         }
 
-        public static void CalcCurrentValue(this System system, DateTime ts, IDataLoader dataLoader)
+        public static void CalcCurrentValue(this SystemEquity system, DateTime ts, IDataLoader dataLoader)
         {
-            system.Value.Add(new SystemValueCalculator().Calc(system, ts, dataLoader));
-            system.ValueTS.Add(ts);
+            system.Value.Add(new SystemValue()
+            {
+                Value = new SystemValueCalculator().Calc(system, ts, dataLoader),
+                TS = ts
+            });
         }
     }
 }

@@ -7,16 +7,16 @@ using System.Linq;
 namespace MarketOps.System.Extensions
 {
     /// <summary>
-    /// Calculates system current equity value.
+    /// Calculates system equity value.
     /// </summary>
     internal class SystemValueCalculator
     {
-        public float Calc(System system, DateTime ts, IDataLoader dataLoader)
+        public float Calc(SystemEquity system, DateTime ts, IDataLoader dataLoader)
         {
             return CalcActive(system, ts, dataLoader) + system.Cash;
         }
 
-        private float CalcActive(System system, DateTime ts, IDataLoader dataLoader)
+        private float CalcActive(SystemEquity system, DateTime ts, IDataLoader dataLoader)
         {
             return system.PositionsActive.Sum(p =>
             {

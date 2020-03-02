@@ -69,7 +69,7 @@
   <ItemGroup>
     <Compile Include="DataLoaders\BufferedDataLoaderTests.cs" />
     <Compile Include="Extensions\PositionExtensionsTests.cs" />
-    <Compile Include="Extensions\SystemExtensionsTests.cs" />
+    <Compile Include="Extensions\SystemEquityExtensionsTests.cs" />
     <Compile Include="Extensions\SystemValueCalculatorTests.cs" />
     <Compile Include="GPW\GPWTickAlignerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

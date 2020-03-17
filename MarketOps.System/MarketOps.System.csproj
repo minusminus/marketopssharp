@@ -44,6 +44,8 @@
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="PositionDir.cs" />
+    <Compile Include="Signal.cs" />
+    <Compile Include="SignalType.cs" />
     <Compile Include="SystemEquity.cs" />
     <Compile Include="Extensions\SystemEquityExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />

@@ -17,5 +17,6 @@ namespace MarketOps.System
         public float Open;
         public float Close;
         public int Volume;
+        public int Ticks;
     }
 }

@@ -6,9 +6,9 @@ namespace MarketOps.System.Interfaces
     /// <summary>
     /// Interface for mechanism to align value to possible price level.
     /// </summary>
-    internal interface ITickAligner
+    public interface ITickAligner
     {
-        float Up(StockType stockType, DateTime ts, float value);
-        float Down(StockType stockType, DateTime ts, float value);
+        float AlignUp(StockType stockType, DateTime ts, float value);
+        float AlignDown(StockType stockType, DateTime ts, float value);
     }
 }

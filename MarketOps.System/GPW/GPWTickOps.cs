@@ -5,12 +5,15 @@ using MarketOps.System.Interfaces;
 namespace MarketOps.System.GPW
 {
     /// <summary>
+    /// Ticks operations for GPW instruments.
+    /// 
     /// Alignes value to possible price according to specifed date for GPW.
+    /// Adds ticks to price according to specifed date for GPW.
     /// 
     /// For stocks: before and after 2019-03-04 in 6 liquidity streams.
     /// By default highest liquidity stream is taken.
     /// </summary>
-    internal class GPWTickAligner : ITickAligner
+    internal class GPWTickOps : ITickAligner, ITickAdder
     {
         private readonly DateTime _changeDate = new DateTime(2019, 3, 4);
 
@@ -47,34 +50,31 @@ namespace MarketOps.System.GPW
         private readonly decimal[] _stocksPriceBordersPost20190304 =
             {0.1M, 0.2M, 0.5M, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, Decimal.MaxValue,};
 
-        public float Up(StockType stockType, DateTime ts, float value)
+        public float AlignUp(StockType stockType, DateTime ts, float value)
         {
-            return (float) ExecuteUpDown(Math.Ceiling, stockType, ts, (decimal) value);
+            return (float)ExecuteUpDown(Math.Ceiling, stockType, ts, (decimal)value);
         }
 
-        public float Down(StockType stockType, DateTime ts, float value)
+        public float AlignDown(StockType stockType, DateTime ts, float value)
         {
-            return (float) ExecuteUpDown(Math.Floor, stockType, ts, (decimal) value);
+            return (float)ExecuteUpDown(Math.Floor, stockType, ts, (decimal)value);
+        }
+
+        public float AddTicks(StockType stockType, DateTime ts, float value, int ticks)
+        {
+            if (stockType == StockType.Undefined) return value;
+            return value + (float)(GetTickSize(stockType, ts, (decimal)value) * ticks);
         }
 
         private decimal ExecuteUpDown(Func<decimal, decimal> alignOp, StockType stockType, DateTime ts, decimal value)
         {
-            switch (stockType)
-            {
-                case StockType.Stock:
-                    return AlignValue(alignOp, value, GetStockTickSize(ts, value), MinValue(stockType));
-                case StockType.Future:
-                    return AlignValue(alignOp, value, 1, MinValue(stockType));
-                case StockType.Index:
-                    return AlignValue(alignOp, value, 0.01M, MinValue(stockType));
-                case StockType.InvestmentFund:
-                    return AlignValue(alignOp, value, 0.0001M, MinValue(stockType));
-                case StockType.Forex:
-                    return AlignValue(alignOp, value, 0.000001M, MinValue(stockType));
-                case StockType.NBPCurrency:
-                    return AlignValue(alignOp, value, 0.0001M, MinValue(stockType));
-            }
-            return value;
+            if (stockType == StockType.Undefined) return value;
+            return AlignValue(alignOp, value, GetTickSize(stockType, ts, value), MinValue(stockType));
+        }
+
+        private decimal GetTickSize(StockType stockType, DateTime ts, decimal value)
+        {
+            return stockType == StockType.Stock ? GetStockTickSize(ts, value) : MinValue(stockType);
         }
 
         private decimal GetStockTickSize(DateTime ts, decimal value)

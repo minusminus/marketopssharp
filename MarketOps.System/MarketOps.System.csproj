@@ -42,16 +42,20 @@
   <ItemGroup>
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
+    <Compile Include="Interfaces\ISlippage.cs" />
+    <Compile Include="Interfaces\ITickAdder.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="PositionDir.cs" />
     <Compile Include="Signal.cs" />
     <Compile Include="SignalType.cs" />
+    <Compile Include="Slippage\SlippageNone.cs" />
+    <Compile Include="Slippage\SlippageTicks.cs" />
     <Compile Include="SystemEquity.cs" />
     <Compile Include="Extensions\SystemEquityExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
     <Compile Include="Interfaces\ITickAligner.cs" />
-    <Compile Include="GPW\GPWTickAligner.cs" />
+    <Compile Include="GPW\GPWTickOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemValue.cs" />
   </ItemGroup>

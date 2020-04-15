@@ -71,8 +71,10 @@
     <Compile Include="Extensions\PositionExtensionsTests.cs" />
     <Compile Include="Extensions\SystemEquityExtensionsTests.cs" />
     <Compile Include="Extensions\SystemValueCalculatorTests.cs" />
-    <Compile Include="GPW\GPWTickAlignerTests.cs" />
+    <Compile Include="GPW\GPWTickOpsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Slippage\SlippageNoneTests.cs" />
+    <Compile Include="Slippage\SlippageTicksTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">

@@ -15,7 +15,7 @@ namespace MarketOps.System.Tests.Slippage
         [TestCase(PositionDir.Short, 200)]
         [TestCase(PositionDir.Long, 0)]
         [TestCase(PositionDir.Short, 0)]
-        public void CalculateClose__PositionNotChanged(PositionDir dir, float value)
+        public void CalculateClose__ValueNotChanged(PositionDir dir, float value)
         {
             _testObj.CalculateClose(StockType.Stock, DateTime.Now, dir, value).ShouldBe(value);
         }
@@ -24,7 +24,7 @@ namespace MarketOps.System.Tests.Slippage
         [TestCase(PositionDir.Short, 200)]
         [TestCase(PositionDir.Long, 0)]
         [TestCase(PositionDir.Short, 0)]
-        public void CalculateOpen__PositionNotChanged(PositionDir dir, float value)
+        public void CalculateOpen__ValueNotChanged(PositionDir dir, float value)
         {
             _testObj.CalculateOpen(StockType.Stock, DateTime.Now, dir, value).ShouldBe(value);
         }

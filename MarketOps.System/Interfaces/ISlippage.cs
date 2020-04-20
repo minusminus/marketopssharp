@@ -5,6 +5,7 @@ namespace MarketOps.System.Interfaces
 {
     /// <summary>
     /// Interface for system position slippage calculation.
+    /// Calculates new value slipped by slippage.
     /// </summary>
     public interface ISlippage
     {

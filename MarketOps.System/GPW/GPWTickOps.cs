@@ -117,7 +117,7 @@ namespace MarketOps.System.GPW
                     return 0.01M;
                 case StockType.Index:
                     return 0.01M;
-                case StockType.Future:
+                case StockType.IndexFuture:
                     return 1;
                 case StockType.InvestmentFund:
                     return 0.0001M;

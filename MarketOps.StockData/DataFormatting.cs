@@ -13,7 +13,7 @@ namespace MarketOps.StockData
             {
                 { StockType.Stock, "F4" },
                 { StockType.Index, "F4" },
-                { StockType.Future, "F4" },
+                { StockType.IndexFuture, "F4" },
                 { StockType.InvestmentFund, "F2" },
                 { StockType.NBPCurrency, "F2" },
                 { StockType.Forex, "F4" },

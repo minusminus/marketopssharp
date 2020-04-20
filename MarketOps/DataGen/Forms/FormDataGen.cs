@@ -90,7 +90,7 @@ namespace MarketOps.DataPump.Forms
             {
                 new Tuple<CheckBox, StockType>(cbGenDailyTypeStock, StockType.Stock),
                 new Tuple<CheckBox, StockType>(cbGenDailyTypeIndex, StockType.Index),
-                new Tuple<CheckBox, StockType>(cbGenDailyTypeFuture, StockType.Future),
+                new Tuple<CheckBox, StockType>(cbGenDailyTypeFuture, StockType.IndexFuture),
                 new Tuple<CheckBox, StockType>(cbGenDailyTypeInvestmentFund, StockType.InvestmentFund),
                 new Tuple<CheckBox, StockType>(cbGenDailyTypeNBPCurrency, StockType.NBPCurrency),
                 new Tuple<CheckBox, StockType>(cbGenDailyTypeForex, StockType.Forex),

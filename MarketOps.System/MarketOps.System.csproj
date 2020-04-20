@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commission\CommissionNone.cs" />
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
+    <Compile Include="Extensions\MoneyValueExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
+    <Compile Include="GPW\CommissionGPWBossa.cs" />
+    <Compile Include="Interfaces\ICommission.cs" />
     <Compile Include="Interfaces\ISlippage.cs" />
     <Compile Include="Interfaces\ITickAdder.cs" />
     <Compile Include="Position.cs" />

@@ -8,7 +8,7 @@
         Undefined = -1,
         Stock = 0,
         Index = 1,
-        Future = 2,
+        IndexFuture = 2,
         InvestmentFund = 4,
         NBPCurrency = 5,
         Forex = 6

@@ -88,7 +88,7 @@ namespace MarketOps.System.Tests.GPW
         [TestCase(2.001F, 3)]
         public void AlignUp_Future(float value, float expected)
         {
-            _testObj.AlignUp(StockType.Future, _dateAfter20190304, value).ShouldBe(expected);
+            _testObj.AlignUp(StockType.IndexFuture, _dateAfter20190304, value).ShouldBe(expected);
         }
 
         [TestCase(1, 1)]
@@ -99,7 +99,7 @@ namespace MarketOps.System.Tests.GPW
         [TestCase(2.001F, 2)]
         public void AlignDown_Future(float value, float expected)
         {
-            _testObj.AlignDown(StockType.Future, _dateAfter20190304, value).ShouldBe(expected);
+            _testObj.AlignDown(StockType.IndexFuture, _dateAfter20190304, value).ShouldBe(expected);
         }
 
         [TestCase(0.0001F, 0.0001F)]
@@ -256,7 +256,7 @@ namespace MarketOps.System.Tests.GPW
         [TestCase(100, -10, 90)]
         public void AddTicks_Future(float value, int ticks, float expected)
         {
-            _testObj.AddTicks(StockType.Future, _dateAfter20190304, value, ticks).ShouldBe(expected);
+            _testObj.AddTicks(StockType.IndexFuture, _dateAfter20190304, value, ticks).ShouldBe(expected);
         }
 
         [TestCase(100, 0, 100)]

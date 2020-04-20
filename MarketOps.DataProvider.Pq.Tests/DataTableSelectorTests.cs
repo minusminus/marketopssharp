@@ -29,7 +29,7 @@ namespace MarketOps.DataProvider.Pq.Tests
             Should.Throw<Exception>(() => { TestObj.GetTableName(StockType.Stock, StockDataRange.Intraday, 0); });
         }
 
-        private StockType[] stdTestStockTypes = new StockType[6] { StockType.Stock, StockType.Index, StockType.Future, StockType.InvestmentFund, StockType.NBPCurrency, StockType.Forex };
+        private StockType[] stdTestStockTypes = new StockType[6] { StockType.Stock, StockType.Index, StockType.IndexFuture, StockType.InvestmentFund, StockType.NBPCurrency, StockType.Forex };
 
         [Test]
         public void DataDaily()

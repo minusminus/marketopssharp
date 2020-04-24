@@ -75,6 +75,7 @@
     <Compile Include="Extensions\SystemValueCalculatorTests.cs" />
     <Compile Include="GPW\CommissionGPWBossaTests.cs" />
     <Compile Include="GPW\GPWTickOpsTests.cs" />
+    <Compile Include="MM\MMSignalVolumeOneItemTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Slippage\SlippageNoneTests.cs" />
     <Compile Include="Slippage\SlippageTicksTests.cs" />

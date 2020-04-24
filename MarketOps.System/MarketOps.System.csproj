@@ -46,8 +46,10 @@
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="GPW\CommissionGPWBossa.cs" />
     <Compile Include="Interfaces\ICommission.cs" />
+    <Compile Include="Interfaces\IMMSignalVolume.cs" />
     <Compile Include="Interfaces\ISlippage.cs" />
     <Compile Include="Interfaces\ITickAdder.cs" />
+    <Compile Include="MM\MMSignalVolumeOneItem.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="PositionDir.cs" />
     <Compile Include="Signal.cs" />
@@ -69,6 +71,7 @@
       <Name>MarketOps.StockData</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

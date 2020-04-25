@@ -27,7 +27,7 @@ namespace MarketOps.System.Tests.MM
         {
             Random r = new Random();
             Enumerable.Range(1, 10).ToList()
-                .ForEach(x =>
+                .ForEach(_ =>
                 {
                     int v = r.Next(1000);
                     _testObj.GetSignalVolume(new Signal() { Volume = v }).ShouldBe(1, $"{v}");

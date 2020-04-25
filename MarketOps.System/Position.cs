@@ -8,15 +8,18 @@ namespace MarketOps.System
     /// </summary>
     public struct Position
     {
+        public Signal EntrySignal;
         public StockDefinition Stock;
         public StockDataRange DataRange;
         public int IntradayInterval;
         public PositionDir Direction;
         public DateTime TSOpen;
-        public DateTime TSClose;
         public float Open;
+        public DateTime TSClose;
         public float Close;
         public int Volume;
-        public int Ticks;
+        public int TicksActive;
+        public PositionCloseMode CloseMode;
+        public float CloseModePrice;
     }
 }

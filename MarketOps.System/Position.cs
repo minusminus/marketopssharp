@@ -15,8 +15,10 @@ namespace MarketOps.System
         public PositionDir Direction;
         public DateTime TSOpen;
         public float Open;
+        public float OpenCommission;
         public DateTime TSClose;
         public float Close;
+        public float CloseCommission;
         public int Volume;
         public int TicksActive;
         public PositionCloseMode CloseMode;

@@ -10,7 +10,7 @@ namespace MarketOps.DataProvider.Pg
     {
         public static string ToTimestampQueryValue(this DateTime dt)
         {
-            return $"timestamp '{dt.ToString("yyyy-MM-dd hh:mm")}'";
+            return $"timestamp '{dt.ToString("yyyy-MM-dd HH:mm")}'";
         }
     }
 }

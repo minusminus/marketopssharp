@@ -8,6 +8,7 @@ namespace MarketOps.System.Interfaces
     /// </summary>
     public interface ISignalGeneratorOnClose
     {
+        void Initialize(DateTime tsStart);
         List<Signal> GenerateOnClose(DateTime ts);
     }
 }

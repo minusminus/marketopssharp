@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1082
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.StockData", "MarketOps.StockData\MarketOps.StockData.csproj", "{302B5831-ECE5-4043-A944-1D8814C8F78E}"
 EndProject
@@ -32,6 +32,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.System", "MarketOps.System\MarketOps.System.csproj", "{4C9D9AB7-7D39-496E-85FD-135D30819239}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.System.Tests", "MarketOps.System.Tests\MarketOps.System.Tests.csproj", "{DC560836-DC1A-4AFA-B405-5D1D04F6050E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SignalGenerators", "MarketOps.SignalGenerators\MarketOps.SignalGenerators.csproj", "{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{DC560836-DC1A-4AFA-B405-5D1D04F6050E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC560836-DC1A-4AFA-B405-5D1D04F6050E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC560836-DC1A-4AFA-B405-5D1D04F6050E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

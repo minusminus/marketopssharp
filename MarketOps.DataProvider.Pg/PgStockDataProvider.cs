@@ -57,5 +57,52 @@ namespace MarketOps.DataProvider.Pg
             res.IntrradayInterval = intradayInterval;
             return res;
         }
+
+        public DateTime GetNearestTickGE(StockDefinition stockDef, StockDataRange dataRange, int intradayInterval, DateTime ts)
+        {
+            DateTime res = DateTime.MinValue;
+
+            string qry = $"select min(ts) from {_tblSelector.GetTableName(stockDef.Type, dataRange, intradayInterval)} where fk_id_spolki={stockDef.ID} and ts >= {ts.ToTimestampQueryValue()}";
+            ProcessSelectQuery(qry, (reader) =>
+            {
+                reader.Read();
+                if (reader.IsDBNull(0))
+                    throw new Exception($"No nearest tick data for stock name={stockDef.Name}");
+                res = reader.GetFieldValue<DateTime>(0);
+            });
+            return res;
+        }
+
+        public DateTime GetNearestTickGETicksBefore(StockDefinition stockDef, StockDataRange dataRange, int intradayInterval, DateTime ts, int ticksBefore)
+        {
+            DateTime res = DateTime.MinValue;
+
+            string qry =
+                "select min(ts), count(*) " +
+                "from " +
+                "( " +
+                "select tsWindow.ts " +
+                "from " +
+                "( " +
+                "select min(ts) as \"mints\" " +
+                $"from {_tblSelector.GetTableName(stockDef.Type, dataRange, intradayInterval)} " +
+                $"where fk_id_spolki = {stockDef.ID} " +
+                $"and ts >= {ts.ToTimestampQueryValue()} " +
+                $") tsNearest, {_tblSelector.GetTableName(stockDef.Type, dataRange, intradayInterval)} tsWindow " +
+                $"where tsWindow.fk_id_spolki = {stockDef.ID} and tsWindow.ts < tsNearest.mints " +
+                "order by tsWindow.ts desc " +
+                $"limit {ticksBefore} " +
+                ") t";
+            ProcessSelectQuery(qry, (reader) =>
+            {
+                reader.Read();
+                if (reader.IsDBNull(0))
+                    throw new Exception($"No nearest tick data for stock name={stockDef.Name}");
+                if (reader.GetFieldValue<int>(1) != ticksBefore)
+                    throw new Exception($"Not enough ticks before for stock name={stockDef.Name}");
+                res = reader.GetFieldValue<DateTime>(0);
+            });
+            return res;
+        }
     }
 }

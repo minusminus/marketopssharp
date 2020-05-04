@@ -9,6 +9,8 @@ namespace MarketOps.System.DataLoaders
 {
     /// <summary>
     /// Stock data loader with buffer.
+    /// 
+    /// Each get resizes buffered data to fit required boundaries.
     /// </summary>
     internal class BufferedDataLoader : IDataLoader
     {
@@ -22,15 +24,18 @@ namespace MarketOps.System.DataLoaders
 
         public StockPricesData Get(string stockName, StockDataRange dataRange, int intradayInterval, DateTime tsFrom, DateTime tsTo)
         {
-            string key = BuffferKey(stockName, dataRange, intradayInterval);
+            string key = BufferKey(stockName, dataRange, intradayInterval);
             StockPricesData res;
             if (TryGetFromBuffer(key, tsFrom, tsTo, out res)) return res;
-            res = LoadData(stockName, dataRange, intradayInterval, tsFrom, tsTo);
+            if (res == null)
+                res = LoadData(stockName, dataRange, intradayInterval, tsFrom, tsTo);
+            else
+                res = LoadData(stockName, dataRange, intradayInterval, tsFrom < res.TS.First() ? tsFrom : res.TS.First(), tsTo > res.TS.Last() ? tsTo : res.TS.Last());
             AddOrReplaceInBuffer(key, res);
             return res;
         }
 
-        private string BuffferKey(string stockName, StockDataRange dataRange, int intradayDataRange) => $"{stockName}_{dataRange}_{intradayDataRange}";
+        private string BufferKey(string stockName, StockDataRange dataRange, int intradayDataRange) => $"{stockName}_{dataRange}_{intradayDataRange}";
 
         private bool TryGetFromBuffer(string key, DateTime tsFrom, DateTime tsTo, out StockPricesData res)
         {

@@ -160,13 +160,25 @@ namespace MarketOps.System.Tests.DataLoaders
         }
 
         [Test]
-        public void Get_SeconfGetInCurrentRange__ReturnsWiderDate()
+        public void Get_SecondGetInCurrentRange__ReturnsWiderDate()
         {
             SubstituteGetPricesData(TSFrom2, TSTo2);
             CheckPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom2, TSTo2), TSFrom2, TSTo2);
             SubstituteGetPricesData(TSFrom1, TSTo1);
             CheckPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom1, TSTo1), TSFrom2, TSTo2);
             CheckDBAccess(1, 1);
+        }
+
+        [Test]
+        public void Get_ExpandRangeTwice__ReturnsWiderData()
+        {
+            SubstituteGetPricesData(TSFrom1, TSTo1);
+            CheckPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom1, TSTo1), TSFrom1, TSTo1);
+            SubstituteGetPricesData(TSFrom1, TSTo2);
+            CheckPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom1, TSTo2), TSFrom1, TSTo2);
+            SubstituteGetPricesData(TSFrom2, TSTo2);
+            CheckPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom2, TSTo2), TSFrom2, TSTo2);
+            CheckDBAccess(3, 3);
         }
     }
 }

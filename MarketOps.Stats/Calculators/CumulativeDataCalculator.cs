@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace MarketOps.Stats.Calculators
 {
@@ -7,13 +8,10 @@ namespace MarketOps.Stats.Calculators
     /// </summary>
     public class CumulativeDataCalculator
     {
-        private float GetInitialSum(int period, Func<int, float> getValue)
-        {
-            float res = 0;
-            for (int i = 0; i < period; i++)
-                res += getValue(i);
-            return res;
-        }
+        private float GetInitialSum(int period, Func<int, float> getValue) =>
+            Enumerable.Range(0, period)
+            .Select(i => getValue(i))
+            .Sum();
 
         protected float[] CalculateCumulative(int dataLength, int period, Func<int, float>getValue )
         {

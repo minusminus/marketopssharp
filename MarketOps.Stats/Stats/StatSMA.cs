@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Types;
+﻿using MarketOps.StockData.Types;
 using MarketOps.Stats.Calculators;
 using MarketOps.StockData.Extensions;
 using System.Drawing;
@@ -11,7 +10,7 @@ namespace MarketOps.Stats.Stats
     /// </summary>
     public class StatSMA : StockStat
     {
-        private const string ParamPeriod = "Period";
+        public const string ParamPeriod = "Period";
         public StatSMA(string chartArea) : base(chartArea) { }
 
         protected override void InitializeData()

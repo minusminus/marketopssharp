@@ -51,6 +51,7 @@
     <Compile Include="Interfaces\ISignalGeneratorOnClose.cs" />
     <Compile Include="Interfaces\ISignalGeneratorOnOpen.cs" />
     <Compile Include="Interfaces\ISlippage.cs" />
+    <Compile Include="Interfaces\ISystemConfigurator.cs" />
     <Compile Include="Interfaces\ITickAdder.cs" />
     <Compile Include="MM\MMCloseCalculatorNone.cs" />
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnClose.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interfaces\ITickAligner.cs" />
     <Compile Include="GPW\GPWTickOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemConfiguration.cs" />
     <Compile Include="SystemValue.cs" />
   </ItemGroup>
   <ItemGroup>

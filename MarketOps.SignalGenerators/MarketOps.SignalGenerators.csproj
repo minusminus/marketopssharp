@@ -45,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
+      <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>
+      <Name>MarketOps.Stats</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>

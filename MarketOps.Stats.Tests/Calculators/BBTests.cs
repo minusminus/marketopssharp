@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Shouldly;
 using MarketOps.Stats.Calculators;
 
-namespace MarketOps.Stats.Tests
+namespace MarketOps.Stats.Calculators.Tests
 {
     [TestFixture]
     public class BBTests

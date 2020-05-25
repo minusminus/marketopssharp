@@ -10,7 +10,6 @@ namespace MarketOps.Stats.Stats
     /// </summary>
     public class StatSMA : StockStat
     {
-        public const string ParamPeriod = "Period";
         public StatSMA(string chartArea) : base(chartArea) { }
 
         protected override void InitializeData()
@@ -23,12 +22,17 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeStatParams()
         {
-            _statParams.Set(ParamPeriod, new StockStatParamInt() { Name = ParamPeriod, Value = 20 });
+            _statParams.Set(StatSMAParams.Period, new StockStatParamInt() { Name = StatSMAParams.Period, Value = 20 });
+        }
+
+        protected override int GetBackBufferLength()
+        {
+            return _statParams.Get(StatSMAParams.Period).As<int>();
         }
 
         public override void Calculate(StockPricesData data)
         {
-            _data[0] = (new SMA()).Calculate(data.C, _statParams.Get(ParamPeriod).As<int>());
+            _data[0] = (new SMA()).Calculate(data.C, _statParams.Get(StatSMAParams.Period).As<int>());
         }
     }
 }

@@ -52,8 +52,11 @@
     <Compile Include="StatsFactories.cs" />
     <Compile Include="StatsFactory.cs" />
     <Compile Include="Stats\StatATR.cs" />
+    <Compile Include="Stats\StatATRParams.cs" />
     <Compile Include="Stats\StatBB.cs" />
+    <Compile Include="Stats\StatBBParams.cs" />
     <Compile Include="Stats\StatSMA.cs" />
+    <Compile Include="Stats\StatSMAParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">

@@ -11,8 +11,6 @@ namespace MarketOps.Stats.Stats
     /// </summary>
     public class StatBB : StockStat
     {
-        public const string ParamPeriod = "Period";
-        public const string ParamSigmaWidth = "SigmaWidth";
         public StatBB(string chartArea) : base(chartArea) { }
 
         protected override void InitializeData()
@@ -29,13 +27,18 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeStatParams()
         {
-            _statParams.Set(ParamPeriod, new StockStatParamInt() { Name = ParamPeriod, Value = 20 });
-            _statParams.Set(ParamSigmaWidth, new StockStatParamFloat() { Name = ParamSigmaWidth, Value = 2.0f });
+            _statParams.Set(StatBBParams.Period, new StockStatParamInt() { Name = StatBBParams.Period, Value = 20 });
+            _statParams.Set(StatBBParams.SigmaWidth, new StockStatParamFloat() { Name = StatBBParams.SigmaWidth, Value = 2.0f });
+        }
+
+        protected override int GetBackBufferLength()
+        {
+            return _statParams.Get(StatBBParams.Period).As<int>();
         }
 
         public override void Calculate(StockPricesData data)
         {
-            BBData res = (new BB()).Calculate(data.C, _statParams.Get(ParamPeriod).As<int>(), _statParams.Get(ParamSigmaWidth).As<float>());
+            BBData res = (new BB()).Calculate(data.C, _statParams.Get(StatBBParams.Period).As<int>(), _statParams.Get(StatBBParams.SigmaWidth).As<float>());
             _data[0] = res.BBL;
             _data[1] = res.SMA;
             _data[2] = res.BBH;

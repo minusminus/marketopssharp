@@ -51,11 +51,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ATRTests.cs" />
-    <Compile Include="BBTests.cs" />
-    <Compile Include="CumulativeDataCalculatorTests.cs" />
+    <Compile Include="Calculators\ATRTests.cs" />
+    <Compile Include="Calculators\BBTests.cs" />
+    <Compile Include="Calculators\CumulativeDataCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SMATests.cs" />
+    <Compile Include="Calculators\SMATests.cs" />
+    <Compile Include="Stats\StatATRTests.cs" />
+    <Compile Include="Stats\StatBBTests.cs" />
+    <Compile Include="Stats\StatSMATests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -64,6 +67,10 @@
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
       <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>
       <Name>MarketOps.Stats</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302B5831-ECE5-4043-A944-1D8814C8F78E}</Project>
+      <Name>MarketOps.StockData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

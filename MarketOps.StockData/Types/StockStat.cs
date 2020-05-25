@@ -24,6 +24,7 @@ namespace MarketOps.StockData.Types
         public string DataName(int index) => _dataNames[index];
         public string ChartArea => _chartArea;
         public StockStatParams StatParams => _statParams;
+        public int BackBufferLength => GetBackBufferLength();
 
         public StockStat(string chartArea)
         {
@@ -47,6 +48,7 @@ namespace MarketOps.StockData.Types
 
         protected abstract void InitializeData();
         protected abstract void InitializeStatParams();
+        protected abstract int GetBackBufferLength();
 
         public abstract void Calculate(StockPricesData data);
     }

@@ -51,7 +51,7 @@
     <Compile Include="Interfaces\ISignalGeneratorOnClose.cs" />
     <Compile Include="Interfaces\ISignalGeneratorOnOpen.cs" />
     <Compile Include="Interfaces\ISlippage.cs" />
-    <Compile Include="Interfaces\ISystemConfigurator.cs" />
+    <Compile Include="Interfaces\ISystemDataDefinitionProvider.cs" />
     <Compile Include="Interfaces\ITickAdder.cs" />
     <Compile Include="MM\MMCloseCalculatorNone.cs" />
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnClose.cs" />
@@ -60,10 +60,12 @@
     <Compile Include="Position.cs" />
     <Compile Include="PositionCloseMode.cs" />
     <Compile Include="PositionDir.cs" />
+    <Compile Include="Processor\StocksBackBufferAggregator.cs" />
     <Compile Include="Signal.cs" />
     <Compile Include="SignalType.cs" />
     <Compile Include="Slippage\SlippageNone.cs" />
     <Compile Include="Slippage\SlippageTicks.cs" />
+    <Compile Include="SystemDataDefinition.cs" />
     <Compile Include="SystemEquity.cs" />
     <Compile Include="Extensions\SystemEquityExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="GPW\GPWTickOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemConfiguration.cs" />
+    <Compile Include="Processor\SystemProcessor.cs" />
     <Compile Include="SystemValue.cs" />
   </ItemGroup>
   <ItemGroup>

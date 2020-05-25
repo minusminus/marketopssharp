@@ -1,6 +1,4 @@
-﻿using MarketOps.StockData.Types;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace MarketOps.System
 {
@@ -11,7 +9,6 @@ namespace MarketOps.System
     {
         public DateTime tsFrom;
         public DateTime tsTo;
-        public List<string> stocks;
-        public Dictionary<string, StockStat> stats;
+        public SystemDataDefinition dataDefinition;
     }
 }

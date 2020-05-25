@@ -14,7 +14,7 @@ namespace MarketOps.SignalGenerators
     /// <summary>
     /// Signal on price crossing sma up or down.
     /// </summary>
-    public class PriceCrossingSMA : ISystemConfigurator, ISignalGeneratorOnClose
+    public class PriceCrossingSMA : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private readonly string _stockName;
         private readonly StockDataRange _dataRange;
@@ -31,15 +31,15 @@ namespace MarketOps.SignalGenerators
             _tickAligner = tickAligner;
         }
 
-        public SystemConfiguration GetConfiguration()
+        public SystemDataDefinition GetDataDefinition()
         {
             StatSMA stat = new StatSMA("");
-            stat.StatParams.Set(StatSMA.ParamPeriod, new StockStatParamInt() { Value = _smaPeriod });
+            stat.StatParams.Set(StatSMAParams.Period, new StockStatParamInt() { Value = _smaPeriod });
 
-            return new SystemConfiguration()
+            return new SystemDataDefinition()
             {
                 stocks = new List<string>() { _stockName },
-                stats = new Dictionary<string, StockStat>() { {_stockName, stat } }
+                statsForStocks = new Dictionary<string, StockStat>() { {_stockName, stat } }
             };
         }
 

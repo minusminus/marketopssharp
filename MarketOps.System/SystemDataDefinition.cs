@@ -9,6 +9,6 @@ namespace MarketOps.System
     public class SystemDataDefinition
     {
         public List<string> stocks;
-        public Dictionary<string, StockStat> statsForStocks;
+        public Dictionary<string, List<StockStat>> statsForStocks;
     }
 }

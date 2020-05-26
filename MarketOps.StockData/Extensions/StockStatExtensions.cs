@@ -12,5 +12,11 @@ namespace MarketOps.StockData.Extensions
         {
             return $"{stat.UID}_{seriesIndex}";
         }
+
+        public static StockStat SetParam(this StockStat stat, string paramName, StockStatParam paramValue)
+        {
+            stat.StatParams.Set(paramName, paramValue);
+            return stat;
+        }
     }
 }

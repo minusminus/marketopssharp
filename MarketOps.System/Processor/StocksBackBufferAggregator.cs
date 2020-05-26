@@ -9,11 +9,10 @@ namespace MarketOps.System.Processor
     /// </summary>
     internal static class StocksBackBufferAggregator
     {
-        public static Dictionary<string, int> Calculate(Dictionary<string, StockStat> statsForStocks)
+        public static Dictionary<string, int> Calculate(Dictionary<string, List<StockStat>> statsForStocks)
         {
             return statsForStocks
-                .GroupBy(x => x.Key)
-                .ToDictionary(g => g.Key, g => g.Max(e => e.Value.BackBufferLength));
+                .ToDictionary(g => g.Key, g => g.Value.Max(e => e.BackBufferLength));
         }
     }
 }

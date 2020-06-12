@@ -13,14 +13,14 @@ namespace MarketOps.System.Tests.Processor
     [TestFixture]
     public class StocksBackBufferAggregatorTests
     {
-        private readonly string Stock1 = "KGHM";
-        private readonly string Stock2 = "PKOBP";
+        private readonly SystemStockDataDefinition Stock1 = new SystemStockDataDefinition() { name = "KGHM", dataRange = StockDataRange.Daily };
+        private readonly SystemStockDataDefinition Stock2 = new SystemStockDataDefinition() { name = "PKOBP", dataRange = StockDataRange.Daily };
 
         [Test]
         public void Calculate_EmptyData__ReturnsEmptyDict()
         {
-            StocksBackBufferAggregator.Calculate(new Dictionary<string, List<StockStat>>()).ShouldBe(
-                new Dictionary<string, int>()
+            StocksBackBufferAggregator.Calculate(new Dictionary<SystemStockDataDefinition, List<StockStat>>()).ShouldBe(
+                new Dictionary<SystemStockDataDefinition, int>()
                 );
         }
 
@@ -31,13 +31,13 @@ namespace MarketOps.System.Tests.Processor
 
             StockStat stat = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = value });
-            Dictionary<string, List<StockStat>> testData = new Dictionary<string, List<StockStat>>()
+            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
             {
                 [Stock1] = new List<StockStat>() { stat }
             };
 
             StocksBackBufferAggregator.Calculate(testData).ShouldBe(
-                new Dictionary<string, int>()
+                new Dictionary<SystemStockDataDefinition, int>()
                 {
                     [Stock1] = value
                 }
@@ -47,7 +47,7 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Calculate_OneStock_NoValue__ThrowsException()
         {
-            Dictionary<string, List<StockStat>> testData = new Dictionary<string, List<StockStat>>()
+            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
             {
                 [Stock1] = new List<StockStat>()
             };
@@ -65,13 +65,13 @@ namespace MarketOps.System.Tests.Processor
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueLow });
             StockStat stat2 = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueHigh });
-            Dictionary<string, List<StockStat>> testData = new Dictionary<string, List<StockStat>>()
+            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
             {
                 [Stock1] = new List<StockStat>() { stat, stat2 }
             };
 
             StocksBackBufferAggregator.Calculate(testData).ShouldBe(
-                new Dictionary<string, int>()
+                new Dictionary<SystemStockDataDefinition, int>()
                 {
                     [Stock1] = valueHigh
                 }
@@ -91,14 +91,14 @@ namespace MarketOps.System.Tests.Processor
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueHigh });
             StockStat stat3 = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueMid });
-            Dictionary<string, List<StockStat>> testData = new Dictionary<string, List<StockStat>>()
+            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
             {
                 [Stock1] = new List<StockStat>() { stat, stat2 },
                 [Stock2] = new List<StockStat>() { stat3, stat }
             };
 
             StocksBackBufferAggregator.Calculate(testData).ShouldBe(
-                new Dictionary<string, int>()
+                new Dictionary<SystemStockDataDefinition, int>()
                 {
                     [Stock1] = valueHigh,
                     [Stock2] = valueMid,

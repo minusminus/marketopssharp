@@ -48,9 +48,9 @@ namespace MarketOps.System.Processor
         public void Process(DateTime tsFrom, DateTime tsTo)
         {
             SystemConfiguration systemConfiguration = GetSystemConfiguration(tsFrom, tsTo);
-            Dictionary<SystemStockDataDefinition, int> backBufferInfo = StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.statsForStocks);
-            PreloadStocksData(backBufferInfo);
-            PrecalcStockStats(backBufferInfo);
+            //Dictionary<SystemStockDataDefinition, int> backBufferInfo = StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.statsForStocks);
+            //PreloadStocksData(backBufferInfo);
+            //PrecalcStockStats(backBufferInfo);
         }
 
         private SystemConfiguration GetSystemConfiguration(DateTime tsFrom, DateTime tsTo)

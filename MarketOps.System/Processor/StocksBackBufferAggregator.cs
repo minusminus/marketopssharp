@@ -1,18 +1,18 @@
-﻿using MarketOps.StockData.Types;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MarketOps.System.Processor
 {
     /// <summary>
-    /// Calculates max back buffer for socks from SystemDataDefinition.statsForStocks
+    /// Calculates max back buffer for socks from SystemDataDefinition stocks list.
     /// </summary>
     internal static class StocksBackBufferAggregator
     {
-        public static Dictionary<SystemStockDataDefinition, int> Calculate(Dictionary<SystemStockDataDefinition, List<StockStat>> statsForStocks)
+        public static List<(SystemStockDataDefinition stock, int max)> Calculate(List<SystemStockDataDefinition> defs)
         {
-            return statsForStocks
-                .ToDictionary(g => g.Key, g => g.Value.Max(e => e.BackBufferLength));
+            return defs
+                .Select(x => (stock: x, max: x.stats.Max(e => e.BackBufferLength)))
+                .ToList();
         }
     }
 }

@@ -35,16 +35,17 @@ namespace MarketOps.SignalGenerators
         {
             StockStat stat = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = _smaPeriod });
-            SystemStockDataDefinition stockDef = new SystemStockDataDefinition()
-            {
-                name = _stockName,
-                dataRange = _dataRange
-            };
 
             return new SystemDataDefinition()
             {
-                stocks = new List<SystemStockDataDefinition>() { stockDef },
-                statsForStocks = new Dictionary<SystemStockDataDefinition, List<StockStat>>() { { stockDef, new List<StockStat>() { stat } } }
+                stocks = new List<SystemStockDataDefinition>() {
+                    new SystemStockDataDefinition()
+                    {
+                        name = _stockName,
+                        dataRange = _dataRange,
+                        stats = new List<StockStat>() { stat }
+                    }
+                }
             };
         }
 

@@ -13,14 +13,15 @@ namespace MarketOps.System.Tests.Processor
     [TestFixture]
     public class StocksBackBufferAggregatorTests
     {
-        private readonly SystemStockDataDefinition Stock1 = new SystemStockDataDefinition() { name = "KGHM", dataRange = StockDataRange.Daily };
-        private readonly SystemStockDataDefinition Stock2 = new SystemStockDataDefinition() { name = "PKOBP", dataRange = StockDataRange.Daily };
+        private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition() { name = "KGHM", dataRange = StockDataRange.Daily, stats = new List<StockStat>() };
+        private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition() { name = "PKOBP", dataRange = StockDataRange.Daily, stats = new List<StockStat>() };
+
 
         [Test]
         public void Calculate_EmptyData__ReturnsEmptyDict()
         {
-            StocksBackBufferAggregator.Calculate(new Dictionary<SystemStockDataDefinition, List<StockStat>>()).ShouldBe(
-                new Dictionary<SystemStockDataDefinition, int>()
+            StocksBackBufferAggregator.Calculate(new List<SystemStockDataDefinition>()).ShouldBe(
+                new List<(SystemStockDataDefinition, int)>()
                 );
         }
 
@@ -31,15 +32,14 @@ namespace MarketOps.System.Tests.Processor
 
             StockStat stat = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = value });
-            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
-            {
-                [Stock1] = new List<StockStat>() { stat }
-            };
+            SystemStockDataDefinition stock1 = Stock1();
+            stock1.stats.Add(stat);
+            List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { stock1 };
 
             StocksBackBufferAggregator.Calculate(testData).ShouldBe(
-                new Dictionary<SystemStockDataDefinition, int>()
+                new List<(SystemStockDataDefinition, int)>()
                 {
-                    [Stock1] = value
+                    (stock1, value)
                 }
                 );
         }
@@ -47,10 +47,7 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Calculate_OneStock_NoValue__ThrowsException()
         {
-            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
-            {
-                [Stock1] = new List<StockStat>()
-            };
+            List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { Stock1() };
 
             Should.Throw<InvalidOperationException>(() => StocksBackBufferAggregator.Calculate(testData));
         }
@@ -65,15 +62,15 @@ namespace MarketOps.System.Tests.Processor
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueLow });
             StockStat stat2 = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueHigh });
-            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
-            {
-                [Stock1] = new List<StockStat>() { stat, stat2 }
-            };
+            SystemStockDataDefinition stock1 = Stock1();
+            stock1.stats.Add(stat);
+            stock1.stats.Add(stat2);
+            List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { stock1 };
 
             StocksBackBufferAggregator.Calculate(testData).ShouldBe(
-                new Dictionary<SystemStockDataDefinition, int>()
+                new List<(SystemStockDataDefinition, int)>()
                 {
-                    [Stock1] = valueHigh
+                    (stock1, valueHigh)
                 }
                 );
         }
@@ -91,17 +88,19 @@ namespace MarketOps.System.Tests.Processor
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueHigh });
             StockStat stat3 = new StatSMA("")
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueMid });
-            Dictionary<SystemStockDataDefinition, List<StockStat>> testData = new Dictionary<SystemStockDataDefinition, List<StockStat>>()
-            {
-                [Stock1] = new List<StockStat>() { stat, stat2 },
-                [Stock2] = new List<StockStat>() { stat3, stat }
-            };
+            SystemStockDataDefinition stock1 = Stock1();
+            stock1.stats.Add(stat);
+            stock1.stats.Add(stat2);
+            SystemStockDataDefinition stock2 = Stock2();
+            stock2.stats.Add(stat3);
+            stock2.stats.Add(stat);
+            List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { stock1, stock2 };
 
             StocksBackBufferAggregator.Calculate(testData).ShouldBe(
-                new Dictionary<SystemStockDataDefinition, int>()
+                new List<(SystemStockDataDefinition, int)>()
                 {
-                    [Stock1] = valueHigh,
-                    [Stock2] = valueMid,
+                    (stock1, valueHigh),
+                    (stock2, valueMid),
                 }
                 );
         }

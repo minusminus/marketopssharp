@@ -25,13 +25,13 @@ namespace MarketOps.System.Processor
 
         public void PreloadAndPrecalc(DateTime tsFrom, DateTime tsTo, Dictionary<SystemStockDataDefinition, int> backBufferInfo, SystemDataDefinition systemDataDefinition)
         {
-            foreach (var backBuf in backBufferInfo)
-            {
-                DateTime tsMovedBack = _dataProvider.GetNearestTickGETicksBefore(_dataProvider.GetStockDefinition(backBuf.Key.name), backBuf.Key.dataRange, 0, tsFrom, backBuf.Value);
-                StockPricesData stockPricesData = _dataLoader.Get(backBuf.Key.name, backBuf.Key.dataRange, 0, tsMovedBack, tsTo);
-                foreach (var stat in systemDataDefinition.statsForStocks[backBuf.Key])
-                    stat.Calculate(stockPricesData);
-            }                  
+            //foreach (var backBuf in backBufferInfo)
+            //{
+            //    DateTime tsMovedBack = _dataProvider.GetNearestTickGETicksBefore(_dataProvider.GetStockDefinition(backBuf.Key.name), backBuf.Key.dataRange, 0, tsFrom, backBuf.Value);
+            //    StockPricesData stockPricesData = _dataLoader.Get(backBuf.Key.name, backBuf.Key.dataRange, 0, tsMovedBack, tsTo);
+            //    foreach (var stat in systemDataDefinition.statsForStocks[backBuf.Key])
+            //        stat.Calculate(stockPricesData);
+            //}                  
         }
     }
 }

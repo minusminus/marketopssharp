@@ -4,9 +4,7 @@ using MarketOps.System.Processor;
 using MarketOps.StockData.Types;
 using System;
 using System.Collections.Generic;
-using MarketOps.Stats.Stats;
-using MarketOps.StockData.Extensions;
-using System.Linq;
+using MarketOps.System.Tests.Mocks;
 
 namespace MarketOps.System.Tests.Processor
 {
@@ -30,8 +28,7 @@ namespace MarketOps.System.Tests.Processor
         {
             const int value = 35;
 
-            StockStat stat = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = value });
+            StockStat stat = new StockStatMock("", value);
             SystemStockDataDefinition stock1 = Stock1();
             stock1.stats.Add(stat);
             List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { stock1 };
@@ -58,10 +55,8 @@ namespace MarketOps.System.Tests.Processor
             const int valueLow = 35;
             const int valueHigh = 135;
 
-            StockStat stat = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueLow });
-            StockStat stat2 = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueHigh });
+            StockStat stat = new StockStatMock("", valueLow);
+            StockStat stat2 = new StockStatMock("", valueHigh);
             SystemStockDataDefinition stock1 = Stock1();
             stock1.stats.Add(stat);
             stock1.stats.Add(stat2);
@@ -82,12 +77,9 @@ namespace MarketOps.System.Tests.Processor
             const int valueMid = 82;
             const int valueHigh = 135;
 
-            StockStat stat = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueLow });
-            StockStat stat2 = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueHigh });
-            StockStat stat3 = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = valueMid });
+            StockStat stat = new StockStatMock("", valueLow);
+            StockStat stat2 = new StockStatMock("", valueHigh);
+            StockStat stat3 = new StockStatMock("", valueMid);
             SystemStockDataDefinition stock1 = Stock1();
             stock1.stats.Add(stat);
             stock1.stats.Add(stat2);

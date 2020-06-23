@@ -48,9 +48,7 @@ namespace MarketOps.System.Processor
         public void Process(DateTime tsFrom, DateTime tsTo)
         {
             SystemConfiguration systemConfiguration = GetSystemConfiguration(tsFrom, tsTo);
-            List<(SystemStockDataDefinition stock, int max)> backBufferInfo = StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.stocks);
-            //PreloadStocksData(backBufferInfo);
-            //PrecalcStockStats(backBufferInfo);
+            PreloadAndCalcStockData(systemConfiguration);
         }
 
         private SystemConfiguration GetSystemConfiguration(DateTime tsFrom, DateTime tsTo)
@@ -61,6 +59,15 @@ namespace MarketOps.System.Processor
                 tsTo = tsTo,
                 dataDefinition = _dataDefinitionProvider.GetDataDefinition()
             };
+        }
+
+        private void PreloadAndCalcStockData(SystemConfiguration systemConfiguration)
+        {
+            new StocksDataPreloader(_dataProvider, _dataLoader).PreloadDataAndPrecalcStats(
+                systemConfiguration.tsFrom,
+                systemConfiguration.tsTo,
+                StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.stocks)
+                );
         }
     }
 }

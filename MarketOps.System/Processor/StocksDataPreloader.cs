@@ -3,9 +3,6 @@ using MarketOps.StockData.Types;
 using MarketOps.System.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketOps.System.Processor
 {

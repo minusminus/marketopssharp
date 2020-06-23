@@ -1,5 +1,4 @@
-﻿using MarketOps.StockData.Types;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MarketOps.System
 {

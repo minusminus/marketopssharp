@@ -48,7 +48,7 @@ namespace MarketOps.System.Processor
         public void Process(DateTime tsFrom, DateTime tsTo)
         {
             SystemConfiguration systemConfiguration = GetSystemConfiguration(tsFrom, tsTo);
-            //Dictionary<SystemStockDataDefinition, int> backBufferInfo = StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.statsForStocks);
+            List<(SystemStockDataDefinition stock, int max)> backBufferInfo = StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.stocks);
             //PreloadStocksData(backBufferInfo);
             //PrecalcStockStats(backBufferInfo);
         }
@@ -61,16 +61,6 @@ namespace MarketOps.System.Processor
                 tsTo = tsTo,
                 dataDefinition = _dataDefinitionProvider.GetDataDefinition()
             };
-        }
-
-        private void PreloadStocksData(Dictionary<SystemStockDataDefinition, int> backBufferInfo)
-        {
-            //_dataLoader.
-        }
-
-        private void PrecalcStockStats(Dictionary<SystemStockDataDefinition, int> backBufferInfo)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -23,15 +23,15 @@ namespace MarketOps.System.Processor
             _dataLoader = dataLoader;
         }
 
-        public void PreloadAndPrecalc(DateTime tsFrom, DateTime tsTo, Dictionary<SystemStockDataDefinition, int> backBufferInfo, SystemDataDefinition systemDataDefinition)
+        public void PreloadDataAndPrecalcStats(DateTime tsFrom, DateTime tsTo, List<(SystemStockDataDefinition stock, int max)> backBufferInfo)
         {
-            //foreach (var backBuf in backBufferInfo)
-            //{
-            //    DateTime tsMovedBack = _dataProvider.GetNearestTickGETicksBefore(_dataProvider.GetStockDefinition(backBuf.Key.name), backBuf.Key.dataRange, 0, tsFrom, backBuf.Value);
-            //    StockPricesData stockPricesData = _dataLoader.Get(backBuf.Key.name, backBuf.Key.dataRange, 0, tsMovedBack, tsTo);
-            //    foreach (var stat in systemDataDefinition.statsForStocks[backBuf.Key])
-            //        stat.Calculate(stockPricesData);
-            //}                  
+            foreach (var backBuf in backBufferInfo)
+            {
+                DateTime tsMovedBack = _dataProvider.GetNearestTickGETicksBefore(_dataProvider.GetStockDefinition(backBuf.stock.name), backBuf.stock.dataRange, 0, tsFrom, backBuf.max);
+                StockPricesData stockPricesData = _dataLoader.Get(backBuf.stock.name, backBuf.stock.dataRange, 0, tsMovedBack, tsTo);
+                foreach (var stat in backBuf.stock.stats)
+                    stat.Calculate(stockPricesData);
+            }
         }
     }
 }

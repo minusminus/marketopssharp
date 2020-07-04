@@ -79,6 +79,7 @@
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />
     <Compile Include="MM\MMSignalVolumeOneItemTests.cs" />
     <Compile Include="Mocks\StockStatMock.cs" />
+    <Compile Include="Processor\PricesDataRangeFinderTests.cs" />
     <Compile Include="Processor\StocksBackBufferAggregatorTests.cs" />
     <Compile Include="Processor\StocksDataPreloaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

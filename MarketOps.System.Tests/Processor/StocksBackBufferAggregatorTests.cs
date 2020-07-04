@@ -11,8 +11,18 @@ namespace MarketOps.System.Tests.Processor
     [TestFixture]
     public class StocksBackBufferAggregatorTests
     {
-        private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition() { name = "KGHM", dataRange = StockDataRange.Daily, stats = new List<StockStat>() };
-        private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition() { name = "PKOBP", dataRange = StockDataRange.Daily, stats = new List<StockStat>() };
+        private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition()
+        {
+            stock = new StockDefinition() { Name = "KGHM" },
+            dataRange = StockDataRange.Daily,
+            stats = new List<StockStat>()
+        };
+        private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition()
+        {
+            stock = new StockDefinition() { Name = "PKOBP" },
+            dataRange = StockDataRange.Daily,
+            stats = new List<StockStat>()
+        };
 
 
         [Test]

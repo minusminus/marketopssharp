@@ -5,8 +5,6 @@ using MarketOps.System.Processor;
 using MarketOps.StockData.Types;
 using System;
 using System.Collections.Generic;
-using MarketOps.Stats.Stats;
-using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Interfaces;
 using MarketOps.System.Interfaces;
 using MarketOps.System.Tests.Mocks;
@@ -25,8 +23,18 @@ namespace MarketOps.System.Tests.Processor
         private StockStatMock _stat;
         private StockPricesData _pricesData;
 
-        private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition() { name = "KGHM", dataRange = StockDataRange.Daily, stats = new List<StockStat>() };
-        private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition() { name = "PKOBP", dataRange = StockDataRange.Daily, stats = new List<StockStat>() };
+        private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition()
+        {
+            stock = new StockDefinition() { Name = "KGHM" },
+            dataRange = StockDataRange.Daily,
+            stats = new List<StockStat>()
+        };
+        private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition()
+        {
+            stock = new StockDefinition() { Name = "PKOBP" },
+            dataRange = StockDataRange.Daily,
+            stats = new List<StockStat>()
+        };
 
         [SetUp]
         public void SetUp()

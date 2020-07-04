@@ -1,4 +1,6 @@
-﻿using MarketOps.StockData.Interfaces;
+﻿using MarketOps.StockData.Extensions;
+using MarketOps.StockData.Interfaces;
+using MarketOps.StockData.Types;
 using MarketOps.System.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -48,7 +50,15 @@ namespace MarketOps.System.Processor
         public void Process(DateTime tsFrom, DateTime tsTo)
         {
             SystemConfiguration systemConfiguration = GetSystemConfiguration(tsFrom, tsTo);
+            CheckSystemConfiguration(systemConfiguration);
             PreloadAndCalcStockData(systemConfiguration);
+            ProcessConfiguredSystem(systemConfiguration);
+        }
+
+        private void CheckSystemConfiguration(SystemConfiguration systemConfiguration)
+        {
+            if (systemConfiguration.tsFrom > systemConfiguration.tsTo) throw new Exception("Configured from greater then to.");
+            if (systemConfiguration.dataDefinition.stocks.Count == 0) throw new Exception("No stocks defined.");
         }
 
         private SystemConfiguration GetSystemConfiguration(DateTime tsFrom, DateTime tsTo)
@@ -68,6 +78,37 @@ namespace MarketOps.System.Processor
                 systemConfiguration.tsTo,
                 StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.stocks)
                 );
+        }
+
+        private void ProcessConfiguredSystem(SystemConfiguration systemConfiguration)
+        {
+            StockPricesData leadingPricesData = GetLeadingData(systemConfiguration);
+            var (from, to) = PricesDataRangeFinder.Find(leadingPricesData, systemConfiguration.tsFrom, systemConfiguration.tsTo);
+            for (int i = from; i <= to; i++)
+                ProcessSingleTick(leadingPricesData, i);
+        }
+
+        private StockPricesData GetLeadingData(SystemConfiguration systemConfiguration)
+        {
+            StockPricesData res = _dataLoader.Get(systemConfiguration.dataDefinition.stocks[0].stock.Name, systemConfiguration.dataDefinition.stocks[0].dataRange, 0, systemConfiguration.tsFrom, systemConfiguration.tsTo);
+            if (res.Length == 0) throw new Exception("Leading prices data is empty.");
+            return res;
+        }
+
+        private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex)
+        {
+            //ProcessStopsOnOpen;
+            //ProcessSignalsOnOpen;
+            //GenerateOnOpenSignals;
+
+            //ProcessStopsOnPrice;
+            //ProcessSignalsOnPrice;
+
+            //ProcessStopsOnClose;
+            //ProcessSignalsOnClose;
+            //GenerateOnCloseSignals;
+
+            //RecalculateStops;
         }
     }
 }

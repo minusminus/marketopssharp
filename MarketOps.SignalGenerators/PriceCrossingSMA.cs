@@ -8,6 +8,7 @@ using MarketOps.System.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.StockData.Extensions;
 using MarketOps.Stats.Stats;
+using MarketOps.StockData.Interfaces;
 
 namespace MarketOps.SignalGenerators
 {
@@ -16,45 +17,66 @@ namespace MarketOps.SignalGenerators
     /// </summary>
     public class PriceCrossingSMA : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
-        private readonly string _stockName;
         private readonly StockDataRange _dataRange;
         private readonly int _smaPeriod;
         private readonly IDataLoader _dataLoader;
+        private readonly IStockDataProvider _dataProvider;
         private readonly ITickAligner _tickAligner;
 
-        public PriceCrossingSMA(string stockName, StockDataRange dataRange, int smaPeriod, IDataLoader dataLoader, ITickAligner tickAligner)
+        private readonly StockDefinition _stock;
+        private readonly StockStat _statSMA;
+
+        public PriceCrossingSMA(string stockName, StockDataRange dataRange, int smaPeriod, IDataLoader dataLoader, IStockDataProvider dataProvider, ITickAligner tickAligner)
         {
-            _stockName = stockName;
             _dataRange = dataRange;
             _smaPeriod = smaPeriod;
             _dataLoader = dataLoader;
+            _dataProvider = dataProvider;
             _tickAligner = tickAligner;
+
+            _stock = _dataProvider.GetStockDefinition(stockName);
+            _statSMA = new StatSMA("")
+                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = _smaPeriod });
         }
 
         public SystemDataDefinition GetDataDefinition()
         {
-            StockStat stat = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = _smaPeriod });
-
             return new SystemDataDefinition()
             {
                 stocks = new List<SystemStockDataDefinition>() {
                     new SystemStockDataDefinition()
                     {
-                        name = _stockName,
-                        dataRange = _dataRange,
-                        stats = new List<StockStat>() { stat }
+                        stock = _stock,
+                        dataRange = _dataRange + 1,
+                        stats = new List<StockStat>() { _statSMA }
                     }
                 }
             };
         }
 
-        public List<Signal> GenerateOnClose(DateTime ts)
+        public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex)
         {
             List<Signal> res = new List<Signal>();
 
-            StockPricesData data = _dataLoader.Get(_stockName, _dataRange, 0, ts, ts);
-            int ix = data.FindByTS(ts);
+            StockPricesData data = _dataLoader.Get(_stock.Name, _dataRange, 0, ts, ts);
+
+            if ((data.C[leadingIndex - 1] <= _statSMA.Data(0)[leadingIndex - 1])
+                && (data.C[leadingIndex] > _statSMA.Data(0)[leadingIndex]))
+                res.Add(new Signal()
+                {
+                    Stock = _stock,
+                    Type = SignalType.ReverseOnOpen,
+                    Direction = PositionDir.Long
+                });
+
+            if ((data.C[leadingIndex - 1] >= _statSMA.Data(0)[leadingIndex - 1])
+                && (data.C[leadingIndex] < _statSMA.Data(0)[leadingIndex]))
+                res.Add(new Signal()
+                {
+                    Stock = _stock,
+                    Type = SignalType.ReverseOnClose,
+                    Direction = PositionDir.Short
+                });
 
             return res;
         }

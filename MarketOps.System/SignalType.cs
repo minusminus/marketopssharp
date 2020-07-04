@@ -7,6 +7,8 @@
     {
         EnterOnPrice,
         EnterOnOpen,
-        EnterOnClose
+        EnterOnClose,
+        ReverseOnOpen,
+        ReverseOnClose
     }
 }

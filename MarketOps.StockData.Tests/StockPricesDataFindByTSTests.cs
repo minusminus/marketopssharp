@@ -26,7 +26,7 @@ namespace MarketOps.StockData.Tests
         }
 
         [Test]
-        public void ValuesOnList()
+        public void FindByTS_ValuesOnList__ReturnsItemIndex()
         {
             StockPricesData d = CreateTestObj();
             d.FindByTS(TestStartTS).ShouldBe(TESTDATALEN - 1, "last");
@@ -35,21 +35,75 @@ namespace MarketOps.StockData.Tests
         }
 
         [Test]
-        public void ValueInRangeButNotOnList()
+        public void FindByTS_ValueInRangeButNotOnList_ReturnsNegativeValue()
         {
             CreateTestObj().FindByTS(TestStartTS.AddDays(-1.5)).ShouldBeLessThan(0);
         }
 
         [Test]
-        public void ValueOutOfRangeLeft()
+        public void FindByTS_ValueOutOfRangeLeft_ReturnsNegativeValue()
         {
             CreateTestObj().FindByTS(TestStartTS.AddDays(-100)).ShouldBeLessThan(0);
         }
 
         [Test]
-        public void ValueOutOfRangeRight()
+        public void FindByTS_ValueOutOfRangeRight_ReturnsNegativeValue()
         {
             CreateTestObj().FindByTS(TestStartTS.AddDays(100)).ShouldBeLessThan(0);
+        }
+
+        [Test]
+        public void FindByTSGE_ValueOnList__ReturnsItemIndex()
+        {
+            StockPricesData d = CreateTestObj();
+            d.FindByTSGE(TestStartTS).ShouldBe(TESTDATALEN - 1, "last");
+            d.FindByTSGE(TestStartTS.AddDays(-1)).ShouldBe(TESTDATALEN - 2, "mid");
+            d.FindByTSGE(TestStartTS.AddDays(-2)).ShouldBe(TESTDATALEN - 3, "first");
+        }
+
+        [Test]
+        public void FindByTSGE_ValueInRangeButNotOnList_ReturnsFirstGE()
+        {
+            CreateTestObj().FindByTSGE(TestStartTS.AddDays(-1.5)).ShouldBe(1);
+        }
+
+        [Test]
+        public void FindByTSGE_ValueOutOfRangeLeft_ReturnsFirstIndex()
+        {
+            CreateTestObj().FindByTSGE(TestStartTS.AddDays(-100)).ShouldBe(0);
+        }
+
+        [Test]
+        public void FindByTSGE_ValueOutOfRangeRight_ReturnsNegativeValue()
+        {
+            CreateTestObj().FindByTSGE(TestStartTS.AddDays(100)).ShouldBeLessThan(0);
+        }
+
+        [Test]
+        public void FindByTSLE_ValueOnList__ReturnsItemIndex()
+        {
+            StockPricesData d = CreateTestObj();
+            d.FindByTSLE(TestStartTS).ShouldBe(TESTDATALEN - 1, "last");
+            d.FindByTSLE(TestStartTS.AddDays(-1)).ShouldBe(TESTDATALEN - 2, "mid");
+            d.FindByTSLE(TestStartTS.AddDays(-2)).ShouldBe(TESTDATALEN - 3, "first");
+        }
+
+        [Test]
+        public void FindByTSLE_ValueInRangeButNotOnList_ReturnsFirstLE()
+        {
+            CreateTestObj().FindByTSLE(TestStartTS.AddDays(-1.5)).ShouldBe(0);
+        }
+
+        [Test]
+        public void FindByTSLE_ValueOutOfRangeLeft_ReturnsNegativeValue()
+        {
+            CreateTestObj().FindByTSLE(TestStartTS.AddDays(-100)).ShouldBeLessThan(0);
+        }
+
+        [Test]
+        public void FindByTSLE_ValueOutOfRangeRight_ReturnsLastIndex()
+        {
+            CreateTestObj().FindByTSLE(TestStartTS.AddDays(100)).ShouldBe(2);
         }
     }
 }

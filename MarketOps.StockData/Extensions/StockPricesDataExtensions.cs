@@ -35,6 +35,32 @@ namespace MarketOps.StockData.Extensions
         }
 
         /// <summary>
+        /// finds index of first data greater or equal to specified timestamp
+        /// assumes data is sorted by TS
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        public static int FindByTSGE(this StockPricesData data, DateTime ts)
+        {
+            int i = Array.BinarySearch<DateTime>(data.TS, ts);
+            return (i >= 0) ? i : ((~i < data.Length) ? ~i : i);
+        }
+
+        /// <summary>
+        /// finds index of first data lower or equal to specified timestamp
+        /// assumes data is sorted by TS
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="ts"></param>
+        /// <returns></returns>
+        public static int FindByTSLE(this StockPricesData data, DateTime ts)
+        {
+            int i = Array.BinarySearch<DateTime>(data.TS, ts);
+            return (i >= 0) ? i : ~i - 1;
+        }
+
+        /// <summary>
         /// returns datetime format for data range select controls
         /// </summary>
         /// <param name="data"></param>

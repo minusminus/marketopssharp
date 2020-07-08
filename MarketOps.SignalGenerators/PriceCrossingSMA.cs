@@ -62,23 +62,24 @@ namespace MarketOps.SignalGenerators
 
             if ((data.C[leadingIndex - 1] <= _statSMA.Data(0)[leadingIndex - 1])
                 && (data.C[leadingIndex] > _statSMA.Data(0)[leadingIndex]))
-                res.Add(new Signal()
-                {
-                    Stock = _stock,
-                    Type = SignalType.ReverseOnOpen,
-                    Direction = PositionDir.Long
-                });
+                res.Add(CreateSignal(PositionDir.Long));
 
             if ((data.C[leadingIndex - 1] >= _statSMA.Data(0)[leadingIndex - 1])
                 && (data.C[leadingIndex] < _statSMA.Data(0)[leadingIndex]))
-                res.Add(new Signal()
-                {
-                    Stock = _stock,
-                    Type = SignalType.ReverseOnClose,
-                    Direction = PositionDir.Short
-                });
+                res.Add(CreateSignal(PositionDir.Short));
 
             return res;
         }
+
+        private Signal CreateSignal(PositionDir dir) =>
+            new Signal()
+            {
+                Stock = _stock,
+                DataRange = _dataRange,
+                IntradayInterval = 0,
+                Type = SignalType.EnterOnOpen,
+                Direction = dir,
+                ReversePosition = true
+            };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
+using MarketOps.System.Extensions;
 using MarketOps.System.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -47,12 +48,14 @@ namespace MarketOps.System.Processor
             _slippage = slippage;
         }
 
-        public void Process(DateTime tsFrom, DateTime tsTo)
+        public SystemEquity Process(DateTime tsFrom, DateTime tsTo, float cashOnStart)
         {
+            SystemEquity equity = new SystemEquity() { Cash = cashOnStart };
             SystemConfiguration systemConfiguration = GetSystemConfiguration(tsFrom, tsTo);
             CheckSystemConfiguration(systemConfiguration);
             PreloadAndCalcStockData(systemConfiguration);
-            ProcessConfiguredSystem(systemConfiguration);
+            ProcessConfiguredSystem(systemConfiguration, equity);
+            return equity;
         }
 
         private void CheckSystemConfiguration(SystemConfiguration systemConfiguration)
@@ -80,12 +83,13 @@ namespace MarketOps.System.Processor
                 );
         }
 
-        private void ProcessConfiguredSystem(SystemConfiguration systemConfiguration)
+        private void ProcessConfiguredSystem(SystemConfiguration systemConfiguration, SystemEquity equity)
         {
+            List<Signal> signals = new List<Signal>();
             StockPricesData leadingPricesData = GetLeadingData(systemConfiguration);
             var (from, to) = PricesDataRangeFinder.Find(leadingPricesData, systemConfiguration.tsFrom, systemConfiguration.tsTo);
             for (int i = from; i <= to; i++)
-                ProcessSingleTick(leadingPricesData, i);
+                ProcessSingleTick(leadingPricesData, i, equity, signals);
         }
 
         private StockPricesData GetLeadingData(SystemConfiguration systemConfiguration)
@@ -95,7 +99,7 @@ namespace MarketOps.System.Processor
             return res;
         }
 
-        private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex)
+        private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex, SystemEquity equity, List<Signal> signals)
         {
             //ProcessStopsOnOpen;
             //ProcessSignalsOnOpen;
@@ -109,6 +113,29 @@ namespace MarketOps.System.Processor
             //GenerateOnCloseSignals;
 
             //RecalculateStops;
+            //CalculateCurrentSystemValue;
+        }
+
+        private void ProcessSignalsOnOpen(DateTime ts, SystemEquity equity, List<Signal> signals)
+        {
+            var signalsToProcess = new HashSet<Signal>(signals.Where(s => s.Type == SignalType.EnterOnOpen));
+
+            foreach (Signal signal in signalsToProcess)
+            {
+                StockPricesData pricesData = _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
+                int pricesDataIndex = pricesData.FindByTS(ts);
+
+                if (signal.ReversePosition)
+                {
+                    int currPos = equity.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
+                    if (currPos > -1)
+                        equity.Close(currPos, ts, pricesData.O[pricesDataIndex]);
+                }
+
+                equity.Open(signal.Stock, signal.Direction, ts, pricesData.O[pricesDataIndex], signal.Volume, signal.DataRange, signal.IntradayInterval);
+            }
+
+            signals.RemoveAll(s => signalsToProcess.Contains(s));
         }
     }
 }

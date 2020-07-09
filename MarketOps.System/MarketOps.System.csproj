@@ -63,6 +63,7 @@
     <Compile Include="PositionCloseMode.cs" />
     <Compile Include="PositionDir.cs" />
     <Compile Include="Processor\PricesDataRangeFinder.cs" />
+    <Compile Include="Processor\SignalProcessor.cs" />
     <Compile Include="Processor\StocksBackBufferAggregator.cs" />
     <Compile Include="Processor\StocksDataPreloader.cs" />
     <Compile Include="Signal.cs" />

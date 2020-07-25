@@ -25,7 +25,6 @@ namespace MarketOps.System.Processor
         {
             if (signals.Count == 0) return;
 
-            //var signalsToProcess = new HashSet<Signal>(signals.Where(s => s.Type == SignalType.EnterOnOpen));
             var signalsToProcess = new HashSet<Signal>(signalsSelector(signals));
 
             foreach (Signal signal in signalsToProcess)
@@ -42,12 +41,10 @@ namespace MarketOps.System.Processor
                         newPosDir = equity.PositionsActive[currPos].Direction;
                         equity.Close(currPos, ts, pricesData.O[pricesDataIndex]);
                     }
-                    //equity.Open(signal.Stock, newPosDir, ts, pricesData.O[pricesDataIndex], signal.Volume, signal.DataRange, signal.IntradayInterval);
-                    equity.Open(signal.Stock, newPosDir, ts, openPriceLevel(pricesData, pricesDataIndex, signal), signal.Volume, signal.DataRange, signal.IntradayInterval);
+                    equity.Open(signal.Stock, newPosDir, ts, openPriceLevel(pricesData, pricesDataIndex, signal), signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
                 }
                 else
-                    //equity.Open(signal.Stock, signal.Direction, ts, pricesData.O[pricesDataIndex], signal.Volume, signal.DataRange, signal.IntradayInterval);
-                    equity.Open(signal.Stock, signal.Direction, ts, openPriceLevel(pricesData, pricesDataIndex, signal), signal.Volume, signal.DataRange, signal.IntradayInterval);
+                    equity.Open(signal.Stock, signal.Direction, ts, openPriceLevel(pricesData, pricesDataIndex, signal), signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
             }
 
             signals.RemoveAll(s => signalsToProcess.Contains(s));

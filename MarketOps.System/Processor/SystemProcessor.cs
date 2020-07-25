@@ -104,7 +104,7 @@ namespace MarketOps.System.Processor
         private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex, SystemEquity equity, List<Signal> signals)
         {
             //ProcessStopsOnOpen;
-            //ProcessSignalsOnOpen;
+            ProcessSignalsOnOpen(leadingPricesData.TS[leadingIndex], equity, signals);
             //GenerateOnOpenSignals;
 
             //ProcessStopsOnPrice;

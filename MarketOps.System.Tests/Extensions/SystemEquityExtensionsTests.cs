@@ -25,6 +25,7 @@ namespace MarketOps.System.Tests.Extensions
         const float Close1 = 25;
         private readonly DateTime CurrentTS = DateTime.Now.Date;
         private readonly DateTime CurrentTS2 = DateTime.Now.AddDays(-1).Date;
+        private readonly Signal EntrySignal = new Signal();
 
         [SetUp]
         public void SetUp()
@@ -48,6 +49,7 @@ namespace MarketOps.System.Tests.Extensions
             pos.Volume.ShouldBe(vol);
             pos.DataRange.ShouldBe(range);
             pos.IntradayInterval.ShouldBe(interval);
+            pos.EntrySignal.ShouldBe(EntrySignal);
         }
 
         private void CheckClosedPosition(int index, PositionDir dir, float open, float close, int vol, DateTime ts, float prevValueOnPosition)
@@ -63,7 +65,7 @@ namespace MarketOps.System.Tests.Extensions
         [TestCase(PositionDir.Long, 10, 20, StockDataRange.Intraday, 60)]
         public void Open__AddsToActive_SubsCash(PositionDir dir, float price, int vol, StockDataRange range, int intradayInterval)
         {
-            _testObj.Open(_stock, dir, CurrentTS, price, vol, range, intradayInterval);
+            _testObj.Open(_stock, dir, CurrentTS, price, vol, range, intradayInterval, EntrySignal);
             _testObj.Cash.ShouldBe(CashValue - price * vol);
             _testObj.PositionsActive.Count.ShouldBe(1);
             CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, price, vol, CurrentTS, range, intradayInterval);
@@ -72,12 +74,12 @@ namespace MarketOps.System.Tests.Extensions
         [Test]
         public void Open_Twice__AddsToActive_SubsCash()
         {
-            _testObj.Open(_stock, PositionDir.Long, CurrentTS, Price1, Vol1, StockDataRange.Daily, 0);
+            _testObj.Open(_stock, PositionDir.Long, CurrentTS, Price1, Vol1, StockDataRange.Daily, 0, EntrySignal);
             _testObj.Cash.ShouldBe(CashValue - Price1 * Vol1);
             _testObj.PositionsActive.Count.ShouldBe(1);
             CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, CurrentTS, StockDataRange.Daily, 0);
 
-            _testObj.Open(_stock2, PositionDir.Short, CurrentTS2, Price2, Vol2, StockDataRange.Daily, 10);
+            _testObj.Open(_stock2, PositionDir.Short, CurrentTS2, Price2, Vol2, StockDataRange.Daily, 10, EntrySignal);
             _testObj.Cash.ShouldBe(CashValue - Price1 * Vol1 - Price2 * Vol2);
             _testObj.PositionsActive.Count.ShouldBe(2);
             CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, CurrentTS, StockDataRange.Daily, 0);

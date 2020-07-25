@@ -10,7 +10,7 @@ namespace MarketOps.System.Extensions
     /// </summary>
     public static class SystemEquityExtensions
     {
-        public static void Open(this SystemEquity system, StockDefinition stock, PositionDir dir, DateTime ts, float price, int volume, StockDataRange dataRange, int intradayInterval)
+        public static void Open(this SystemEquity system, StockDefinition stock, PositionDir dir, DateTime ts, float price, int volume, StockDataRange dataRange, int intradayInterval, Signal entrySignal)
         {
             Position pos = new Position
             {
@@ -20,7 +20,8 @@ namespace MarketOps.System.Extensions
                 Direction = dir,
                 Open = price,
                 TSOpen = ts,
-                Volume = volume
+                Volume = volume,
+                EntrySignal = entrySignal
             };
             system.PositionsActive.Add(pos);
             system.Cash -= pos.OpenValue();

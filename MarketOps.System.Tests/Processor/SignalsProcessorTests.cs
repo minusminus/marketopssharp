@@ -92,22 +92,22 @@ namespace MarketOps.System.Tests.Processor
         {
             SystemEquity equity = CreateEquity();
             List<Signal> signals = CreateSignals();
-            Signal openSignal = signals.Where(signalsFilter).First();
+            Signal openSignal = signals.First(signalsFilter);
             TestObj.Process(signals, LastDate, equity,
                 (sigs) => { _signalSelectorCalled = true; return sigs.Where(signalsFilter); },
                 (_, __, sig) => { _openPriceLevelCalled = true; return sig.Price; });
             CheckProcessResult(equity, signals, true, true, 3, 1, 0);
             signals.Contains(openSignal).ShouldBeFalse();
             CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash - openSignal.Price * openSignal.Volume);
+            equity.Cash.ShouldBe(InitialCash - (openSignal.Price * openSignal.Volume));
         }
 
         public void TestReversePosition(PositionDir activePosDir, PositionDir expectedOpenedPosDir)
         {
-            Func<Signal, bool> signalsFilter = (s) => (s.Direction == PositionDir.Long) && (s.ReversePosition);
+            bool signalsFilter(Signal s) => (s.Direction == PositionDir.Long) && (s.ReversePosition);
             SystemEquity equity = CreateEquity();
             List<Signal> signals = CreateSignals();
-            Signal openSignal = signals.Where(signalsFilter).First();
+            Signal openSignal = signals.First(signalsFilter);
             Position activePosition = new Position() { Direction = activePosDir, Stock = _stock, Volume = 5 };
             equity.PositionsActive.Add(activePosition);
             TestObj.Process(signals, LastDate, equity,
@@ -117,7 +117,7 @@ namespace MarketOps.System.Tests.Processor
             signals.Contains(openSignal).ShouldBeFalse();
             CheckPositionsClosed(equity, 0, activePosDir, openSignal.Price, activePosition.Volume, LastDate);
             CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash + openSignal.Price * activePosition.Volume - openSignal.Price * openSignal.Volume);
+            equity.Cash.ShouldBe(InitialCash + (openSignal.Price * activePosition.Volume) - (openSignal.Price * openSignal.Volume));
         }
 
         [Test]
@@ -176,6 +176,23 @@ namespace MarketOps.System.Tests.Processor
         public void Process_ReverseShortPos_NoActivePos__OpensPosition()
         {
             TestOpenPosition((s) => (s.Direction == PositionDir.Short) && (s.ReversePosition), PositionDir.Short);
+        }
+
+        [Test]
+        public void Process_OpenLongOnPrice_TwoSignals__OpensPositions()
+        {
+            bool signalsFilter(Signal s) => !s.ReversePosition;
+            SystemEquity equity = CreateEquity();
+            List<Signal> signals = CreateSignals();
+            Signal[] openSignal = signals.Where(signalsFilter).ToArray();
+            openSignal.Length.ShouldBe(2);
+            TestObj.Process(signals, LastDate, equity,
+                (sigs) => { _signalSelectorCalled = true; return sigs.Where(signalsFilter); },
+                (_, __, sig) => { _openPriceLevelCalled = true; return sig.Price; });
+            CheckProcessResult(equity, signals, true, true, 2, 2, 0);
+            CheckPositionsActive(equity, 0, openSignal[0], openSignal[0].Direction, openSignal[0].Price, openSignal[0].Volume, LastDate);
+            CheckPositionsActive(equity, 1, openSignal[1], openSignal[1].Direction, openSignal[1].Price, openSignal[1].Volume, LastDate);
+            equity.Cash.ShouldBe(InitialCash - (openSignal[0].Price * openSignal[0].Volume) - (openSignal[1].Price * openSignal[1].Volume));
         }
     }
 }

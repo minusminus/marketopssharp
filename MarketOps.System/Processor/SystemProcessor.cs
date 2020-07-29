@@ -25,7 +25,7 @@ namespace MarketOps.System.Processor
         private readonly ISignalGeneratorOnClose _signalGeneratorOnClose;
         private readonly ICommission _commission;
         private readonly ISlippage _slippage;
-        private readonly SignalProcessor _signalProcessor;
+        private readonly SignalsProcessor _signalsProcessor;
 
         public SystemProcessor(
             IStockDataProvider dataProvider,
@@ -47,7 +47,7 @@ namespace MarketOps.System.Processor
             _signalGeneratorOnClose = signalGeneratorOnClose;
             _commission = commission;
             _slippage = slippage;
-            _signalProcessor = new SignalProcessor(_dataLoader);
+            _signalsProcessor = new SignalsProcessor(_dataLoader);
         }
 
         public SystemEquity Process(DateTime tsFrom, DateTime tsTo, float cashOnStart)
@@ -120,33 +120,9 @@ namespace MarketOps.System.Processor
 
         private void ProcessSignalsOnOpen(DateTime ts, SystemEquity equity, List<Signal> signals)
         {
-            _signalProcessor.Process(signals, ts, equity,
+            _signalsProcessor.Process(signals, ts, equity,
                 (sigs) => sigs.Where(s => s.Type == SignalType.EnterOnOpen),
                 (pricesData, pricesDataIndex, _) => pricesData.O[pricesDataIndex]);
-
-            //var signalsToProcess = new HashSet<Signal>(signals.Where(s => s.Type == SignalType.EnterOnOpen));
-
-            //foreach (Signal signal in signalsToProcess)
-            //{
-            //    StockPricesData pricesData = _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
-            //    int pricesDataIndex = pricesData.FindByTS(ts);
-
-            //    if (signal.ReversePosition)
-            //    {
-            //        PositionDir newPosDir = signal.Direction;
-            //        int currPos = equity.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
-            //        if (currPos > -1)
-            //        {
-            //            newPosDir = equity.PositionsActive[currPos].Direction;
-            //            equity.Close(currPos, ts, pricesData.O[pricesDataIndex]);
-            //        }
-            //        equity.Open(signal.Stock, newPosDir, ts, pricesData.O[pricesDataIndex], signal.Volume, signal.DataRange, signal.IntradayInterval);
-            //    }
-            //    else
-            //        equity.Open(signal.Stock, signal.Direction, ts, pricesData.O[pricesDataIndex], signal.Volume, signal.DataRange, signal.IntradayInterval);
-            //}
-
-            //signals.RemoveAll(s => signalsToProcess.Contains(s));
         }
     }
 }

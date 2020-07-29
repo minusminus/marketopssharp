@@ -8,13 +8,13 @@ using System.Collections.Generic;
 namespace MarketOps.System.Processor
 {
     /// <summary>
-    /// System signal processor.
+    /// System signals processor.
     /// </summary>
-    internal class SignalProcessor
+    internal class SignalsProcessor
     {
         private readonly IDataLoader _dataLoader;
 
-        public SignalProcessor(IDataLoader dataLoader)
+        public SignalsProcessor(IDataLoader dataLoader)
         {
             _dataLoader = dataLoader;
         }
@@ -31,6 +31,7 @@ namespace MarketOps.System.Processor
             {
                 StockPricesData pricesData = _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
                 int pricesDataIndex = pricesData.FindByTS(ts);
+                float openPrice = openPriceLevel(pricesData, pricesDataIndex, signal);
 
                 if (signal.ReversePosition)
                 {
@@ -38,13 +39,13 @@ namespace MarketOps.System.Processor
                     int currPos = equity.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
                     if (currPos > -1)
                     {
-                        newPosDir = equity.PositionsActive[currPos].Direction;
-                        equity.Close(currPos, ts, pricesData.O[pricesDataIndex]);
+                        newPosDir = equity.PositionsActive[currPos].Direction == PositionDir.Long ? PositionDir.Short : PositionDir.Long;
+                        equity.Close(currPos, ts, openPrice);
                     }
-                    equity.Open(signal.Stock, newPosDir, ts, openPriceLevel(pricesData, pricesDataIndex, signal), signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
+                    equity.Open(signal.Stock, newPosDir, ts, openPrice, signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
                 }
                 else
-                    equity.Open(signal.Stock, signal.Direction, ts, openPriceLevel(pricesData, pricesDataIndex, signal), signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
+                    equity.Open(signal.Stock, signal.Direction, ts, openPrice, signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
             }
 
             signals.RemoveAll(s => signalsToProcess.Contains(s));

@@ -13,15 +13,15 @@ using System.Linq;
 namespace MarketOps.System.Tests.Processor
 {
     [TestFixture]
-    public class SignalProcessorTests
+    public class SignalsProcessorTests
     {
         private readonly DateTime LastDate = DateTime.Now.Date;
         private readonly int PricesCount = 10;
         private readonly float InitialCash = 10000;
 
-        private static readonly StockDefinition _stock = new StockDefinition();
+        private static readonly StockDefinition _stock = new StockDefinition() { ID = 1 };
 
-        private SignalProcessor TestObj;
+        private SignalsProcessor TestObj;
         private IDataLoader _dataLoader;
         private StockPricesData _pricesData;
 
@@ -32,7 +32,7 @@ namespace MarketOps.System.Tests.Processor
         public void SetUp()
         {
             _dataLoader = Substitute.For<IDataLoader>();
-            TestObj = new SignalProcessor(_dataLoader);
+            TestObj = new SignalsProcessor(_dataLoader);
             _signalSelectorCalled = false;
             _openPriceLevelCalled = false;
 
@@ -58,15 +58,15 @@ namespace MarketOps.System.Tests.Processor
         private SystemEquity CreateEquity() => new SystemEquity() { Cash = InitialCash };
 
         private void CheckProcessResult(SystemEquity equity, List<Signal> signals, bool expectedSelectorCalled, bool expectedPriceLevelCalled,
-            int expectedSignalsCount, int expectedPositionsActiveCount, int expectedValueCount)
+            int expectedSignalsCount, int expectedPositionsActiveCount, int expectedPositionsClosedCount)
         {
             _signalSelectorCalled.ShouldBe(expectedSelectorCalled);
             _openPriceLevelCalled.ShouldBe(expectedPriceLevelCalled);
             signals.Count.ShouldBe(expectedSignalsCount);
             equity.PositionsActive.Count.ShouldBe(expectedPositionsActiveCount);
-            equity.PositionsClosed.Count.ShouldBe(0);
-            equity.ClosedPositionsValue.Count.ShouldBe(0);
-            equity.Value.Count.ShouldBe(expectedValueCount);
+            equity.PositionsClosed.Count.ShouldBe(expectedPositionsClosedCount);
+            equity.ClosedPositionsValue.Count.ShouldBe(expectedPositionsClosedCount);
+            equity.Value.Count.ShouldBe(0);
         }
 
         private void CheckPositionsActive(SystemEquity equity, int posIndex, Signal expectedSignal, PositionDir expectedDir,
@@ -77,6 +77,47 @@ namespace MarketOps.System.Tests.Processor
             equity.PositionsActive[posIndex].Open.ShouldBe(expectedOpen);
             equity.PositionsActive[posIndex].Volume.ShouldBe(expectedVolume);
             equity.PositionsActive[posIndex].TSOpen.ShouldBe(expectedTS);
+        }
+
+        private void CheckPositionsClosed(SystemEquity equity, int posIndex, PositionDir expectedDir,
+            float expectedClose, int expectedVolume, DateTime expectedTS)
+        {
+            equity.PositionsClosed[posIndex].Direction.ShouldBe(expectedDir);
+            equity.PositionsClosed[posIndex].Close.ShouldBe(expectedClose);
+            equity.PositionsClosed[posIndex].Volume.ShouldBe(expectedVolume);
+            equity.PositionsClosed[posIndex].TSClose.ShouldBe(expectedTS);
+        }
+
+        private void TestOpenPosition(Func<Signal, bool> signalsFilter, PositionDir expectedOpenedPosDir)
+        {
+            SystemEquity equity = CreateEquity();
+            List<Signal> signals = CreateSignals();
+            Signal openSignal = signals.Where(signalsFilter).First();
+            TestObj.Process(signals, LastDate, equity,
+                (sigs) => { _signalSelectorCalled = true; return sigs.Where(signalsFilter); },
+                (_, __, sig) => { _openPriceLevelCalled = true; return sig.Price; });
+            CheckProcessResult(equity, signals, true, true, 3, 1, 0);
+            signals.Contains(openSignal).ShouldBeFalse();
+            CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
+            equity.Cash.ShouldBe(InitialCash - openSignal.Price * openSignal.Volume);
+        }
+
+        public void TestReversePosition(PositionDir activePosDir, PositionDir expectedOpenedPosDir)
+        {
+            Func<Signal, bool> signalsFilter = (s) => (s.Direction == PositionDir.Long) && (s.ReversePosition);
+            SystemEquity equity = CreateEquity();
+            List<Signal> signals = CreateSignals();
+            Signal openSignal = signals.Where(signalsFilter).First();
+            Position activePosition = new Position() { Direction = activePosDir, Stock = _stock, Volume = 5 };
+            equity.PositionsActive.Add(activePosition);
+            TestObj.Process(signals, LastDate, equity,
+                (sigs) => { _signalSelectorCalled = true; return sigs.Where(signalsFilter); },
+                (_, __, sig) => { _openPriceLevelCalled = true; return sig.Price; });
+            CheckProcessResult(equity, signals, true, true, 3, 1, 1);
+            signals.Contains(openSignal).ShouldBeFalse();
+            CheckPositionsClosed(equity, 0, activePosDir, openSignal.Price, activePosition.Volume, LastDate);
+            CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
+            equity.Cash.ShouldBe(InitialCash + openSignal.Price * activePosition.Volume - openSignal.Price * openSignal.Volume);
         }
 
         [Test]
@@ -104,31 +145,37 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Process_OpenLongOnPrice__OpensPosition()
         {
-            SystemEquity equity = CreateEquity();
-            List<Signal> signals = CreateSignals();
-            Signal openSignal = signals.Where(s => (s.Direction == PositionDir.Long) && (!s.ReversePosition)).First();
-            TestObj.Process(signals, LastDate, equity,
-                (sigs) => { _signalSelectorCalled = true; return sigs.Where(s => (s.Direction == PositionDir.Long) && (!s.ReversePosition)); },
-                (_, __, sig) => { _openPriceLevelCalled = true; return sig.Price; });
-            CheckProcessResult(equity, signals, true, true, 3, 1, 0);
-            signals.Contains(openSignal).ShouldBeFalse();
-            CheckPositionsActive(equity, 0, openSignal, PositionDir.Long, openSignal.Price, openSignal.Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash - openSignal.Price * openSignal.Volume);
+            TestOpenPosition((s) => (s.Direction == PositionDir.Long) && (!s.ReversePosition), PositionDir.Long);
         }
 
         [Test]
         public void Process_OpenShortOnPrice__OpensPosition()
         {
-            SystemEquity equity = CreateEquity();
-            List<Signal> signals = CreateSignals();
-            Signal openSignal = signals.Where(s => (s.Direction == PositionDir.Short) && (!s.ReversePosition)).First();
-            TestObj.Process(signals, LastDate, equity,
-                (sigs) => { _signalSelectorCalled = true; return sigs.Where(s => (s.Direction == PositionDir.Short) && (!s.ReversePosition)); },
-                (_, __, sig) => { _openPriceLevelCalled = true; return sig.Price; });
-            CheckProcessResult(equity, signals, true, true, 3, 1, 0);
-            signals.Contains(openSignal).ShouldBeFalse();
-            CheckPositionsActive(equity, 0, openSignal, PositionDir.Short, openSignal.Price, openSignal.Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash - openSignal.Price * openSignal.Volume);
+            TestOpenPosition((s) => (s.Direction == PositionDir.Short) && (!s.ReversePosition), PositionDir.Short);
+        }
+
+        [Test]
+        public void Process_ReverseLongPos__ReversesPosition()
+        {
+            TestReversePosition(PositionDir.Long, PositionDir.Short);
+        }
+
+        [Test]
+        public void Process_ReverseShortPos__ReversesPosition()
+        {
+            TestReversePosition(PositionDir.Short, PositionDir.Long);
+        }
+
+        [Test]
+        public void Process_ReverseLongPos_NoActivePos__OpensPosition()
+        {
+            TestOpenPosition((s) => (s.Direction == PositionDir.Long) && (s.ReversePosition), PositionDir.Long);
+        }
+
+        [Test]
+        public void Process_ReverseShortPos_NoActivePos__OpensPosition()
+        {
+            TestOpenPosition((s) => (s.Direction == PositionDir.Short) && (s.ReversePosition), PositionDir.Short);
         }
     }
 }

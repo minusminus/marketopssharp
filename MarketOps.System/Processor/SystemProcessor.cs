@@ -111,7 +111,7 @@ namespace MarketOps.System.Processor
             //ProcessSignalsOnPrice;
 
             //ProcessStopsOnClose;
-            //ProcessSignalsOnClose;
+            ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], equity, signals);
             //GenerateOnCloseSignals;
 
             //RecalculateStops;
@@ -121,8 +121,15 @@ namespace MarketOps.System.Processor
         private void ProcessSignalsOnOpen(DateTime ts, SystemEquity equity, List<Signal> signals)
         {
             _signalsProcessor.Process(signals, ts, equity,
-                (sigs) => sigs.Where(s => s.Type == SignalType.EnterOnOpen),
-                (pricesData, pricesDataIndex, _) => pricesData.O[pricesDataIndex]);
+                SignalSelector.SignalsOnOpen,
+                OpenPriceSelector.OnOpen);
+        }
+
+        private void ProcessSignalsOnClose(DateTime ts, SystemEquity equity, List<Signal> signals)
+        {
+            _signalsProcessor.Process(signals, ts, equity,
+                SignalSelector.SignalsOnClose,
+                OpenPriceSelector.OnClose);
         }
     }
 }

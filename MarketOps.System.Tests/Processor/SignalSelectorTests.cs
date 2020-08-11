@@ -2,27 +2,12 @@
 using MarketOps.System.Processor;
 using NUnit.Framework;
 using Shouldly;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MarketOps.System.Tests.Processor
 {
     [TestFixture]
     public class SignalSelectorTests
     {
-        private List<Signal> CreateSignals() => new List<Signal>() {
-            new Signal() { Type = SignalType.EnterOnOpen, Price = 1},
-            new Signal() { Type = SignalType.EnterOnClose, Price = 2},
-            new Signal() { Type = SignalType.EnterOnOpen, Price = 3},
-            new Signal() { Type = SignalType.EnterOnClose, Price = 4},
-            new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Long, Price = 100},
-            new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Long, Price = 200},
-            new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Long, Price = 300},
-            new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Short, Price = 100},
-            new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Short, Price = 200},
-            new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Short, Price = 300},
-        };
-
         private StockPricesData CreatePricesData(float o, float h, float l, float c)
         {
             StockPricesData res = new StockPricesData(1);
@@ -33,63 +18,70 @@ namespace MarketOps.System.Tests.Processor
             return res;
         }
 
-        private void CheckSelectedSignals(List<Signal> signals, float[] expectedPrices)
+        [Test]
+        public void OnOpen_OpenSignal__ReturnsTrue()
         {
-            signals.Count.ShouldBe(expectedPrices.Length);
-            foreach (float price in expectedPrices)
-                signals.Where(x => x.Price == price).ShouldNotBeEmpty();
+            SignalSelector.OnOpen(new Signal() { Type = SignalType.EnterOnOpen }, CreatePricesData(0, 0, 0, 0), 0).ShouldBeTrue();
         }
 
         [Test]
-        public void SignalsOnOpen_EmptyList__ReturnsEmptyList()
+        public void OnOpen_NotOpenSignal__ReturnsFalse()
         {
-            SignalSelector.SignalsOnOpen(new List<Signal>()).ShouldBeEmpty();
+            SignalSelector.OnOpen(new Signal() { Type = SignalType.EnterOnClose }, CreatePricesData(0, 0, 0, 0), 0).ShouldBeFalse();
         }
 
         [Test]
-        public void SignalsOnOpen_FilledList__ReturnsOnOpenOnly()
+        public void OnClose_CloseSignal__ReturnsTrue()
         {
-            CheckSelectedSignals(SignalSelector.SignalsOnOpen(CreateSignals()).ToList(),
-                new float[] { 1, 3 });
+            SignalSelector.OnClose(new Signal() { Type = SignalType.EnterOnClose }, CreatePricesData(0, 0, 0, 0), 0).ShouldBeTrue();
         }
 
         [Test]
-        public void SignalsOnClose_EmptyList__ReturnsEmptyList()
+        public void OnClose_NotCloseSignal__ReturnsFalse()
         {
-            SignalSelector.SignalsOnClose(new List<Signal>()).ShouldBeEmpty();
+            SignalSelector.OnClose(new Signal() { Type = SignalType.EnterOnOpen }, CreatePricesData(0, 0, 0, 0), 0).ShouldBeFalse();
         }
 
         [Test]
-        public void SignalsOnClose_FilledList__ReturnsOnCloseOnly()
+        public void OnPrice_NotPriceSignal__ReturnsFalse()
         {
-            CheckSelectedSignals(SignalSelector.SignalsOnClose(CreateSignals()).ToList(),
-                new float[] { 2, 4 });
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnOpen }, CreatePricesData(0, 0, 0, 0), 0).ShouldBeFalse();
         }
 
         [Test]
-        public void SignalsOnPrice_EmptyList__ReturnsEmptyList()
+        public void OnPrice_LongPriceSignal_OutOfRange__ReturnsFalse()
         {
-            SignalSelector.SignalsOnPrice(new List<Signal>(), CreatePricesData(0, 0, 0, 0), 0).ShouldBeEmpty();
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Long, Price = 200 }, CreatePricesData(0, 100, 50, 0), 0).ShouldBeFalse();
         }
 
         [Test]
-        public void SignalsOnPrice_NoPriceInRange__ReturnsEmptyList()
+        public void OnPrice_LongPriceSignal_InRange__ReturnsTrue()
         {
-            SignalSelector.SignalsOnPrice(CreateSignals(), CreatePricesData(0, 50, 500, 0), 0).ShouldBeEmpty();
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Long, Price = 75 }, CreatePricesData(0, 100, 50, 0), 0).ShouldBeTrue();
         }
 
         [Test]
-        public void SignalsOnPrice_LongPriceInRange__ReturnsInRangeOnly()
+        public void OnPrice_LongPriceSignal_BelowRange__ReturnsTrue()
         {
-            CheckSelectedSignals(SignalSelector.SignalsOnPrice(CreateSignals(), CreatePricesData(0, 200, 500, 0), 0).ToList(),
-                new float[] { 100, 200 });
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Long, Price = 20 }, CreatePricesData(0, 100, 50, 0), 0).ShouldBeTrue();
         }
 
         [Test]
-        public void SignalsOnPrice_ShortPriceInRange__ReturnsInRangeOnly()
+        public void OnPrice_ShortPriceSignal_OutOfRange__ReturnsFalse()
         {
-            CheckSelectedSignals(SignalSelector.SignalsOnPrice(CreateSignals(), CreatePricesData(0, 50, 200, 0), 0).ToList(),
-                new float[] { 200, 300 });
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Short, Price = 20 }, CreatePricesData(0, 100, 50, 0), 0).ShouldBeFalse();
+        }
+
+        [Test]
+        public void OnPrice_ShortPriceSignal_InRange__ReturnsTrue()
+        {
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Short, Price = 75 }, CreatePricesData(0, 100, 50, 0), 0).ShouldBeTrue();
+        }
+
+        [Test]
+        public void OnPrice_ShortPriceSignal_AboveRange__ReturnsTrue()
+        {
+            SignalSelector.OnPrice(new Signal() { Type = SignalType.EnterOnPrice, Direction = PositionDir.Short, Price = 120 }, CreatePricesData(0, 100, 50, 0), 0).ShouldBeTrue();
         }
     }
 }

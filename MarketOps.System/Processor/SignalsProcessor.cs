@@ -20,19 +20,14 @@ namespace MarketOps.System.Processor
         }
 
         public void Process(List<Signal> signals, DateTime ts, SystemEquity equity,
-            Func<IEnumerable<Signal>, IEnumerable<Signal>> signalsSelector,
-            Func<StockPricesData, int, Signal, float> openPriceLevel)
+            Func<Signal, StockPricesData, int, bool> signalSelector,
+            Func<Signal, StockPricesData, int, float> openPriceSelector)
         {
             if (signals.Count == 0) return;
 
-            HashSet<Signal> signalsToProcess = SelectSignals(signals, signalsSelector);
-            ProcessSignals(ts, equity, openPriceLevel, signalsToProcess);
-            RemoveProcessedSignals(signals, signalsToProcess);
-        }
-
-        private static HashSet<Signal> SelectSignals(List<Signal> signals, Func<IEnumerable<Signal>, IEnumerable<Signal>> signalsSelector)
-        {
-            return new HashSet<Signal>(signalsSelector(signals));
+            HashSet<Signal> processedSignals = new HashSet<Signal>();
+            ProcessSignals(signals, ts, equity, signalSelector, openPriceSelector, processedSignals);
+            RemoveProcessedSignals(signals, processedSignals);
         }
 
         private static void RemoveProcessedSignals(List<Signal> signals, HashSet<Signal> signalsToProcess)
@@ -40,35 +35,41 @@ namespace MarketOps.System.Processor
             signals.RemoveAll(s => signalsToProcess.Contains(s));
         }
 
-        private void ProcessSignals(DateTime ts, SystemEquity equity, Func<StockPricesData, int, Signal, float> openPriceLevel, HashSet<Signal> signalsToProcess)
+        private void ProcessSignals(List<Signal> signals, DateTime ts, SystemEquity equity, Func<Signal, StockPricesData, int, bool> signalSelector, Func<Signal, StockPricesData, int, float> openPriceSelector, HashSet<Signal> processedSignals)
         {
-            foreach (Signal signal in signalsToProcess)
-                ProcessSignal(ts, equity, openPriceLevel, signal);
+            foreach (Signal signal in signals)
+            {
+                StockPricesData pricesData = GetPricesData(signal, ts);
+                int pricesDataIndex = pricesData.FindByTS(ts);
+                if (signalSelector(signal, pricesData, pricesDataIndex))
+                {
+                    processedSignals.Add(signal);
+                    ProcessSignal(signal, ts, equity, openPriceSelector, pricesData, pricesDataIndex);
+                }
+            }
         }
 
-        private void ProcessSignal(DateTime ts, SystemEquity equity, Func<StockPricesData, int, Signal, float> openPriceLevel, Signal signal)
+        private void ProcessSignal(Signal signal, DateTime ts, SystemEquity equity, Func<Signal, StockPricesData, int, float> openPriceSelector, StockPricesData pricesData, int pricesDataIndex)
         {
-            StockPricesData pricesData = GetPricesData(ts, signal);
-            int pricesDataIndex = pricesData.FindByTS(ts);
-            float openPrice = openPriceLevel(pricesData, pricesDataIndex, signal);
+            float openPrice = openPriceSelector(signal, pricesData, pricesDataIndex);
 
             if (signal.ReversePosition)
-                ReversePosition(ts, equity, signal, openPrice);
+                ReversePosition(signal, ts, equity, openPrice);
             else
-                OpenPosition(ts, equity, signal, openPrice);
+                OpenPosition(signal, ts, equity, openPrice);
         }
 
-        private StockPricesData GetPricesData(DateTime ts, Signal signal)
+        private StockPricesData GetPricesData(Signal signal, DateTime ts)
         {
             return _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
         }
 
-        private static void OpenPosition(DateTime ts, SystemEquity equity, Signal signal, float openPrice)
+        private static void OpenPosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
         {
             equity.Open(signal.Stock, signal.Direction, ts, openPrice, signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
         }
 
-        private static void ReversePosition(DateTime ts, SystemEquity equity, Signal signal, float openPrice)
+        private static void ReversePosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
         {
             PositionDir newPosDir = signal.Direction;
             int currPos = equity.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);

@@ -108,7 +108,7 @@ namespace MarketOps.System.Processor
             //GenerateOnOpenSignals;
 
             //ProcessStopsOnPrice;
-            //ProcessSignalsOnPrice;
+            ProcessSignalsOnPrice(leadingPricesData.TS[leadingIndex], equity, signals);
 
             //ProcessStopsOnClose;
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], equity, signals);
@@ -121,15 +121,22 @@ namespace MarketOps.System.Processor
         private void ProcessSignalsOnOpen(DateTime ts, SystemEquity equity, List<Signal> signals)
         {
             _signalsProcessor.Process(signals, ts, equity,
-                SignalSelector.SignalsOnOpen,
+                SignalSelector.OnOpen,
                 OpenPriceSelector.OnOpen);
         }
 
         private void ProcessSignalsOnClose(DateTime ts, SystemEquity equity, List<Signal> signals)
         {
             _signalsProcessor.Process(signals, ts, equity,
-                SignalSelector.SignalsOnClose,
+                SignalSelector.OnClose,
                 OpenPriceSelector.OnClose);
+        }
+
+        private void ProcessSignalsOnPrice(DateTime ts, SystemEquity equity, List<Signal> signals)
+        {
+            _signalsProcessor.Process(signals, ts, equity,
+                SignalSelector.OnPrice,
+                OpenPriceSelector.OnPrice);
         }
     }
 }

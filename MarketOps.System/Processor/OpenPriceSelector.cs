@@ -7,11 +7,11 @@ namespace MarketOps.System.Processor
     /// </summary>
     internal static class OpenPriceSelector
     {
-        public static float OnOpen(StockPricesData pricesData, int priceIndex, Signal signal) => pricesData.O[priceIndex];
+        public static float OnOpen(Signal signal, StockPricesData pricesData, int priceIndex) => pricesData.O[priceIndex];
 
-        public static float OnClose(StockPricesData pricesData, int priceIndex, Signal signal) => pricesData.C[priceIndex];
+        public static float OnClose(Signal signal, StockPricesData pricesData, int priceIndex) => pricesData.C[priceIndex];
 
-        public static float OnPrice(StockPricesData pricesData, int priceIndex, Signal signal)
+        public static float OnPrice(Signal signal, StockPricesData pricesData, int priceIndex)
         {
             if (((signal.Direction == PositionDir.Long) && (pricesData.O[priceIndex] >= signal.Price))
              || ((signal.Direction == PositionDir.Short) && (pricesData.O[priceIndex] <= signal.Price)))

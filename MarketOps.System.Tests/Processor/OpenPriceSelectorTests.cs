@@ -23,37 +23,37 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void OnOpen__ReturnsOpenPrice()
         {
-            OpenPriceSelector.OnOpen(CreatePricesData(10, 0, 0, 0), 0, new Signal()).ShouldBe(10);
+            OpenPriceSelector.OnOpen(new Signal(), CreatePricesData(10, 0, 0, 0), 0).ShouldBe(10);
         }
 
         [Test]
         public void OnClose__ReturnsClosePrice()
         {
-            OpenPriceSelector.OnClose(CreatePricesData(0, 0, 0, 10), 0, new Signal()).ShouldBe(10);
+            OpenPriceSelector.OnClose(new Signal(), CreatePricesData(0, 0, 0, 10), 0).ShouldBe(10);
         }
 
         [Test]
         public void OnPrice_LongSignalPriceInRange__ReturnsSignalPrice()
         {
-            OpenPriceSelector.OnPrice(CreatePricesData(10, 100, 5, 20), 0, new Signal() { Direction = PositionDir.Long, Price = 50 }).ShouldBe(50);
+            OpenPriceSelector.OnPrice(new Signal() { Direction = PositionDir.Long, Price = 50 }, CreatePricesData(10, 100, 5, 20), 0).ShouldBe(50);
         }
 
         [Test]
         public void OnPrice_LongSignalPriceBelowRange__ReturnsOpenPrice()
         {
-            OpenPriceSelector.OnPrice(CreatePricesData(10, 100, 5, 20), 0, new Signal() { Direction = PositionDir.Long, Price = 5 }).ShouldBe(10);
+            OpenPriceSelector.OnPrice(new Signal() { Direction = PositionDir.Long, Price = 5 }, CreatePricesData(10, 100, 5, 20), 0).ShouldBe(10);
         }
 
         [Test]
         public void OnPrice_ShortSignalPriceInRange__ReturnsSignalPrice()
         {
-            OpenPriceSelector.OnPrice(CreatePricesData(70, 100, 5, 20), 0, new Signal() { Direction = PositionDir.Short, Price = 50 }).ShouldBe(50);
+            OpenPriceSelector.OnPrice(new Signal() { Direction = PositionDir.Short, Price = 50 }, CreatePricesData(70, 100, 5, 20), 0).ShouldBe(50);
         }
 
         [Test]
         public void OnPrice_ShortSignalPriceBelowRange__ReturnsOpenPrice()
         {
-            OpenPriceSelector.OnPrice(CreatePricesData(10, 100, 5, 20), 0, new Signal() { Direction = PositionDir.Short, Price = 50 }).ShouldBe(10);
+            OpenPriceSelector.OnPrice(new Signal() { Direction = PositionDir.Short, Price = 50 }, CreatePricesData(10, 100, 5, 20), 0).ShouldBe(10);
         }
     }
 }

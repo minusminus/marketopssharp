@@ -26,6 +26,7 @@ namespace MarketOps.System.Processor
         private readonly ICommission _commission;
         private readonly ISlippage _slippage;
         private readonly SignalsProcessor _signalsProcessor;
+        private readonly PositionsCloser _positionCloser;
 
         public SystemProcessor(
             IStockDataProvider dataProvider,
@@ -48,6 +49,7 @@ namespace MarketOps.System.Processor
             _commission = commission;
             _slippage = slippage;
             _signalsProcessor = new SignalsProcessor(_dataLoader);
+            _positionCloser = new PositionsCloser(_dataLoader);
         }
 
         public SystemEquity Process(DateTime tsFrom, DateTime tsTo, float cashOnStart)
@@ -103,16 +105,16 @@ namespace MarketOps.System.Processor
 
         private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex, SystemEquity equity, List<Signal> signals)
         {
-            //ProcessStopsOnOpen;
+            ProcessStopsOnOpen(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnOpen(leadingPricesData.TS[leadingIndex], equity, signals);
-            //GenerateOnOpenSignals;
+            GenerateOnOpenSignals(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
 
-            //ProcessStopsOnPrice;
+            ProcessStopsOnPrice(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnPrice(leadingPricesData.TS[leadingIndex], equity, signals);
 
-            //ProcessStopsOnClose;
+            ProcessStopsOnClose(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], equity, signals);
-            //GenerateOnCloseSignals;
+            GenerateOnCloseSignals(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
 
             //RecalculateStops;
             //CalculateCurrentSystemValue;
@@ -137,6 +139,37 @@ namespace MarketOps.System.Processor
             _signalsProcessor.Process(signals, ts, equity,
                 SignalSelector.OnPrice,
                 OpenPriceSelector.OnPrice);
+        }
+
+        private void GenerateOnOpenSignals(DateTime ts, int leadingIndex, List<Signal> signals)
+        {
+            signals.AddRange(_signalGeneratorOnOpen?.GenerateOnOpen(ts, leadingIndex));
+        }
+
+        private void GenerateOnCloseSignals(DateTime ts, int leadingIndex, List<Signal> signals)
+        {
+            signals.AddRange(_signalGeneratorOnClose?.GenerateOnClose(ts, leadingIndex));
+        }
+
+        private void ProcessStopsOnOpen(DateTime ts, SystemEquity equity)
+        {
+            _positionCloser.Process(ts, equity,
+                ClosingPositionSelector.OnOpen,
+                ClosePriceSelector.OnOpen);
+        }
+
+        private void ProcessStopsOnClose(DateTime ts, SystemEquity equity)
+        {
+            _positionCloser.Process(ts, equity,
+                ClosingPositionSelector.OnClose,
+                ClosePriceSelector.OnClose);
+        }
+
+        private void ProcessStopsOnPrice(DateTime ts, SystemEquity equity)
+        {
+            _positionCloser.Process(ts, equity,
+                ClosingPositionSelector.OnPrice,
+                ClosePriceSelector.OnPrice);
         }
     }
 }

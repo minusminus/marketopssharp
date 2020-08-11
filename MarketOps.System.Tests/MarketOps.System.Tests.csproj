@@ -79,6 +79,8 @@
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />
     <Compile Include="MM\MMSignalVolumeOneItemTests.cs" />
     <Compile Include="Mocks\StockStatMock.cs" />
+    <Compile Include="Processor\ClosePriceSelectorTests.cs" />
+    <Compile Include="Processor\ClosingPositionSelectorTests.cs" />
     <Compile Include="Processor\OpenPriceSelectorTests.cs" />
     <Compile Include="Processor\PricesDataRangeFinderTests.cs" />
     <Compile Include="Processor\SignalSelectorTests.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Slippage\SlippageNoneTests.cs" />
     <Compile Include="Slippage\SlippageTicksTests.cs" />
+    <Compile Include="StockPricesDataUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">

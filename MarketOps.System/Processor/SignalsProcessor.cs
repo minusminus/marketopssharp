@@ -24,28 +24,23 @@ namespace MarketOps.System.Processor
             Func<Signal, StockPricesData, int, float> openPriceSelector)
         {
             if (signals.Count == 0) return;
-
-            HashSet<Signal> processedSignals = new HashSet<Signal>();
-            ProcessSignals(signals, ts, equity, signalSelector, openPriceSelector, processedSignals);
-            RemoveProcessedSignals(signals, processedSignals);
+            ProcessSignals(signals, ts, equity, signalSelector, openPriceSelector);
         }
 
-        private static void RemoveProcessedSignals(List<Signal> signals, HashSet<Signal> signalsToProcess)
+        private void ProcessSignals(List<Signal> signals, DateTime ts, SystemEquity equity, Func<Signal, StockPricesData, int, bool> signalSelector, Func<Signal, StockPricesData, int, float> openPriceSelector)
         {
-            signals.RemoveAll(s => signalsToProcess.Contains(s));
-        }
-
-        private void ProcessSignals(List<Signal> signals, DateTime ts, SystemEquity equity, Func<Signal, StockPricesData, int, bool> signalSelector, Func<Signal, StockPricesData, int, float> openPriceSelector, HashSet<Signal> processedSignals)
-        {
-            foreach (Signal signal in signals)
+            int i = 0;
+            while (i < signals.Count)
             {
-                StockPricesData pricesData = GetPricesData(signal, ts);
+                StockPricesData pricesData = GetPricesData(signals[i], ts);
                 int pricesDataIndex = pricesData.FindByTS(ts);
-                if (signalSelector(signal, pricesData, pricesDataIndex))
+                if (signalSelector(signals[i], pricesData, pricesDataIndex))
                 {
-                    processedSignals.Add(signal);
-                    ProcessSignal(signal, ts, equity, openPriceSelector, pricesData, pricesDataIndex);
+                    ProcessSignal(signals[i], ts, equity, openPriceSelector, pricesData, pricesDataIndex);
+                    RemoveProcessedSignal(signals, i);
                 }
+                else
+                    i++;
             }
         }
 
@@ -57,6 +52,11 @@ namespace MarketOps.System.Processor
                 ReversePosition(signal, ts, equity, openPrice);
             else
                 OpenPosition(signal, ts, equity, openPrice);
+        }
+
+        private static void RemoveProcessedSignal(List<Signal> signals, int i)
+        {
+            signals.RemoveAt(i);
         }
 
         private StockPricesData GetPricesData(Signal signal, DateTime ts)

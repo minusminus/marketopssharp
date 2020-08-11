@@ -62,7 +62,10 @@
     <Compile Include="Position.cs" />
     <Compile Include="PositionCloseMode.cs" />
     <Compile Include="PositionDir.cs" />
+    <Compile Include="Processor\ClosePriceSelector.cs" />
+    <Compile Include="Processor\ClosingPositionSelector.cs" />
     <Compile Include="Processor\OpenPriceSelector.cs" />
+    <Compile Include="Processor\PositionsCloser.cs" />
     <Compile Include="Processor\PricesDataRangeFinder.cs" />
     <Compile Include="Processor\SignalSelector.cs" />
     <Compile Include="Processor\SignalsProcessor.cs" />

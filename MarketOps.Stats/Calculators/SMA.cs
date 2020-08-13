@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MarketOps.Stats.Calculators
+﻿namespace MarketOps.Stats.Calculators
 {
     /// <summary>
     /// Calculates Simple Moving Average on provided array

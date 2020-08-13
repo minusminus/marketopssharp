@@ -15,10 +15,7 @@ namespace MarketOps.DataPump.Bossa
             _rootPath = rootPath;
         }
 
-        public string GetDownloadPath(string downloadFileName)
-        {
-            return Path.Combine(_rootPath, downloadFileName);
-        }
+        public string GetDownloadPath(string downloadFileName) => Path.Combine(_rootPath, downloadFileName);
 
         public string GetUnzipPath(string downloadFileName)
         {

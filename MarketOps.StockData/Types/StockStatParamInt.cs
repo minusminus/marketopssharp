@@ -7,13 +7,11 @@ namespace MarketOps.StockData.Types
     /// </summary>
     public class StockStatParamInt : StockStatParam
     {
-        public override StockStatParam Clone()
+        public override StockStatParam Clone() => new StockStatParamInt
         {
-            StockStatParamInt res = new StockStatParamInt();
-            res.Name = this.Name;
-            res.Value = this.Value;
-            return res;
-        }
+            Name = this.Name,
+            Value = this.Value
+        };
 
         protected override void SetValueString(string value)
         {

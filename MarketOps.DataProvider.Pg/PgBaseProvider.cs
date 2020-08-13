@@ -10,10 +10,21 @@ namespace MarketOps.DataProvider.Pg
     /// </summary>
     public class PgBaseProvider
     {
-        private NpgsqlConnection OpenConnection()
+        public List<StockDefinition> GetAllStockDefinitions()
         {
-            NpgsqlConnection res = new NpgsqlConnection(PgDBConnectionString.ConnectionString);
-            res.Open();
+            List<StockDefinition> res = new List<StockDefinition>();
+
+            string qry = $"select * from at_spolki";
+            ProcessSelectQuery(qry, (reader) =>
+            {
+                if (!reader.HasRows) return;
+                while (reader.Read())
+                {
+                    StockDefinition def = new StockDefinition();
+                    PgDataToStockDefinitionConverter.ToStockDefinition(reader, def);
+                    res.Add(def);
+                }
+            });
             return res;
         }
 
@@ -32,21 +43,10 @@ namespace MarketOps.DataProvider.Pg
                 cmd.ExecuteNonQuery();
         }
 
-        public List<StockDefinition> GetAllStockDefinitions()
+        private NpgsqlConnection OpenConnection()
         {
-            List<StockDefinition> res = new List<StockDefinition>();
-
-            string qry = $"select * from at_spolki";
-            ProcessSelectQuery(qry, (reader) =>
-            {
-                if (!reader.HasRows) return;
-                while (reader.Read())
-                {
-                    StockDefinition def = new StockDefinition();
-                    PgDataToStockDefinitionConverter.ToStockDefinition(reader, def);
-                    res.Add(def);
-                }
-            });
+            NpgsqlConnection res = new NpgsqlConnection(PgDBConnectionString.ConnectionString);
+            res.Open();
             return res;
         }
     }

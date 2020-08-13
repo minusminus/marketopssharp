@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Types;
+﻿using MarketOps.StockData.Types;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Extensions;
 
@@ -18,24 +17,16 @@ namespace MarketOps
             return $"{data.Stock.Name} {data.Prices.DataRangeToString()} [{data.TsFrom.ToString(data.Prices.DataRangeFormatString())} - {data.TsTo.ToString(data.Prices.DataRangeFormatString())}{nodatainfo}]";
         }
 
-        public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex)
-        {
-            return $"{data.Prices.TS[selectedIndex].ToString(data.Prices.DataRangeFormatString())} OHLC(" +
-                $"{data.Stock.FormatPrice(data.Prices.O[selectedIndex])}, " +
-                $"{data.Stock.FormatPrice(data.Prices.H[selectedIndex])}, " +
-                $"{data.Stock.FormatPrice(data.Prices.L[selectedIndex])}, " +
-                $"{data.Stock.FormatPrice(data.Prices.C[selectedIndex])}) " +
-                $"V={data.Prices.V[selectedIndex]}";
-        }
+        public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex) =>
+            $"{data.Prices.TS[selectedIndex].ToString(data.Prices.DataRangeFormatString())} OHLC(" +
+            $"{data.Stock.FormatPrice(data.Prices.O[selectedIndex])}, " +
+            $"{data.Stock.FormatPrice(data.Prices.H[selectedIndex])}, " +
+            $"{data.Stock.FormatPrice(data.Prices.L[selectedIndex])}, " +
+            $"{data.Stock.FormatPrice(data.Prices.C[selectedIndex])}) " +
+            $"V={data.Prices.V[selectedIndex]}";
 
-        public string GetAxisXToolTip(StockDisplayData data, int selectedIndex)
-        {
-            return $"{data.Prices.TS[selectedIndex].ToString(data.Prices.DataRangeFormatString())}";
-        }
+        public string GetAxisXToolTip(StockDisplayData data, int selectedIndex) => $"{data.Prices.TS[selectedIndex].ToString(data.Prices.DataRangeFormatString())}";
 
-        public string GetAxisYToolTip(StockDisplayData data, double selectedValue)
-        {
-            return data.Stock.FormatPrice(selectedValue);
-        }
+        public string GetAxisYToolTip(StockDisplayData data, double selectedValue) => data.Stock.FormatPrice(selectedValue);
     }
 }

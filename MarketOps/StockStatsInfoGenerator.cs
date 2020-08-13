@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MarketOps.StockData.Types;
 using MarketOps.StockData;
-using MarketOps.StockData.Extensions;
 using MarketOps.Controls.Types;
 
 namespace MarketOps
@@ -20,10 +18,7 @@ namespace MarketOps
             return string.Join(", ", values);
         }
 
-        public string GetStatHeader(StockStat stat)
-        {
-            return $"{stat.Name}({GetStatHeaderParams(stat.StatParams)})";
-        }
+        public string GetStatHeader(StockStat stat) => $"{stat.Name}({GetStatHeaderParams(stat.StatParams)})";
 
         private string GetStatHeaderParams(StockStatParams statParams)
         {

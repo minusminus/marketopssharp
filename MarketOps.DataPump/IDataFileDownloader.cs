@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.DataPump.Types;
+﻿using MarketOps.DataPump.Types;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.DataPump

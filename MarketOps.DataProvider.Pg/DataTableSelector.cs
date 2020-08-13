@@ -5,10 +5,18 @@ using MarketOps.StockData.Types;
 namespace MarketOps.DataProvider.Pg
 {
     /// <summary>
-    /// gets table name for specified data range
+    /// Gets table name for specified data range.
     /// </summary>
     public class DataTableSelector
     {
+        public string GetTableName(StockType stockType, StockDataRange dataRange, int intradayInterval)
+        {
+            CheckInput(stockType, dataRange, intradayInterval);
+            if (dataRange == StockDataRange.Intraday)
+                return GetIntradayTableName(stockType, intradayInterval);
+            return GetStdTableName(stockType, dataRange);
+        }
+
         private void CheckInput(StockType stockType, StockDataRange dataRange, int intradayInterval)
         {
             if (stockType == StockType.Undefined)
@@ -35,14 +43,6 @@ namespace MarketOps.DataProvider.Pg
         private string GetIntradayTableName(StockType stockType, int intradayInterval)
         {
             return $"at_intra{intradayInterval}m{(int)stockType}";
-        }
-
-        public string GetTableName(StockType stockType, StockDataRange dataRange, int intradayInterval)
-        {
-            CheckInput(stockType, dataRange, intradayInterval);
-            if (dataRange == StockDataRange.Intraday)
-                return GetIntradayTableName(stockType, intradayInterval);
-            return GetStdTableName(stockType, dataRange);
         }
     }
 }

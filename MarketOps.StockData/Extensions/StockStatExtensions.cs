@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Types;
+﻿using MarketOps.StockData.Types;
 
 namespace MarketOps.StockData.Extensions
 {
@@ -8,10 +7,7 @@ namespace MarketOps.StockData.Extensions
     /// </summary>
     public static class StockStatExtensions
     {
-        public static string ChartSeriesName(this StockStat stat, int seriesIndex)
-        {
-            return $"{stat.UID}_{seriesIndex}";
-        }
+        public static string ChartSeriesName(this StockStat stat, int seriesIndex) => $"{stat.UID}_{seriesIndex}";
 
         public static StockStat SetParam(this StockStat stat, string paramName, StockStatParam paramValue)
         {

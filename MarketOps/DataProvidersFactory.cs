@@ -9,10 +9,7 @@ namespace MarketOps
     /// </summary>
     internal static class DataProvidersFactory
     {
-        public static IStockDataProvider GetStockDataProvider()
-        {
-            return new PgStockDataProvider();
-        }
+        public static IStockDataProvider GetStockDataProvider() => new PgStockDataProvider();
 
         public static IDataPumpProvider GetDataPumpProvider()
         {

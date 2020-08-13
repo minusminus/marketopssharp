@@ -7,9 +7,6 @@ namespace MarketOps.StockData.Extensions
     /// </summary>
     public static class StockStatParamExtensions
     {
-        public static T As<T>(this StockStatParam param)
-        {
-            return (T)param.Value;
-        }
+        public static T As<T>(this StockStatParam param) => (T)param.Value;
     }
 }

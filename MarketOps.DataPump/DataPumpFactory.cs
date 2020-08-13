@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.DataPump.Types;
+﻿using MarketOps.DataPump.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.DataPump.DBWriters;
@@ -11,7 +10,7 @@ namespace MarketOps.DataPump
     /// <summary>
     /// Factory creating specified data pump mechanism
     /// </summary>
-    public class DataPumpFactory
+    public static class DataPumpFactory
     {
         public static IDataPump Get(DataPumpType dataPumpType, IDataPumpProvider dataPumpProvider, string downloadPath)
         {

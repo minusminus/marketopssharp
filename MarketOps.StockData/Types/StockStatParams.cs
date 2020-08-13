@@ -17,8 +17,7 @@ namespace MarketOps.StockData.Types
 
         public StockStatParam Get(string paramName)
         {
-            StockStatParam value;
-            if (!_params.TryGetValue(paramName, out value))
+            if (!_params.TryGetValue(paramName, out StockStatParam value))
                 throw new Exception($"Undefined parameter {paramName}");
             return value;
         }

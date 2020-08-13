@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Types;
+﻿using MarketOps.StockData.Types;
 using MarketOps.DataPump.Types;
 using MarketOps.StockData.Interfaces;
 using MarketOps.DataPump.DBWriters;
@@ -19,7 +18,7 @@ namespace MarketOps.DataPump.Bossa
         private readonly IDataFileDownloader _dataFileDownloader;
         private readonly DownloadDirectories _downloadDirectories;
 
-        public DataPump(IDataPumpProvider dataPumpProvider, IDataFileIterator dataFileIterator, 
+        public DataPump(IDataPumpProvider dataPumpProvider, IDataFileIterator dataFileIterator,
             IDataPumpStockDataToDBWriter stockDataToDBWriter, IDataFileLineToStockData lineToStockData,
             IDataFileDownloader dataFileDownloader, DownloadDirectories downloadDirectories)
         {

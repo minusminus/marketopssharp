@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Types;
+﻿using MarketOps.StockData.Types;
 using Npgsql;
 
 namespace MarketOps.DataProvider.Pg
@@ -7,7 +6,7 @@ namespace MarketOps.DataProvider.Pg
     /// <summary>
     /// converts data from postgres db reader to StockDefinition object
     /// </summary>
-    internal class PgDataToStockDefinitionConverter
+    internal static class PgDataToStockDefinitionConverter
     {
         public static void ToStockDefinition(NpgsqlDataReader reader, StockDefinition data)
         {

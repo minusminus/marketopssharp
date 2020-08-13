@@ -21,7 +21,7 @@ namespace MarketOps.StockData
 
         private void ThrowIfOverlappingData(StockPricesData dataLeft, StockPricesData dataRight)
         {
-            if (dataRight.TS[0] <= dataLeft.TS[dataLeft.Length - 1]) 
+            if (dataRight.TS[0] <= dataLeft.TS[dataLeft.Length - 1])
                 throw new Exception("Overlapping data");
         }
 

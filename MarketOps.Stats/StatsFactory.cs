@@ -12,15 +12,11 @@ namespace MarketOps.Stats
     {
         protected Dictionary<string, Type> Stats;
 
-        public List<string> GetList()
-        {
-            return Stats.Keys.OrderBy(x => x).ToList();
-        }
+        public List<string> GetList() => Stats.Keys.OrderBy(x => x).ToList();
 
         public StockStat Get(string statName, string chartArea)
         {
-            Type t;
-            if (!Stats.TryGetValue(statName, out t))
+            if (!Stats.TryGetValue(statName, out Type t))
                 throw new Exception($"Not found stat: {statName}");
 
             return (StockStat)Activator.CreateInstance(t, chartArea);

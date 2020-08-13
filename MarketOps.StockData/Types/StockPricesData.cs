@@ -20,16 +20,6 @@ namespace MarketOps.StockData.Types
 
         public int Length => O.Length;
 
-        private void CreateTables(int length)
-        {
-            O = new float[length];
-            H = new float[length];
-            L = new float[length];
-            C = new float[length];
-            V = new Int64[length];
-            TS = new DateTime[length];
-        }
-
         public StockPricesData(int length)
         {
             Range = StockDataRange.Undefined;
@@ -42,6 +32,16 @@ namespace MarketOps.StockData.Types
             Range = data.Range;
             IntrradayInterval = data.IntrradayInterval;
             CreateTables(length);
+        }
+
+        private void CreateTables(int length)
+        {
+            O = new float[length];
+            H = new float[length];
+            L = new float[length];
+            C = new float[length];
+            V = new Int64[length];
+            TS = new DateTime[length];
         }
     }
 }

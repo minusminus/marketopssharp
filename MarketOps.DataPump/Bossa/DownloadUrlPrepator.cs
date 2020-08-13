@@ -38,7 +38,6 @@ namespace MarketOps.DataPump.Bossa
 
         private string GetPathTicks(StockDefinition stockDefinition)
         {
-            //return Path.Combine(_downloadDefinitions[stockDefinition.Type].PathIntra, "");
             throw new NotImplementedException();
         }
     }

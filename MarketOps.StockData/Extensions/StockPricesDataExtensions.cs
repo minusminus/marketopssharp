@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Remoting.Channels;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.StockData.Extensions
@@ -16,11 +14,7 @@ namespace MarketOps.StockData.Extensions
         /// <param name="original"></param>
         /// <param name="toMerge"></param>
         /// <returns></returns>
-        public static StockPricesData Merge(this StockPricesData original, StockPricesData toMerge)
-        {
-            StockPricesDataMerger merger = new StockPricesDataMerger();
-            return merger.Merge(original, toMerge);
-        }
+        public static StockPricesData Merge(this StockPricesData original, StockPricesData toMerge) => new StockPricesDataMerger().Merge(original, toMerge);
 
         /// <summary>
         /// finds index of data by specified timestamp
@@ -29,10 +23,7 @@ namespace MarketOps.StockData.Extensions
         /// <param name="data"></param>
         /// <param name="ts"></param>
         /// <returns></returns>
-        public static int FindByTS(this StockPricesData data, DateTime ts)
-        {
-            return Array.BinarySearch<DateTime>(data.TS, ts);
-        }
+        public static int FindByTS(this StockPricesData data, DateTime ts) => Array.BinarySearch<DateTime>(data.TS, ts);
 
         /// <summary>
         /// finds index of first data greater or equal to specified timestamp
@@ -65,20 +56,14 @@ namespace MarketOps.StockData.Extensions
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string DataRangeDateTimeInputFormat(this StockPricesData data)
-        {
-            return DataFormatting.DataRangeDateTimeInputFormat(data.Range);
-        }
+        public static string DataRangeDateTimeInputFormat(this StockPricesData data) => DataFormatting.DataRangeDateTimeInputFormat(data.Range);
 
         /// <summary>
         /// returns format string to convert datetime acording to range
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static string DataRangeFormatString(this StockPricesData data)
-        {
-            return DataFormatting.DataRangeFormatString(data.Range);
-        }
+        public static string DataRangeFormatString(this StockPricesData data) => DataFormatting.DataRangeFormatString(data.Range);
 
         /// <summary>
         /// returns range description

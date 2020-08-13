@@ -2,7 +2,7 @@
 
 namespace MarketOps
 {
-    internal class DirectoryUtils
+    internal static class DirectoryUtils
     {
         public static void ClearDir(string dirPath, bool recreateDir)
         {

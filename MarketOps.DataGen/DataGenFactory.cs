@@ -6,11 +6,8 @@ namespace MarketOps.DataGen
     /// <summary>
     /// Factory creating specified data generation mechanism
     /// </summary>
-    public class DataGenFactory
+    public static class DataGenFactory
     {
-        public static IDataGen Get(IDataGenProvider dataGenProvider)
-        {
-            return new DataAggregator(dataGenProvider);
-        }
+        public static IDataGen Get(IDataGenProvider dataGenProvider) => new DataAggregator(dataGenProvider);
     }
 }

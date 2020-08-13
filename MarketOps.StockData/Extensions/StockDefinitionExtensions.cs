@@ -1,9 +1,4 @@
 ﻿using MarketOps.StockData.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketOps.StockData.Extensions
 {
@@ -18,9 +13,6 @@ namespace MarketOps.StockData.Extensions
         /// <param name="stockData"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string FormatPrice(this StockDefinition stockData, double value)
-        {
-            return DataFormatting.FormatPrice(stockData.Type, value);
-        }
+        public static string FormatPrice(this StockDefinition stockData, double value) => DataFormatting.FormatPrice(stockData.Type, value);
     }
 }

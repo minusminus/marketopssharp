@@ -1,19 +1,15 @@
-﻿using System;
-
-namespace MarketOps.StockData.Types
+﻿namespace MarketOps.StockData.Types
 {
     /// <summary>
     /// Statistics parameter with string value
     /// </summary>
     public class StockStatParamString : StockStatParam
     {
-        public override StockStatParam Clone()
+        public override StockStatParam Clone() => new StockStatParamString
         {
-            StockStatParamString res = new StockStatParamString();
-            res.Name = this.Name;
-            res.Value = this.Value;
-            return res;
-        }
+            Name = this.Name,
+            Value = this.Value
+        };
 
         protected override void SetValueString(string value)
         {

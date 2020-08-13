@@ -1,5 +1,4 @@
 ﻿using MarketOps.StockData.Types;
-using System;
 using System.Collections.Generic;
 
 namespace MarketOps.StockData
@@ -7,7 +6,7 @@ namespace MarketOps.StockData
     /// <summary>
     /// Data formatting methods
     /// </summary>
-    public class DataFormatting
+    public static class DataFormatting
     {
         private static readonly Dictionary<StockType, string> PriceValueFormats = new Dictionary<StockType, string>()
             {
@@ -25,15 +24,9 @@ namespace MarketOps.StockData
         /// <param name="stockType"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string FormatPrice(StockType stockType, double value)
-        {
-            return value.ToString(PriceValueFormats[stockType]);
-        }
+        public static string FormatPrice(StockType stockType, double value) => value.ToString(PriceValueFormats[stockType]);
 
-        public static string FormatStatValue(float value)
-        {
-            return value.ToString("F2");
-        }
+        public static string FormatStatValue(float value) => value.ToString("F2");
 
         private static readonly Dictionary<StockDataRange, string> DataRangeFormatStrings = new Dictionary<StockDataRange, string>()
             {
@@ -50,20 +43,14 @@ namespace MarketOps.StockData
         /// </summary>
         /// <param name="dataRange"></param>
         /// <returns></returns>
-        public static string DataRangeFormatString(StockDataRange dataRange)
-        {
-            return DataRangeFormatStrings[dataRange];
-        }
+        public static string DataRangeFormatString(StockDataRange dataRange) => DataRangeFormatStrings[dataRange];
 
         /// <summary>
         /// returns datetime format for data range select controls
         /// </summary>
         /// <param name="dataRange"></param>
         /// <returns></returns>
-        public static string DataRangeDateTimeInputFormat(StockDataRange dataRange)
-        {
-            if ((dataRange == StockDataRange.Intraday) || (dataRange == StockDataRange.Tick)) return "yyyy-MM-dd hh:mm";
-            return "yyyy-MM-dd";
-        }
+        public static string DataRangeDateTimeInputFormat(StockDataRange dataRange) =>
+            (dataRange == StockDataRange.Intraday) || (dataRange == StockDataRange.Tick) ? "yyyy-MM-dd hh:mm" : "yyyy-MM-dd";
     }
 }

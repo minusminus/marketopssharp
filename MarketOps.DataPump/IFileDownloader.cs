@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MarketOps.DataPump
+﻿namespace MarketOps.DataPump
 {
     /// <summary>
     /// File downloading interface

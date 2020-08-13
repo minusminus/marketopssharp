@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MarketOps.StockData.Types
+﻿namespace MarketOps.StockData.Types
 {
     /// <summary>
     /// Download definition for data pump

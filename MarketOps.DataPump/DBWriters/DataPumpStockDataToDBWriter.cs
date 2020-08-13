@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Interfaces;
+﻿using MarketOps.StockData.Interfaces;
 using MarketOps.DataPump.Types;
 using MarketOps.StockData.Types;
 

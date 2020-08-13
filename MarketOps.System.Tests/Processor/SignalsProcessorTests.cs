@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using Shouldly;
-using NSubstitute;
 using MarketOps.System.Processor;
 using MarketOps.StockData.Types;
 using System;
@@ -21,7 +20,6 @@ namespace MarketOps.System.Tests.Processor
 
         private SignalsProcessor TestObj;
         private IDataLoader _dataLoader;
-        private StockPricesData _pricesData;
 
         private bool _signalSelectorCalled;
         private bool _openPriceLevelCalled;
@@ -29,21 +27,10 @@ namespace MarketOps.System.Tests.Processor
         [SetUp]
         public void SetUp()
         {
-            _dataLoader = Substitute.For<IDataLoader>();
+            _dataLoader = DataLoaderUtils.CreateSubstitute(PricesCount, LastDate);
             TestObj = new SignalsProcessor(_dataLoader);
             _signalSelectorCalled = false;
             _openPriceLevelCalled = false;
-
-            _pricesData = new StockPricesData(PricesCount);
-            for (int i = 0; i < _pricesData.Length; i++)
-            {
-                _pricesData.O[i] = i;
-                _pricesData.H[i] = i;
-                _pricesData.L[i] = i;
-                _pricesData.C[i] = i;
-                _pricesData.TS[i] = LastDate.AddDays(-_pricesData.Length + i + 1);
-            }
-            _dataLoader.Get(default, default, default, default, default).ReturnsForAnyArgs(_pricesData);
         }
 
         private List<Signal> CreateSignals() => new List<Signal>() {

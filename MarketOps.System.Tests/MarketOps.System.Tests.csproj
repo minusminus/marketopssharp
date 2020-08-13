@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Commission\CommissionNoneTests.cs" />
     <Compile Include="DataLoaders\BufferedDataLoaderTests.cs" />
+    <Compile Include="DataLoaderUtils.cs" />
     <Compile Include="Extensions\MoneyValueExtensionsTests.cs" />
     <Compile Include="Extensions\PositionExtensionsTests.cs" />
     <Compile Include="Extensions\SystemEquityExtensionsTests.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Processor\ClosePriceSelectorTests.cs" />
     <Compile Include="Processor\ClosingPositionSelectorTests.cs" />
     <Compile Include="Processor\OpenPriceSelectorTests.cs" />
+    <Compile Include="Processor\PositionsCloserTests.cs" />
     <Compile Include="Processor\PricesDataRangeFinderTests.cs" />
     <Compile Include="Processor\SignalSelectorTests.cs" />
     <Compile Include="Processor\SignalsProcessorTests.cs" />

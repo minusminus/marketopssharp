@@ -16,7 +16,7 @@ namespace MarketOps.System.Tests.MM
             foreach (PositionCloseMode mode in Enum.GetValues(typeof(PositionCloseMode)))
             {
                 Position pos = new Position() { CloseMode = mode };
-                _testObj.CalculateCloseMode(ref pos);
+                _testObj.CalculateCloseMode(ref pos, DateTime.Now);
                 pos.CloseMode.ShouldBe(PositionCloseMode.DontClose, mode.ToString());
             }
         }

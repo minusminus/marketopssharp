@@ -50,7 +50,6 @@ namespace MarketOps.System.Tests.Processor
             equity.PositionsActive.Count.ShouldBe(expectedPositionsActiveCount);
             equity.PositionsClosed.Count.ShouldBe(expectedPositionsClosedCount);
             equity.ClosedPositionsValue.Count.ShouldBe(expectedPositionsClosedCount);
-            //equity.Value.Count.ShouldBe(0);
         }
 
         [Test]
@@ -85,6 +84,30 @@ namespace MarketOps.System.Tests.Processor
                 (_, __, ___) => { _positionSelectorCalled = true; return true; },
                 (_, __, ___) => { _closePriceSelectorCalled = true; return 10; });
             CheckProcessResult(equity, true, true, 0, 1);
+        }
+
+        [Test]
+        public void Process_PositionSelectorReturnsTrue_TwoPositions__PositionsClosed()
+        {
+            SystemEquity equity = CreateEquity(
+                new[] { PositionDir.Long, PositionDir.Long },
+                new[] { PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit });
+            TestObj.Process(LastDate, equity,
+                (_, __, ___) => { _positionSelectorCalled = true; return true; },
+                (_, __, ___) => { _closePriceSelectorCalled = true; return 10; });
+            CheckProcessResult(equity, true, true, 0, 2);
+        }
+
+        [Test]
+        public void Process_PositionSelectorReturnsTrue_NotAllPositionsSelected__SelectedPositionsClosed()
+        {
+            SystemEquity equity = CreateEquity(
+                new[] { PositionDir.Short, PositionDir.Long, PositionDir.Long, PositionDir.Short },
+                new[] { PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit });
+            TestObj.Process(LastDate, equity,
+                (pos, __, ___) => { _positionSelectorCalled = true; return (pos.Direction == PositionDir.Long); },
+                (_, __, ___) => { _closePriceSelectorCalled = true; return 10; });
+            CheckProcessResult(equity, true, true, 2, 2);
         }
     }
 }

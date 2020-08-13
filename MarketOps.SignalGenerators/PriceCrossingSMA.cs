@@ -39,11 +39,9 @@ namespace MarketOps.SignalGenerators
                 .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = _smaPeriod });
         }
 
-        public SystemDataDefinition GetDataDefinition()
+        public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
         {
-            return new SystemDataDefinition()
-            {
-                stocks = new List<SystemStockDataDefinition>() {
+            stocks = new List<SystemStockDataDefinition>() {
                     new SystemStockDataDefinition()
                     {
                         stock = _stock,
@@ -51,8 +49,7 @@ namespace MarketOps.SignalGenerators
                         stats = new List<StockStat>() { _statSMA }
                     }
                 }
-            };
-        }
+        };
 
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex)
         {

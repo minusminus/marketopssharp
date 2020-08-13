@@ -15,11 +15,11 @@ namespace MarketOps.System.Tests.MM
             Position pos = new Position() { TicksActive = 1 };
             for (int i = 1; i < requiredTicks; i++)
             {
-                _testObj.CalculateCloseMode(ref pos);
+                _testObj.CalculateCloseMode(ref pos, DateTime.Now);
                 pos.CloseMode.ShouldBe(PositionCloseMode.DontClose, $"required={requiredTicks}, i={i}");
                 pos.TicksActive++;
             }
-            _testObj.CalculateCloseMode(ref pos);
+            _testObj.CalculateCloseMode(ref pos, DateTime.Now);
             pos.CloseMode.ShouldBe(PositionCloseMode.OnClose, $"required={requiredTicks}, last");
         }
 

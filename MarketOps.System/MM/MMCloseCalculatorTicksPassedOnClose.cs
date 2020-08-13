@@ -1,4 +1,5 @@
 ﻿using MarketOps.System.Interfaces;
+using System;
 
 namespace MarketOps.System.MM
 {
@@ -14,7 +15,7 @@ namespace MarketOps.System.MM
             _ticks = ticks;
         }
 
-        public void CalculateCloseMode(ref Position position)
+        public void CalculateCloseMode(ref Position position, DateTime ts)
         {
             position.CloseMode = (position.TicksActive < _ticks) ? PositionCloseMode.DontClose : PositionCloseMode.OnClose;
         }

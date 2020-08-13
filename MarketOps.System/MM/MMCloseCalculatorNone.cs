@@ -1,4 +1,5 @@
 ﻿using MarketOps.System.Interfaces;
+using System;
 
 namespace MarketOps.System.MM
 {
@@ -7,7 +8,7 @@ namespace MarketOps.System.MM
     /// </summary>
     public class MMCloseCalculatorNone : IMMPositionCloseCalculator
     {
-        public void CalculateCloseMode(ref Position position)
+        public void CalculateCloseMode(ref Position position, DateTime ts)
         {
             position.CloseMode = PositionCloseMode.DontClose;
         }

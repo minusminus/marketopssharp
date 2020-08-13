@@ -27,6 +27,7 @@ namespace MarketOps.System.Processor
         private readonly ISlippage _slippage;
         private readonly SignalsProcessor _signalsProcessor;
         private readonly PositionsCloser _positionCloser;
+        private readonly IMMPositionCloseCalculator _mmPositionCloseCalculator;
 
         public SystemProcessor(
             IStockDataProvider dataProvider,
@@ -37,7 +38,8 @@ namespace MarketOps.System.Processor
             ISignalGeneratorOnOpen signalGeneratorOnOpen,
             ISignalGeneratorOnClose signalGeneratorOnClose,
             ICommission commission,
-            ISlippage slippage)
+            ISlippage slippage,
+            IMMPositionCloseCalculator mmPositionCloseCalculator)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
@@ -48,6 +50,7 @@ namespace MarketOps.System.Processor
             _signalGeneratorOnClose = signalGeneratorOnClose;
             _commission = commission;
             _slippage = slippage;
+            _mmPositionCloseCalculator = mmPositionCloseCalculator;
             _signalsProcessor = new SignalsProcessor(_dataLoader);
             _positionCloser = new PositionsCloser(_dataLoader);
         }
@@ -105,6 +108,7 @@ namespace MarketOps.System.Processor
 
         private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex, SystemEquity equity, List<Signal> signals)
         {
+            UpdateActivePositions(equity);
             ProcessStopsOnOpen(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnOpen(leadingPricesData.TS[leadingIndex], equity, signals);
             GenerateOnOpenSignals(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
@@ -116,8 +120,8 @@ namespace MarketOps.System.Processor
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], equity, signals);
             GenerateOnCloseSignals(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
 
-            //RecalculateStops;
-            //CalculateCurrentSystemValue;
+            RecalculateStops(leadingPricesData.TS[leadingIndex], equity);
+            CalculateCurrentSystemValue(leadingPricesData.TS[leadingIndex], equity);
         }
 
         private void ProcessSignalsOnOpen(DateTime ts, SystemEquity equity, List<Signal> signals)
@@ -170,6 +174,21 @@ namespace MarketOps.System.Processor
             _positionCloser.Process(ts, equity,
                 ClosingPositionSelector.OnPrice,
                 ClosePriceSelector.OnPrice);
+        }
+
+        private void UpdateActivePositions(SystemEquity equity)
+        {
+            equity.PositionsActive.ForEach(pos => pos.TicksActive++);
+        }
+
+        private void RecalculateStops(DateTime ts, SystemEquity equity)
+        {
+            equity.PositionsActive.ForEach(pos => _mmPositionCloseCalculator?.CalculateCloseMode(ref pos, ts));
+        }
+
+        private void CalculateCurrentSystemValue(DateTime ts, SystemEquity equity)
+        {
+            equity.CalcCurrentValue(ts, _dataLoader);
         }
     }
 }

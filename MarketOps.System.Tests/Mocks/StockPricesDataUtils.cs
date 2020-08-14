@@ -1,6 +1,6 @@
 ﻿using MarketOps.StockData.Types;
 
-namespace MarketOps.System.Tests
+namespace MarketOps.System.Tests.Mocks
 {
     /// <summary>
     /// Utils for StockPricesData.

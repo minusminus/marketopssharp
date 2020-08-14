@@ -25,9 +25,9 @@ namespace MarketOps.System.Processor
         private readonly ISignalGeneratorOnClose _signalGeneratorOnClose;
         private readonly ICommission _commission;
         private readonly ISlippage _slippage;
+        private readonly IMMPositionCloseCalculator _mmPositionCloseCalculator;
         private readonly SignalsProcessor _signalsProcessor;
         private readonly PositionsCloser _positionCloser;
-        private readonly IMMPositionCloseCalculator _mmPositionCloseCalculator;
 
         public SystemProcessor(
             IStockDataProvider dataProvider,
@@ -51,8 +51,8 @@ namespace MarketOps.System.Processor
             _commission = commission;
             _slippage = slippage;
             _mmPositionCloseCalculator = mmPositionCloseCalculator;
-            _signalsProcessor = new SignalsProcessor(_dataLoader);
-            _positionCloser = new PositionsCloser(_dataLoader);
+            _signalsProcessor = new SignalsProcessor(_dataLoader, _commission, _slippage);
+            _positionCloser = new PositionsCloser(_dataLoader, _commission, _slippage);
         }
 
         public SystemEquity Process(DateTime tsFrom, DateTime tsTo, float cashOnStart)

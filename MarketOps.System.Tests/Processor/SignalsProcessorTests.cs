@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using MarketOps.System.Interfaces;
 using System.Linq;
+using MarketOps.System.Tests.Mocks;
 
 namespace MarketOps.System.Tests.Processor
 {
@@ -20,6 +21,8 @@ namespace MarketOps.System.Tests.Processor
 
         private SignalsProcessor TestObj;
         private IDataLoader _dataLoader;
+        private ICommission _commission;
+        private ISlippage _slippage;
 
         private bool _signalSelectorCalled;
         private bool _openPriceLevelCalled;
@@ -28,7 +31,9 @@ namespace MarketOps.System.Tests.Processor
         public void SetUp()
         {
             _dataLoader = DataLoaderUtils.CreateSubstitute(PricesCount, LastDate);
-            TestObj = new SignalsProcessor(_dataLoader);
+            _commission = CommissionUtils.CreateSubstitute();
+            _slippage = SlippageUtils.CreateSusbstitute();
+            TestObj = new SignalsProcessor(_dataLoader, _commission, _slippage);
             _signalSelectorCalled = false;
             _openPriceLevelCalled = false;
         }

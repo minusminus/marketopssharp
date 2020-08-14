@@ -13,10 +13,14 @@ namespace MarketOps.System.Processor
     internal class SignalsProcessor
     {
         private readonly IDataLoader _dataLoader;
+        private readonly ICommission _commission;
+        private readonly ISlippage _slippage;
 
-        public SignalsProcessor(IDataLoader dataLoader)
+        public SignalsProcessor(IDataLoader dataLoader, ICommission commission, ISlippage slippage)
         {
             _dataLoader = dataLoader;
+            _commission = commission;
+            _slippage = slippage;
         }
 
         public void Process(List<Signal> signals, DateTime ts, SystemEquity equity,
@@ -54,7 +58,7 @@ namespace MarketOps.System.Processor
                 OpenPosition(signal, ts, equity, openPrice);
         }
 
-        private static void RemoveProcessedSignal(List<Signal> signals, int i)
+        private void RemoveProcessedSignal(List<Signal> signals, int i)
         {
             signals.RemoveAt(i);
         }
@@ -64,21 +68,21 @@ namespace MarketOps.System.Processor
             return _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
         }
 
-        private static void OpenPosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
+        private void OpenPosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
         {
-            equity.Open(signal.Stock, signal.Direction, ts, openPrice, signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
+            equity.Open(ts, signal.Direction, openPrice, signal, _slippage, _commission);
         }
 
-        private static void ReversePosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
+        private void ReversePosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
         {
             PositionDir newPosDir = signal.Direction;
             int currPos = equity.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
             if (currPos > -1)
             {
                 newPosDir = equity.PositionsActive[currPos].Direction == PositionDir.Long ? PositionDir.Short : PositionDir.Long;
-                equity.Close(currPos, ts, openPrice);
+                equity.Close(currPos, ts, openPrice, _slippage, _commission);
             }
-            equity.Open(signal.Stock, newPosDir, ts, openPrice, signal.Volume, signal.DataRange, signal.IntradayInterval, signal);
+            equity.Open(ts, newPosDir, openPrice, signal, _slippage, _commission);
         }
     }
 }

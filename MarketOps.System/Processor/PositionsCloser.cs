@@ -12,10 +12,14 @@ namespace MarketOps.System.Processor
     internal class PositionsCloser
     {
         private readonly IDataLoader _dataLoader;
+        private readonly ICommission _commission;
+        private readonly ISlippage _slippage;
 
-        public PositionsCloser(IDataLoader dataLoader)
+        public PositionsCloser(IDataLoader dataLoader, ICommission commission, ISlippage slippage)
         {
             _dataLoader = dataLoader;
+            _commission = commission;
+            _slippage = slippage;
         }
 
         public void Process(DateTime ts, SystemEquity equity,
@@ -44,8 +48,7 @@ namespace MarketOps.System.Processor
 
         private void ProcessPosition(DateTime ts, SystemEquity equity, int positionIndex, Func<Position, StockPricesData, int, float> closePriceSelector, StockPricesData pricesData, int pricesDataIndex)
         {
-            float closePrice = closePriceSelector(equity.PositionsActive[positionIndex], pricesData, pricesDataIndex);
-            equity.Close(positionIndex, ts, closePrice);
+            equity.Close(positionIndex, ts, closePriceSelector(equity.PositionsActive[positionIndex], pricesData, pricesDataIndex), _slippage, _commission);
         }
 
         private StockPricesData GetPricesData(Position position, DateTime ts)

@@ -1,4 +1,5 @@
 ﻿using MarketOps.System.Processor;
+using MarketOps.System.Tests.Mocks;
 using NUnit.Framework;
 using Shouldly;
 
@@ -26,8 +27,8 @@ namespace MarketOps.System.Tests.Processor
         public void OnPrice(PositionDir positionDir, float price, float expected)
         {
             OpenPriceSelector.OnPrice(
-                new Signal() { Direction = positionDir, Price = price }, 
-                StockPricesDataUtils.CreatePricesData(10, 100, 5, 20), 
+                new Signal() { Direction = positionDir, Price = price },
+                StockPricesDataUtils.CreatePricesData(10, 100, 5, 20),
                 0).ShouldBe(expected);
         }
     }

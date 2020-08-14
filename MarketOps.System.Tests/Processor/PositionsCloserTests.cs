@@ -4,6 +4,7 @@ using MarketOps.System.Processor;
 using MarketOps.StockData.Types;
 using System;
 using MarketOps.System.Interfaces;
+using MarketOps.System.Tests.Mocks;
 
 namespace MarketOps.System.Tests.Processor
 {
@@ -18,6 +19,8 @@ namespace MarketOps.System.Tests.Processor
 
         private PositionsCloser TestObj;
         private IDataLoader _dataLoader;
+        private ICommission _commission;
+        private ISlippage _slippage;
 
         private bool _positionSelectorCalled;
         private bool _closePriceSelectorCalled;
@@ -26,7 +29,9 @@ namespace MarketOps.System.Tests.Processor
         public void SetUp()
         {
             _dataLoader = DataLoaderUtils.CreateSubstitute(PricesCount, LastDate);
-            TestObj = new PositionsCloser(_dataLoader);
+            _commission = CommissionUtils.CreateSubstitute();
+            _slippage = SlippageUtils.CreateSusbstitute();
+            TestObj = new PositionsCloser(_dataLoader, _commission, _slippage);
             _positionSelectorCalled = false;
             _closePriceSelectorCalled = false;
         }

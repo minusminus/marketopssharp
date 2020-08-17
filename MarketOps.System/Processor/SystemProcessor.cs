@@ -1,13 +1,9 @@
-﻿using MarketOps.StockData.Extensions;
-using MarketOps.StockData.Interfaces;
+﻿using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.System.Extensions;
 using MarketOps.System.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketOps.System.Processor
 {
@@ -18,8 +14,8 @@ namespace MarketOps.System.Processor
     {
         private readonly IStockDataProvider _dataProvider;
         private readonly IDataLoader _dataLoader;
-        private readonly ITickAligner _tickAligner;
-        private readonly ITickAdder _tickAdder;
+        //private readonly ITickAligner _tickAligner;
+        //private readonly ITickAdder _tickAdder;
         private readonly ISystemDataDefinitionProvider _dataDefinitionProvider;
         private readonly ISignalGeneratorOnOpen _signalGeneratorOnOpen;
         private readonly ISignalGeneratorOnClose _signalGeneratorOnClose;
@@ -32,8 +28,8 @@ namespace MarketOps.System.Processor
         public SystemProcessor(
             IStockDataProvider dataProvider,
             IDataLoader dataLoader,
-            ITickAligner tickAligner,
-            ITickAdder tickAdder,
+            //ITickAligner tickAligner,
+            //ITickAdder tickAdder,
             ISystemDataDefinitionProvider dataDefinitionProvider,
             ISignalGeneratorOnOpen signalGeneratorOnOpen,
             ISignalGeneratorOnClose signalGeneratorOnClose,
@@ -43,8 +39,8 @@ namespace MarketOps.System.Processor
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
-            _tickAligner = tickAligner;
-            _tickAdder = tickAdder;
+            //_tickAligner = tickAligner;
+            //_tickAdder = tickAdder;
             _dataDefinitionProvider = dataDefinitionProvider;
             _signalGeneratorOnOpen = signalGeneratorOnOpen;
             _signalGeneratorOnClose = signalGeneratorOnClose;
@@ -111,14 +107,14 @@ namespace MarketOps.System.Processor
             UpdateActivePositions(equity);
             ProcessStopsOnOpen(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnOpen(leadingPricesData.TS[leadingIndex], equity, signals);
-            GenerateOnOpenSignals(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
+            GenerateSignalsOnOpen(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
 
             ProcessStopsOnPrice(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnPrice(leadingPricesData.TS[leadingIndex], equity, signals);
 
             ProcessStopsOnClose(leadingPricesData.TS[leadingIndex], equity);
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], equity, signals);
-            GenerateOnCloseSignals(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
+            GenerateSignalsOnClose(leadingPricesData.TS[leadingIndex], leadingIndex, signals);
 
             RecalculateStops(leadingPricesData.TS[leadingIndex], equity);
             CalculateCurrentSystemValue(leadingPricesData.TS[leadingIndex], equity);
@@ -129,6 +125,7 @@ namespace MarketOps.System.Processor
             _signalsProcessor.Process(signals, ts, equity,
                 SignalSelector.OnOpen,
                 OpenPriceSelector.OnOpen);
+            RemoveSignalsOfType(signals, SignalType.EnterOnOpen);
         }
 
         private void ProcessSignalsOnClose(DateTime ts, SystemEquity equity, List<Signal> signals)
@@ -136,6 +133,7 @@ namespace MarketOps.System.Processor
             _signalsProcessor.Process(signals, ts, equity,
                 SignalSelector.OnClose,
                 OpenPriceSelector.OnClose);
+            RemoveSignalsOfType(signals, SignalType.EnterOnClose);
         }
 
         private void ProcessSignalsOnPrice(DateTime ts, SystemEquity equity, List<Signal> signals)
@@ -143,16 +141,24 @@ namespace MarketOps.System.Processor
             _signalsProcessor.Process(signals, ts, equity,
                 SignalSelector.OnPrice,
                 OpenPriceSelector.OnPrice);
+            RemoveSignalsOfType(signals, SignalType.EnterOnPrice);
         }
 
-        private void GenerateOnOpenSignals(DateTime ts, int leadingIndex, List<Signal> signals)
+        private void RemoveSignalsOfType(List<Signal> signals, SignalType toRemove)
         {
-            signals.AddRange(_signalGeneratorOnOpen?.GenerateOnOpen(ts, leadingIndex));
+            signals.RemoveAll(s => s.Type == toRemove);
         }
 
-        private void GenerateOnCloseSignals(DateTime ts, int leadingIndex, List<Signal> signals)
+        private void GenerateSignalsOnOpen(DateTime ts, int leadingIndex, List<Signal> signals)
         {
-            signals.AddRange(_signalGeneratorOnClose?.GenerateOnClose(ts, leadingIndex));
+            if (_signalGeneratorOnOpen == null) return;
+            signals.AddRange(_signalGeneratorOnOpen.GenerateOnOpen(ts, leadingIndex));
+        }
+
+        private void GenerateSignalsOnClose(DateTime ts, int leadingIndex, List<Signal> signals)
+        {
+            if (_signalGeneratorOnClose == null) return;
+            signals.AddRange(_signalGeneratorOnClose.GenerateOnClose(ts, leadingIndex));
         }
 
         private void ProcessStopsOnOpen(DateTime ts, SystemEquity equity)
@@ -183,7 +189,8 @@ namespace MarketOps.System.Processor
 
         private void RecalculateStops(DateTime ts, SystemEquity equity)
         {
-            equity.PositionsActive.ForEach(pos => _mmPositionCloseCalculator?.CalculateCloseMode(ref pos, ts));
+            if (_mmPositionCloseCalculator == null) return;
+            equity.PositionsActive.ForEach(pos => _mmPositionCloseCalculator.CalculateCloseMode(ref pos, ts));
         }
 
         private void CalculateCurrentSystemValue(DateTime ts, SystemEquity equity)

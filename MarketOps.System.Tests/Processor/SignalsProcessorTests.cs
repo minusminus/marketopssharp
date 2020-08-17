@@ -86,8 +86,8 @@ namespace MarketOps.System.Tests.Processor
             TestObj.Process(signals, LastDate, equity,
                 (sig, _, __) => { _signalSelectorCalled = true; return signalFilter(sig); },
                 (sig, _, __) => { _openPriceLevelCalled = true; return sig.Price; });
-            CheckProcessResult(equity, signals, true, true, 3, 1, 0);
-            signals.Contains(openSignal).ShouldBeFalse();
+            CheckProcessResult(equity, signals, true, true, 4, 1, 0);
+            signals.Contains(openSignal).ShouldBeTrue();
             CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
             equity.Cash.ShouldBe(InitialCash - (openSignal.Price * openSignal.Volume));
         }
@@ -103,8 +103,8 @@ namespace MarketOps.System.Tests.Processor
             TestObj.Process(signals, LastDate, equity,
                 (sig, _, __) => { _signalSelectorCalled = true; return signalFilter(sig); },
                 (sig, _, __) => { _openPriceLevelCalled = true; return sig.Price; });
-            CheckProcessResult(equity, signals, true, true, 3, 1, 1);
-            signals.Contains(openSignal).ShouldBeFalse();
+            CheckProcessResult(equity, signals, true, true, 4, 1, 1);
+            signals.Contains(openSignal).ShouldBeTrue();
             CheckPositionsClosed(equity, 0, activePosDir, openSignal.Price, activePosition.Volume, LastDate);
             CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
             equity.Cash.ShouldBe(InitialCash + (openSignal.Price * activePosition.Volume) - (openSignal.Price * openSignal.Volume));
@@ -179,7 +179,7 @@ namespace MarketOps.System.Tests.Processor
             TestObj.Process(signals, LastDate, equity,
                 (sig, _, __) => { _signalSelectorCalled = true; return signalFilter(sig); },
                 (sig, _, __) => { _openPriceLevelCalled = true; return sig.Price; });
-            CheckProcessResult(equity, signals, true, true, 2, 2, 0);
+            CheckProcessResult(equity, signals, true, true, 4, 2, 0);
             CheckPositionsActive(equity, 0, openSignal[0], openSignal[0].Direction, openSignal[0].Price, openSignal[0].Volume, LastDate);
             CheckPositionsActive(equity, 1, openSignal[1], openSignal[1].Direction, openSignal[1].Price, openSignal[1].Volume, LastDate);
             equity.Cash.ShouldBe(InitialCash - (openSignal[0].Price * openSignal[0].Volume) - (openSignal[1].Price * openSignal[1].Volume));

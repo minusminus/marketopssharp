@@ -21,7 +21,6 @@ namespace MarketOps.System.Tests.Processor
         private IStockDataProvider _dataProvider;
         private IDataLoader _dataLoader;
         private StockStatMock _stat;
-        private StockPricesData _pricesData;
 
         private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition()
         {
@@ -29,6 +28,7 @@ namespace MarketOps.System.Tests.Processor
             dataRange = StockDataRange.Daily,
             stats = new List<StockStat>()
         };
+
         private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition()
         {
             stock = new StockDefinition() { Name = "PKOBP" },
@@ -39,23 +39,11 @@ namespace MarketOps.System.Tests.Processor
         [SetUp]
         public void SetUp()
         {
-            _dataProvider = Substitute.For<IStockDataProvider>();
-            _dataLoader = Substitute.For<IDataLoader>();
+            _dataProvider = StockDataProviderUtils.CreateSubstitute(DateTime.MinValue);
+            _dataLoader = DataLoaderUtils.CreateSubstitute(2 * BackBufRange, BackBufRange, DateTime.Now.Date);
             TestObj = new StocksDataPreloader(_dataProvider, _dataLoader);
 
-            _pricesData = new StockPricesData(2 * BackBufRange);
-            for(int i=0; i<_pricesData.Length; i++)
-            {
-                _pricesData.O[i] = BackBufRange;
-                _pricesData.H[i] = BackBufRange;
-                _pricesData.L[i] = BackBufRange;
-                _pricesData.C[i] = BackBufRange;
-                _pricesData.TS[i] = DateTime.Now.Date;
-            }
             _stat = new StockStatMock("", BackBufRange);
-
-            _dataProvider.GetNearestTickGETicksBefore(default, default, default, default, default).ReturnsForAnyArgs(DateTime.MinValue);
-            _dataLoader.Get(default, default, default, default, default).ReturnsForAnyArgs(_pricesData);
         }
 
         private void TestPreloadDataAndPrecalcStats(List<(SystemStockDataDefinition stock, int max)> testBackBuffer,

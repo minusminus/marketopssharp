@@ -30,5 +30,19 @@ namespace MarketOps.System.Tests.Mocks
             }
             return CreateSubstitute(pricesData);
         }
+
+        public static IDataLoader CreateSubstitute(int pricesCount, float price, DateTime ts)
+        {
+            StockPricesData pricesData = new StockPricesData(pricesCount);
+            for (int i = 0; i < pricesData.Length; i++)
+            {
+                pricesData.O[i] = price;
+                pricesData.H[i] = price;
+                pricesData.L[i] = price;
+                pricesData.C[i] = price;
+                pricesData.TS[i] = ts;
+            }
+            return CreateSubstitute(pricesData);
+        }
     }
 }

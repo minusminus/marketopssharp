@@ -6,7 +6,7 @@ namespace MarketOps.System
     /// <summary>
     /// Position data.
     /// </summary>
-    public struct Position
+    public class Position
     {
         public Signal EntrySignal;
         public StockDefinition Stock;

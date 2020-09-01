@@ -8,7 +8,7 @@ namespace MarketOps.System.MM
     /// </summary>
     public class MMCloseCalculatorNone : IMMPositionCloseCalculator
     {
-        public void CalculateCloseMode(ref Position position, DateTime ts)
+        public void CalculateCloseMode(Position position, DateTime ts)
         {
             position.CloseMode = PositionCloseMode.DontClose;
         }

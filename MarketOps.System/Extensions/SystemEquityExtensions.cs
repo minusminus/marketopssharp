@@ -22,7 +22,8 @@ namespace MarketOps.System.Extensions
                 OpenCommission = commission,
                 TSOpen = ts,
                 Volume = volume,
-                EntrySignal = entrySignal
+                EntrySignal = entrySignal,
+                TicksActive = 1
             };
             system.PositionsActive.Add(pos);
             system.Cash -= pos.OpenValue();

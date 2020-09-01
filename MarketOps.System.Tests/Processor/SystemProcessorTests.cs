@@ -16,8 +16,9 @@ namespace MarketOps.System.Tests.Processor
     public class SystemProcessorTests
     {
         private readonly DateTime LastDate = DateTime.Now.Date;
-        private readonly int PricesCount = 10;
-        private readonly float InitialCash = 10000;
+        private const int PricesCount = 2;
+        private const float InitialCash = 10000;
+        private const float StartingPrice = 10;
 
         private static readonly StockDefinition _stock = new StockDefinition() { ID = 1 };
         private static readonly StockStatMock _stockStatMock = new StockStatMock("", 0);
@@ -37,7 +38,7 @@ namespace MarketOps.System.Tests.Processor
         public void SetUp()
         {
             _dataProvider = StockDataProviderUtils.CreateSubstitute(DateTime.MinValue);
-            _dataLoader = DataLoaderUtils.CreateSubstitute(PricesCount, LastDate);
+            _dataLoader = DataLoaderUtils.CreateSubstituteWithConstantPrice(PricesCount, StartingPrice, LastDate);
             _dataDefinitionProvider = Substitute.For<ISystemDataDefinitionProvider>();
             _signalGeneratorOnOpen = Substitute.For<ISignalGeneratorOnOpen>();
             _signalGeneratorOnClose = Substitute.For<ISignalGeneratorOnClose>();
@@ -71,8 +72,22 @@ namespace MarketOps.System.Tests.Processor
             equity.ClosedPositionsValue.Count.ShouldBe(0);
             equity.Value.Count.ShouldBe(PricesCount);
             equity.Value.All(x => x.Value == InitialCash).ShouldBeTrue();
-            Position pos = new Position();
-            _mmPositionCloseCalculator.DidNotReceiveWithAnyArgs().CalculateCloseMode(ref pos, default);
+            _mmPositionCloseCalculator.DidNotReceiveWithAnyArgs().CalculateCloseMode(default, default);
+            _stockStatMock.CalculateCallCount.ShouldBe(1);
+        }
+
+        private void CheckPositionOpenedEquity(SystemEquity equity, PositionDir expectedDir, float expectedPrice, int expectedPositionTicks)
+        {
+            equity.Cash.ShouldBe(InitialCash - expectedPrice);
+            equity.PositionsActive.Count.ShouldBe(1);
+            equity.PositionsActive[0].Direction.ShouldBe(expectedDir);
+            equity.PositionsActive[0].Open.ShouldBe(expectedPrice);
+            equity.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
+            equity.PositionsClosed.Count.ShouldBe(0);
+            equity.ClosedPositionsValue.Count.ShouldBe(0);
+            equity.Value.Count.ShouldBe(PricesCount);
+            equity.Value.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
 
@@ -85,5 +100,83 @@ namespace MarketOps.System.Tests.Processor
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, (withGeneratorOnOpen ? _signalGeneratorOnOpen : null), (withGeneratorOnClose ? _signalGeneratorOnClose : null), _commission, _slippage, _mmPositionCloseCalculator);
             CheckEmptyEquity(TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash));
         }
+
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, StartingPrice, PricesCount)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice - 1, true, StartingPrice, PricesCount)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice + 1, false, 0, 0)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice, true, StartingPrice, PricesCount)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice + 1, true, StartingPrice, PricesCount)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice - 1, false, 0, 0)]
+        public void Process_SignalOnOpen(SignalType signalType, PositionDir positionDir, float price, 
+            bool expectedHit, float expectedPrice, int expectedPositionTicks)
+        {
+            _signalGeneratorOnOpen.GenerateOnOpen(default, default).ReturnsForAnyArgs(x =>
+            {
+                if (x.ArgAt<int>(1) == 0)
+                    return new List<Signal>() {
+                    new Signal()
+                    {
+                        Stock = _stock,
+                        DataRange = StockDataRange.Daily,
+                        IntradayInterval = 0,
+                        Type = signalType,
+                        Direction = positionDir,
+                        ReversePosition = false,
+                        Price = price,
+                        Volume = 1
+                    }
+                };
+                return new List<Signal>();
+            });
+
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, _signalGeneratorOnOpen, null, _commission, _slippage, _mmPositionCloseCalculator);
+            SystemEquity testEquity = TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash);
+            if (expectedHit)
+                CheckPositionOpenedEquity(testEquity, positionDir, expectedPrice, expectedPositionTicks);
+            else
+                CheckEmptyEquity(testEquity);
+        }
+
+        //[Test]
+        //public void Process_OpenSignalHitInBounds__OpensPosition()
+        //{
+
+        //}
+
+        //[Test]
+        //public void Process_OpenSignalHitAboveBounds__OpensPosition()
+        //{
+
+        //}
+
+        //[Test]
+        //public void Process_OpenSignalHitBelowBounds__OpensPosition()
+        //{
+
+        //}
+
+        //[Test]
+        //public void Process_OpenSignalNotHitAboveBounds__EmptyEquity()
+        //{
+
+        //}
+
+        //[Test]
+        //public void Process_OpenSignalNotHitBelowBounds__EmptyEquity()
+        //{
+
+        //}
+
+        //[Test]
+        //public void Process_StopHit__ClosesPosition()
+        //{
+
+        //}
+
+        //[Test]
+        //public void Process_StopNotHit__PositionLeftOpen()
+        //{
+
+        //}
     }
 }

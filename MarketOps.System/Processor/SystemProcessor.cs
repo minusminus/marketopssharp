@@ -190,7 +190,7 @@ namespace MarketOps.System.Processor
         private void RecalculateStops(DateTime ts, SystemEquity equity)
         {
             if (_mmPositionCloseCalculator == null) return;
-            equity.PositionsActive.ForEach(pos => _mmPositionCloseCalculator.CalculateCloseMode(ref pos, ts));
+            equity.PositionsActive.ForEach(pos => _mmPositionCloseCalculator.CalculateCloseMode(pos, ts));
         }
 
         private void CalculateCurrentSystemValue(DateTime ts, SystemEquity equity)

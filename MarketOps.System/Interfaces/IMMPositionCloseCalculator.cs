@@ -8,6 +8,6 @@ namespace MarketOps.System.Interfaces
     /// </summary>
     public interface IMMPositionCloseCalculator
     {
-        void CalculateCloseMode(ref Position position, DateTime ts);
+        void CalculateCloseMode(Position position, DateTime ts);
     }
 }

@@ -15,7 +15,7 @@ namespace MarketOps.System.MM
             _ticks = ticks;
         }
 
-        public void CalculateCloseMode(ref Position position, DateTime ts)
+        public void CalculateCloseMode(Position position, DateTime ts)
         {
             position.CloseMode = (position.TicksActive < _ticks) ? PositionCloseMode.DontClose : PositionCloseMode.OnOpen;
         }

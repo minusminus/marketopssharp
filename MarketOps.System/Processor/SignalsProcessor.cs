@@ -23,33 +23,33 @@ namespace MarketOps.System.Processor
             _slippage = slippage;
         }
 
-        public void Process(List<Signal> signals, DateTime ts, SystemEquity equity,
+        public void Process(DateTime ts, SystemState systemState,
             Func<Signal, StockPricesData, int, bool> signalSelector,
             Func<Signal, StockPricesData, int, float> openPriceSelector)
         {
-            if (signals.Count == 0) return;
-            ProcessSignals(signals, ts, equity, signalSelector, openPriceSelector);
+            if (systemState.Signals.Count == 0) return;
+            ProcessSignals(ts, systemState, signalSelector, openPriceSelector);
         }
 
-        private void ProcessSignals(List<Signal> signals, DateTime ts, SystemEquity equity, Func<Signal, StockPricesData, int, bool> signalSelector, Func<Signal, StockPricesData, int, float> openPriceSelector)
+        private void ProcessSignals(DateTime ts, SystemState systemState, Func<Signal, StockPricesData, int, bool> signalSelector, Func<Signal, StockPricesData, int, float> openPriceSelector)
         {
-            for (int i = 0; i < signals.Count; i++)
+            for (int i = 0; i < systemState.Signals.Count; i++)
             {
-                StockPricesData pricesData = GetPricesData(signals[i], ts);
+                StockPricesData pricesData = GetPricesData(systemState.Signals[i], ts);
                 int pricesDataIndex = pricesData.FindByTS(ts);
-                if (signalSelector(signals[i], pricesData, pricesDataIndex))
-                    ProcessSignal(signals[i], ts, equity, openPriceSelector, pricesData, pricesDataIndex);
+                if (signalSelector(systemState.Signals[i], pricesData, pricesDataIndex))
+                    ProcessSignal(systemState.Signals[i], ts, systemState, openPriceSelector, pricesData, pricesDataIndex);
             }
         }
 
-        private void ProcessSignal(Signal signal, DateTime ts, SystemEquity equity, Func<Signal, StockPricesData, int, float> openPriceSelector, StockPricesData pricesData, int pricesDataIndex)
+        private void ProcessSignal(Signal signal, DateTime ts, SystemState systemState, Func<Signal, StockPricesData, int, float> openPriceSelector, StockPricesData pricesData, int pricesDataIndex)
         {
             float openPrice = openPriceSelector(signal, pricesData, pricesDataIndex);
 
             if (signal.ReversePosition)
-                ReversePosition(signal, ts, equity, openPrice);
+                ReversePosition(signal, ts, systemState, openPrice);
             else
-                OpenPosition(signal, ts, equity, openPrice);
+                OpenPosition(signal, ts, systemState, openPrice);
         }
 
         private StockPricesData GetPricesData(Signal signal, DateTime ts)
@@ -57,21 +57,21 @@ namespace MarketOps.System.Processor
             return _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
         }
 
-        private void OpenPosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
+        private void OpenPosition(Signal signal, DateTime ts, SystemState systemState, float openPrice)
         {
-            equity.Open(ts, signal.Direction, openPrice, signal, _slippage, _commission);
+            systemState.Open(ts, signal.Direction, openPrice, signal, _slippage, _commission);
         }
 
-        private void ReversePosition(Signal signal, DateTime ts, SystemEquity equity, float openPrice)
+        private void ReversePosition(Signal signal, DateTime ts, SystemState systemState, float openPrice)
         {
             PositionDir newPosDir = signal.Direction;
-            int currPos = equity.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
+            int currPos = systemState.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
             if (currPos > -1)
             {
-                newPosDir = equity.PositionsActive[currPos].Direction == PositionDir.Long ? PositionDir.Short : PositionDir.Long;
-                equity.Close(currPos, ts, openPrice, _slippage, _commission);
+                newPosDir = systemState.PositionsActive[currPos].Direction == PositionDir.Long ? PositionDir.Short : PositionDir.Long;
+                systemState.Close(currPos, ts, openPrice, _slippage, _commission);
             }
-            equity.Open(ts, newPosDir, openPrice, signal, _slippage, _commission);
+            systemState.Open(ts, newPosDir, openPrice, signal, _slippage, _commission);
         }
     }
 }

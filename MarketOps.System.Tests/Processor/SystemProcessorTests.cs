@@ -32,6 +32,7 @@ namespace MarketOps.System.Tests.Processor
         private ICommission _commission;
         private ISlippage _slippage;
         private IMMPositionCloseCalculator _mmPositionCloseCalculator;
+        private SystemState _systemState;
 
         private SystemProcessor TestObj;
 
@@ -46,7 +47,7 @@ namespace MarketOps.System.Tests.Processor
             _commission = CommissionUtils.CreateSubstitute();
             _slippage = SlippageUtils.CreateSusbstitute();
             _mmPositionCloseCalculator = Substitute.For<IMMPositionCloseCalculator>();
-
+            _systemState = new SystemState() { Cash = InitialCash };
             //TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, _signalGeneratorOnOpen, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
 
             _dataDefinitionProvider.GetDataDefinition().Returns(
@@ -65,29 +66,29 @@ namespace MarketOps.System.Tests.Processor
             _stockStatMock.CalculateCallCount = 0;
         }
 
-        private void CheckEmptyEquity(SystemEquity equity)
+        private void CheckEmptySystemState()
         {
-            equity.Cash.ShouldBe(InitialCash);
-            equity.PositionsActive.Count.ShouldBe(0);
-            equity.PositionsClosed.Count.ShouldBe(0);
-            equity.ClosedPositionsValue.Count.ShouldBe(0);
-            equity.Value.Count.ShouldBe(PricesCount);
-            equity.Value.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.Cash.ShouldBe(InitialCash);
+            _systemState.PositionsActive.Count.ShouldBe(0);
+            _systemState.PositionsClosed.Count.ShouldBe(0);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
+            _systemState.Equity.Count.ShouldBe(PricesCount);
+            _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _mmPositionCloseCalculator.DidNotReceiveWithAnyArgs().CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
 
-        private void CheckPositionOpenedEquity(SystemEquity equity, PositionDir expectedDir, float expectedPrice, int expectedPositionTicks)
+        private void CheckPositionOpenedSystemState(PositionDir expectedDir, float expectedPrice, int expectedPositionTicks)
         {
-            equity.Cash.ShouldBe(InitialCash - expectedPrice);
-            equity.PositionsActive.Count.ShouldBe(1);
-            equity.PositionsActive[0].Direction.ShouldBe(expectedDir);
-            equity.PositionsActive[0].Open.ShouldBe(expectedPrice);
-            equity.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
-            equity.PositionsClosed.Count.ShouldBe(0);
-            equity.ClosedPositionsValue.Count.ShouldBe(0);
-            equity.Value.Count.ShouldBe(PricesCount);
-            equity.Value.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.Cash.ShouldBe(InitialCash - expectedPrice);
+            _systemState.PositionsActive.Count.ShouldBe(1);
+            _systemState.PositionsActive[0].Direction.ShouldBe(expectedDir);
+            _systemState.PositionsActive[0].Open.ShouldBe(expectedPrice);
+            _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
+            _systemState.PositionsClosed.Count.ShouldBe(0);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
+            _systemState.Equity.Count.ShouldBe(PricesCount);
+            _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
@@ -99,7 +100,8 @@ namespace MarketOps.System.Tests.Processor
             _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(new List<Signal>());
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, (withGeneratorOnOpen ? _signalGeneratorOnOpen : null), (withGeneratorOnClose ? _signalGeneratorOnClose : null), _commission, _slippage, _mmPositionCloseCalculator);
-            CheckEmptyEquity(TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash));
+            TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
+            CheckEmptySystemState();
         }
 
         [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, StartingPrice, PricesCount)]
@@ -112,7 +114,7 @@ namespace MarketOps.System.Tests.Processor
         [TestCase(SignalType.EnterOnOpen, PositionDir.Short, 0, true, StartingPrice, PricesCount - 1)]
         [TestCase(SignalType.EnterOnClose, PositionDir.Long, 0, true, StartingPrice, PricesCount)]
         [TestCase(SignalType.EnterOnClose, PositionDir.Short, 0, true, StartingPrice, PricesCount)]
-        public void Process_SignalOnOpen(SignalType signalType, PositionDir positionDir, float price, 
+        public void Process_SignalOnOpen(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, float expectedPrice, int expectedPositionTicks)
         {
             _signalGeneratorOnOpen.GenerateOnOpen(default, default).ReturnsForAnyArgs(args =>
@@ -135,11 +137,11 @@ namespace MarketOps.System.Tests.Processor
             });
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, _signalGeneratorOnOpen, null, _commission, _slippage, _mmPositionCloseCalculator);
-            SystemEquity testEquity = TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash);
+            TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
-                CheckPositionOpenedEquity(testEquity, positionDir, expectedPrice, expectedPositionTicks);
+                CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
             else
-                CheckEmptyEquity(testEquity);
+                CheckEmptySystemState();
         }
 
         [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, StartingPrice, PricesCount - 1)]
@@ -175,11 +177,11 @@ namespace MarketOps.System.Tests.Processor
             });
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
-            SystemEquity testEquity = TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash);
+            TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
-                CheckPositionOpenedEquity(testEquity, positionDir, expectedPrice, expectedPositionTicks);
+                CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
             else
-                CheckEmptyEquity(testEquity);
+                CheckEmptySystemState();
         }
 
         [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, StartingPrice, PricesCount - 1)]
@@ -215,11 +217,11 @@ namespace MarketOps.System.Tests.Processor
             });
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
-            SystemEquity testEquity = TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash);
+            TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
-                CheckPositionOpenedEquity(testEquity, positionDir, expectedPrice, expectedPositionTicks);
+                CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
             else
-                CheckEmptyEquity(testEquity);
+                CheckEmptySystemState();
         }
 
         [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, StartingPrice, PricesCount - 1)]
@@ -246,11 +248,11 @@ namespace MarketOps.System.Tests.Processor
             });
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
-            SystemEquity testEquity = TestObj.Process(LastDate.AddDays(-PricesCount), LastDate, InitialCash);
+            TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
-                CheckPositionOpenedEquity(testEquity, positionDir, expectedPrice, expectedPositionTicks);
+                CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
             else
-                CheckEmptyEquity(testEquity);
+                CheckEmptySystemState();
         }
 
         //[Test]

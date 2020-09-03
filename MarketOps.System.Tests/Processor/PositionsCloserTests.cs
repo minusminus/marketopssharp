@@ -36,31 +36,31 @@ namespace MarketOps.System.Tests.Processor
             _closePriceSelectorCalled = false;
         }
 
-        private SystemEquity CreateEquity(PositionDir[] activeDirs, PositionCloseMode[] activeCloseModes)
+        private SystemState CreateEquity(PositionDir[] activeDirs, PositionCloseMode[] activeCloseModes)
         {
             activeDirs.Length.ShouldBe(activeCloseModes.Length);
 
-            SystemEquity equity = new SystemEquity();
+            SystemState equity = new SystemState();
             equity.Cash = InitialCash;
             for (int i = 0; i < activeDirs.Length; i++)
                 equity.PositionsActive.Add(new Position() { Stock = _stock, Direction = activeDirs[i], CloseMode = activeCloseModes[i] });
             return equity;
         }
 
-        private void CheckProcessResult(SystemEquity equity, bool expectedSelectorCalled, bool expectedPriceSelectorCalled,
+        private void CheckProcessResult(SystemState equity, bool expectedSelectorCalled, bool expectedPriceSelectorCalled,
             int expectedPositionsActiveCount, int expectedPositionsClosedCount)
         {
             _positionSelectorCalled.ShouldBe(expectedSelectorCalled);
             _closePriceSelectorCalled.ShouldBe(expectedPriceSelectorCalled);
             equity.PositionsActive.Count.ShouldBe(expectedPositionsActiveCount);
             equity.PositionsClosed.Count.ShouldBe(expectedPositionsClosedCount);
-            equity.ClosedPositionsValue.Count.ShouldBe(expectedPositionsClosedCount);
+            equity.ClosedPositionsEquity.Count.ShouldBe(expectedPositionsClosedCount);
         }
 
         [Test]
         public void Process_EmptyActivePositionsList__DoesNothing()
         {
-            SystemEquity equity = new SystemEquity();
+            SystemState equity = new SystemState();
             TestObj.Process(LastDate, equity,
                 (_, __, ___) => { _positionSelectorCalled = true; return true; },
                 (_, __, ___) => { _closePriceSelectorCalled = true; return -1; });
@@ -70,7 +70,7 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Process_PositionSelectorReturnsFalse__DoesNothing()
         {
-            SystemEquity equity = CreateEquity(
+            SystemState equity = CreateEquity(
                 new[] { PositionDir.Long, PositionDir.Long, PositionDir.Long },
                 new[] { PositionCloseMode.OnOpen, PositionCloseMode.OnOpen, PositionCloseMode.OnOpen });
             TestObj.Process(LastDate, equity,
@@ -82,7 +82,7 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Process_PositionSelectorReturnsTrue__PositionClosed()
         {
-            SystemEquity equity = CreateEquity(
+            SystemState equity = CreateEquity(
                 new[] { PositionDir.Long },
                 new[] { PositionCloseMode.OnPriceHit });
             TestObj.Process(LastDate, equity,
@@ -94,7 +94,7 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Process_PositionSelectorReturnsTrue_TwoPositions__PositionsClosed()
         {
-            SystemEquity equity = CreateEquity(
+            SystemState equity = CreateEquity(
                 new[] { PositionDir.Long, PositionDir.Long },
                 new[] { PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit });
             TestObj.Process(LastDate, equity,
@@ -106,7 +106,7 @@ namespace MarketOps.System.Tests.Processor
         [Test]
         public void Process_PositionSelectorReturnsTrue_NotAllPositionsSelected__SelectedPositionsClosed()
         {
-            SystemEquity equity = CreateEquity(
+            SystemState equity = CreateEquity(
                 new[] { PositionDir.Short, PositionDir.Long, PositionDir.Long, PositionDir.Short },
                 new[] { PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit });
             TestObj.Process(LastDate, equity,

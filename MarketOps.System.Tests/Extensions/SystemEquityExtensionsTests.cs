@@ -11,7 +11,7 @@ namespace MarketOps.System.Tests.Extensions
     [TestFixture]
     public class SystemEquityExtensionsTests
     {
-        private SystemEquity _testObj;
+        private SystemState _testObj;
         private StockDefinition _stock;
         private StockDefinition _stock2;
         private StockPricesData _stockPrices;
@@ -35,7 +35,7 @@ namespace MarketOps.System.Tests.Extensions
         {
             _stock = new StockDefinition();
             _stock2 = new StockDefinition();
-            _testObj = new SystemEquity() { Cash = CashValue };
+            _testObj = new SystemState() { Cash = CashValue };
             _stockPrices = new StockPricesData(1);
             _dataLoader = DataLoaderUtils.CreateSubstitute(_stockPrices);
             _commission = CommissionUtils.CreateSubstitute(Commission);
@@ -60,8 +60,8 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.PositionsClosed[index].Close.ShouldBe(close);
             _testObj.PositionsClosed[index].CloseCommission.ShouldBe(commission);
             _testObj.PositionsClosed[index].TSClose.ShouldBe(ts);
-            _testObj.ClosedPositionsValue[index].Value.ShouldBe(prevValueOnPosition + (close - open) * vol * (dir == PositionDir.Long ? 1 : -1) - commission);
-            _testObj.ClosedPositionsValue[index].TS.ShouldBe(ts);
+            _testObj.ClosedPositionsEquity[index].Value.ShouldBe(prevValueOnPosition + (close - open) * vol * (dir == PositionDir.Long ? 1 : -1) - commission);
+            _testObj.ClosedPositionsEquity[index].TS.ShouldBe(ts);
         }
 
         private Position CreatePosition(PositionDir dir, float open, int vol) => new Position()
@@ -110,7 +110,7 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.Cash.ShouldBe(CashValue + close * vol - Commission);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(1);
-            _testObj.ClosedPositionsValue.Count.ShouldBe(1);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
             CheckClosedPosition(0, dir, open, close, vol, Commission, CurrentTS, 0);
         }
 
@@ -125,16 +125,16 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.Cash.ShouldBe(CashValue + Close1 * Vol1 - Commission);
             _testObj.PositionsActive.Count.ShouldBe(1);
             _testObj.PositionsClosed.Count.ShouldBe(1);
-            _testObj.ClosedPositionsValue.Count.ShouldBe(1);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
             CheckClosedPosition(0, PositionDir.Long, Price1, Close1, Vol1, Commission, CurrentTS, 0);
 
             _testObj.Close(0, CurrentTS2, Close1, Commission);
             _testObj.Cash.ShouldBe(CashValue + Close1 * Vol1 + Close1 * Vol2 - Commission * 2);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(2);
-            _testObj.ClosedPositionsValue.Count.ShouldBe(2);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(2);
             CheckClosedPosition(0, PositionDir.Long, Price1, Close1, Vol1, Commission, CurrentTS, 0);
-            CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, Commission, CurrentTS2, _testObj.ClosedPositionsValue[0].Value);
+            CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, Commission, CurrentTS2, _testObj.ClosedPositionsEquity[0].Value);
         }
 
         [TestCase(0, 0)]
@@ -158,9 +158,9 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.Cash.ShouldBe(CashValue + Close1 * Vol1 + Close1 * Vol2 - Commission * 2);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(2);
-            _testObj.ClosedPositionsValue.Count.ShouldBe(2);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(2);
             CheckClosedPosition(0, PositionDir.Long, Price1, Close1, Vol1, Commission, CurrentTS, 0);
-            CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, Commission, CurrentTS, _testObj.ClosedPositionsValue[0].Value);
+            CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, Commission, CurrentTS, _testObj.ClosedPositionsEquity[0].Value);
         }
 
         [Test]
@@ -169,9 +169,9 @@ namespace MarketOps.System.Tests.Extensions
             _stockPrices.TS[0] = CurrentTS;
             _stockPrices.C[0] = Close1;
             _testObj.CalcCurrentValue(CurrentTS, _dataLoader);
-            _testObj.Value.Count.ShouldBe(1);
-            _testObj.Value[0].Value.ShouldBe(CashValue);
-            _testObj.Value[0].TS.ShouldBe(CurrentTS);
+            _testObj.Equity.Count.ShouldBe(1);
+            _testObj.Equity[0].Value.ShouldBe(CashValue);
+            _testObj.Equity[0].TS.ShouldBe(CurrentTS);
         }
 
         [Test]
@@ -181,9 +181,9 @@ namespace MarketOps.System.Tests.Extensions
             _stockPrices.TS[0] = CurrentTS;
             _stockPrices.C[0] = Close1;
             _testObj.CalcCurrentValue(CurrentTS, _dataLoader);
-            _testObj.Value.Count.ShouldBe(1);
-            _testObj.Value[0].Value.ShouldBe(CashValue + Close1 * Vol1);
-            _testObj.Value[0].TS.ShouldBe(CurrentTS);
+            _testObj.Equity.Count.ShouldBe(1);
+            _testObj.Equity[0].Value.ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.Equity[0].TS.ShouldBe(CurrentTS);
         }
 
         [Test]
@@ -193,19 +193,19 @@ namespace MarketOps.System.Tests.Extensions
             _stockPrices.TS[0] = CurrentTS;
             _stockPrices.C[0] = Close1;
             _testObj.CalcCurrentValue(CurrentTS, _dataLoader);
-            _testObj.Value.Count.ShouldBe(1);
-            _testObj.Value[0].Value.ShouldBe(CashValue + Close1 * Vol1);
-            _testObj.Value[0].TS.ShouldBe(CurrentTS);
+            _testObj.Equity.Count.ShouldBe(1);
+            _testObj.Equity[0].Value.ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.Equity[0].TS.ShouldBe(CurrentTS);
 
             _testObj.CloseAll(CurrentTS2, Close1, _slippage, CommissionUtils.CreateSubstitute());
             _stockPrices.TS[0] = CurrentTS2;
             _stockPrices.C[0] = Close1;
             _testObj.CalcCurrentValue(CurrentTS2, _dataLoader);
-            _testObj.Value.Count.ShouldBe(2);
-            _testObj.Value[0].Value.ShouldBe(CashValue + Close1 * Vol1);
-            _testObj.Value[0].TS.ShouldBe(CurrentTS);
-            _testObj.Value[1].Value.ShouldBe(CashValue + Close1 * Vol1);
-            _testObj.Value[1].TS.ShouldBe(CurrentTS2);
+            _testObj.Equity.Count.ShouldBe(2);
+            _testObj.Equity[0].Value.ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.Equity[0].TS.ShouldBe(CurrentTS);
+            _testObj.Equity[1].Value.ShouldBe(CashValue + Close1 * Vol1);
+            _testObj.Equity[1].TS.ShouldBe(CurrentTS2);
         }
     }
 }

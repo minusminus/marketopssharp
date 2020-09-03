@@ -22,33 +22,33 @@ namespace MarketOps.System.Processor
             _slippage = slippage;
         }
 
-        public void Process(DateTime ts, SystemEquity equity,
+        public void Process(DateTime ts, SystemState systemState,
             Func<Position, StockPricesData, int, bool> positionSelector,
             Func<Position, StockPricesData, int, float> closePriceSelector)
         {
-            if (equity.PositionsActive.Count == 0) return;
-            ProcessActivePrositions(ts, equity, positionSelector, closePriceSelector);
+            if (systemState.PositionsActive.Count == 0) return;
+            ProcessActivePrositions(ts, systemState, positionSelector, closePriceSelector);
         }
 
-        private void ProcessActivePrositions(DateTime ts, SystemEquity equity,
+        private void ProcessActivePrositions(DateTime ts, SystemState systemState,
             Func<Position, StockPricesData, int, bool> positionSelector,
             Func<Position, StockPricesData, int, float> closePriceSelector)
         {
             int i = 0;
-            while (i < equity.PositionsActive.Count)
+            while (i < systemState.PositionsActive.Count)
             {
-                StockPricesData pricesData = GetPricesData(equity.PositionsActive[i], ts);
+                StockPricesData pricesData = GetPricesData(systemState.PositionsActive[i], ts);
                 int pricesDataIndex = pricesData.FindByTS(ts);
-                if (positionSelector(equity.PositionsActive[i], pricesData, pricesDataIndex))
-                    ProcessPosition(ts, equity, i, closePriceSelector, pricesData, pricesDataIndex);
+                if (positionSelector(systemState.PositionsActive[i], pricesData, pricesDataIndex))
+                    ProcessPosition(ts, systemState, i, closePriceSelector, pricesData, pricesDataIndex);
                 else
                     i++;
             }
         }
 
-        private void ProcessPosition(DateTime ts, SystemEquity equity, int positionIndex, Func<Position, StockPricesData, int, float> closePriceSelector, StockPricesData pricesData, int pricesDataIndex)
+        private void ProcessPosition(DateTime ts, SystemState systemState, int positionIndex, Func<Position, StockPricesData, int, float> closePriceSelector, StockPricesData pricesData, int pricesDataIndex)
         {
-            equity.Close(positionIndex, ts, closePriceSelector(equity.PositionsActive[positionIndex], pricesData, pricesDataIndex), _slippage, _commission);
+            systemState.Close(positionIndex, ts, closePriceSelector(systemState.PositionsActive[positionIndex], pricesData, pricesDataIndex), _slippage, _commission);
         }
 
         private StockPricesData GetPricesData(Position position, DateTime ts)

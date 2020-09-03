@@ -13,7 +13,7 @@ namespace MarketOps.System.Tests.Extensions
     {
         private SystemValueCalculator _testObj;
         private IDataLoader _dataLoader;
-        private SystemEquity _testSys;
+        private SystemState _testSys;
         private StockPricesData _stockPrices;
 
         const float CashValue = 100;
@@ -26,7 +26,7 @@ namespace MarketOps.System.Tests.Extensions
         public void SetUp()
         {
             _dataLoader = Substitute.For<IDataLoader>();
-            _testSys = new SystemEquity() { Cash = CashValue };
+            _testSys = new SystemState() { Cash = CashValue };
             _stockPrices = new StockPricesData(1);
             _testObj = new SystemValueCalculator();
 
@@ -40,7 +40,7 @@ namespace MarketOps.System.Tests.Extensions
         [Test]
         public void Calc_Empty__Returns0()
         {
-            _testObj.Calc(new SystemEquity(), DateTime.Now, _dataLoader).ShouldBe(0);
+            _testObj.Calc(new SystemState(), DateTime.Now, _dataLoader).ShouldBe(0);
         }
 
         [Test]

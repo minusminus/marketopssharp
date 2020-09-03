@@ -76,8 +76,8 @@
     <Compile Include="Slippage\SlippageNone.cs" />
     <Compile Include="Slippage\SlippageTicks.cs" />
     <Compile Include="SystemDataDefinition.cs" />
-    <Compile Include="SystemEquity.cs" />
-    <Compile Include="Extensions\SystemEquityExtensions.cs" />
+    <Compile Include="SystemState.cs" />
+    <Compile Include="Extensions\SystemStateExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />
     <Compile Include="Interfaces\IDataLoader.cs" />
     <Compile Include="Interfaces\ITickAligner.cs" />

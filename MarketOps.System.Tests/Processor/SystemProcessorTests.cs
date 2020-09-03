@@ -9,6 +9,7 @@ using System;
 using MarketOps.StockData.Types;
 using System.Collections.Generic;
 using System.Linq;
+using MarketOps.System.Extensions;
 
 namespace MarketOps.System.Tests.Processor
 {
@@ -90,6 +91,24 @@ namespace MarketOps.System.Tests.Processor
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks).CalculateCloseMode(default, default);
+            _stockStatMock.CalculateCallCount.ShouldBe(1);
+        }
+
+        private void CheckPositionReversedSystemState(PositionDir expectedActiveDir, PositionDir expectedClosedDir, float expectedPrice, int expectedPositionTicks, int expectedClosedPositionTicks)
+        {
+            _systemState.Cash.ShouldBe(InitialCash - expectedPrice);
+            _systemState.PositionsActive.Count.ShouldBe(1);
+            _systemState.PositionsActive[0].Direction.ShouldBe(expectedActiveDir);
+            _systemState.PositionsActive[0].Open.ShouldBe(expectedPrice);
+            _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
+            _systemState.PositionsClosed.Count.ShouldBe(1);
+            _systemState.PositionsClosed[0].Direction.ShouldBe(expectedClosedDir);
+            _systemState.PositionsClosed[0].Open.ShouldBe(expectedPrice);
+            _systemState.PositionsClosed[0].TicksActive.ShouldBe(expectedClosedPositionTicks);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
+            _systemState.Equity.Count.ShouldBe(PricesCount);
+            _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks + expectedClosedPositionTicks - 2).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
 
@@ -224,33 +243,36 @@ namespace MarketOps.System.Tests.Processor
                 CheckEmptySystemState();
         }
 
-        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, PositionDir.Short, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice, true, PositionDir.Long, StartingPrice, PricesCount - 1)]
         public void Process_SignalReverse_WithOpenedPosition(SignalType signalType, PositionDir positionDir, float price,
-            bool expectedHit, float expectedPrice, int expectedPositionTicks)
+            bool expectedHit, PositionDir expectedPositionDir, float expectedPrice, int expectedPositionTicks)
         {
+            Signal sig = new Signal()
+            {
+                Stock = _stock,
+                DataRange = StockDataRange.Daily,
+                IntradayInterval = 0,
+                Type = signalType,
+                Direction = positionDir,
+                ReversePosition = true,
+                Price = price,
+                Volume = 1
+            };
+
             _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(args =>
             {
-                if ((args.ArgAt<int>(1) == 0) || (args.ArgAt<int>(1) == 1))
-                    return new List<Signal>() {
-                    new Signal()
-                    {
-                        Stock = _stock,
-                        DataRange = StockDataRange.Daily,
-                        IntradayInterval = 0,
-                        Type = signalType,
-                        Direction = positionDir,
-                        ReversePosition = true,
-                        Price = price,
-                        Volume = 1
-                    }
-                };
+                if (args.ArgAt<int>(1) == 0)
+                    return new List<Signal>() { sig };
                 return new List<Signal>();
             });
+
+            _systemState.Open(LastDate.AddDays(-PricesCount - 1), positionDir, StartingPrice, sig, _slippage, _commission);
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
-                CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
+                CheckPositionReversedSystemState(expectedPositionDir, positionDir, expectedPrice, expectedPositionTicks, 3);
             else
                 CheckEmptySystemState();
         }

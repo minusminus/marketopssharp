@@ -75,6 +75,7 @@ namespace MarketOps.System.Tests.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.DidNotReceiveWithAnyArgs().CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
@@ -90,6 +91,7 @@ namespace MarketOps.System.Tests.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
@@ -108,7 +110,23 @@ namespace MarketOps.System.Tests.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks + expectedClosedPositionTicks - 2).CalculateCloseMode(default, default);
+            _stockStatMock.CalculateCallCount.ShouldBe(1);
+        }
+
+        private void CheckPositionNotReversedSystemState(PositionDir expectedActiveDir, float expectedPrice, int expectedPositionTicks)
+        {
+            _systemState.Cash.ShouldBe(InitialCash - expectedPrice);
+            _systemState.PositionsActive.Count.ShouldBe(1);
+            _systemState.PositionsActive[0].Direction.ShouldBe(expectedActiveDir);
+            _systemState.PositionsActive[0].Open.ShouldBe(expectedPrice);
+            _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
+            _systemState.PositionsClosed.Count.ShouldBe(0);
+            _systemState.Equity.Count.ShouldBe(PricesCount);
+            _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.LastProcessedTS.Equals(LastDate);
+            _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks - 1).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
 
@@ -244,7 +262,15 @@ namespace MarketOps.System.Tests.Processor
         }
 
         [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice, true, PositionDir.Short, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice - PriceRange - 1, true, PositionDir.Short, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Long, StartingPrice + PriceRange + 1, false, PositionDir.Short, 0, 0)]
         [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice, true, PositionDir.Long, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice + PriceRange + 1, true, PositionDir.Long, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnPrice, PositionDir.Short, StartingPrice - PriceRange - 1, false, PositionDir.Long, 0, 0)]
+        [TestCase(SignalType.EnterOnOpen, PositionDir.Long, 0, true, PositionDir.Short, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnOpen, PositionDir.Short, 0, true, PositionDir.Long, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnClose, PositionDir.Long, 0, true, PositionDir.Short, StartingPrice, PricesCount - 1)]
+        [TestCase(SignalType.EnterOnClose, PositionDir.Short, 0, true, PositionDir.Long, StartingPrice, PricesCount - 1)]
         public void Process_SignalReverse_WithOpenedPosition(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, PositionDir expectedPositionDir, float expectedPrice, int expectedPositionTicks)
         {
@@ -274,7 +300,7 @@ namespace MarketOps.System.Tests.Processor
             if (expectedHit)
                 CheckPositionReversedSystemState(expectedPositionDir, positionDir, expectedPrice, expectedPositionTicks, 3);
             else
-                CheckEmptySystemState();
+                CheckPositionNotReversedSystemState(positionDir, StartingPrice, PricesCount + 1);
         }
 
         //[Test]

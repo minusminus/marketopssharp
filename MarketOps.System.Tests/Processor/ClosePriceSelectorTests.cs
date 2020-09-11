@@ -24,9 +24,9 @@ namespace MarketOps.System.Tests.Processor
         [TestCase(PositionDir.Long, 7, 7)]
         [TestCase(PositionDir.Short, 50, 50)]
         [TestCase(PositionDir.Short, 7, 10)]
-        public void OnPrice(PositionDir positionDir, float price, float expected)
+        public void OnStopHit(PositionDir positionDir, float price, float expected)
         {
-            ClosePriceSelector.OnPrice(
+            ClosePriceSelector.OnStopHit(
                 new Position() { Direction = positionDir, CloseModePrice = price },
                 StockPricesDataUtils.CreatePricesData(10, 100, 5, 20),
                 0).ShouldBe(expected);

@@ -170,8 +170,8 @@ namespace MarketOps.System.Processor
         private void ProcessStopsOnPrice(DateTime ts, SystemState systemState)
         {
             _positionCloser.Process(ts, systemState,
-                ClosingPositionSelector.OnPrice,
-                ClosePriceSelector.OnPrice);
+                ClosingPositionSelector.OnStopHit,
+                ClosePriceSelector.OnStopHit);
         }
 
         private void UpdateActivePositions(SystemState systemState)

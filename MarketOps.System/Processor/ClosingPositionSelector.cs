@@ -14,8 +14,8 @@ namespace MarketOps.System.Processor
         public static bool OnClose(Position position, StockPricesData pricesData, int priceIndex) =>
             position.CloseMode == PositionCloseMode.OnClose;
 
-        public static bool OnPrice(Position position, StockPricesData pricesData, int priceIndex) =>
-            (position.CloseMode == PositionCloseMode.OnPriceHit)
+        public static bool OnStopHit(Position position, StockPricesData pricesData, int priceIndex) =>
+            (position.CloseMode == PositionCloseMode.OnStopHit)
             && (
                 ((position.Direction == PositionDir.Long) && (position.CloseModePrice >= pricesData.L[priceIndex]))
                 || ((position.Direction == PositionDir.Short) && (position.CloseModePrice <= pricesData.H[priceIndex]))

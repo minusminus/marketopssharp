@@ -6,7 +6,7 @@
     public enum PositionCloseMode
     {
         DontClose,
-        OnPriceHit,
+        OnStopHit,
         OnClose,
         OnOpen
     }

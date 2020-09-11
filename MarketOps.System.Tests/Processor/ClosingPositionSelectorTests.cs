@@ -33,9 +33,9 @@ namespace MarketOps.System.Tests.Processor
         }
 
         [Test]
-        public void OnPrice_NotCloseOnPrice__ReturnsFalse()
+        public void OnStopHit_NotCloseOnPrice__ReturnsFalse()
         {
-            ClosingPositionSelector.OnPrice(new Position() { CloseMode = PositionCloseMode.OnClose }, StockPricesDataUtils.CreatePricesData(0, 0, 0, 0), 0).ShouldBeFalse();
+            ClosingPositionSelector.OnStopHit(new Position() { CloseMode = PositionCloseMode.OnClose }, StockPricesDataUtils.CreatePricesData(0, 0, 0, 0), 0).ShouldBeFalse();
         }
 
         [TestCase(PositionDir.Long, 75, true)]
@@ -44,10 +44,10 @@ namespace MarketOps.System.Tests.Processor
         [TestCase(PositionDir.Short, 75, true)]
         [TestCase(PositionDir.Short, 125, false)]
         [TestCase(PositionDir.Short, 25, true)]
-        public void OnPrice(PositionDir positionDir, float closeModePrice, bool expected)
+        public void OnStopHit(PositionDir positionDir, float closeModePrice, bool expected)
         {
-            ClosingPositionSelector.OnPrice(
-                new Position() { Direction = positionDir, CloseMode = PositionCloseMode.OnPriceHit, CloseModePrice = closeModePrice }, 
+            ClosingPositionSelector.OnStopHit(
+                new Position() { Direction = positionDir, CloseMode = PositionCloseMode.OnStopHit, CloseModePrice = closeModePrice }, 
                 StockPricesDataUtils.CreatePricesData(0, 100, 50, 0), 
                 0).ShouldBe(expected);
         }

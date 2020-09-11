@@ -11,7 +11,7 @@ namespace MarketOps.System.Processor
 
         public static float OnClose(Position position, StockPricesData pricesData, int priceIndex) => pricesData.C[priceIndex];
 
-        public static float OnPrice(Position position, StockPricesData pricesData, int priceIndex)
+        public static float OnStopHit(Position position, StockPricesData pricesData, int priceIndex)
         {
             if (((position.Direction == PositionDir.Long) && (pricesData.O[priceIndex] <= position.CloseModePrice))
              || ((position.Direction == PositionDir.Short) && (pricesData.O[priceIndex] >= position.CloseModePrice)))

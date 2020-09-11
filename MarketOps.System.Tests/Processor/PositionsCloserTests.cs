@@ -84,7 +84,7 @@ namespace MarketOps.System.Tests.Processor
         {
             SystemState equity = CreateEquity(
                 new[] { PositionDir.Long },
-                new[] { PositionCloseMode.OnPriceHit });
+                new[] { PositionCloseMode.OnStopHit });
             TestObj.Process(LastDate, equity,
                 (_, __, ___) => { _positionSelectorCalled = true; return true; },
                 (_, __, ___) => { _closePriceSelectorCalled = true; return 10; });
@@ -96,7 +96,7 @@ namespace MarketOps.System.Tests.Processor
         {
             SystemState equity = CreateEquity(
                 new[] { PositionDir.Long, PositionDir.Long },
-                new[] { PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit });
+                new[] { PositionCloseMode.OnStopHit, PositionCloseMode.OnStopHit });
             TestObj.Process(LastDate, equity,
                 (_, __, ___) => { _positionSelectorCalled = true; return true; },
                 (_, __, ___) => { _closePriceSelectorCalled = true; return 10; });
@@ -108,7 +108,7 @@ namespace MarketOps.System.Tests.Processor
         {
             SystemState equity = CreateEquity(
                 new[] { PositionDir.Short, PositionDir.Long, PositionDir.Long, PositionDir.Short },
-                new[] { PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit, PositionCloseMode.OnPriceHit });
+                new[] { PositionCloseMode.OnStopHit, PositionCloseMode.OnStopHit, PositionCloseMode.OnStopHit, PositionCloseMode.OnStopHit });
             TestObj.Process(LastDate, equity,
                 (pos, __, ___) => { _positionSelectorCalled = true; return (pos.Direction == PositionDir.Long); },
                 (_, __, ___) => { _closePriceSelectorCalled = true; return 10; });

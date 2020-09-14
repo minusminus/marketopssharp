@@ -183,7 +183,7 @@ namespace MarketOps.System.Tests.Processor
         [TestCase(SignalType.EnterOnOpen, PositionDir.Short, 0, true, StartingPrice, PricesCount - 1)]
         [TestCase(SignalType.EnterOnClose, PositionDir.Long, 0, true, StartingPrice, PricesCount)]
         [TestCase(SignalType.EnterOnClose, PositionDir.Short, 0, true, StartingPrice, PricesCount)]
-        public void Process_SignalOnOpen(SignalType signalType, PositionDir positionDir, float price,
+        public void Process_SignalGeneratedOnOpen(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, float expectedPrice, int expectedPositionTicks)
         {
             _signalGeneratorOnOpen.GenerateOnOpen(default, default).ReturnsForAnyArgs(args =>
@@ -223,7 +223,7 @@ namespace MarketOps.System.Tests.Processor
         [TestCase(SignalType.EnterOnOpen, PositionDir.Short, 0, true, StartingPrice, PricesCount - 1)]
         [TestCase(SignalType.EnterOnClose, PositionDir.Long, 0, true, StartingPrice, PricesCount - 1)]
         [TestCase(SignalType.EnterOnClose, PositionDir.Short, 0, true, StartingPrice, PricesCount - 1)]
-        public void Process_SignalOnClose(SignalType signalType, PositionDir positionDir, float price,
+        public void Process_SignalGeneratedOnClose(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, float expectedPrice, int expectedPositionTicks)
         {
             _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(args =>

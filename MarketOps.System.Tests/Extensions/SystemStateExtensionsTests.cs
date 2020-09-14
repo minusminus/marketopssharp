@@ -9,7 +9,7 @@ using MarketOps.System.Tests.Mocks;
 namespace MarketOps.System.Tests.Extensions
 {
     [TestFixture]
-    public class SystemEquityExtensionsTests
+    public class SystemStateExtensionsTests
     {
         private SystemState _testObj;
         private StockDefinition _stock;
@@ -78,7 +78,7 @@ namespace MarketOps.System.Tests.Extensions
         public void Open__AddsToActive_SubsCash(PositionDir dir, float price, int vol, StockDataRange range, int intradayInterval)
         {
             _testObj.Open(_stock, dir, CurrentTS, price, vol, Commission, range, intradayInterval, EntrySignal);
-            _testObj.Cash.ShouldBe(CashValue - price * vol - Commission);
+            _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (price * vol) - Commission);
             _testObj.PositionsActive.Count.ShouldBe(1);
             CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, price, vol, Commission, CurrentTS, range, intradayInterval);
         }
@@ -87,13 +87,13 @@ namespace MarketOps.System.Tests.Extensions
         public void Open_Twice__AddsToActive_SubsCash()
         {
             _testObj.Open(_stock, PositionDir.Long, CurrentTS, Price1, Vol1, Commission, StockDataRange.Daily, 0, EntrySignal);
-            _testObj.Cash.ShouldBe(CashValue - Price1 * Vol1 - Commission);
             _testObj.PositionsActive.Count.ShouldBe(1);
+            _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (Price1 * Vol1) - Commission);
             CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, Commission, CurrentTS, StockDataRange.Daily, 0);
 
             _testObj.Open(_stock2, PositionDir.Short, CurrentTS2, Price2, Vol2, Commission, StockDataRange.Daily, 10, EntrySignal);
-            _testObj.Cash.ShouldBe(CashValue - Price1 * Vol1 - Price2 * Vol2 - Commission * 2);
             _testObj.PositionsActive.Count.ShouldBe(2);
+            _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (Price1 * Vol1) - _testObj.PositionsActive[1].DirectionMultiplier() * (Price2 * Vol2) - Commission * 2);
             CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, Commission, CurrentTS, StockDataRange.Daily, 0);
             CheckOpenedPosition(_testObj.PositionsActive[1], _stock2, PositionDir.Short, Price2, Vol2, Commission, CurrentTS2, StockDataRange.Daily, 10);
         }
@@ -107,7 +107,7 @@ namespace MarketOps.System.Tests.Extensions
             Position pos = CreatePosition(dir, open, vol);
             _testObj.PositionsActive.Add(pos);
             _testObj.Close(0, CurrentTS, close, Commission);
-            _testObj.Cash.ShouldBe(CashValue + close * vol - Commission);
+            _testObj.Cash.ShouldBe(CashValue + pos.DirectionMultiplier() * (close * vol) - Commission);
             _testObj.PositionsActive.Count.ShouldBe(0);
             _testObj.PositionsClosed.Count.ShouldBe(1);
             _testObj.ClosedPositionsEquity.Count.ShouldBe(1);

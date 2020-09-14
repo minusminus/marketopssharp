@@ -26,7 +26,7 @@ namespace MarketOps.System.Extensions
                 TicksActive = 1
             };
             systemState.PositionsActive.Add(pos);
-            systemState.Cash -= pos.OpenValue();
+            systemState.Cash -= pos.DirectionMultiplier() * pos.OpenValue();
             systemState.Cash -= pos.OpenCommission;
         }
 
@@ -44,7 +44,7 @@ namespace MarketOps.System.Extensions
             pos.TSClose = ts;
             system.PositionsActive.RemoveAt(positionIndex);
             system.PositionsClosed.Add(pos);
-            system.Cash += pos.CloseValue();
+            system.Cash += pos.DirectionMultiplier() * pos.CloseValue();
             system.Cash -= pos.CloseCommission;
             system.ClosedPositionsEquity.Add(new SystemValue()
             {

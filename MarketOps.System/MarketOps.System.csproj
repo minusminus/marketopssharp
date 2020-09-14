@@ -45,6 +45,7 @@
     <Compile Include="Commission\CommissionNone.cs" />
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
     <Compile Include="Extensions\MoneyValueExtensions.cs" />
+    <Compile Include="Extensions\PositionDirExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="GPW\CommissionGPWBossa.cs" />
     <Compile Include="Interfaces\ICommission.cs" />

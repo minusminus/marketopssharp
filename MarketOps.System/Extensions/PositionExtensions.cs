@@ -5,9 +5,14 @@
     /// </summary>
     public static class PositionExtensions
     {
+        public static float DirectionMultiplier(this Position pos)
+        {
+            return pos.DirectionMultiplier();
+        }
+
         public static float Value(this Position pos)
         {
-            return (pos.Direction == PositionDir.Long ? pos.Close - pos.Open : pos.Open - pos.Close) * pos.Volume;
+            return pos.DirectionMultiplier() * (pos.Close - pos.Open) * pos.Volume;
         }
 
         public static float OpenValue(this Position pos)

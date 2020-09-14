@@ -49,7 +49,9 @@ namespace MarketOps.System.Tests.Processor
             _slippage = SlippageUtils.CreateSusbstitute();
             _mmPositionCloseCalculator = Substitute.For<IMMPositionCloseCalculator>();
             _systemState = new SystemState() { Cash = InitialCash };
-            //TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, _signalGeneratorOnOpen, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
+
+            _slippage.CalculateOpen(default, default, default, default).ReturnsForAnyArgs(args => args.ArgAt<float>(3));
+            _slippage.CalculateClose(default, default, default, default).ReturnsForAnyArgs(args => args.ArgAt<float>(3));
 
             _dataDefinitionProvider.GetDataDefinition().Returns(
                 new SystemDataDefinition()
@@ -139,6 +141,21 @@ namespace MarketOps.System.Tests.Processor
             _systemState.PositionsClosed[0].Close.ShouldBe(expectedStopPrice);
             _systemState.PositionsClosed[0].TicksActive.ShouldBe(expectedClosedPositionTicks);
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
+            _systemState.Equity.Count.ShouldBe(PricesCount);
+            _systemState.Equity.First().Value.ShouldBe(InitialCash);
+            _systemState.Equity.Skip(1).All(x => x.Value == (InitialCash - expectedOpenPrice + expectedStopPrice)).ShouldBeTrue();
+            _systemState.LastProcessedTS.Equals(LastDate);
+        }
+
+        private void CheckPositionNotStopped(PositionDir expectedDir, float expectedOpenPrice, int expectedPositionTicks)
+        {
+            _systemState.Cash.ShouldBe(InitialCash - expectedOpenPrice);
+            _systemState.PositionsActive.Count.ShouldBe(1);
+            _systemState.PositionsActive[0].Direction.ShouldBe(expectedDir);
+            _systemState.PositionsActive[0].Open.ShouldBe(expectedOpenPrice);
+            _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
+            _systemState.PositionsClosed.Count.ShouldBe(0);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
@@ -321,14 +338,17 @@ namespace MarketOps.System.Tests.Processor
         [TestCase(PositionDir.Long, StartingPrice + PriceRange, true, StartingPrice, 3)]
         [TestCase(PositionDir.Long, StartingPrice + PriceRange + 1, true, StartingPrice, 3)]
         [TestCase(PositionDir.Long, StartingPrice - PriceRange, true, StartingPrice - PriceRange, 3)]
-        [TestCase(PositionDir.Long, StartingPrice - PriceRange - 1, false, 0, PricesCount)]
-        public void Process_StopHit(PositionDir positionDir, float stopPrice, bool expectedHit, float expectedStopPrice, int expectedClosedPositionTicks)
+        [TestCase(PositionDir.Long, StartingPrice - PriceRange - 1, false, 0, PricesCount + 1)]
+        [TestCase(PositionDir.Short, StartingPrice, true, StartingPrice, 3)]
+        [TestCase(PositionDir.Short, StartingPrice + PriceRange, true, StartingPrice + PriceRange, 3)]
+        public void Process_StopHit(PositionDir positionDir, float stopPrice, bool expectedHit, float expectedStopPrice, int expectedPositionTicks)
         {
-            _systemState.Open(LastDate.AddDays(-PricesCount - 1), positionDir, StartingPrice, new Signal() { Stock = _stock }, _slippage, _commission);
+            _systemState.Open(LastDate.AddDays(-PricesCount - 1), positionDir, StartingPrice, new Signal() { Stock = _stock, Volume = 1 }, _slippage, _commission);
             _mmPositionCloseCalculator
                 .WhenForAnyArgs(x => x.CalculateCloseMode(default, default))
                 .Do(args =>
                 {
+                    if (args.ArgAt<DateTime>(1) > LastDate.AddDays(-PricesCount + 1)) return;
                     Position pos = args.ArgAt<Position>(0);
                     pos.CloseMode = PositionCloseMode.OnStopHit;
                     pos.CloseModePrice = stopPrice;
@@ -337,19 +357,9 @@ namespace MarketOps.System.Tests.Processor
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, null, _commission, _slippage, _mmPositionCloseCalculator);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
-                CheckPositionStopped(positionDir, StartingPrice, expectedStopPrice, expectedClosedPositionTicks);
+                CheckPositionStopped(positionDir, StartingPrice, expectedStopPrice, expectedPositionTicks);
+            else
+                CheckPositionNotStopped(positionDir, StartingPrice, expectedPositionTicks);
         }
-
-        //[Test]
-        //public void Process_StopHit__ClosesPosition()
-        //{
-
-        //}
-
-        //[Test]
-        //public void Process_StopNotHit__PositionLeftOpen()
-        //{
-
-        //}
     }
 }

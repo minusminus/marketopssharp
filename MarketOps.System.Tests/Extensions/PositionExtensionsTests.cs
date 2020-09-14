@@ -16,6 +16,14 @@ namespace MarketOps.System.Tests.Extensions
             _testObj = new Position();
         }
 
+        [TestCase(PositionDir.Long, 1)]
+        [TestCase(PositionDir.Short, -1)]
+        public void DirectionMultiplier(PositionDir dir, float expected)
+        {
+            _testObj.Direction = dir;
+            _testObj.DirectionMultiplier().ShouldBe(expected);
+        }
+
         [TestCase(0, 0, 0)]
         [TestCase(10, 0, 0)]
         [TestCase(0, 10, 0)]

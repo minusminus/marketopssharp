@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using MarketOps.System.Interfaces;
 using System.Linq;
 using MarketOps.System.Tests.Mocks;
+using MarketOps.System.Extensions;
 
 namespace MarketOps.System.Tests.Processor
 {
@@ -14,8 +15,10 @@ namespace MarketOps.System.Tests.Processor
     public class SignalsProcessorTests
     {
         private readonly DateTime LastDate = DateTime.Now.Date;
-        private readonly int PricesCount = 10;
-        private readonly float InitialCash = 10000;
+        private const int PricesCount = 10;
+        private const float InitialCash = 10000;
+        private const float SignalPrice = 10;
+        private const int SignalVolume = 10;
 
         private static readonly StockDefinition _stock = new StockDefinition() { ID = 1 };
 
@@ -42,10 +45,10 @@ namespace MarketOps.System.Tests.Processor
         {
             var res = new SystemState() { Cash = InitialCash };
             res.Signals.AddRange(new List<Signal>() {
-                new Signal() { Stock = _stock, Direction = PositionDir.Long, Price = 10, Volume = 10, ReversePosition = false },
-                new Signal() { Stock = _stock, Direction = PositionDir.Short, Price = 10, Volume = 10, ReversePosition = false },
-                new Signal() { Stock = _stock, Direction = PositionDir.Long, Price = 10, Volume = 10, ReversePosition = true },
-                new Signal() { Stock = _stock, Direction = PositionDir.Short, Price = 10, Volume = 10, ReversePosition = true },
+                new Signal() { Stock = _stock, Direction = PositionDir.Long, Price = SignalPrice, Volume = SignalVolume, ReversePosition = false },
+                new Signal() { Stock = _stock, Direction = PositionDir.Short, Price = SignalPrice, Volume = SignalVolume, ReversePosition = false },
+                new Signal() { Stock = _stock, Direction = PositionDir.Long, Price = SignalPrice, Volume = SignalVolume, ReversePosition = true },
+                new Signal() { Stock = _stock, Direction = PositionDir.Short, Price = SignalPrice, Volume = SignalVolume, ReversePosition = true },
             });
             return res;
         }
@@ -91,7 +94,7 @@ namespace MarketOps.System.Tests.Processor
             CheckProcessResult(equity, true, true, 4, 1, 0);
             equity.Signals.Contains(openSignal).ShouldBeTrue();
             CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash - (openSignal.Price * openSignal.Volume));
+            equity.Cash.ShouldBe(InitialCash - equity.PositionsActive[0].DirectionMultiplier() * (openSignal.Price * openSignal.Volume));
         }
 
         public void TestReversePosition(PositionDir activePosDir, PositionDir expectedOpenedPosDir)
@@ -181,7 +184,7 @@ namespace MarketOps.System.Tests.Processor
             CheckProcessResult(equity, true, true, 4, 2, 0);
             CheckPositionsActive(equity, 0, openSignal[0], openSignal[0].Direction, openSignal[0].Price, openSignal[0].Volume, LastDate);
             CheckPositionsActive(equity, 1, openSignal[1], openSignal[1].Direction, openSignal[1].Price, openSignal[1].Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash - (openSignal[0].Price * openSignal[0].Volume) - (openSignal[1].Price * openSignal[1].Volume));
+            equity.Cash.ShouldBe(InitialCash - (openSignal[0].Price * openSignal[0].Volume) + (openSignal[1].Price * openSignal[1].Volume));
         }
     }
 }

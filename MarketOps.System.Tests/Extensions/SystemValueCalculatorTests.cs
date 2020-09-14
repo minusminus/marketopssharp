@@ -64,30 +64,32 @@ namespace MarketOps.System.Tests.Extensions
             _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
         }
 
-        [Test]
-        public void Calc_WithActivePosition__ReturnsCashAndPositionValue()
+        [TestCase(PositionDir.Long)]
+        [TestCase(PositionDir.Short)]
+        public void Calc_WithActivePosition__ReturnsCashAndPositionValue(PositionDir dir)
         {
             _testSys.PositionsActive.Add(new Position()
             {
                 Stock = new StockDefinition(),
-                Direction = PositionDir.Long,
+                Direction = dir,
                 Volume = Vol
             });
-            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + PriceL * Vol);
+            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + dir.DirectionMultiplier() * PriceL * Vol);
         }
 
-        [Test]
-        public void Calc_WithTwoActivePositions__ReturnsCashAndPositionsValue()
+        [TestCase(PositionDir.Long)]
+        [TestCase(PositionDir.Short)]
+        public void Calc_WithTwoActivePositions__ReturnsCashAndPositionsValue(PositionDir dir)
         {
             const int posCount = 2;
             for (int i = 0; i < posCount; i++)
                 _testSys.PositionsActive.Add(new Position()
                 {
                     Stock = new StockDefinition(),
-                    Direction = PositionDir.Long,
+                    Direction = dir,
                     Volume = Vol
                 });
-            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + (PriceL * Vol) * posCount);
+            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + (dir.DirectionMultiplier() * PriceL * Vol) * posCount);
         }
     }
 }

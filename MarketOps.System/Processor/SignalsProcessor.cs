@@ -68,7 +68,7 @@ namespace MarketOps.System.Processor
             int currPos = systemState.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
             if (currPos > -1)
             {
-                newPosDir = systemState.PositionsActive[currPos].Direction == PositionDir.Long ? PositionDir.Short : PositionDir.Long;
+                newPosDir = systemState.PositionsActive[currPos].ReverseDirection();
                 systemState.Close(currPos, ts, openPrice, _slippage, _commission);
             }
             systemState.Open(ts, newPosDir, openPrice, signal, _slippage, _commission);

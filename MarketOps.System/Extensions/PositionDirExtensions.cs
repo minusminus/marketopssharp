@@ -9,5 +9,10 @@
         {
             return postionDir == PositionDir.Long ? 1 : -1;
         }
+
+        public static PositionDir ReverseDirection(this PositionDir postionDir)
+        {
+            return postionDir == PositionDir.Long ? PositionDir.Short : PositionDir.Long;
+        }
     }
 }

@@ -111,7 +111,7 @@ namespace MarketOps.System.Tests.Processor
             equity.Signals.Contains(openSignal).ShouldBeTrue();
             CheckPositionsClosed(equity, 0, activePosDir, openSignal.Price, activePosition.Volume, LastDate);
             CheckPositionsActive(equity, 0, openSignal, expectedOpenedPosDir, openSignal.Price, openSignal.Volume, LastDate);
-            equity.Cash.ShouldBe(InitialCash + (openSignal.Price * activePosition.Volume) - (openSignal.Price * openSignal.Volume));
+            equity.Cash.ShouldBe(InitialCash + activePosition.DirectionMultiplier() * (openSignal.Price * activePosition.Volume) - expectedOpenedPosDir.DirectionMultiplier() * (openSignal.Price * openSignal.Volume));
         }
 
         [Test]

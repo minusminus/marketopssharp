@@ -13,5 +13,12 @@ namespace MarketOps.System.Tests.Extensions
         {
             dir.DirectionMultiplier().ShouldBe(expected);
         }
+
+        [TestCase(PositionDir.Long, PositionDir.Short)]
+        [TestCase(PositionDir.Short, PositionDir.Long)]
+        public void ReverseDirection(PositionDir dir, PositionDir expected)
+        {
+            dir.ReverseDirection().ShouldBe(expected);
+        }
     }
 }

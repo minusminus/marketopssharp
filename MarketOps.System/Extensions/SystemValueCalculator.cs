@@ -22,7 +22,7 @@ namespace MarketOps.System.Extensions
             {
                 StockPricesData prices = dataLoader.Get(p.Stock.Name, p.DataRange, p.IntradayInterval, ts, ts);
                 int ix = prices.FindByTS(ts);
-                return prices.C[ix] * p.Volume;
+                return p.DirectionMultiplier() * prices.C[ix] * p.Volume;
             });
         }
     }

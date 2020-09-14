@@ -7,7 +7,12 @@
     {
         public static float DirectionMultiplier(this Position pos)
         {
-            return pos.DirectionMultiplier();
+            return pos.Direction.DirectionMultiplier();
+        }
+
+        public static PositionDir ReverseDirection(this Position pos)
+        {
+            return pos.Direction.ReverseDirection();
         }
 
         public static float Value(this Position pos)

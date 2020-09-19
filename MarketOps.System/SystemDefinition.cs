@@ -1,4 +1,5 @@
-﻿using MarketOps.System.Interfaces;
+﻿using MarketOps.StockData.Types;
+using MarketOps.System.Interfaces;
 
 namespace MarketOps.System
 {
@@ -21,5 +22,6 @@ namespace MarketOps.System
         public ICommission Commission { get => _commission; }
         public ISlippage Slippage { get => _slippage; }
         public IMMPositionCloseCalculator MMPositionCloseCalculator { get => _mmPositionCloseCalculator; }
+        public readonly MOParams SystemParams = new MOParams();
     }
 }

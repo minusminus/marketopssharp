@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using MarketOps.Controls.Types;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.Controls.PriceChart
@@ -14,11 +13,11 @@ namespace MarketOps.Controls.PriceChart
         public bool Execute(StockStat stat)
         {
             SetCaption(stat.Name);
-            LoadStatParams(stat.StatParams);
+            dgvParams.LoadStatParams(stat.StatParams);
             LoadStatDataColors(stat);
             if (ShowDialog() == DialogResult.OK)
             {
-                SaveStatParams(stat.StatParams);
+                dgvParams.SaveStatParams(stat.StatParams);
                 SaveStatDataColors(stat);
                 return true;
             }
@@ -28,22 +27,6 @@ namespace MarketOps.Controls.PriceChart
         private void SetCaption(string statName)
         {
             Text = $"{statName} parameters";
-        }
-
-        private void LoadStatParams(StockStatParams statParams)
-        {
-            foreach (var param in statParams)
-                srcParams.Add(new StockStatParamEditMapper(param.Clone()));
-        }
-
-        private void SaveStatParams(StockStatParams statParams)
-        {
-            var list = srcParams.GetEnumerator();
-            while (list.MoveNext())
-            {
-                StockStatParamEditMapper paramMapper = (StockStatParamEditMapper)list.Current;
-                statParams.Get(paramMapper.Name).ValueString = paramMapper.Value;
-            }
         }
 
         private void LoadStatDataColors(StockStat stat)

@@ -3,11 +3,11 @@
 namespace MarketOps.StockData.Types
 {
     /// <summary>
-    /// Statistics parameter with integer value
+    /// Parameter with float value
     /// </summary>
-    public class StockStatParamInt : StockStatParam
+    public class MOParamFloat : MOParam
     {
-        public override StockStatParam Clone() => new StockStatParamInt
+        public override MOParam Clone() => new MOParamFloat
         {
             Name = this.Name,
             Value = this.Value
@@ -15,7 +15,7 @@ namespace MarketOps.StockData.Types
 
         protected override void SetValueString(string value)
         {
-            Value = Convert.ToInt32(value);
+            Value = Convert.ToSingle(value);
         }
     }
 }

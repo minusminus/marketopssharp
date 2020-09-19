@@ -53,11 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MOParamsExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockPricesDataFindByTSTests.cs" />
     <Compile Include="StockPricesDataMergerTests.cs" />
     <Compile Include="StockPricesDataTests.cs" />
-    <Compile Include="StockStatParamsTests.cs" />
+    <Compile Include="MOParamsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -27,8 +27,8 @@ namespace MarketOps.Stats.Stats
 
         protected override void InitializeStatParams()
         {
-            _statParams.Set(StatBBParams.Period, new StockStatParamInt() { Name = StatBBParams.Period, Value = 20 });
-            _statParams.Set(StatBBParams.SigmaWidth, new StockStatParamFloat() { Name = StatBBParams.SigmaWidth, Value = 2.0f });
+            _statParams.Set(StatBBParams.Period, 20);
+            _statParams.Set(StatBBParams.SigmaWidth, 2.0f);
         }
 
         protected override int GetBackBufferLength()

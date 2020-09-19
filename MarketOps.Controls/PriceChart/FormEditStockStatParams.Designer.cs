@@ -28,51 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.dbgParams = new System.Windows.Forms.DataGridView();
-            this.ParamName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ParamValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcParams = new System.Windows.Forms.BindingSource(this.components);
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.pnlTblLayoutColors = new System.Windows.Forms.TableLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.dbgParams)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcParams)).BeginInit();
+            this.dgvParams = new MarketOps.Controls.StockData.MOParamsEditor();
             this.pnlButtons.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dbgParams
-            // 
-            this.dbgParams.AllowUserToAddRows = false;
-            this.dbgParams.AllowUserToDeleteRows = false;
-            this.dbgParams.AutoGenerateColumns = false;
-            this.dbgParams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dbgParams.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ParamName,
-            this.ParamValue});
-            this.dbgParams.DataSource = this.srcParams;
-            this.dbgParams.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dbgParams.Location = new System.Drawing.Point(0, 0);
-            this.dbgParams.Name = "dbgParams";
-            this.dbgParams.Size = new System.Drawing.Size(424, 272);
-            this.dbgParams.TabIndex = 0;
-            // 
-            // ParamName
-            // 
-            this.ParamName.DataPropertyName = "Name";
-            this.ParamName.HeaderText = "Name";
-            this.ParamName.Name = "ParamName";
-            this.ParamName.ReadOnly = true;
-            this.ParamName.Width = 150;
-            // 
-            // ParamValue
-            // 
-            this.ParamValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.ParamValue.DataPropertyName = "Value";
-            this.ParamValue.HeaderText = "Value";
-            this.ParamValue.Name = "ParamValue";
             // 
             // pnlButtons
             // 
@@ -126,6 +89,14 @@
             this.pnlTblLayoutColors.Size = new System.Drawing.Size(424, 38);
             this.pnlTblLayoutColors.TabIndex = 3;
             // 
+            // dgvParams
+            // 
+            this.dgvParams.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvParams.Location = new System.Drawing.Point(0, 0);
+            this.dgvParams.Name = "dgvParams";
+            this.dgvParams.Size = new System.Drawing.Size(424, 199);
+            this.dgvParams.TabIndex = 4;
+            // 
             // FormEditStockStatParams
             // 
             this.AcceptButton = this.btnOk;
@@ -133,9 +104,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(424, 272);
+            this.Controls.Add(this.dgvParams);
             this.Controls.Add(this.pnlTblLayoutColors);
             this.Controls.Add(this.pnlButtons);
-            this.Controls.Add(this.dbgParams);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -143,23 +114,17 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit stat parameters";
-            ((System.ComponentModel.ISupportInitialize)(this.dbgParams)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcParams)).EndInit();
             this.pnlButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dbgParams;
         private System.Windows.Forms.Panel pnlButtons;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.BindingSource srcParams;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ParamName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ParamValue;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.TableLayoutPanel pnlTblLayoutColors;
+        private StockData.MOParamsEditor dgvParams;
     }
 }

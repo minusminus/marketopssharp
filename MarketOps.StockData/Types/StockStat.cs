@@ -14,7 +14,7 @@ namespace MarketOps.StockData.Types
         protected float[][] _data;
         protected Color[] _dataColors;
         protected string[] _dataNames;
-        protected readonly StockStatParams _statParams = new StockStatParams();
+        protected readonly MOParams _statParams = new MOParams();
 
         public string UID => _uid;
         public string Name => _name;
@@ -23,7 +23,7 @@ namespace MarketOps.StockData.Types
         public Color[] DataColor => _dataColors;
         public string DataName(int index) => _dataNames[index];
         public string ChartArea => _chartArea;
-        public StockStatParams StatParams => _statParams;
+        public MOParams StatParams => _statParams;
         public int BackBufferLength => GetBackBufferLength();
 
         public StockStat(string chartArea)

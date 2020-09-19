@@ -31,7 +31,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
 
             _stock = _dataProvider.GetStockDefinition(stockName);
             _statSMA = new StatSMA("")
-                .SetParam(StatSMAParams.Period, new StockStatParamInt() { Value = _smaPeriod });
+                .SetParam(StatSMAParams.Period, new MOParamInt() { Value = _smaPeriod });
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()

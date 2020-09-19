@@ -1,4 +1,5 @@
-﻿using MarketOps.StockData.Interfaces;
+﻿using MarketOps.StockData.Extensions;
+using MarketOps.StockData.Interfaces;
 using MarketOps.System;
 using MarketOps.System.Interfaces;
 using System;
@@ -24,6 +25,9 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
             _commission = null;
             _slippage = null;
             _mmPositionCloseCalculator = null;
+
+            SystemParams.Set(PriceCrossingSMAParams.StockName, "");
+            SystemParams.Set(PriceCrossingSMAParams.SMAPeriod, 20);
         }
     }
 }

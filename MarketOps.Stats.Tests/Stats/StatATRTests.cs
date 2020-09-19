@@ -23,7 +23,7 @@ namespace MarketOps.Stats.Tests.Stats
         {
             const int periodValue = 125;
             StatATR testObj = new StatATR("");
-            testObj.StatParams.Set(StatATRParams.Period, new StockStatParamInt() { Value = periodValue });
+            testObj.StatParams.Set(StatATRParams.Period, periodValue);
             testObj.BackBufferLength.ShouldBe(periodValue);
         }
     }

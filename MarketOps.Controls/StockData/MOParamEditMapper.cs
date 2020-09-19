@@ -1,15 +1,15 @@
 ﻿using MarketOps.StockData.Types;
 
-namespace MarketOps.Controls.Types
+namespace MarketOps.Controls.StockData
 {
     /// <summary>
-    /// Maping StockStatParam to enable edit in DatGridView
+    /// Mapping MOParam to enable edit in DatGridView
     /// </summary>
-    internal class StockStatParamEditMapper
+    internal class MOParamEditMapper
     {
-        private readonly StockStatParam _statParam;
+        private readonly MOParam _statParam;
 
-        public StockStatParamEditMapper(StockStatParam statParam)
+        public MOParamEditMapper(MOParam statParam)
         {
             _statParam = statParam;
         }

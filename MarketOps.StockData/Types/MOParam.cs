@@ -1,9 +1,9 @@
 ﻿namespace MarketOps.StockData.Types
 {
     /// <summary>
-    /// Statistics parameter definition
+    /// Parameter definition
     /// </summary>
-    public abstract class StockStatParam
+    public abstract class MOParam
     {
         public string Name;
         public object Value;
@@ -16,6 +16,6 @@
 
         protected abstract void SetValueString(string value);
 
-        public abstract StockStatParam Clone();
+        public abstract MOParam Clone();
     }
 }

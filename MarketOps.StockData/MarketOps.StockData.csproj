@@ -45,9 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataFormatting.cs" />
+    <Compile Include="Extensions\MOParamsExtensions.cs" />
     <Compile Include="Extensions\StockDefinitionExtensions.cs" />
     <Compile Include="Extensions\StockStatExtensions.cs" />
-    <Compile Include="Extensions\StockStatParamExtensions.cs" />
+    <Compile Include="Extensions\MOParamExtensions.cs" />
     <Compile Include="Interfaces\IDataGenProvider.cs" />
     <Compile Include="Interfaces\IDataPumpProvider.cs" />
     <Compile Include="Interfaces\IStockDataProvider.cs" />
@@ -61,11 +62,11 @@
     <Compile Include="Types\StockDisplayData.cs" />
     <Compile Include="Types\StockPricesData.cs" />
     <Compile Include="Types\StockStat.cs" />
-    <Compile Include="Types\StockStatParam.cs" />
-    <Compile Include="Types\StockStatParamFloat.cs" />
-    <Compile Include="Types\StockStatParamInt.cs" />
-    <Compile Include="Types\StockStatParams.cs" />
-    <Compile Include="Types\StockStatParamString.cs" />
+    <Compile Include="Types\MOParam.cs" />
+    <Compile Include="Types\MOParamFloat.cs" />
+    <Compile Include="Types\MOParamInt.cs" />
+    <Compile Include="Types\MOParams.cs" />
+    <Compile Include="Types\MOParamString.cs" />
     <Compile Include="Types\StockType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

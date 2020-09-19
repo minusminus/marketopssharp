@@ -9,7 +9,7 @@ namespace MarketOps.StockData.Extensions
     {
         public static string ChartSeriesName(this StockStat stat, int seriesIndex) => $"{stat.UID}_{seriesIndex}";
 
-        public static StockStat SetParam(this StockStat stat, string paramName, StockStatParam paramValue)
+        public static StockStat SetParam(this StockStat stat, string paramName, MOParam paramValue)
         {
             stat.StatParams.Set(paramName, paramValue);
             return stat;

@@ -20,10 +20,10 @@ namespace MarketOps
 
         public string GetStatHeader(StockStat stat) => $"{stat.Name}({GetStatHeaderParams(stat.StatParams)})";
 
-        private string GetStatHeaderParams(StockStatParams statParams)
+        private string GetStatHeaderParams(MOParams statParams)
         {
             List<string> values = new List<string>();
-            foreach (StockStatParam param in statParams)
+            foreach (MOParam param in statParams)
                 values.Add(param.Value.ToString());
             return string.Join(",", values);
         }

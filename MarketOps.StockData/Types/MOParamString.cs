@@ -1,11 +1,11 @@
 ﻿namespace MarketOps.StockData.Types
 {
     /// <summary>
-    /// Statistics parameter with string value
+    /// Parameter with string value
     /// </summary>
-    public class StockStatParamString : StockStatParam
+    public class MOParamString : MOParam
     {
-        public override StockStatParam Clone() => new StockStatParamString
+        public override MOParam Clone() => new MOParamString
         {
             Name = this.Name,
             Value = this.Value

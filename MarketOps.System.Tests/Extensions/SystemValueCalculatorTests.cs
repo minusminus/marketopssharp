@@ -12,7 +12,7 @@ namespace MarketOps.System.Tests.Extensions
     public class SystemValueCalculatorTests
     {
         private SystemValueCalculator _testObj;
-        private IDataLoader _dataLoader;
+        private ISystemDataLoader _dataLoader;
         private SystemState _testSys;
         private StockPricesData _stockPrices;
 
@@ -25,7 +25,7 @@ namespace MarketOps.System.Tests.Extensions
         [SetUp]
         public void SetUp()
         {
-            _dataLoader = Substitute.For<IDataLoader>();
+            _dataLoader = Substitute.For<ISystemDataLoader>();
             _testSys = new SystemState() { Cash = CashValue };
             _stockPrices = new StockPricesData(1);
             _testObj = new SystemValueCalculator();

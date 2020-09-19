@@ -77,10 +77,12 @@
     <Compile Include="Slippage\SlippageNone.cs" />
     <Compile Include="Slippage\SlippageTicks.cs" />
     <Compile Include="SystemDataDefinition.cs" />
+    <Compile Include="SystemDefinition.cs" />
+    <Compile Include="SystemRunner.cs" />
     <Compile Include="SystemState.cs" />
     <Compile Include="Extensions\SystemStateExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />
-    <Compile Include="Interfaces\IDataLoader.cs" />
+    <Compile Include="Interfaces\ISystemDataLoader.cs" />
     <Compile Include="Interfaces\ITickAligner.cs" />
     <Compile Include="GPW\GPWTickOps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

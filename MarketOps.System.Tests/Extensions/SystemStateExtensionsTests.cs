@@ -15,7 +15,7 @@ namespace MarketOps.System.Tests.Extensions
         private StockDefinition _stock;
         private StockDefinition _stock2;
         private StockPricesData _stockPrices;
-        private IDataLoader _dataLoader;
+        private ISystemDataLoader _dataLoader;
         private ICommission _commission;
         private ISlippage _slippage;
 
@@ -37,7 +37,7 @@ namespace MarketOps.System.Tests.Extensions
             _stock2 = new StockDefinition();
             _testObj = new SystemState() { Cash = CashValue };
             _stockPrices = new StockPricesData(1);
-            _dataLoader = DataLoaderUtils.CreateSubstitute(_stockPrices);
+            _dataLoader = SystemDataLoaderUtils.CreateSubstitute(_stockPrices);
             _commission = CommissionUtils.CreateSubstitute(Commission);
             _slippage = SlippageUtils.CreateSusbstitute();
         }

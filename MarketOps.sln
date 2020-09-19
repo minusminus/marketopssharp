@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.System", "MarketO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.System.Tests", "MarketOps.System.Tests\MarketOps.System.Tests.csproj", "{DC560836-DC1A-4AFA-B405-5D1D04F6050E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SignalGenerators", "MarketOps.SignalGenerators\MarketOps.SignalGenerators.csproj", "{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemDefs", "MarketOps.SignalGenerators\MarketOps.SystemDefs.csproj", "{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

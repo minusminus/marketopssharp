@@ -4,9 +4,9 @@ using MarketOps.StockData.Types;
 namespace MarketOps.System.Interfaces
 {
     /// <summary>
-    /// Interface for stock data loading.
+    /// Interface for systme processing stock data loading.
     /// </summary>
-    public interface IDataLoader
+    public interface ISystemDataLoader
     {
         StockPricesData Get(string stockName, StockDataRange dataRange, int intradayInterval, DateTime tsFrom, DateTime tsTo);
     }

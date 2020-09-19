@@ -12,9 +12,9 @@ namespace MarketOps.System.Processor
     internal class StocksDataPreloader
     {
         private readonly IStockDataProvider _dataProvider;
-        private readonly IDataLoader _dataLoader;
+        private readonly ISystemDataLoader _dataLoader;
 
-        public StocksDataPreloader(IStockDataProvider dataProvider, IDataLoader dataLoader)
+        public StocksDataPreloader(IStockDataProvider dataProvider, ISystemDataLoader dataLoader)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;

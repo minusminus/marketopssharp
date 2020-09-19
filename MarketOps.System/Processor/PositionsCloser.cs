@@ -11,11 +11,11 @@ namespace MarketOps.System.Processor
     /// </summary>
     internal class PositionsCloser
     {
-        private readonly IDataLoader _dataLoader;
+        private readonly ISystemDataLoader _dataLoader;
         private readonly ICommission _commission;
         private readonly ISlippage _slippage;
 
-        public PositionsCloser(IDataLoader dataLoader, ICommission commission, ISlippage slippage)
+        public PositionsCloser(ISystemDataLoader dataLoader, ICommission commission, ISlippage slippage)
         {
             _dataLoader = dataLoader;
             _commission = commission;

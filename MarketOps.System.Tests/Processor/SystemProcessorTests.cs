@@ -26,7 +26,7 @@ namespace MarketOps.System.Tests.Processor
         private static readonly StockStatMock _stockStatMock = new StockStatMock("", 0);
 
         private IStockDataProvider _dataProvider;
-        private IDataLoader _dataLoader;
+        private ISystemDataLoader _dataLoader;
         private ISystemDataDefinitionProvider _dataDefinitionProvider;
         private ISignalGeneratorOnOpen _signalGeneratorOnOpen;
         private ISignalGeneratorOnClose _signalGeneratorOnClose;
@@ -41,7 +41,7 @@ namespace MarketOps.System.Tests.Processor
         public void SetUp()
         {
             _dataProvider = StockDataProviderUtils.CreateSubstitute(DateTime.MinValue);
-            _dataLoader = DataLoaderUtils.CreateSubstituteWithConstantPriceInRange(PricesCount, StartingPrice, PriceRange, LastDate);
+            _dataLoader = SystemDataLoaderUtils.CreateSubstituteWithConstantPriceInRange(PricesCount, StartingPrice, PriceRange, LastDate);
             _dataDefinitionProvider = Substitute.For<ISystemDataDefinitionProvider>();
             _signalGeneratorOnOpen = Substitute.For<ISignalGeneratorOnOpen>();
             _signalGeneratorOnClose = Substitute.For<ISignalGeneratorOnClose>();

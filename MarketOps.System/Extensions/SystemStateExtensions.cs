@@ -65,7 +65,7 @@ namespace MarketOps.System.Extensions
                 systemState.Close(0, ts, price, slippage, commission);
         }
 
-        public static void CalcCurrentValue(this SystemState systemState, DateTime ts, IDataLoader dataLoader)
+        public static void CalcCurrentValue(this SystemState systemState, DateTime ts, ISystemDataLoader dataLoader)
         {
             systemState.Equity.Add(new SystemValue()
             {

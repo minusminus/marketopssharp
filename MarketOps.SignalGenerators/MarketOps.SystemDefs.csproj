@@ -43,7 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PriceCrossingSMA.cs" />
+    <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
+    <Compile Include="PriceCrossingSMA\SignalsPriceCrossingSMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

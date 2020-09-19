@@ -8,21 +8,21 @@ namespace MarketOps.System.Tests.Mocks
     /// <summary>
     /// Utils for IDataLoader mock.
     /// </summary>
-    internal static class DataLoaderUtils
+    internal static class SystemDataLoaderUtils
     {
-        public static IDataLoader CreateSubstitute(StockPricesData pricesData)
+        public static ISystemDataLoader CreateSubstitute(StockPricesData pricesData)
         {
-            IDataLoader dataLoader = Substitute.For<IDataLoader>();
+            ISystemDataLoader dataLoader = Substitute.For<ISystemDataLoader>();
             dataLoader.Get(default, default, default, default, default).ReturnsForAnyArgs(pricesData);
             return dataLoader;
         }
 
-        public static IDataLoader CreateSubstitute(int pricesCount, DateTime lastDate)
+        public static ISystemDataLoader CreateSubstitute(int pricesCount, DateTime lastDate)
         {
             return CreateSubstituteWithStartingPrice(pricesCount, 0, lastDate);
         }
 
-        public static IDataLoader CreateSubstituteWithStartingPrice(int pricesCount, float startingPrice, DateTime lastDate)
+        public static ISystemDataLoader CreateSubstituteWithStartingPrice(int pricesCount, float startingPrice, DateTime lastDate)
         {
             StockPricesData pricesData = new StockPricesData(pricesCount);
             for (int i = 0; i < pricesData.Length; i++)
@@ -36,7 +36,7 @@ namespace MarketOps.System.Tests.Mocks
             return CreateSubstitute(pricesData);
         }
 
-        public static IDataLoader CreateSubstituteWithConstantPrice(int pricesCount, float price, DateTime lastDate)
+        public static ISystemDataLoader CreateSubstituteWithConstantPrice(int pricesCount, float price, DateTime lastDate)
         {
             StockPricesData pricesData = new StockPricesData(pricesCount);
             for (int i = 0; i < pricesData.Length; i++)
@@ -50,7 +50,7 @@ namespace MarketOps.System.Tests.Mocks
             return CreateSubstitute(pricesData);
         }
 
-        public static IDataLoader CreateSubstituteWithConstantPriceInRange(int pricesCount, float price, float priceRange, DateTime lastDate)
+        public static ISystemDataLoader CreateSubstituteWithConstantPriceInRange(int pricesCount, float price, float priceRange, DateTime lastDate)
         {
             StockPricesData pricesData = new StockPricesData(pricesCount);
             for (int i = 0; i < pricesData.Length; i++)
@@ -64,7 +64,7 @@ namespace MarketOps.System.Tests.Mocks
             return CreateSubstitute(pricesData);
         }
 
-        public static IDataLoader CreateSubstitute(int pricesCount, float price, DateTime ts)
+        public static ISystemDataLoader CreateSubstitute(int pricesCount, float price, DateTime ts)
         {
             StockPricesData pricesData = new StockPricesData(pricesCount);
             for (int i = 0; i < pricesData.Length; i++)

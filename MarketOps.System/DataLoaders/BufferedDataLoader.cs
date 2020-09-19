@@ -12,7 +12,7 @@ namespace MarketOps.System.DataLoaders
     /// 
     /// Each get resizes buffered data to fit required boundaries.
     /// </summary>
-    internal class BufferedDataLoader : IDataLoader
+    internal class BufferedDataLoader : ISystemDataLoader
     {
         private readonly IStockDataProvider _dataProvider;
         private readonly Dictionary<string, StockPricesData> _buffer = new Dictionary<string, StockPricesData>();

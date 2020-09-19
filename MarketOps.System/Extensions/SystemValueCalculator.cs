@@ -11,12 +11,12 @@ namespace MarketOps.System.Extensions
     /// </summary>
     internal class SystemValueCalculator
     {
-        public float Calc(SystemState system, DateTime ts, IDataLoader dataLoader)
+        public float Calc(SystemState system, DateTime ts, ISystemDataLoader dataLoader)
         {
             return CalcActive(system, ts, dataLoader) + system.Cash;
         }
 
-        private float CalcActive(SystemState system, DateTime ts, IDataLoader dataLoader)
+        private float CalcActive(SystemState system, DateTime ts, ISystemDataLoader dataLoader)
         {
             return system.PositionsActive.Sum(p =>
             {

@@ -19,7 +19,7 @@ namespace MarketOps.System.Tests.Processor
         private StocksDataPreloader TestObj;
 
         private IStockDataProvider _dataProvider;
-        private IDataLoader _dataLoader;
+        private ISystemDataLoader _dataLoader;
         private StockStatMock _stat;
 
         private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition()
@@ -40,7 +40,7 @@ namespace MarketOps.System.Tests.Processor
         public void SetUp()
         {
             _dataProvider = StockDataProviderUtils.CreateSubstitute(DateTime.MinValue);
-            _dataLoader = DataLoaderUtils.CreateSubstitute(2 * BackBufRange, BackBufRange, DateTime.Now.Date);
+            _dataLoader = SystemDataLoaderUtils.CreateSubstitute(2 * BackBufRange, BackBufRange, DateTime.Now.Date);
             TestObj = new StocksDataPreloader(_dataProvider, _dataLoader);
 
             _stat = new StockStatMock("", BackBufRange);

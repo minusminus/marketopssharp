@@ -12,11 +12,11 @@ namespace MarketOps.System.Processor
     /// </summary>
     internal class SignalsProcessor
     {
-        private readonly IDataLoader _dataLoader;
+        private readonly ISystemDataLoader _dataLoader;
         private readonly ICommission _commission;
         private readonly ISlippage _slippage;
 
-        public SignalsProcessor(IDataLoader dataLoader, ICommission commission, ISlippage slippage)
+        public SignalsProcessor(ISystemDataLoader dataLoader, ICommission commission, ISlippage slippage)
         {
             _dataLoader = dataLoader;
             _commission = commission;

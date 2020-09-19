@@ -23,7 +23,7 @@ namespace MarketOps.System.Tests.Processor
         private static readonly StockDefinition _stock = new StockDefinition() { ID = 1 };
 
         private SignalsProcessor TestObj;
-        private IDataLoader _dataLoader;
+        private ISystemDataLoader _dataLoader;
         private ICommission _commission;
         private ISlippage _slippage;
 
@@ -33,7 +33,7 @@ namespace MarketOps.System.Tests.Processor
         [SetUp]
         public void SetUp()
         {
-            _dataLoader = DataLoaderUtils.CreateSubstitute(PricesCount, LastDate);
+            _dataLoader = SystemDataLoaderUtils.CreateSubstitute(PricesCount, LastDate);
             _commission = CommissionUtils.CreateSubstitute();
             _slippage = SlippageUtils.CreateSusbstitute();
             TestObj = new SignalsProcessor(_dataLoader, _commission, _slippage);

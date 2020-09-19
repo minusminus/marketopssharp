@@ -7,29 +7,27 @@ using MarketOps.StockData.Extensions;
 using MarketOps.Stats.Stats;
 using MarketOps.StockData.Interfaces;
 
-namespace MarketOps.SignalGenerators
+namespace MarketOps.SystemDefs.PriceCrossingSMA
 {
     /// <summary>
     /// Signal on price crossing sma up or down.
     /// </summary>
-    public class PriceCrossingSMA : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
+    internal class SignalsPriceCrossingSMA : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private readonly StockDataRange _dataRange;
         private readonly int _smaPeriod;
-        private readonly IDataLoader _dataLoader;
+        private readonly ISystemDataLoader _dataLoader;
         private readonly IStockDataProvider _dataProvider;
-        private readonly ITickAligner _tickAligner;
 
         private readonly StockDefinition _stock;
         private readonly StockStat _statSMA;
 
-        public PriceCrossingSMA(string stockName, StockDataRange dataRange, int smaPeriod, IDataLoader dataLoader, IStockDataProvider dataProvider, ITickAligner tickAligner)
+        public SignalsPriceCrossingSMA(string stockName, StockDataRange dataRange, int smaPeriod, ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
         {
             _dataRange = dataRange;
             _smaPeriod = smaPeriod;
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
-            _tickAligner = tickAligner;
 
             _stock = _dataProvider.GetStockDefinition(stockName);
             _statSMA = new StatSMA("")

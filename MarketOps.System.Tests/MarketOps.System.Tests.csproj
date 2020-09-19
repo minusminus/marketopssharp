@@ -70,7 +70,7 @@
     <Compile Include="DataLoaders\BufferedDataLoaderTests.cs" />
     <Compile Include="Extensions\PositionDirExtensionsTests.cs" />
     <Compile Include="Mocks\CommissionUtils.cs" />
-    <Compile Include="Mocks\DataLoaderUtils.cs" />
+    <Compile Include="Mocks\SystemDataLoaderUtils.cs" />
     <Compile Include="Extensions\MoneyValueExtensionsTests.cs" />
     <Compile Include="Extensions\PositionExtensionsTests.cs" />
     <Compile Include="Extensions\SystemStateExtensionsTests.cs" />

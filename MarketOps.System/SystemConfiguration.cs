@@ -5,7 +5,7 @@ namespace MarketOps.System
     /// <summary>
     /// System configuration data.
     /// </summary>
-    public class SystemConfiguration
+    internal class SystemConfiguration
     {
         public DateTime tsFrom;
         public DateTime tsTo;

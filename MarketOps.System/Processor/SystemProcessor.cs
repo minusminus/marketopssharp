@@ -13,7 +13,7 @@ namespace MarketOps.System.Processor
     internal class SystemProcessor
     {
         private readonly IStockDataProvider _dataProvider;
-        private readonly IDataLoader _dataLoader;
+        private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemDataDefinitionProvider _dataDefinitionProvider;
         private readonly ISignalGeneratorOnOpen _signalGeneratorOnOpen;
         private readonly ISignalGeneratorOnClose _signalGeneratorOnClose;
@@ -25,7 +25,7 @@ namespace MarketOps.System.Processor
 
         public SystemProcessor(
             IStockDataProvider dataProvider,
-            IDataLoader dataLoader,
+            ISystemDataLoader dataLoader,
             ISystemDataDefinitionProvider dataDefinitionProvider,
             ISignalGeneratorOnOpen signalGeneratorOnOpen,
             ISignalGeneratorOnClose signalGeneratorOnClose,

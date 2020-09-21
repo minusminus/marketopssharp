@@ -21,6 +21,8 @@ namespace MarketOps.System
 
         public void Run(SystemDefinition systemDefinition, SystemState systemState, DateTime tsFrom, DateTime tsTo)
         {
+            systemDefinition.Prepare();
+
             SystemProcessor processor = new SystemProcessor(
                 _dataProvider,
                 _dataLoader,

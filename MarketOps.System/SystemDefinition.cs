@@ -23,5 +23,7 @@ namespace MarketOps.System
         public ISlippage Slippage { get => _slippage; }
         public IMMPositionCloseCalculator MMPositionCloseCalculator { get => _mmPositionCloseCalculator; }
         public readonly MOParams SystemParams = new MOParams();
+
+        public abstract void Prepare();
     }
 }

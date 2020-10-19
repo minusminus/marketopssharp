@@ -42,11 +42,13 @@
             this.tcMain = new System.Windows.Forms.TabControl();
             this.tabCharts = new System.Windows.Forms.TabPage();
             this.tabSimulation = new System.Windows.Forms.TabPage();
+            this.btnSim = new System.Windows.Forms.Button();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabCharts.SuspendLayout();
+            this.tabSimulation.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -187,12 +189,23 @@
             // 
             // tabSimulation
             // 
+            this.tabSimulation.Controls.Add(this.btnSim);
             this.tabSimulation.Location = new System.Drawing.Point(4, 31);
             this.tabSimulation.Name = "tabSimulation";
             this.tabSimulation.Size = new System.Drawing.Size(945, 474);
             this.tabSimulation.TabIndex = 1;
             this.tabSimulation.Text = "Simulation";
             this.tabSimulation.UseVisualStyleBackColor = true;
+            // 
+            // btnSim
+            // 
+            this.btnSim.Location = new System.Drawing.Point(18, 30);
+            this.btnSim.Name = "btnSim";
+            this.btnSim.Size = new System.Drawing.Size(75, 23);
+            this.btnSim.TabIndex = 0;
+            this.btnSim.Text = "Sim test";
+            this.btnSim.UseVisualStyleBackColor = true;
+            this.btnSim.Click += new System.EventHandler(this.btnSim_Click);
             // 
             // FormMain
             // 
@@ -212,6 +225,7 @@
             this.pnlCharts.PerformLayout();
             this.tcMain.ResumeLayout(false);
             this.tabCharts.ResumeLayout(false);
+            this.tabSimulation.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,6 +246,7 @@
         private System.Windows.Forms.TabControl tcMain;
         private System.Windows.Forms.TabPage tabCharts;
         private System.Windows.Forms.TabPage tabSimulation;
+        private System.Windows.Forms.Button btnSim;
     }
 }
 

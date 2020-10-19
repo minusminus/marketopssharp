@@ -20,6 +20,12 @@ using MarketOps.DataPump.Forms;
 using MarketOps.DataPump.Types;
 using MarketOps.Extensions;
 using MarketOps.Stats.Stats;
+using MarketOps.SystemExecutor;
+using MarketOps.SystemDefs.PriceCrossingSMA;
+using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.StockData.Extensions;
+using MarketOps.SystemExecutor.Slippage;
+using MarketOps.SystemExecutor.Commission;
 
 namespace MarketOps
 {
@@ -64,13 +70,12 @@ namespace MarketOps
 
         private void PrepareStockDataRangeSource()
         {
-            List<StockDataRange> dct = new List<StockDataRange>()
+            cbStockDataRange.DataSource = new List<StockDataRange>()
             {
                 StockDataRange.Daily,
                 StockDataRange.Weekly,
                 StockDataRange.Monthly
             };
-            cbStockDataRange.DataSource = dct;
         }
 
         private bool GetStockDefinition(IStockDataProvider dataProvider, out StockDefinition stockDef)
@@ -158,6 +163,23 @@ namespace MarketOps
 
             FormDataGen frm = new FormDataGen(dataGenerator);
             frm.Execute();
+        }
+
+        private void btnSim_Click(object sender, EventArgs e)
+        {
+            IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
+            ISystemDataLoader dataLoader = SystemDataLoaderFactory.Get(dataProvider);
+
+            SystemDefinition systemDef = new PriceCrossingSMA(dataProvider, dataLoader, new SlippageNone(), new CommissionNone());
+            systemDef.SystemParams.Set(PriceCrossingSMAParams.StockName, "KGHM");
+            systemDef.SystemParams.Set(PriceCrossingSMAParams.SMAPeriod, 20);
+
+            SystemState systemState = new SystemState() { Cash = 10000 };
+
+            SystemRunner runner = new SystemRunner(dataProvider, dataLoader);
+            runner.Run(systemDef, systemState, new DateTime(2015, 01, 01), new DateTime(2019, 01, 01));
+
+            _msgDisplay.Info("zrobione");
         }
     }
 }

@@ -77,6 +77,7 @@
     <Compile Include="Slippage\SlippageNone.cs" />
     <Compile Include="Slippage\SlippageTicks.cs" />
     <Compile Include="SystemDataDefinition.cs" />
+    <Compile Include="SystemDataLoaderFactory.cs" />
     <Compile Include="SystemDefinition.cs" />
     <Compile Include="SystemRunner.cs" />
     <Compile Include="SystemState.cs" />

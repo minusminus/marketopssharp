@@ -140,6 +140,10 @@
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
+      <Project>{4c9d9ab7-7d39-496e-85fd-135d30819239}</Project>
+      <Name>MarketOps.SystemExecutor</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

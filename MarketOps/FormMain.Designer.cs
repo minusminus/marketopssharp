@@ -43,12 +43,17 @@
             this.tabCharts = new System.Windows.Forms.TabPage();
             this.tabSimulation = new System.Windows.Forms.TabPage();
             this.btnSim = new System.Windows.Forms.Button();
+            this.pnlTop = new System.Windows.Forms.Panel();
+            this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
+            this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
+            this.pnlSimResult = new System.Windows.Forms.Panel();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
             this.tcMain.SuspendLayout();
             this.tabCharts.SuspendLayout();
             this.tabSimulation.SuspendLayout();
+            this.pnlTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -189,7 +194,8 @@
             // 
             // tabSimulation
             // 
-            this.tabSimulation.Controls.Add(this.btnSim);
+            this.tabSimulation.Controls.Add(this.pnlSimResult);
+            this.tabSimulation.Controls.Add(this.pnlTop);
             this.tabSimulation.Location = new System.Drawing.Point(4, 31);
             this.tabSimulation.Name = "tabSimulation";
             this.tabSimulation.Size = new System.Drawing.Size(945, 474);
@@ -199,13 +205,49 @@
             // 
             // btnSim
             // 
-            this.btnSim.Location = new System.Drawing.Point(18, 30);
+            this.btnSim.Location = new System.Drawing.Point(21, 32);
             this.btnSim.Name = "btnSim";
-            this.btnSim.Size = new System.Drawing.Size(75, 23);
+            this.btnSim.Size = new System.Drawing.Size(209, 23);
             this.btnSim.TabIndex = 0;
-            this.btnSim.Text = "Sim test";
+            this.btnSim.Text = "Simulate";
             this.btnSim.UseVisualStyleBackColor = true;
             this.btnSim.Click += new System.EventHandler(this.btnSim_Click);
+            // 
+            // pnlTop
+            // 
+            this.pnlTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTop.Controls.Add(this.dtpSimTo);
+            this.pnlTop.Controls.Add(this.dtpSimFrom);
+            this.pnlTop.Controls.Add(this.btnSim);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(945, 67);
+            this.pnlTop.TabIndex = 1;
+            // 
+            // dtpSimFrom
+            // 
+            this.dtpSimFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpSimFrom.Location = new System.Drawing.Point(21, 6);
+            this.dtpSimFrom.Name = "dtpSimFrom";
+            this.dtpSimFrom.Size = new System.Drawing.Size(97, 20);
+            this.dtpSimFrom.TabIndex = 1;
+            // 
+            // dtpSimTo
+            // 
+            this.dtpSimTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpSimTo.Location = new System.Drawing.Point(133, 6);
+            this.dtpSimTo.Name = "dtpSimTo";
+            this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
+            this.dtpSimTo.TabIndex = 2;
+            // 
+            // pnlSimResult
+            // 
+            this.pnlSimResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlSimResult.Location = new System.Drawing.Point(0, 67);
+            this.pnlSimResult.Name = "pnlSimResult";
+            this.pnlSimResult.Size = new System.Drawing.Size(945, 407);
+            this.pnlSimResult.TabIndex = 2;
             // 
             // FormMain
             // 
@@ -226,6 +268,7 @@
             this.tcMain.ResumeLayout(false);
             this.tabCharts.ResumeLayout(false);
             this.tabSimulation.ResumeLayout(false);
+            this.pnlTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,6 +290,10 @@
         private System.Windows.Forms.TabPage tabCharts;
         private System.Windows.Forms.TabPage tabSimulation;
         private System.Windows.Forms.Button btnSim;
+        private System.Windows.Forms.Panel pnlTop;
+        private System.Windows.Forms.DateTimePicker dtpSimFrom;
+        private System.Windows.Forms.DateTimePicker dtpSimTo;
+        private System.Windows.Forms.Panel pnlSimResult;
     }
 }
 

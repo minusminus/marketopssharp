@@ -41,6 +41,7 @@ namespace MarketOps
             _msgDisplay = new MsgDisplay(this, "MarketOps");
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
+            InitializeSim();
         }
 
         #region price chart events
@@ -76,6 +77,12 @@ namespace MarketOps
                 StockDataRange.Weekly,
                 StockDataRange.Monthly
             };
+        }
+
+        private void InitializeSim()
+        {
+            dtpSimTo.Value = DateTime.Now.Date;
+            dtpSimFrom.Value = dtpSimTo.Value.AddYears(-5);
         }
 
         private bool GetStockDefinition(IStockDataProvider dataProvider, out StockDefinition stockDef)
@@ -176,8 +183,8 @@ namespace MarketOps
 
             SystemState systemState = new SystemState() { Cash = 10000 };
 
-            SystemRunner runner = new SystemRunner(dataProvider, dataLoader);
-            runner.Run(systemDef, systemState, new DateTime(2015, 01, 01), new DateTime(2019, 01, 01));
+            SystemRunner runner = new SystemRunner(dataProvider, dataLoader); 
+            runner.Run(systemDef, systemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
 
             _msgDisplay.Info("zrobione");
         }

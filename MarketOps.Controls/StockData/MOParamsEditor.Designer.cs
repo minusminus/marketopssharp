@@ -41,6 +41,7 @@
             // 
             this.dbgParams.AllowUserToAddRows = false;
             this.dbgParams.AllowUserToDeleteRows = false;
+            this.dbgParams.AllowUserToResizeRows = false;
             this.dbgParams.AutoGenerateColumns = false;
             this.dbgParams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dbgParams.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -70,12 +71,12 @@
             this.ParamValue.HeaderText = "Value";
             this.ParamValue.Name = "ParamValue";
             // 
-            // StockStatParamsEditor
+            // MOParamsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.dbgParams);
-            this.Name = "StockStatParamsEditor";
+            this.Name = "MOParamsEditor";
             this.Size = new System.Drawing.Size(426, 303);
             ((System.ComponentModel.ISupportInitialize)(this.srcParams)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dbgParams)).EndInit();

@@ -35,10 +35,18 @@ namespace MarketOps
         private readonly IStockStatsInfoGenerator _stockStatsInfoGenerator = new StockStatsInfoGenerator();
         private readonly MsgDisplay _msgDisplay;
 
+        private readonly IStockDataProvider _dataProvider;
+        private readonly ISystemDataLoader _systemDataLoader;
+
+        private SystemDefinition _currentSimSystemDef;
+
         public FormMain()
         {
             InitializeComponent();
             _msgDisplay = new MsgDisplay(this, "MarketOps");
+            _dataProvider = DataProvidersFactory.GetStockDataProvider();
+            _systemDataLoader = SystemDataLoaderFactory.Get(_dataProvider);
+
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
             InitializeSim();
@@ -47,19 +55,16 @@ namespace MarketOps
         #region price chart events
         private StockPricesData OnGetChartData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo)
         {
-            IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
             currentData.TsFrom = tsFrom;
             currentData.TsTo = tsTo;
-            return dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            return _dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
         }
 
         private StockPricesData OnPrependChartData(StockDisplayData currentData)
         {
             DateTime ts = currentData.TsFrom;
             currentData.TsFrom = currentData.TsFrom.AddDays(-1).AddYears(-1);
-            IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
-            StockPricesData newdata = dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, currentData.TsFrom, ts);
-            return newdata;
+            return _dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, currentData.TsFrom, ts);
         }
 
         private void OnRecalculateStockStats(StockDisplayData currentData)
@@ -101,16 +106,15 @@ namespace MarketOps
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
             StockDefinition stockDef;
-            if (!GetStockDefinition(dataProvider, out stockDef)) return;
+            if (!GetStockDefinition(_dataProvider, out stockDef)) return;
             StockDisplayData currentStock = new StockDisplayData()
             {
                 TsFrom = DateTime.Now.Date.AddYears(-1),
                 TsTo = DateTime.Now.Date,
                 Stock = stockDef
             };
-            currentStock.Prices = dataProvider.GetPricesData(currentStock.Stock, (StockDataRange)cbStockDataRange.SelectedItem, 0, currentStock.TsFrom, currentStock.TsTo);
+            currentStock.Prices = _dataProvider.GetPricesData(currentStock.Stock, (StockDataRange)cbStockDataRange.SelectedItem, 0, currentStock.TsFrom, currentStock.TsTo);
             AddTabWithChart(currentStock);
         }
 
@@ -172,19 +176,29 @@ namespace MarketOps
             frm.Execute();
         }
 
+        private void btnSimLoadDefinition_Click(object sender, EventArgs e)
+        {
+            _currentSimSystemDef = new PriceCrossingSMA(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone());
+            _currentSimSystemDef.SystemParams.Set(PriceCrossingSMAParams.StockName, "KGHM");
+            _currentSimSystemDef.SystemParams.Set(PriceCrossingSMAParams.SMAPeriod, 20);
+
+            paramsSim.LoadParams(_currentSimSystemDef.SystemParams);
+        }
+
         private void btnSim_Click(object sender, EventArgs e)
         {
-            IStockDataProvider dataProvider = DataProvidersFactory.GetStockDataProvider();
-            ISystemDataLoader dataLoader = SystemDataLoaderFactory.Get(dataProvider);
+            if (_currentSimSystemDef == null)
+            {
+                _msgDisplay.Error("System definition not loaded.");
+                return;
+            }
 
-            SystemDefinition systemDef = new PriceCrossingSMA(dataProvider, dataLoader, new SlippageNone(), new CommissionNone());
-            systemDef.SystemParams.Set(PriceCrossingSMAParams.StockName, "KGHM");
-            systemDef.SystemParams.Set(PriceCrossingSMAParams.SMAPeriod, 20);
+            paramsSim.SaveParams(_currentSimSystemDef.SystemParams);
 
             SystemState systemState = new SystemState() { Cash = 10000 };
 
-            SystemRunner runner = new SystemRunner(dataProvider, dataLoader); 
-            runner.Run(systemDef, systemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
+            SystemRunner runner = new SystemRunner(_dataProvider, _systemDataLoader);
+            runner.Run(_currentSimSystemDef, systemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
 
             _msgDisplay.Info("zrobione");
         }

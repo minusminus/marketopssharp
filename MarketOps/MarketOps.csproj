@@ -49,11 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Charting\ChartAreaPreparatorBase.cs" />
-    <Compile Include="Charting\ChartAreaPreparatorStock.cs" />
-    <Compile Include="Charting\ChartAreaPreparatorVolume.cs" />
-    <Compile Include="Charting\DataSeriesPreparatorStock.cs" />
-    <Compile Include="Charting\DataSeriesPreparatorVolume.cs" />
     <Compile Include="DataGen\DataGenerator.cs" />
     <Compile Include="DataGen\Forms\FormDataGen.cs">
       <SubType>Form</SubType>

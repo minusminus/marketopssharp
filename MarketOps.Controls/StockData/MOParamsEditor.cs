@@ -10,19 +10,19 @@ namespace MarketOps.Controls.StockData
             InitializeComponent();
         }
 
-        public void LoadStatParams(MOParams statParams)
+        public void LoadParams(MOParams moParams)
         {
-            foreach (var param in statParams)
+            foreach (var param in moParams)
                 srcParams.Add(new MOParamEditMapper(param.Clone()));
         }
 
-        public void SaveStatParams(MOParams statParams)
+        public void SaveParams(MOParams moParams)
         {
             var list = srcParams.GetEnumerator();
             while (list.MoveNext())
             {
                 MOParamEditMapper paramMapper = (MOParamEditMapper)list.Current;
-                statParams.Get(paramMapper.Name).ValueString = paramMapper.Value;
+                moParams.Get(paramMapper.Name).ValueString = paramMapper.Value;
             }
         }
     }

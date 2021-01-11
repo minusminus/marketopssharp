@@ -13,11 +13,11 @@ namespace MarketOps.Controls.PriceChart
         public bool Execute(StockStat stat)
         {
             SetCaption(stat.Name);
-            dgvParams.LoadStatParams(stat.StatParams);
+            dgvParams.LoadParams(stat.StatParams);
             LoadStatDataColors(stat);
             if (ShowDialog() == DialogResult.OK)
             {
-                dgvParams.SaveStatParams(stat.StatParams);
+                dgvParams.SaveParams(stat.StatParams);
                 SaveStatDataColors(stat);
                 return true;
             }

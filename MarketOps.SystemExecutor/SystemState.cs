@@ -8,6 +8,7 @@ namespace MarketOps.SystemExecutor
     /// </summary>
     public class SystemState
     {
+        public float InitialCash;
         public float Cash;
         public DateTime LastProcessedTS;
         public readonly List<Signal> Signals = new List<Signal>();

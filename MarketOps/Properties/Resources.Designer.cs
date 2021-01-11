@@ -59,5 +59,15 @@ namespace MarketOps.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Icon podobny do zasobu (Ikona).
+        /// </summary>
+        internal static System.Drawing.Icon risk_icon {
+            get {
+                object obj = ResourceManager.GetObject("risk_icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

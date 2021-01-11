@@ -47,6 +47,7 @@ namespace MarketOps
             _dataProvider = DataProvidersFactory.GetStockDataProvider();
             _systemDataLoader = SystemDataLoaderFactory.Get(_dataProvider);
 
+            this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
             InitializeSim();
@@ -106,8 +107,7 @@ namespace MarketOps
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            StockDefinition stockDef;
-            if (!GetStockDefinition(_dataProvider, out stockDef)) return;
+            if (!GetStockDefinition(_dataProvider, out StockDefinition stockDef)) return;
             StockDisplayData currentStock = new StockDisplayData()
             {
                 TsFrom = DateTime.Now.Date.AddYears(-1),
@@ -195,12 +195,38 @@ namespace MarketOps
 
             paramsSim.SaveParams(_currentSimSystemDef.SystemParams);
 
-            SystemState systemState = new SystemState() { Cash = 10000 };
+            SystemState systemState = new SystemState() { InitialCash = (float)edtInitialCash.Value, Cash = (float)edtInitialCash.Value };
 
             SystemRunner runner = new SystemRunner(_dataProvider, _systemDataLoader);
             runner.Run(_currentSimSystemDef, systemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
+            ShowSimulationResult(systemState);
 
             _msgDisplay.Info("zrobione");
+        }
+
+        private void ShowSimulationResult(SystemState systemState)
+        {
+            SystemStateSummary summary = new SystemStateSummaryCalculator().Calculate(systemState);
+
+            lblSDRStartTS.Text = summary.StartTS.ToDisplay();
+            lblSDRStopTS.Text = summary.StopTS.ToDisplay();
+            lblSDRProcessedTicks.Text = summary.ProcessedTicks.ToDisplay();
+
+            lblSDRInitialValue.Text = summary.InitialValue.ToDisplay();
+            lblSDRFinalValueOnClosedPositions.Text = summary.FinalValueOnClosedPositions.ToDisplay();
+            lblSDRFinalValueOnLastTick.Text = summary.FinalValueOnLastTick.ToDisplay();
+
+            lblSDRClosedPositionsCount.Text = summary.ClosedPositionsCount.ToDisplay();
+            lblSDRWins.Text = summary.Wins.ToDisplay();
+            lblSDRWinProbability.Text = summary.WinProbability.ToDisplay();
+            lblSDRSumWins.Text = summary.SumWins.ToDisplay();
+            lblSDRAvgWin.Text = summary.AvgWin.ToDisplay();
+            lblSDRLosses.Text = summary.Losses.ToDisplay();
+            lblSDRLossProbability.Text = summary.LossProbability.ToDisplay();
+            lblSDRSumLosses.Text = summary.SumLosses.ToDisplay();
+            lblSDRAvgLoss.Text = summary.AvgLoss.ToDisplay();
+            lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
+            lblSDRExpectedPositionValue.Text = summary.ExpectedPositionValue.ToDisplay();
         }
     }
 }

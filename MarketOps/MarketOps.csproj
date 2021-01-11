@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\risk_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -69,6 +72,7 @@
     <Compile Include="DirectoryUtils.cs" />
     <Compile Include="Extensions\StockDisplayDataExtensions.cs" />
     <Compile Include="Extensions\TabControlExtensions.cs" />
+    <Compile Include="Extensions\ValueDisplayExtensions.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SystemExecution\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\risk_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

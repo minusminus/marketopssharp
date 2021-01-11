@@ -98,6 +98,7 @@
     <Compile Include="Slippage\SlippageNoneTests.cs" />
     <Compile Include="Slippage\SlippageTicksTests.cs" />
     <Compile Include="Mocks\StockPricesDataUtils.cs" />
+    <Compile Include="SystemSummary\WinsLossesCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MarketOps.Controls.PriceChart
+namespace MarketOps.Controls.ChartsUtils
 {
     public partial class FormSelectDataRange : Form
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MarketOps.Controls;
 using MarketOps.Controls.Extensions;
-using MarketOps.Controls.PriceChart;
+using MarketOps.Controls.ChartsUtils;
 using MarketOps.Controls.Types;
 using MarketOps.DataGen;
 using MarketOps.StockData.Types;
@@ -208,6 +208,7 @@ namespace MarketOps
         {
             CalcAndShowSummary(systemState);
             ShowPositions(systemState);
+            ShowEquityCharts(systemState);
         }
 
         private void CalcAndShowSummary(SystemState systemState)
@@ -238,6 +239,12 @@ namespace MarketOps
         private void ShowPositions(SystemState systemState)
         {
             dbgPositions.LoadData(systemState);
+        }
+
+        private void ShowEquityCharts(SystemState systemState)
+        {
+            chartEquity.LoadData(systemState.Equity);
+            chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity);
         }
     }
 }

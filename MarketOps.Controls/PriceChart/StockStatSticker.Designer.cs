@@ -1,4 +1,4 @@
-﻿namespace MarketOps.Controls.PriceChart
+﻿namespace MarketOps.Controls.ChartsUtils
 {
     partial class StockStatSticker
     {

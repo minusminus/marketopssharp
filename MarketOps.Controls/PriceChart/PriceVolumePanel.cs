@@ -7,7 +7,7 @@ using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 using MarketOps.Stats;
 
-namespace MarketOps.Controls.PriceChart
+namespace MarketOps.Controls.ChartsUtils
 {
     public partial class PriceVolumePanel : UserControl
     {

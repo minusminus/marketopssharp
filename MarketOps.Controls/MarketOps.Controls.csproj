@@ -53,7 +53,7 @@
     <Compile Include="PriceChart\ChartAxisValueLabel.Designer.cs">
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="PriceChart\ChartYViewRangeCalculator.cs" />
+    <Compile Include="ChartsUtils\ChartYViewRangeCalculator.cs" />
     <Compile Include="PriceChart\ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
     <Compile Include="PriceChart\FormEditStockStatParams.cs">
@@ -103,6 +103,13 @@
     </Compile>
     <Compile Include="StockStatSeriesFactory.cs" />
     <Compile Include="SuspendDrawingUpdate.cs" />
+    <Compile Include="SystemEquity\SystemEquityChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SystemEquity\SystemEquityChart.Designer.cs">
+      <DependentUpon>SystemEquityChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SystemEquity\SystemValueMapper.cs" />
     <Compile Include="SystemPositionsGrid\SystemPositionGridRecord.cs" />
     <Compile Include="SystemPositionsGrid\SystemPositionsGrid.cs">
       <SubType>UserControl</SubType>
@@ -146,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StockData\MOParamsEditor.resx">
       <DependentUpon>MOParamsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemEquity\SystemEquityChart.resx">
+      <DependentUpon>SystemEquityChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SystemPositionsGrid\SystemPositionsGrid.resx">
       <DependentUpon>SystemPositionsGrid.cs</DependentUpon>

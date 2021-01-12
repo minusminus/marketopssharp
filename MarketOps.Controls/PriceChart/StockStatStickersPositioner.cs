@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MarketOps.Controls.PriceChart
+namespace MarketOps.Controls.ChartsUtils
 {
     /// <summary>
     /// Manages positions of StockStat stickers on chart areas.

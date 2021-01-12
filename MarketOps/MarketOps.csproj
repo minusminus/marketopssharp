@@ -70,7 +70,6 @@
       <DependentUpon>FormDataPump.cs</DependentUpon>
     </Compile>
     <Compile Include="DirectoryUtils.cs" />
-    <Compile Include="Extensions\StockDisplayDataExtensions.cs" />
     <Compile Include="Extensions\TabControlExtensions.cs" />
     <Compile Include="Extensions\ValueDisplayExtensions.cs" />
     <Compile Include="FormMain.cs">

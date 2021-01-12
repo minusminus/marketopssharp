@@ -103,6 +103,13 @@
     </Compile>
     <Compile Include="StockStatSeriesFactory.cs" />
     <Compile Include="SuspendDrawingUpdate.cs" />
+    <Compile Include="SystemPositionsGrid\SystemPositionGridRecord.cs" />
+    <Compile Include="SystemPositionsGrid\SystemPositionsGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SystemPositionsGrid\SystemPositionsGrid.Designer.cs">
+      <DependentUpon>SystemPositionsGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolTipExtended.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -140,6 +147,9 @@
     <EmbeddedResource Include="StockData\MOParamsEditor.resx">
       <DependentUpon>MOParamsEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SystemPositionsGrid\SystemPositionsGrid.resx">
+      <DependentUpon>SystemPositionsGrid.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
@@ -149,6 +159,10 @@
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
+      <Project>{4c9d9ab7-7d39-496e-85fd-135d30819239}</Project>
+      <Name>MarketOps.SystemExecutor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

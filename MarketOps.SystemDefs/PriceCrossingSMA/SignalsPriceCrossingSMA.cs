@@ -73,7 +73,8 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 IntradayInterval = 0,
                 Type = SignalType.EnterOnOpen,
                 Direction = dir,
-                ReversePosition = true
+                ReversePosition = true,
+                Volume = 1
             };
     }
 }

@@ -201,10 +201,16 @@ namespace MarketOps
             runner.Run(_currentSimSystemDef, systemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
             ShowSimulationResult(systemState);
 
-            _msgDisplay.Info("zrobione");
+            //_msgDisplay.Info("zrobione");
         }
 
         private void ShowSimulationResult(SystemState systemState)
+        {
+            CalcAndShowSummary(systemState);
+            ShowPositions(systemState);
+        }
+
+        private void CalcAndShowSummary(SystemState systemState)
         {
             SystemStateSummary summary = new SystemStateSummaryCalculator().Calculate(systemState);
 
@@ -227,6 +233,11 @@ namespace MarketOps
             lblSDRAvgLoss.Text = summary.AvgLoss.ToDisplay();
             lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.ExpectedPositionValue.ToDisplay();
+        }
+
+        private void ShowPositions(SystemState systemState)
+        {
+            dbgPositions.LoadData(systemState);
         }
     }
 }

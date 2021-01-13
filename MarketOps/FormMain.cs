@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MarketOps.Controls;
 using MarketOps.Controls.Extensions;
 using MarketOps.Controls.ChartsUtils;
 using MarketOps.Controls.Types;
@@ -19,13 +13,13 @@ using MarketOps.DataPump;
 using MarketOps.DataPump.Forms;
 using MarketOps.DataPump.Types;
 using MarketOps.Extensions;
-using MarketOps.Stats.Stats;
 using MarketOps.SystemExecutor;
 using MarketOps.SystemDefs.PriceCrossingSMA;
 using MarketOps.SystemExecutor.Interfaces;
 using MarketOps.StockData.Extensions;
 using MarketOps.SystemExecutor.Slippage;
 using MarketOps.SystemExecutor.Commission;
+using MarketOps.SystemAnalysis;
 
 namespace MarketOps
 {

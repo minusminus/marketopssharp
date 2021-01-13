@@ -1,6 +1,7 @@
-﻿using MarketOps.SystemExecutor.Extensions;
+﻿using MarketOps.SystemExecutor;
+using MarketOps.SystemExecutor.Extensions;
 
-namespace MarketOps.SystemExecutor.SystemSummary
+namespace MarketOps.SystemAnalysis.SystemSummary
 {
     /// <summary>
     /// Calculates wins and losses of system state.

@@ -138,6 +138,10 @@
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemAnalysis\MarketOps.SystemAnalysis.csproj">
+      <Project>{e77e14d1-5661-49d8-8259-664915c0bb01}</Project>
+      <Name>MarketOps.SystemAnalysis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.SystemDefs\MarketOps.SystemDefs.csproj">
       <Project>{e9909ebc-1d6d-47cf-9258-e3fc3d7484f3}</Project>
       <Name>MarketOps.SystemDefs</Name>

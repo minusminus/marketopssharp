@@ -1,10 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
 using Shouldly;
-using MarketOps.SystemExecutor.SystemSummary;
+using MarketOps.SystemAnalysis.SystemSummary;
+using MarketOps.SystemExecutor;
 using System.Linq;
 
-namespace MarketOps.SystemExecutor.Tests.SystemSummary
+namespace MarketOps.SystemAnalysis.Tests.SystemSummary
 {
     [TestFixture]
     public class WinsLossesCalculatorTests

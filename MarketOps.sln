@@ -35,6 +35,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemExecutor.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemDefs", "MarketOps.SystemDefs\MarketOps.SystemDefs.csproj", "{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemAnalysis", "MarketOps.SystemAnalysis\MarketOps.SystemAnalysis.csproj", "{E77E14D1-5661-49D8-8259-664915C0BB01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemAnalysis.Tests", "MarketOps.SystemAnalysis.Tests\MarketOps.SystemAnalysis.Tests.csproj", "{3E47095C-239A-40DF-A5B7-7AB59F131CEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +109,14 @@ Global
 		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9909EBC-1D6D-47CF-9258-E3FC3D7484F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E77E14D1-5661-49D8-8259-664915C0BB01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E77E14D1-5661-49D8-8259-664915C0BB01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E77E14D1-5661-49D8-8259-664915C0BB01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E77E14D1-5661-49D8-8259-664915C0BB01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E47095C-239A-40DF-A5B7-7AB59F131CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E47095C-239A-40DF-A5B7-7AB59F131CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E47095C-239A-40DF-A5B7-7AB59F131CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E47095C-239A-40DF-A5B7-7AB59F131CEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

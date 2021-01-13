@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MarketOps.SystemExecutor
+namespace MarketOps.SystemAnalysis
 {
     /// <summary>
     /// System execution summary.

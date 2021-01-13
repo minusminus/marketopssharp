@@ -1,7 +1,8 @@
-﻿using MarketOps.SystemExecutor.SystemSummary;
+﻿using MarketOps.SystemExecutor;
+using MarketOps.SystemAnalysis.SystemSummary;
 using System.Linq;
 
-namespace MarketOps.SystemExecutor
+namespace MarketOps.SystemAnalysis
 {
     /// <summary>
     /// Summary calculator of system state.

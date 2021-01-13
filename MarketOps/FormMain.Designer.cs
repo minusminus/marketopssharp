@@ -51,6 +51,10 @@
             this.tcSimulationData = new System.Windows.Forms.TabControl();
             this.tabSimDataResults = new System.Windows.Forms.TabPage();
             this.pnlSimDataResults = new System.Windows.Forms.Panel();
+            this.lblSDRMaxDDOnPositions = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.lblSDRMaxDDOnTicks = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             this.lblSDRProcessedTicks = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.lblSDRExpectedPositionValue = new System.Windows.Forms.Label();
@@ -88,6 +92,8 @@
             this.tabSimDataPositions = new System.Windows.Forms.TabPage();
             this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
             this.tabSimDataDrawdowns = new System.Windows.Forms.TabPage();
+            this.chartDD2DTicks = new MarketOps.Controls.DrawDowns.DrawDowns2DChart();
+            this.tabSimDataProfits = new System.Windows.Forms.TabPage();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
             this.pnlSimulationStart = new System.Windows.Forms.Panel();
@@ -99,11 +105,7 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.tabSimDataProfits = new System.Windows.Forms.TabPage();
-            this.lblSDRMaxDDOnTicks = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.lblSDRMaxDDOnPositions = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
+            this.chartDD2DPositions = new MarketOps.Controls.DrawDowns.DrawDowns2DChart();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -118,6 +120,7 @@
             this.tabSimDataResults.SuspendLayout();
             this.pnlSimDataResults.SuspendLayout();
             this.tabSimDataPositions.SuspendLayout();
+            this.tabSimDataDrawdowns.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
@@ -398,6 +401,42 @@
             this.pnlSimDataResults.Name = "pnlSimDataResults";
             this.pnlSimDataResults.Size = new System.Drawing.Size(933, 271);
             this.pnlSimDataResults.TabIndex = 0;
+            // 
+            // lblSDRMaxDDOnPositions
+            // 
+            this.lblSDRMaxDDOnPositions.AutoSize = true;
+            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(382, 154);
+            this.lblSDRMaxDDOnPositions.Name = "lblSDRMaxDDOnPositions";
+            this.lblSDRMaxDDOnPositions.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRMaxDDOnPositions.TabIndex = 56;
+            this.lblSDRMaxDDOnPositions.Text = "Avg";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(248, 154);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(105, 13);
+            this.label23.TabIndex = 55;
+            this.label23.Text = "Max DD on positions";
+            // 
+            // lblSDRMaxDDOnTicks
+            // 
+            this.lblSDRMaxDDOnTicks.AutoSize = true;
+            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(382, 138);
+            this.lblSDRMaxDDOnTicks.Name = "lblSDRMaxDDOnTicks";
+            this.lblSDRMaxDDOnTicks.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRMaxDDOnTicks.TabIndex = 54;
+            this.lblSDRMaxDDOnTicks.Text = "Avg";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(248, 138);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(86, 13);
+            this.label21.TabIndex = 53;
+            this.label21.Text = "Max DD on ticks";
             // 
             // lblSDRProcessedTicks
             // 
@@ -726,6 +765,8 @@
             // 
             // tabSimDataDrawdowns
             // 
+            this.tabSimDataDrawdowns.Controls.Add(this.chartDD2DPositions);
+            this.tabSimDataDrawdowns.Controls.Add(this.chartDD2DTicks);
             this.tabSimDataDrawdowns.Location = new System.Drawing.Point(4, 22);
             this.tabSimDataDrawdowns.Name = "tabSimDataDrawdowns";
             this.tabSimDataDrawdowns.Padding = new System.Windows.Forms.Padding(3);
@@ -733,6 +774,24 @@
             this.tabSimDataDrawdowns.TabIndex = 2;
             this.tabSimDataDrawdowns.Text = "Drawdowns";
             this.tabSimDataDrawdowns.UseVisualStyleBackColor = true;
+            // 
+            // chartDD2DTicks
+            // 
+            this.chartDD2DTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDD2DTicks.Location = new System.Drawing.Point(21, 6);
+            this.chartDD2DTicks.Name = "chartDD2DTicks";
+            this.chartDD2DTicks.Size = new System.Drawing.Size(296, 181);
+            this.chartDD2DTicks.TabIndex = 0;
+            // 
+            // tabSimDataProfits
+            // 
+            this.tabSimDataProfits.Location = new System.Drawing.Point(4, 22);
+            this.tabSimDataProfits.Name = "tabSimDataProfits";
+            this.tabSimDataProfits.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSimDataProfits.Size = new System.Drawing.Size(939, 277);
+            this.tabSimDataProfits.TabIndex = 3;
+            this.tabSimDataProfits.Text = "Profits";
+            this.tabSimDataProfits.UseVisualStyleBackColor = true;
             // 
             // pnlTop
             // 
@@ -849,51 +908,13 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // tabSimDataProfits
+            // chartDD2DPositions
             // 
-            this.tabSimDataProfits.Location = new System.Drawing.Point(4, 22);
-            this.tabSimDataProfits.Name = "tabSimDataProfits";
-            this.tabSimDataProfits.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSimDataProfits.Size = new System.Drawing.Size(939, 277);
-            this.tabSimDataProfits.TabIndex = 3;
-            this.tabSimDataProfits.Text = "Profits";
-            this.tabSimDataProfits.UseVisualStyleBackColor = true;
-            // 
-            // lblSDRMaxDDOnTicks
-            // 
-            this.lblSDRMaxDDOnTicks.AutoSize = true;
-            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(382, 138);
-            this.lblSDRMaxDDOnTicks.Name = "lblSDRMaxDDOnTicks";
-            this.lblSDRMaxDDOnTicks.Size = new System.Drawing.Size(26, 13);
-            this.lblSDRMaxDDOnTicks.TabIndex = 54;
-            this.lblSDRMaxDDOnTicks.Text = "Avg";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(248, 138);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(86, 13);
-            this.label21.TabIndex = 53;
-            this.label21.Text = "Max DD on ticks";
-            // 
-            // lblSDRMaxDDOnPositions
-            // 
-            this.lblSDRMaxDDOnPositions.AutoSize = true;
-            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(382, 154);
-            this.lblSDRMaxDDOnPositions.Name = "lblSDRMaxDDOnPositions";
-            this.lblSDRMaxDDOnPositions.Size = new System.Drawing.Size(26, 13);
-            this.lblSDRMaxDDOnPositions.TabIndex = 56;
-            this.lblSDRMaxDDOnPositions.Text = "Avg";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(248, 154);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(105, 13);
-            this.label23.TabIndex = 55;
-            this.label23.Text = "Max DD on positions";
+            this.chartDD2DPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDD2DPositions.Location = new System.Drawing.Point(583, 6);
+            this.chartDD2DPositions.Name = "chartDD2DPositions";
+            this.chartDD2DPositions.Size = new System.Drawing.Size(296, 181);
+            this.chartDD2DPositions.TabIndex = 1;
             // 
             // FormMain
             // 
@@ -923,6 +944,7 @@
             this.pnlSimDataResults.ResumeLayout(false);
             this.pnlSimDataResults.PerformLayout();
             this.tabSimDataPositions.ResumeLayout(false);
+            this.tabSimDataDrawdowns.ResumeLayout(false);
             this.pnlTop.ResumeLayout(false);
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
@@ -1009,6 +1031,8 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label lblSDRMaxDDOnTicks;
         private System.Windows.Forms.Label label21;
+        private Controls.DrawDowns.DrawDowns2DChart chartDD2DTicks;
+        private Controls.DrawDowns.DrawDowns2DChart chartDD2DPositions;
     }
 }
 

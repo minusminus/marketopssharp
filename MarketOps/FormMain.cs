@@ -203,15 +203,16 @@ namespace MarketOps
 
         private void ShowSimulationResult(SystemState systemState)
         {
-            CalcAndShowSummary(systemState);
-            ShowPositions(systemState);
-            ShowEquityCharts(systemState);
-        }
-
-        private void CalcAndShowSummary(SystemState systemState)
-        {
             SystemStateSummary summary = SystemStateSummaryCalculator.Calculate(systemState);
 
+            DisplaySummary(summary);
+            ShowPositions(systemState);
+            ShowEquityCharts(systemState);
+            ShowDDCharts(summary);
+        }
+
+        private void DisplaySummary(SystemStateSummary summary)
+        {
             lblSDRStartTS.Text = summary.StartTS.ToDisplay();
             lblSDRStopTS.Text = summary.StopTS.ToDisplay();
             lblSDRProcessedTicks.Text = summary.ProcessedTicks.ToDisplay();
@@ -245,6 +246,12 @@ namespace MarketOps
         {
             chartEquity.LoadData(systemState.Equity);
             chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity);
+        }
+
+        private void ShowDDCharts(SystemStateSummary summary)
+        {
+            chartDD2DTicks.LoadData(summary.DDTicks);
+            chartDD2DPositions.LoadData(summary.DDClosedPositions);
         }
     }
 }

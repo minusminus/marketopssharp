@@ -46,6 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChartAreaFactory.cs" />
+    <Compile Include="DrawDowns\DrawDowns2DChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DrawDowns\DrawDowns2DChart.Designer.cs">
+      <DependentUpon>DrawDowns2DChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DrawDowns\SystemDrawDownMapper.cs" />
     <Compile Include="Extensions\TabPageExtensions.cs" />
     <Compile Include="PriceChart\ChartAxisValueLabel.cs">
       <SubType>UserControl</SubType>
@@ -129,6 +136,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DrawDowns\DrawDowns2DChart.resx">
+      <DependentUpon>DrawDowns2DChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PriceChart\ChartAxisValueLabel.resx">
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,6 +179,10 @@
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemAnalysis\MarketOps.SystemAnalysis.csproj">
+      <Project>{e77e14d1-5661-49d8-8259-664915c0bb01}</Project>
+      <Name>MarketOps.SystemAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
       <Project>{4c9d9ab7-7d39-496e-85fd-135d30819239}</Project>

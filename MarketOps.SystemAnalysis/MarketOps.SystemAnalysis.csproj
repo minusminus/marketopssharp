@@ -41,9 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawDowns\DrawDownsCalculator.cs" />
+    <Compile Include="Extensions\DrawDownsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemDrawDown.cs" />
     <Compile Include="SystemStateSummary.cs" />
-    <Compile Include="SystemStateSummaryCalculator.cs" />
+    <Compile Include="SystemSummary\SystemStateSummaryCalculator.cs" />
     <Compile Include="SystemSummary\WinsLossesCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,5 +55,6 @@
       <Name>MarketOps.SystemExecutor</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

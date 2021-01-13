@@ -87,6 +87,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tabSimDataPositions = new System.Windows.Forms.TabPage();
             this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
+            this.tabSimDataDrawdowns = new System.Windows.Forms.TabPage();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
             this.pnlSimulationStart = new System.Windows.Forms.Panel();
@@ -98,7 +99,11 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.tabSimDataDrawdowns = new System.Windows.Forms.TabPage();
+            this.tabSimDataProfits = new System.Windows.Forms.TabPage();
+            this.lblSDRMaxDDOnTicks = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.lblSDRMaxDDOnPositions = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -329,6 +334,7 @@
             this.tcSimulationData.Controls.Add(this.tabSimDataResults);
             this.tcSimulationData.Controls.Add(this.tabSimDataPositions);
             this.tcSimulationData.Controls.Add(this.tabSimDataDrawdowns);
+            this.tcSimulationData.Controls.Add(this.tabSimDataProfits);
             this.tcSimulationData.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tcSimulationData.Location = new System.Drawing.Point(0, 364);
             this.tcSimulationData.Name = "tcSimulationData";
@@ -349,6 +355,10 @@
             // 
             // pnlSimDataResults
             // 
+            this.pnlSimDataResults.Controls.Add(this.lblSDRMaxDDOnPositions);
+            this.pnlSimDataResults.Controls.Add(this.label23);
+            this.pnlSimDataResults.Controls.Add(this.lblSDRMaxDDOnTicks);
+            this.pnlSimDataResults.Controls.Add(this.label21);
             this.pnlSimDataResults.Controls.Add(this.lblSDRProcessedTicks);
             this.pnlSimDataResults.Controls.Add(this.label20);
             this.pnlSimDataResults.Controls.Add(this.lblSDRExpectedPositionValue);
@@ -410,7 +420,7 @@
             // lblSDRExpectedPositionValue
             // 
             this.lblSDRExpectedPositionValue.AutoSize = true;
-            this.lblSDRExpectedPositionValue.Location = new System.Drawing.Point(146, 208);
+            this.lblSDRExpectedPositionValue.Location = new System.Drawing.Point(382, 106);
             this.lblSDRExpectedPositionValue.Name = "lblSDRExpectedPositionValue";
             this.lblSDRExpectedPositionValue.Size = new System.Drawing.Size(26, 13);
             this.lblSDRExpectedPositionValue.TabIndex = 50;
@@ -419,7 +429,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(12, 208);
+            this.label19.Location = new System.Drawing.Point(248, 106);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(120, 13);
             this.label19.TabIndex = 49;
@@ -428,7 +438,7 @@
             // lblSDRAvgWinLossRatio
             // 
             this.lblSDRAvgWinLossRatio.AutoSize = true;
-            this.lblSDRAvgWinLossRatio.Location = new System.Drawing.Point(146, 192);
+            this.lblSDRAvgWinLossRatio.Location = new System.Drawing.Point(382, 90);
             this.lblSDRAvgWinLossRatio.Name = "lblSDRAvgWinLossRatio";
             this.lblSDRAvgWinLossRatio.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgWinLossRatio.TabIndex = 48;
@@ -437,7 +447,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 192);
+            this.label14.Location = new System.Drawing.Point(248, 90);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(57, 13);
             this.label14.TabIndex = 47;
@@ -446,7 +456,7 @@
             // lblSDRLossProbability
             // 
             this.lblSDRLossProbability.AutoSize = true;
-            this.lblSDRLossProbability.Location = new System.Drawing.Point(146, 144);
+            this.lblSDRLossProbability.Location = new System.Drawing.Point(382, 42);
             this.lblSDRLossProbability.Name = "lblSDRLossProbability";
             this.lblSDRLossProbability.Size = new System.Drawing.Size(26, 13);
             this.lblSDRLossProbability.TabIndex = 46;
@@ -455,7 +465,7 @@
             // lblSDRWinProbability
             // 
             this.lblSDRWinProbability.AutoSize = true;
-            this.lblSDRWinProbability.Location = new System.Drawing.Point(146, 128);
+            this.lblSDRWinProbability.Location = new System.Drawing.Point(382, 26);
             this.lblSDRWinProbability.Name = "lblSDRWinProbability";
             this.lblSDRWinProbability.Size = new System.Drawing.Size(26, 13);
             this.lblSDRWinProbability.TabIndex = 45;
@@ -464,7 +474,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(114, 144);
+            this.label17.Location = new System.Drawing.Point(350, 42);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(32, 13);
             this.label17.TabIndex = 44;
@@ -473,7 +483,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(114, 128);
+            this.label18.Location = new System.Drawing.Point(350, 26);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(32, 13);
             this.label18.TabIndex = 43;
@@ -482,7 +492,7 @@
             // lblSDRSumLosses
             // 
             this.lblSDRSumLosses.AutoSize = true;
-            this.lblSDRSumLosses.Location = new System.Drawing.Point(70, 176);
+            this.lblSDRSumLosses.Location = new System.Drawing.Point(306, 74);
             this.lblSDRSumLosses.Name = "lblSDRSumLosses";
             this.lblSDRSumLosses.Size = new System.Drawing.Size(26, 13);
             this.lblSDRSumLosses.TabIndex = 42;
@@ -491,7 +501,7 @@
             // lblSDRSumWins
             // 
             this.lblSDRSumWins.AutoSize = true;
-            this.lblSDRSumWins.Location = new System.Drawing.Point(70, 160);
+            this.lblSDRSumWins.Location = new System.Drawing.Point(306, 58);
             this.lblSDRSumWins.Name = "lblSDRSumWins";
             this.lblSDRSumWins.Size = new System.Drawing.Size(26, 13);
             this.lblSDRSumWins.TabIndex = 41;
@@ -500,7 +510,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 176);
+            this.label15.Location = new System.Drawing.Point(248, 74);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(60, 13);
             this.label15.TabIndex = 40;
@@ -509,7 +519,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 160);
+            this.label16.Location = new System.Drawing.Point(248, 58);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(52, 13);
             this.label16.TabIndex = 39;
@@ -518,7 +528,7 @@
             // lblSDRAvgLoss
             // 
             this.lblSDRAvgLoss.AutoSize = true;
-            this.lblSDRAvgLoss.Location = new System.Drawing.Point(146, 176);
+            this.lblSDRAvgLoss.Location = new System.Drawing.Point(382, 74);
             this.lblSDRAvgLoss.Name = "lblSDRAvgLoss";
             this.lblSDRAvgLoss.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgLoss.TabIndex = 38;
@@ -527,7 +537,7 @@
             // lblSDRAvgWin
             // 
             this.lblSDRAvgWin.AutoSize = true;
-            this.lblSDRAvgWin.Location = new System.Drawing.Point(146, 160);
+            this.lblSDRAvgWin.Location = new System.Drawing.Point(382, 58);
             this.lblSDRAvgWin.Name = "lblSDRAvgWin";
             this.lblSDRAvgWin.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgWin.TabIndex = 37;
@@ -536,7 +546,7 @@
             // lblSDRLosses
             // 
             this.lblSDRLosses.AutoSize = true;
-            this.lblSDRLosses.Location = new System.Drawing.Point(70, 144);
+            this.lblSDRLosses.Location = new System.Drawing.Point(306, 42);
             this.lblSDRLosses.Name = "lblSDRLosses";
             this.lblSDRLosses.Size = new System.Drawing.Size(40, 13);
             this.lblSDRLosses.TabIndex = 36;
@@ -545,7 +555,7 @@
             // lblSDRWins
             // 
             this.lblSDRWins.AutoSize = true;
-            this.lblSDRWins.Location = new System.Drawing.Point(70, 128);
+            this.lblSDRWins.Location = new System.Drawing.Point(306, 26);
             this.lblSDRWins.Name = "lblSDRWins";
             this.lblSDRWins.Size = new System.Drawing.Size(31, 13);
             this.lblSDRWins.TabIndex = 35;
@@ -554,7 +564,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(114, 176);
+            this.label7.Location = new System.Drawing.Point(350, 74);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 13);
             this.label7.TabIndex = 34;
@@ -563,7 +573,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(114, 160);
+            this.label11.Location = new System.Drawing.Point(350, 58);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(29, 13);
             this.label11.TabIndex = 33;
@@ -572,7 +582,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 144);
+            this.label10.Location = new System.Drawing.Point(248, 42);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(40, 13);
             this.label10.TabIndex = 32;
@@ -581,7 +591,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 128);
+            this.label9.Location = new System.Drawing.Point(248, 26);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(31, 13);
             this.label9.TabIndex = 30;
@@ -590,7 +600,7 @@
             // lblSDRClosedPositionsCount
             // 
             this.lblSDRClosedPositionsCount.AutoSize = true;
-            this.lblSDRClosedPositionsCount.Location = new System.Drawing.Point(146, 112);
+            this.lblSDRClosedPositionsCount.Location = new System.Drawing.Point(382, 10);
             this.lblSDRClosedPositionsCount.Name = "lblSDRClosedPositionsCount";
             this.lblSDRClosedPositionsCount.Size = new System.Drawing.Size(41, 13);
             this.lblSDRClosedPositionsCount.TabIndex = 29;
@@ -599,7 +609,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 112);
+            this.label8.Location = new System.Drawing.Point(248, 10);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(83, 13);
             this.label8.TabIndex = 28;
@@ -644,7 +654,7 @@
             // lblSDRFinalValueOnLastTick
             // 
             this.lblSDRFinalValueOnLastTick.AutoSize = true;
-            this.lblSDRFinalValueOnLastTick.Location = new System.Drawing.Point(146, 92);
+            this.lblSDRFinalValueOnLastTick.Location = new System.Drawing.Point(146, 106);
             this.lblSDRFinalValueOnLastTick.Name = "lblSDRFinalValueOnLastTick";
             this.lblSDRFinalValueOnLastTick.Size = new System.Drawing.Size(41, 13);
             this.lblSDRFinalValueOnLastTick.TabIndex = 8;
@@ -653,7 +663,7 @@
             // lblSDRFinalValueOnClosedPositions
             // 
             this.lblSDRFinalValueOnClosedPositions.AutoSize = true;
-            this.lblSDRFinalValueOnClosedPositions.Location = new System.Drawing.Point(146, 76);
+            this.lblSDRFinalValueOnClosedPositions.Location = new System.Drawing.Point(146, 90);
             this.lblSDRFinalValueOnClosedPositions.Name = "lblSDRFinalValueOnClosedPositions";
             this.lblSDRFinalValueOnClosedPositions.Size = new System.Drawing.Size(41, 13);
             this.lblSDRFinalValueOnClosedPositions.TabIndex = 7;
@@ -662,7 +672,7 @@
             // lblSDRInitialValue
             // 
             this.lblSDRInitialValue.AutoSize = true;
-            this.lblSDRInitialValue.Location = new System.Drawing.Point(146, 60);
+            this.lblSDRInitialValue.Location = new System.Drawing.Point(146, 74);
             this.lblSDRInitialValue.Name = "lblSDRInitialValue";
             this.lblSDRInitialValue.Size = new System.Drawing.Size(41, 13);
             this.lblSDRInitialValue.TabIndex = 6;
@@ -671,7 +681,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 92);
+            this.label6.Location = new System.Drawing.Point(12, 106);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(112, 13);
             this.label6.TabIndex = 2;
@@ -680,7 +690,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 76);
+            this.label5.Location = new System.Drawing.Point(12, 90);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(117, 13);
             this.label5.TabIndex = 1;
@@ -689,7 +699,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 60);
+            this.label4.Location = new System.Drawing.Point(12, 74);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 0;
@@ -713,6 +723,16 @@
             this.dbgPositions.Name = "dbgPositions";
             this.dbgPositions.Size = new System.Drawing.Size(933, 271);
             this.dbgPositions.TabIndex = 0;
+            // 
+            // tabSimDataDrawdowns
+            // 
+            this.tabSimDataDrawdowns.Location = new System.Drawing.Point(4, 22);
+            this.tabSimDataDrawdowns.Name = "tabSimDataDrawdowns";
+            this.tabSimDataDrawdowns.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSimDataDrawdowns.Size = new System.Drawing.Size(939, 277);
+            this.tabSimDataDrawdowns.TabIndex = 2;
+            this.tabSimDataDrawdowns.Text = "Drawdowns";
+            this.tabSimDataDrawdowns.UseVisualStyleBackColor = true;
             // 
             // pnlTop
             // 
@@ -829,15 +849,51 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // tabSimDataDrawdowns
+            // tabSimDataProfits
             // 
-            this.tabSimDataDrawdowns.Location = new System.Drawing.Point(4, 22);
-            this.tabSimDataDrawdowns.Name = "tabSimDataDrawdowns";
-            this.tabSimDataDrawdowns.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSimDataDrawdowns.Size = new System.Drawing.Size(939, 277);
-            this.tabSimDataDrawdowns.TabIndex = 2;
-            this.tabSimDataDrawdowns.Text = "Drawdowns";
-            this.tabSimDataDrawdowns.UseVisualStyleBackColor = true;
+            this.tabSimDataProfits.Location = new System.Drawing.Point(4, 22);
+            this.tabSimDataProfits.Name = "tabSimDataProfits";
+            this.tabSimDataProfits.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSimDataProfits.Size = new System.Drawing.Size(939, 277);
+            this.tabSimDataProfits.TabIndex = 3;
+            this.tabSimDataProfits.Text = "Profits";
+            this.tabSimDataProfits.UseVisualStyleBackColor = true;
+            // 
+            // lblSDRMaxDDOnTicks
+            // 
+            this.lblSDRMaxDDOnTicks.AutoSize = true;
+            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(382, 138);
+            this.lblSDRMaxDDOnTicks.Name = "lblSDRMaxDDOnTicks";
+            this.lblSDRMaxDDOnTicks.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRMaxDDOnTicks.TabIndex = 54;
+            this.lblSDRMaxDDOnTicks.Text = "Avg";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(248, 138);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(86, 13);
+            this.label21.TabIndex = 53;
+            this.label21.Text = "Max DD on ticks";
+            // 
+            // lblSDRMaxDDOnPositions
+            // 
+            this.lblSDRMaxDDOnPositions.AutoSize = true;
+            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(382, 154);
+            this.lblSDRMaxDDOnPositions.Name = "lblSDRMaxDDOnPositions";
+            this.lblSDRMaxDDOnPositions.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRMaxDDOnPositions.TabIndex = 56;
+            this.lblSDRMaxDDOnPositions.Text = "Avg";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(248, 154);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(105, 13);
+            this.label23.TabIndex = 55;
+            this.label23.Text = "Max DD on positions";
             // 
             // FormMain
             // 
@@ -948,6 +1004,11 @@
         private Controls.SystemEquity.SystemEquityChart chartEquity;
         private Controls.SystemEquity.SystemEquityChart chartEquityOnPositions;
         private System.Windows.Forms.TabPage tabSimDataDrawdowns;
+        private System.Windows.Forms.TabPage tabSimDataProfits;
+        private System.Windows.Forms.Label lblSDRMaxDDOnPositions;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label lblSDRMaxDDOnTicks;
+        private System.Windows.Forms.Label label21;
     }
 }
 

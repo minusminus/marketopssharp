@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MarketOps.SystemAnalysis
 {
@@ -26,5 +27,8 @@ namespace MarketOps.SystemAnalysis
         public float AvgLoss;
         public float AvgWinLossRatio;
         public float ExpectedPositionValue;
+
+        public List<SystemDrawDown> DDTicks;
+        public List<SystemDrawDown> DDClosedPositions;
     }
 }

@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrawDowns\DrawDownsCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemSummary\WinsLossesCalculatorTests.cs" />
   </ItemGroup>
@@ -80,6 +81,7 @@
       <Name>MarketOps.SystemExecutor</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -20,6 +20,9 @@ using MarketOps.StockData.Extensions;
 using MarketOps.SystemExecutor.Slippage;
 using MarketOps.SystemExecutor.Commission;
 using MarketOps.SystemAnalysis;
+using MarketOps.SystemAnalysis.SystemSummary;
+using System.Linq;
+using MarketOps.SystemAnalysis.Extensions;
 
 namespace MarketOps
 {
@@ -207,7 +210,7 @@ namespace MarketOps
 
         private void CalcAndShowSummary(SystemState systemState)
         {
-            SystemStateSummary summary = new SystemStateSummaryCalculator().Calculate(systemState);
+            SystemStateSummary summary = SystemStateSummaryCalculator.Calculate(systemState);
 
             lblSDRStartTS.Text = summary.StartTS.ToDisplay();
             lblSDRStopTS.Text = summary.StopTS.ToDisplay();
@@ -228,6 +231,9 @@ namespace MarketOps
             lblSDRAvgLoss.Text = summary.AvgLoss.ToDisplay();
             lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.ExpectedPositionValue.ToDisplay();
+
+            lblSDRMaxDDOnTicks.Text = summary.DDTicks.MaxDD().ToDisplayPcnt();
+            lblSDRMaxDDOnPositions.Text = summary.DDClosedPositions.MaxDD().ToDisplayPcnt();
         }
 
         private void ShowPositions(SystemState systemState)

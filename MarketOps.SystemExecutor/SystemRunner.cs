@@ -1,7 +1,8 @@
 ﻿using MarketOps.StockData.Interfaces;
 using System;
 using MarketOps.SystemExecutor.Processor;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor
 {

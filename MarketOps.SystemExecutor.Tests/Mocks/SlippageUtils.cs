@@ -1,4 +1,4 @@
-﻿using MarketOps.SystemExecutor.Interfaces;
+﻿using MarketOps.SystemData.Interfaces;
 using NSubstitute;
 
 namespace MarketOps.SystemExecutor.Tests.Mocks
@@ -6,7 +6,7 @@ namespace MarketOps.SystemExecutor.Tests.Mocks
     /// <summary>
     /// Utils for ISlippage mocks.
     /// </summary>
-    internal static class SlippageUtils
+    public static class SlippageUtils
     {
         public static ISlippage CreateSusbstitute()
         {

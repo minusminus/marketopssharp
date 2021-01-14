@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using MarketOps.SystemExecutor;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.Controls.SystemPositionsGrid
 {

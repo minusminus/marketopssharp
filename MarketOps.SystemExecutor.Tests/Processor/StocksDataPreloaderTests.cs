@@ -6,8 +6,9 @@ using MarketOps.StockData.Types;
 using System;
 using System.Collections.Generic;
 using MarketOps.StockData.Interfaces;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemExecutor.Tests.Mocks;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.Processor
 {

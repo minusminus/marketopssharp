@@ -4,10 +4,11 @@ using MarketOps.SystemExecutor.Processor;
 using MarketOps.StockData.Types;
 using System;
 using System.Collections.Generic;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using System.Linq;
 using MarketOps.SystemExecutor.Tests.Mocks;
-using MarketOps.SystemExecutor.Extensions;
+using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.Processor
 {

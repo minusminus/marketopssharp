@@ -7,7 +7,7 @@ namespace MarketOps.SystemExecutor.Tests.Mocks
     /// <summary>
     /// Utils for IStockDataProvider mock.
     /// </summary>
-    internal static class StockDataProviderUtils
+    public static class StockDataProviderUtils
     {
         public static IStockDataProvider CreateSubstitute(DateTime nearestTickGETicksBefore)
         {

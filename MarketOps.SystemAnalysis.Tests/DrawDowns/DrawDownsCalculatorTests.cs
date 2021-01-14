@@ -1,11 +1,10 @@
 ﻿using System;
 using NUnit.Framework;
 using Shouldly;
-using MarketOps.SystemAnalysis.SystemSummary;
-using MarketOps.SystemExecutor;
 using System.Linq;
 using MarketOps.SystemAnalysis.DrawDowns;
 using System.Collections.Generic;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemAnalysis.Tests.DrawDowns
 {

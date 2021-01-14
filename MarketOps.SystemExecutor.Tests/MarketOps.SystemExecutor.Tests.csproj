@@ -68,13 +68,9 @@
   <ItemGroup>
     <Compile Include="Commission\CommissionNoneTests.cs" />
     <Compile Include="DataLoaders\BufferedDataLoaderTests.cs" />
-    <Compile Include="Extensions\PositionDirExtensionsTests.cs" />
     <Compile Include="Mocks\CommissionUtils.cs" />
     <Compile Include="Mocks\SystemDataLoaderUtils.cs" />
     <Compile Include="Extensions\MoneyValueExtensionsTests.cs" />
-    <Compile Include="Extensions\PositionExtensionsTests.cs" />
-    <Compile Include="Extensions\SystemStateExtensionsTests.cs" />
-    <Compile Include="Extensions\SystemValueCalculatorTests.cs" />
     <Compile Include="GPW\CommissionGPWBossaTests.cs" />
     <Compile Include="GPW\GPWTickOpsTests.cs" />
     <Compile Include="MM\MMCloseCalculatorNoneTests.cs" />
@@ -107,6 +103,10 @@
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemData\MarketOps.SystemData.csproj">
+      <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
+      <Name>MarketOps.SystemData</Name>
     </ProjectReference>
     <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
       <Project>{4c9d9ab7-7d39-496e-85fd-135d30819239}</Project>

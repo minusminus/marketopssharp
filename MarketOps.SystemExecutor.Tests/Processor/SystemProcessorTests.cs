@@ -4,12 +4,13 @@ using NUnit.Framework;
 using Shouldly;
 using NSubstitute;
 using MarketOps.StockData.Interfaces;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using System;
 using MarketOps.StockData.Types;
 using System.Collections.Generic;
 using System.Linq;
-using MarketOps.SystemExecutor.Extensions;
+using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.Processor
 {

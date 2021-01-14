@@ -42,17 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrawDowns\DrawDownsCalculator.cs" />
-    <Compile Include="Extensions\DrawDownsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SystemDrawDown.cs" />
-    <Compile Include="SystemStateSummary.cs" />
     <Compile Include="SystemSummary\SystemStateSummaryCalculator.cs" />
     <Compile Include="SystemSummary\WinsLossesCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
-      <Project>{4c9d9ab7-7d39-496e-85fd-135d30819239}</Project>
-      <Name>MarketOps.SystemExecutor</Name>
+    <ProjectReference Include="..\MarketOps.SystemData\MarketOps.SystemData.csproj">
+      <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
+      <Name>MarketOps.SystemData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

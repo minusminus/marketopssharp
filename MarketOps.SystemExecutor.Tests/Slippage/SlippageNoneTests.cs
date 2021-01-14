@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Shouldly;
 using MarketOps.SystemExecutor.Slippage;
 using MarketOps.StockData.Types;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.Slippage
 {

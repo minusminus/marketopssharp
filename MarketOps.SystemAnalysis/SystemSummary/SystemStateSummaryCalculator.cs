@@ -1,5 +1,5 @@
 ﻿using MarketOps.SystemAnalysis.DrawDowns;
-using MarketOps.SystemExecutor;
+using MarketOps.SystemData.Types;
 using System.Linq;
 
 namespace MarketOps.SystemAnalysis.SystemSummary

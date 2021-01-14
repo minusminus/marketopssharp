@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using MarketOps.SystemAnalysis;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.Controls.DrawDowns
 {

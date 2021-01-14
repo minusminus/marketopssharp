@@ -1,6 +1,6 @@
-﻿using MarketOps.SystemExecutor;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemAnalysis.DrawDowns
 {

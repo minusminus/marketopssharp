@@ -15,14 +15,14 @@ using MarketOps.DataPump.Types;
 using MarketOps.Extensions;
 using MarketOps.SystemExecutor;
 using MarketOps.SystemDefs.PriceCrossingSMA;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using MarketOps.StockData.Extensions;
 using MarketOps.SystemExecutor.Slippage;
 using MarketOps.SystemExecutor.Commission;
-using MarketOps.SystemAnalysis;
 using MarketOps.SystemAnalysis.SystemSummary;
 using System.Linq;
-using MarketOps.SystemAnalysis.Extensions;
+using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps
 {

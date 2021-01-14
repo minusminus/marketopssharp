@@ -1,5 +1,5 @@
-﻿using MarketOps.SystemAnalysis;
-using MarketOps.SystemAnalysis.Extensions;
+﻿using MarketOps.SystemData.Types;
+using MarketOps.SystemData.Extensions;
 
 namespace MarketOps.Controls.DrawDowns
 {

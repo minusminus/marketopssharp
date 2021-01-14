@@ -1,10 +1,11 @@
 ﻿using NUnit.Framework;
 using Shouldly;
 using MarketOps.SystemExecutor.Slippage;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using NSubstitute;
 using MarketOps.StockData.Types;
 using System;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.Slippage
 {

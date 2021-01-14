@@ -5,7 +5,7 @@ namespace MarketOps.SystemExecutor.Tests.Mocks
     /// <summary>
     /// Utils for StockPricesData.
     /// </summary>
-    internal static class StockPricesDataUtils
+    public static class StockPricesDataUtils
     {
         public static StockPricesData CreatePricesData(float o, float h, float l, float c)
         {

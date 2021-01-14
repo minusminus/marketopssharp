@@ -5,7 +5,7 @@ namespace MarketOps.SystemExecutor.Tests.Mocks
     /// <summary>
     /// Stock stat mock.
     /// </summary>
-    internal class StockStatMock : StockStat
+    public class StockStatMock : StockStat
     {
         public StockStatMock(string chartArea, int returnedBackBufferLength) : base(chartArea)
         {

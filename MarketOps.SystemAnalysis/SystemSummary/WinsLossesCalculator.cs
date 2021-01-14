@@ -1,5 +1,5 @@
-﻿using MarketOps.SystemExecutor;
-using MarketOps.SystemExecutor.Extensions;
+﻿using MarketOps.SystemData.Types;
+using MarketOps.SystemData.Extensions;
 
 namespace MarketOps.SystemAnalysis.SystemSummary
 {

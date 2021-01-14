@@ -1,6 +1,5 @@
 ﻿using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
-using MarketOps.SystemExecutor.Interfaces;
 using System;
 
 namespace MarketOps.SystemExecutor.Processor

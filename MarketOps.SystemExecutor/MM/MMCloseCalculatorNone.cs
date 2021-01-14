@@ -1,4 +1,5 @@
-﻿using MarketOps.SystemExecutor.Interfaces;
+﻿using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
 using System;
 
 namespace MarketOps.SystemExecutor.MM

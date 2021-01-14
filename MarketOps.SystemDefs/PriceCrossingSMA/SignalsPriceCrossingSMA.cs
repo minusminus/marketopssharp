@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarketOps.SystemExecutor;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.StockData.Extensions;
 using MarketOps.Stats.Stats;
 using MarketOps.StockData.Interfaces;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemDefs.PriceCrossingSMA
 {

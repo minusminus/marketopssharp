@@ -1,9 +1,9 @@
 ﻿using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
-using MarketOps.SystemExecutor.Extensions;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Interfaces;
 using System;
-using System.Collections.Generic;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Processor
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.SystemExecutor.Commission;
+﻿using MarketOps.SystemExecutor.Commission;
 using NUnit.Framework;
 using Shouldly;
 using MarketOps.StockData.Types;

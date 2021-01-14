@@ -1,4 +1,4 @@
-﻿using MarketOps.SystemExecutor;
+﻿using MarketOps.SystemData.Types;
 using System;
 
 namespace MarketOps.Controls.SystemEquity

@@ -3,6 +3,7 @@ using MarketOps.SystemExecutor.MM;
 using NUnit.Framework;
 using Shouldly;
 using System.Linq;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.MM
 {

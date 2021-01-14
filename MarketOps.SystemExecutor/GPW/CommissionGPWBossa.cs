@@ -1,7 +1,7 @@
 ﻿using System;
 using MarketOps.StockData.Types;
 using MarketOps.SystemExecutor.Extensions;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 
 namespace MarketOps.SystemExecutor.GPW
 {

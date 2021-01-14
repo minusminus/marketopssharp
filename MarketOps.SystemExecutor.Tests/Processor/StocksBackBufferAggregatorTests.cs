@@ -5,6 +5,7 @@ using MarketOps.StockData.Types;
 using System;
 using System.Collections.Generic;
 using MarketOps.SystemExecutor.Tests.Mocks;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.Processor
 {

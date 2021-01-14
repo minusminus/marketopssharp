@@ -1,5 +1,5 @@
 ﻿using MarketOps.StockData.Types;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 using NSubstitute;
 using System;
 
@@ -8,7 +8,7 @@ namespace MarketOps.SystemExecutor.Tests.Mocks
     /// <summary>
     /// Utils for IDataLoader mock.
     /// </summary>
-    internal static class SystemDataLoaderUtils
+    public static class SystemDataLoaderUtils
     {
         public static ISystemDataLoader CreateSubstitute(StockPricesData pricesData)
         {

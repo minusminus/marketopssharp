@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 
 namespace MarketOps.SystemExecutor.DataLoaders
 {

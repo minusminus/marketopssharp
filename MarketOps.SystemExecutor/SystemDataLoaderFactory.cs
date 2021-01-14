@@ -1,6 +1,6 @@
 ﻿using MarketOps.StockData.Interfaces;
 using MarketOps.SystemExecutor.DataLoaders;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
 
 namespace MarketOps.SystemExecutor
 {

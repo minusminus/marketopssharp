@@ -1,7 +1,7 @@
 ﻿using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Interfaces;
-using MarketOps.SystemExecutor;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemDefs.PriceCrossingSMA
 {

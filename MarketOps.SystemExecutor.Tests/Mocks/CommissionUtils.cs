@@ -1,4 +1,4 @@
-﻿using MarketOps.SystemExecutor.Interfaces;
+﻿using MarketOps.SystemData.Interfaces;
 using NSubstitute;
 
 namespace MarketOps.SystemExecutor.Tests.Mocks
@@ -6,7 +6,7 @@ namespace MarketOps.SystemExecutor.Tests.Mocks
     /// <summary>
     /// Utils for ICommission mocks.
     /// </summary>
-    internal static class CommissionUtils
+    public static class CommissionUtils
     {
         public static ICommission CreateSubstitute()
         {

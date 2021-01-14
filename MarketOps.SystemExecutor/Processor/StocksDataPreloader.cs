@@ -1,6 +1,7 @@
 ﻿using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
 using System;
 using System.Collections.Generic;
 

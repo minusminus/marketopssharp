@@ -2,8 +2,8 @@
 using NUnit.Framework;
 using Shouldly;
 using MarketOps.SystemAnalysis.SystemSummary;
-using MarketOps.SystemExecutor;
 using System.Linq;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemAnalysis.Tests.SystemSummary
 {

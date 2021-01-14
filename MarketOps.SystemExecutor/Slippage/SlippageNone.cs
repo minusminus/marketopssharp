@@ -1,6 +1,7 @@
 ﻿using System;
 using MarketOps.StockData.Types;
-using MarketOps.SystemExecutor.Interfaces;
+using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.Slippage
 {

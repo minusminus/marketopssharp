@@ -59,6 +59,12 @@
     <Compile Include="DataGen\Forms\FormDataGen.designer.cs">
       <DependentUpon>FormDataGen.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataMappers\Profit2PointChartMapper.cs" />
+    <Compile Include="DataMappers\ProfitPcnt2PointChartMapper.cs" />
+    <Compile Include="DataMappers\ProfitPcntPointChartData.cs" />
+    <Compile Include="DataMappers\ProfitPointChartData.cs" />
+    <Compile Include="DataMappers\SystemDrawDownPointChartData.cs" />
+    <Compile Include="DataMappers\SystemDrawDown2PointChartMapper.cs" />
     <Compile Include="DataOp.cs" />
     <Compile Include="DataProvidersFactory.cs" />
     <Compile Include="DataPump\DataPumper.cs" />

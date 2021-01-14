@@ -92,7 +92,8 @@
             this.tabSimDataPositions = new System.Windows.Forms.TabPage();
             this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
             this.tabSimDataDrawdowns = new System.Windows.Forms.TabPage();
-            this.chartDD2DTicks = new MarketOps.Controls.DrawDowns.DrawDowns2DChart();
+            this.chartDDPositions = new MarketOps.Controls.PointChart.PointChart();
+            this.chartDDTicks = new MarketOps.Controls.PointChart.PointChart();
             this.tabSimDataProfits = new System.Windows.Forms.TabPage();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
@@ -105,7 +106,14 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.chartDD2DPositions = new MarketOps.Controls.DrawDowns.DrawDowns2DChart();
+            this.gbDDTicks = new System.Windows.Forms.GroupBox();
+            this.gbDDPositions = new System.Windows.Forms.GroupBox();
+            this.splitDrawDowns = new System.Windows.Forms.SplitContainer();
+            this.splitProfits = new System.Windows.Forms.SplitContainer();
+            this.gbProfitsValue = new System.Windows.Forms.GroupBox();
+            this.chartProfitValue = new MarketOps.Controls.PointChart.PointChart();
+            this.gbProfitPcnt = new System.Windows.Forms.GroupBox();
+            this.chartProfitPcnt = new MarketOps.Controls.PointChart.PointChart();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -121,9 +129,22 @@
             this.pnlSimDataResults.SuspendLayout();
             this.tabSimDataPositions.SuspendLayout();
             this.tabSimDataDrawdowns.SuspendLayout();
+            this.tabSimDataProfits.SuspendLayout();
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
+            this.gbDDTicks.SuspendLayout();
+            this.gbDDPositions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitDrawDowns)).BeginInit();
+            this.splitDrawDowns.Panel1.SuspendLayout();
+            this.splitDrawDowns.Panel2.SuspendLayout();
+            this.splitDrawDowns.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitProfits)).BeginInit();
+            this.splitProfits.Panel1.SuspendLayout();
+            this.splitProfits.Panel2.SuspendLayout();
+            this.splitProfits.SuspendLayout();
+            this.gbProfitsValue.SuspendLayout();
+            this.gbProfitPcnt.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -765,26 +786,35 @@
             // 
             // tabSimDataDrawdowns
             // 
-            this.tabSimDataDrawdowns.Controls.Add(this.chartDD2DPositions);
-            this.tabSimDataDrawdowns.Controls.Add(this.chartDD2DTicks);
+            this.tabSimDataDrawdowns.Controls.Add(this.splitDrawDowns);
             this.tabSimDataDrawdowns.Location = new System.Drawing.Point(4, 22);
             this.tabSimDataDrawdowns.Name = "tabSimDataDrawdowns";
-            this.tabSimDataDrawdowns.Padding = new System.Windows.Forms.Padding(3);
             this.tabSimDataDrawdowns.Size = new System.Drawing.Size(939, 277);
             this.tabSimDataDrawdowns.TabIndex = 2;
             this.tabSimDataDrawdowns.Text = "Drawdowns";
             this.tabSimDataDrawdowns.UseVisualStyleBackColor = true;
             // 
-            // chartDD2DTicks
+            // chartDDPositions
             // 
-            this.chartDD2DTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartDD2DTicks.Location = new System.Drawing.Point(21, 6);
-            this.chartDD2DTicks.Name = "chartDD2DTicks";
-            this.chartDD2DTicks.Size = new System.Drawing.Size(296, 181);
-            this.chartDD2DTicks.TabIndex = 0;
+            this.chartDDPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDDPositions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartDDPositions.Location = new System.Drawing.Point(3, 16);
+            this.chartDDPositions.Name = "chartDDPositions";
+            this.chartDDPositions.Size = new System.Drawing.Size(457, 181);
+            this.chartDDPositions.TabIndex = 1;
+            // 
+            // chartDDTicks
+            // 
+            this.chartDDTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDDTicks.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartDDTicks.Location = new System.Drawing.Point(3, 16);
+            this.chartDDTicks.Name = "chartDDTicks";
+            this.chartDDTicks.Size = new System.Drawing.Size(462, 181);
+            this.chartDDTicks.TabIndex = 0;
             // 
             // tabSimDataProfits
             // 
+            this.tabSimDataProfits.Controls.Add(this.splitProfits);
             this.tabSimDataProfits.Location = new System.Drawing.Point(4, 22);
             this.tabSimDataProfits.Name = "tabSimDataProfits";
             this.tabSimDataProfits.Padding = new System.Windows.Forms.Padding(3);
@@ -908,13 +938,105 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // chartDD2DPositions
+            // gbDDTicks
             // 
-            this.chartDD2DPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartDD2DPositions.Location = new System.Drawing.Point(583, 6);
-            this.chartDD2DPositions.Name = "chartDD2DPositions";
-            this.chartDD2DPositions.Size = new System.Drawing.Size(296, 181);
-            this.chartDD2DPositions.TabIndex = 1;
+            this.gbDDTicks.Controls.Add(this.chartDDTicks);
+            this.gbDDTicks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbDDTicks.Location = new System.Drawing.Point(1, 1);
+            this.gbDDTicks.Name = "gbDDTicks";
+            this.gbDDTicks.Size = new System.Drawing.Size(468, 275);
+            this.gbDDTicks.TabIndex = 2;
+            this.gbDDTicks.TabStop = false;
+            this.gbDDTicks.Text = "Ticks";
+            // 
+            // gbDDPositions
+            // 
+            this.gbDDPositions.Controls.Add(this.chartDDPositions);
+            this.gbDDPositions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbDDPositions.Location = new System.Drawing.Point(1, 1);
+            this.gbDDPositions.Name = "gbDDPositions";
+            this.gbDDPositions.Size = new System.Drawing.Size(463, 275);
+            this.gbDDPositions.TabIndex = 3;
+            this.gbDDPositions.TabStop = false;
+            this.gbDDPositions.Text = "Positions";
+            // 
+            // splitDrawDowns
+            // 
+            this.splitDrawDowns.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitDrawDowns.IsSplitterFixed = true;
+            this.splitDrawDowns.Location = new System.Drawing.Point(0, 0);
+            this.splitDrawDowns.Name = "splitDrawDowns";
+            // 
+            // splitDrawDowns.Panel1
+            // 
+            this.splitDrawDowns.Panel1.Controls.Add(this.gbDDTicks);
+            this.splitDrawDowns.Panel1.Padding = new System.Windows.Forms.Padding(1);
+            // 
+            // splitDrawDowns.Panel2
+            // 
+            this.splitDrawDowns.Panel2.Controls.Add(this.gbDDPositions);
+            this.splitDrawDowns.Panel2.Padding = new System.Windows.Forms.Padding(1);
+            this.splitDrawDowns.Size = new System.Drawing.Size(939, 277);
+            this.splitDrawDowns.SplitterDistance = 470;
+            this.splitDrawDowns.TabIndex = 4;
+            // 
+            // splitProfits
+            // 
+            this.splitProfits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitProfits.IsSplitterFixed = true;
+            this.splitProfits.Location = new System.Drawing.Point(3, 3);
+            this.splitProfits.Name = "splitProfits";
+            // 
+            // splitProfits.Panel1
+            // 
+            this.splitProfits.Panel1.Controls.Add(this.gbProfitsValue);
+            // 
+            // splitProfits.Panel2
+            // 
+            this.splitProfits.Panel2.Controls.Add(this.gbProfitPcnt);
+            this.splitProfits.Size = new System.Drawing.Size(933, 271);
+            this.splitProfits.SplitterDistance = 470;
+            this.splitProfits.TabIndex = 0;
+            // 
+            // gbProfitsValue
+            // 
+            this.gbProfitsValue.Controls.Add(this.chartProfitValue);
+            this.gbProfitsValue.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbProfitsValue.Location = new System.Drawing.Point(0, 0);
+            this.gbProfitsValue.Name = "gbProfitsValue";
+            this.gbProfitsValue.Size = new System.Drawing.Size(470, 271);
+            this.gbProfitsValue.TabIndex = 3;
+            this.gbProfitsValue.TabStop = false;
+            this.gbProfitsValue.Text = "Value";
+            // 
+            // chartProfitValue
+            // 
+            this.chartProfitValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartProfitValue.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartProfitValue.Location = new System.Drawing.Point(3, 16);
+            this.chartProfitValue.Name = "chartProfitValue";
+            this.chartProfitValue.Size = new System.Drawing.Size(464, 181);
+            this.chartProfitValue.TabIndex = 0;
+            // 
+            // gbProfitPcnt
+            // 
+            this.gbProfitPcnt.Controls.Add(this.chartProfitPcnt);
+            this.gbProfitPcnt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbProfitPcnt.Location = new System.Drawing.Point(0, 0);
+            this.gbProfitPcnt.Name = "gbProfitPcnt";
+            this.gbProfitPcnt.Size = new System.Drawing.Size(459, 271);
+            this.gbProfitPcnt.TabIndex = 3;
+            this.gbProfitPcnt.TabStop = false;
+            this.gbProfitPcnt.Text = "Percentage";
+            // 
+            // chartProfitPcnt
+            // 
+            this.chartProfitPcnt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartProfitPcnt.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartProfitPcnt.Location = new System.Drawing.Point(3, 16);
+            this.chartProfitPcnt.Name = "chartProfitPcnt";
+            this.chartProfitPcnt.Size = new System.Drawing.Size(453, 181);
+            this.chartProfitPcnt.TabIndex = 0;
             // 
             // FormMain
             // 
@@ -945,10 +1067,23 @@
             this.pnlSimDataResults.PerformLayout();
             this.tabSimDataPositions.ResumeLayout(false);
             this.tabSimDataDrawdowns.ResumeLayout(false);
+            this.tabSimDataProfits.ResumeLayout(false);
             this.pnlTop.ResumeLayout(false);
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
+            this.gbDDTicks.ResumeLayout(false);
+            this.gbDDPositions.ResumeLayout(false);
+            this.splitDrawDowns.Panel1.ResumeLayout(false);
+            this.splitDrawDowns.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitDrawDowns)).EndInit();
+            this.splitDrawDowns.ResumeLayout(false);
+            this.splitProfits.Panel1.ResumeLayout(false);
+            this.splitProfits.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitProfits)).EndInit();
+            this.splitProfits.ResumeLayout(false);
+            this.gbProfitsValue.ResumeLayout(false);
+            this.gbProfitPcnt.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1031,8 +1166,16 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label lblSDRMaxDDOnTicks;
         private System.Windows.Forms.Label label21;
-        private Controls.DrawDowns.DrawDowns2DChart chartDD2DTicks;
-        private Controls.DrawDowns.DrawDowns2DChart chartDD2DPositions;
+        private Controls.PointChart.PointChart chartDDTicks;
+        private Controls.PointChart.PointChart chartDDPositions;
+        private System.Windows.Forms.GroupBox gbDDPositions;
+        private System.Windows.Forms.GroupBox gbDDTicks;
+        private System.Windows.Forms.SplitContainer splitDrawDowns;
+        private System.Windows.Forms.SplitContainer splitProfits;
+        private System.Windows.Forms.GroupBox gbProfitsValue;
+        private Controls.PointChart.PointChart chartProfitValue;
+        private System.Windows.Forms.GroupBox gbProfitPcnt;
+        private Controls.PointChart.PointChart chartProfitPcnt;
     }
 }
 

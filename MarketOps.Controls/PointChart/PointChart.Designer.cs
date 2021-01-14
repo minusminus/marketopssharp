@@ -1,6 +1,6 @@
-﻿namespace MarketOps.Controls.DrawDowns
+﻿namespace MarketOps.Controls.PointChart
 {
-    partial class DrawDowns2DChart
+    partial class PointChart
     {
         /// <summary> 
         /// Wymagana zmienna projektanta.
@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.chartDD2D = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.srcDD2D = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.chartDD2D)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcDD2D)).BeginInit();
+            this.chartPoints = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.srcPoints = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.chartPoints)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.srcPoints)).BeginInit();
             this.SuspendLayout();
             // 
-            // chartDD2D
+            // chartPoints
             // 
             chartArea1.AxisX.IsLabelAutoFit = false;
             chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F);
@@ -52,38 +52,38 @@
             chartArea1.AxisY.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
-            chartArea1.Name = "areaDD2D";
-            this.chartDD2D.ChartAreas.Add(chartArea1);
-            this.chartDD2D.DataSource = this.srcDD2D;
-            this.chartDD2D.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartDD2D.Location = new System.Drawing.Point(0, 0);
-            this.chartDD2D.Name = "chartDD2D";
-            series1.ChartArea = "areaDD2D";
+            chartArea1.Name = "areaPoints";
+            this.chartPoints.ChartAreas.Add(chartArea1);
+            this.chartPoints.DataSource = this.srcPoints;
+            this.chartPoints.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartPoints.Location = new System.Drawing.Point(0, 0);
+            this.chartPoints.Name = "chartPoints";
+            series1.ChartArea = "areaPoints";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
-            series1.Name = "seriesDD2D";
-            series1.XValueMember = "DDValue";
-            series1.YValueMembers = "Length";
-            this.chartDD2D.Series.Add(series1);
-            this.chartDD2D.Size = new System.Drawing.Size(408, 275);
-            this.chartDD2D.TabIndex = 0;
-            this.chartDD2D.Text = "chart1";
+            series1.Name = "seriesPoints";
+            series1.XValueMember = "X";
+            series1.YValueMembers = "Y";
+            this.chartPoints.Series.Add(series1);
+            this.chartPoints.Size = new System.Drawing.Size(408, 275);
+            this.chartPoints.TabIndex = 0;
+            this.chartPoints.Text = "chart1";
             // 
-            // DrawDowns2DChart
+            // PointChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.chartDD2D);
-            this.Name = "DrawDowns2DChart";
+            this.Controls.Add(this.chartPoints);
+            this.Name = "PointChart";
             this.Size = new System.Drawing.Size(408, 275);
-            ((System.ComponentModel.ISupportInitialize)(this.chartDD2D)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcDD2D)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartPoints)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.srcPoints)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartDD2D;
-        private System.Windows.Forms.BindingSource srcDD2D;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartPoints;
+        private System.Windows.Forms.BindingSource srcPoints;
     }
 }

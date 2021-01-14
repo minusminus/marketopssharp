@@ -46,13 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChartAreaFactory.cs" />
-    <Compile Include="DrawDowns\DrawDowns2DChart.cs">
+    <Compile Include="PointChart\PointChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DrawDowns\DrawDowns2DChart.Designer.cs">
-      <DependentUpon>DrawDowns2DChart.cs</DependentUpon>
+    <Compile Include="PointChart\PointChart.Designer.cs">
+      <DependentUpon>PointChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="DrawDowns\SystemDrawDownMapper.cs" />
+    <Compile Include="PointChart\PointChartData.cs" />
     <Compile Include="Extensions\TabPageExtensions.cs" />
     <Compile Include="PriceChart\ChartAxisValueLabel.cs">
       <SubType>UserControl</SubType>
@@ -136,8 +136,8 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DrawDowns\DrawDowns2DChart.resx">
-      <DependentUpon>DrawDowns2DChart.cs</DependentUpon>
+    <EmbeddedResource Include="PointChart\PointChart.resx">
+      <DependentUpon>PointChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PriceChart\ChartAxisValueLabel.resx">
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>

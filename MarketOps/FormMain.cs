@@ -23,6 +23,7 @@ using MarketOps.SystemAnalysis.SystemSummary;
 using System.Linq;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Types;
+using MarketOps.DataMappers;
 
 namespace MarketOps
 {
@@ -209,6 +210,7 @@ namespace MarketOps
             ShowPositions(systemState);
             ShowEquityCharts(systemState);
             ShowDDCharts(summary);
+            ShowProfitCharts(systemState);
         }
 
         private void DisplaySummary(SystemStateSummary summary)
@@ -250,8 +252,14 @@ namespace MarketOps
 
         private void ShowDDCharts(SystemStateSummary summary)
         {
-            chartDD2DTicks.LoadData(summary.DDTicks);
-            chartDD2DPositions.LoadData(summary.DDClosedPositions);
+            chartDDTicks.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDTicks));
+            chartDDPositions.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDClosedPositions));
+        }
+
+        private void ShowProfitCharts(SystemState systemState)
+        {
+            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed));
+            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed));
         }
     }
 }

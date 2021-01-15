@@ -191,8 +191,6 @@ namespace MarketOps
         {
             ConfigSystemDefinition config = (ConfigSystemDefinition)cbSystemChoice.SelectedItem;
             _currentSimSystemDef = _systemDefinitionFactory.Get(config);
-            foreach (var paramDef in config.ParamsDefaults)
-                _currentSimSystemDef.SystemParams.Get(paramDef.Param).ValueString = paramDef.Value;
 
             lblSimSystemName.Text = config.Description;
             paramsSim.LoadParams(_currentSimSystemDef.SystemParams);

@@ -31,7 +31,9 @@ namespace MarketOps.SystemExecutor.ConfigSystemDefs
             if (systemDefType == null)
                 throw new Exception($"Class {config.ClassName} not found in {config.ClassLibrary}");
 
-            return CreateObject(systemDefType);
+            SystemDefinition res = CreateObject(systemDefType);
+            SetDefaultParams(res, config.ParamsDefaults);
+            return res;
         }
 
         private Type FindType(string className, string libraryName) =>
@@ -55,5 +57,11 @@ namespace MarketOps.SystemExecutor.ConfigSystemDefs
                 _slippage,
                 _commission
             };
+
+        private void SetDefaultParams(SystemDefinition systemDefinition, ConfigSystemDefinitionParamDefault[] paramsDefaults)
+        {
+            foreach (var paramDef in paramsDefaults)
+                systemDefinition.SystemParams.Get(paramDef.Param).ValueString = paramDef.Value;
+        }
     }
 }

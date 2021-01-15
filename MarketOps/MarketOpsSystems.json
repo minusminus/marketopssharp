@@ -1,0 +1,22 @@
+[
+  {
+    "Description": "PriceCrossingSMA",
+    "ClassName": "MarketOps.SystemDefs.PriceCrossingSMA.PriceCrossingSMA",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "SMA period",
+        "Value": "20"
+      }
+    ]
+  },
+  {
+    "Description": "ZZZZZZ test",
+    "ClassName": "",
+    "ClassLibrary": ""
+  }
+]

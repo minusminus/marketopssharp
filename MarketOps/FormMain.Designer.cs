@@ -92,9 +92,17 @@
             this.tabSimDataPositions = new System.Windows.Forms.TabPage();
             this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
             this.tabSimDataDrawdowns = new System.Windows.Forms.TabPage();
-            this.chartDDPositions = new MarketOps.Controls.PointChart.PointChart();
+            this.splitDrawDowns = new System.Windows.Forms.SplitContainer();
+            this.gbDDTicks = new System.Windows.Forms.GroupBox();
             this.chartDDTicks = new MarketOps.Controls.PointChart.PointChart();
+            this.gbDDPositions = new System.Windows.Forms.GroupBox();
+            this.chartDDPositions = new MarketOps.Controls.PointChart.PointChart();
             this.tabSimDataProfits = new System.Windows.Forms.TabPage();
+            this.splitProfits = new System.Windows.Forms.SplitContainer();
+            this.gbProfitsValue = new System.Windows.Forms.GroupBox();
+            this.chartProfitValue = new MarketOps.Controls.PointChart.PointChart();
+            this.gbProfitPcnt = new System.Windows.Forms.GroupBox();
+            this.chartProfitPcnt = new MarketOps.Controls.PointChart.PointChart();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
             this.pnlSimulationStart = new System.Windows.Forms.Panel();
@@ -106,14 +114,8 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.gbDDTicks = new System.Windows.Forms.GroupBox();
-            this.gbDDPositions = new System.Windows.Forms.GroupBox();
-            this.splitDrawDowns = new System.Windows.Forms.SplitContainer();
-            this.splitProfits = new System.Windows.Forms.SplitContainer();
-            this.gbProfitsValue = new System.Windows.Forms.GroupBox();
-            this.chartProfitValue = new MarketOps.Controls.PointChart.PointChart();
-            this.gbProfitPcnt = new System.Windows.Forms.GroupBox();
-            this.chartProfitPcnt = new MarketOps.Controls.PointChart.PointChart();
+            this.cbSystemChoice = new System.Windows.Forms.ComboBox();
+            this.lblSimSystemName = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -129,22 +131,22 @@
             this.pnlSimDataResults.SuspendLayout();
             this.tabSimDataPositions.SuspendLayout();
             this.tabSimDataDrawdowns.SuspendLayout();
-            this.tabSimDataProfits.SuspendLayout();
-            this.pnlTop.SuspendLayout();
-            this.pnlSimulationStart.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
-            this.gbDDTicks.SuspendLayout();
-            this.gbDDPositions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitDrawDowns)).BeginInit();
             this.splitDrawDowns.Panel1.SuspendLayout();
             this.splitDrawDowns.Panel2.SuspendLayout();
             this.splitDrawDowns.SuspendLayout();
+            this.gbDDTicks.SuspendLayout();
+            this.gbDDPositions.SuspendLayout();
+            this.tabSimDataProfits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitProfits)).BeginInit();
             this.splitProfits.Panel1.SuspendLayout();
             this.splitProfits.Panel2.SuspendLayout();
             this.splitProfits.SuspendLayout();
             this.gbProfitsValue.SuspendLayout();
             this.gbProfitPcnt.SuspendLayout();
+            this.pnlTop.SuspendLayout();
+            this.pnlSimulationStart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -794,172 +796,6 @@
             this.tabSimDataDrawdowns.Text = "Drawdowns";
             this.tabSimDataDrawdowns.UseVisualStyleBackColor = true;
             // 
-            // chartDDPositions
-            // 
-            this.chartDDPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartDDPositions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartDDPositions.Location = new System.Drawing.Point(3, 16);
-            this.chartDDPositions.Name = "chartDDPositions";
-            this.chartDDPositions.Size = new System.Drawing.Size(457, 181);
-            this.chartDDPositions.TabIndex = 1;
-            // 
-            // chartDDTicks
-            // 
-            this.chartDDTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartDDTicks.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartDDTicks.Location = new System.Drawing.Point(3, 16);
-            this.chartDDTicks.Name = "chartDDTicks";
-            this.chartDDTicks.Size = new System.Drawing.Size(462, 181);
-            this.chartDDTicks.TabIndex = 0;
-            // 
-            // tabSimDataProfits
-            // 
-            this.tabSimDataProfits.Controls.Add(this.splitProfits);
-            this.tabSimDataProfits.Location = new System.Drawing.Point(4, 22);
-            this.tabSimDataProfits.Name = "tabSimDataProfits";
-            this.tabSimDataProfits.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSimDataProfits.Size = new System.Drawing.Size(939, 277);
-            this.tabSimDataProfits.TabIndex = 3;
-            this.tabSimDataProfits.Text = "Profits";
-            this.tabSimDataProfits.UseVisualStyleBackColor = true;
-            // 
-            // pnlTop
-            // 
-            this.pnlTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlTop.Controls.Add(this.paramsSim);
-            this.pnlTop.Controls.Add(this.pnlSimulationStart);
-            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlTop.Location = new System.Drawing.Point(0, 0);
-            this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(253, 667);
-            this.pnlTop.TabIndex = 0;
-            // 
-            // paramsSim
-            // 
-            this.paramsSim.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paramsSim.Location = new System.Drawing.Point(0, 181);
-            this.paramsSim.Name = "paramsSim";
-            this.paramsSim.Size = new System.Drawing.Size(251, 484);
-            this.paramsSim.TabIndex = 1;
-            // 
-            // pnlSimulationStart
-            // 
-            this.pnlSimulationStart.Controls.Add(this.label3);
-            this.pnlSimulationStart.Controls.Add(this.label2);
-            this.pnlSimulationStart.Controls.Add(this.label1);
-            this.pnlSimulationStart.Controls.Add(this.edtInitialCash);
-            this.pnlSimulationStart.Controls.Add(this.btnSimLoadDefinition);
-            this.pnlSimulationStart.Controls.Add(this.btnSim);
-            this.pnlSimulationStart.Controls.Add(this.dtpSimFrom);
-            this.pnlSimulationStart.Controls.Add(this.dtpSimTo);
-            this.pnlSimulationStart.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSimulationStart.Location = new System.Drawing.Point(0, 0);
-            this.pnlSimulationStart.Name = "pnlSimulationStart";
-            this.pnlSimulationStart.Size = new System.Drawing.Size(251, 181);
-            this.pnlSimulationStart.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 125);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 13);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Initial cash";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 100);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(20, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "To";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 75);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "From";
-            // 
-            // edtInitialCash
-            // 
-            this.edtInitialCash.Location = new System.Drawing.Point(124, 121);
-            this.edtInitialCash.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.edtInitialCash.Name = "edtInitialCash";
-            this.edtInitialCash.Size = new System.Drawing.Size(97, 20);
-            this.edtInitialCash.TabIndex = 4;
-            this.edtInitialCash.Value = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            // 
-            // btnSimLoadDefinition
-            // 
-            this.btnSimLoadDefinition.Location = new System.Drawing.Point(21, 30);
-            this.btnSimLoadDefinition.Name = "btnSimLoadDefinition";
-            this.btnSimLoadDefinition.Size = new System.Drawing.Size(200, 23);
-            this.btnSimLoadDefinition.TabIndex = 3;
-            this.btnSimLoadDefinition.Text = "Load definition";
-            this.btnSimLoadDefinition.UseVisualStyleBackColor = true;
-            this.btnSimLoadDefinition.Click += new System.EventHandler(this.btnSimLoadDefinition_Click);
-            // 
-            // btnSim
-            // 
-            this.btnSim.Location = new System.Drawing.Point(21, 147);
-            this.btnSim.Name = "btnSim";
-            this.btnSim.Size = new System.Drawing.Size(200, 23);
-            this.btnSim.TabIndex = 0;
-            this.btnSim.Text = "Simulate";
-            this.btnSim.UseVisualStyleBackColor = true;
-            this.btnSim.Click += new System.EventHandler(this.btnSim_Click);
-            // 
-            // dtpSimFrom
-            // 
-            this.dtpSimFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpSimFrom.Location = new System.Drawing.Point(124, 69);
-            this.dtpSimFrom.Name = "dtpSimFrom";
-            this.dtpSimFrom.Size = new System.Drawing.Size(97, 20);
-            this.dtpSimFrom.TabIndex = 1;
-            // 
-            // dtpSimTo
-            // 
-            this.dtpSimTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpSimTo.Location = new System.Drawing.Point(124, 95);
-            this.dtpSimTo.Name = "dtpSimTo";
-            this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
-            this.dtpSimTo.TabIndex = 2;
-            // 
-            // gbDDTicks
-            // 
-            this.gbDDTicks.Controls.Add(this.chartDDTicks);
-            this.gbDDTicks.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbDDTicks.Location = new System.Drawing.Point(1, 1);
-            this.gbDDTicks.Name = "gbDDTicks";
-            this.gbDDTicks.Size = new System.Drawing.Size(468, 275);
-            this.gbDDTicks.TabIndex = 2;
-            this.gbDDTicks.TabStop = false;
-            this.gbDDTicks.Text = "Ticks";
-            // 
-            // gbDDPositions
-            // 
-            this.gbDDPositions.Controls.Add(this.chartDDPositions);
-            this.gbDDPositions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbDDPositions.Location = new System.Drawing.Point(1, 1);
-            this.gbDDPositions.Name = "gbDDPositions";
-            this.gbDDPositions.Size = new System.Drawing.Size(463, 275);
-            this.gbDDPositions.TabIndex = 3;
-            this.gbDDPositions.TabStop = false;
-            this.gbDDPositions.Text = "Positions";
-            // 
             // splitDrawDowns
             // 
             this.splitDrawDowns.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -979,6 +815,57 @@
             this.splitDrawDowns.Size = new System.Drawing.Size(939, 277);
             this.splitDrawDowns.SplitterDistance = 470;
             this.splitDrawDowns.TabIndex = 4;
+            // 
+            // gbDDTicks
+            // 
+            this.gbDDTicks.Controls.Add(this.chartDDTicks);
+            this.gbDDTicks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbDDTicks.Location = new System.Drawing.Point(1, 1);
+            this.gbDDTicks.Name = "gbDDTicks";
+            this.gbDDTicks.Size = new System.Drawing.Size(468, 275);
+            this.gbDDTicks.TabIndex = 2;
+            this.gbDDTicks.TabStop = false;
+            this.gbDDTicks.Text = "Ticks";
+            // 
+            // chartDDTicks
+            // 
+            this.chartDDTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDDTicks.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartDDTicks.Location = new System.Drawing.Point(3, 16);
+            this.chartDDTicks.Name = "chartDDTicks";
+            this.chartDDTicks.Size = new System.Drawing.Size(462, 181);
+            this.chartDDTicks.TabIndex = 0;
+            // 
+            // gbDDPositions
+            // 
+            this.gbDDPositions.Controls.Add(this.chartDDPositions);
+            this.gbDDPositions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbDDPositions.Location = new System.Drawing.Point(1, 1);
+            this.gbDDPositions.Name = "gbDDPositions";
+            this.gbDDPositions.Size = new System.Drawing.Size(463, 275);
+            this.gbDDPositions.TabIndex = 3;
+            this.gbDDPositions.TabStop = false;
+            this.gbDDPositions.Text = "Positions";
+            // 
+            // chartDDPositions
+            // 
+            this.chartDDPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDDPositions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartDDPositions.Location = new System.Drawing.Point(3, 16);
+            this.chartDDPositions.Name = "chartDDPositions";
+            this.chartDDPositions.Size = new System.Drawing.Size(457, 181);
+            this.chartDDPositions.TabIndex = 1;
+            // 
+            // tabSimDataProfits
+            // 
+            this.tabSimDataProfits.Controls.Add(this.splitProfits);
+            this.tabSimDataProfits.Location = new System.Drawing.Point(4, 22);
+            this.tabSimDataProfits.Name = "tabSimDataProfits";
+            this.tabSimDataProfits.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSimDataProfits.Size = new System.Drawing.Size(939, 277);
+            this.tabSimDataProfits.TabIndex = 3;
+            this.tabSimDataProfits.Text = "Profits";
+            this.tabSimDataProfits.UseVisualStyleBackColor = true;
             // 
             // splitProfits
             // 
@@ -1038,6 +925,142 @@
             this.chartProfitPcnt.Size = new System.Drawing.Size(453, 181);
             this.chartProfitPcnt.TabIndex = 0;
             // 
+            // pnlTop
+            // 
+            this.pnlTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlTop.Controls.Add(this.paramsSim);
+            this.pnlTop.Controls.Add(this.pnlSimulationStart);
+            this.pnlTop.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(253, 667);
+            this.pnlTop.TabIndex = 0;
+            // 
+            // paramsSim
+            // 
+            this.paramsSim.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paramsSim.Location = new System.Drawing.Point(0, 251);
+            this.paramsSim.Name = "paramsSim";
+            this.paramsSim.Size = new System.Drawing.Size(251, 414);
+            this.paramsSim.TabIndex = 1;
+            // 
+            // pnlSimulationStart
+            // 
+            this.pnlSimulationStart.Controls.Add(this.lblSimSystemName);
+            this.pnlSimulationStart.Controls.Add(this.cbSystemChoice);
+            this.pnlSimulationStart.Controls.Add(this.label3);
+            this.pnlSimulationStart.Controls.Add(this.label2);
+            this.pnlSimulationStart.Controls.Add(this.label1);
+            this.pnlSimulationStart.Controls.Add(this.edtInitialCash);
+            this.pnlSimulationStart.Controls.Add(this.btnSimLoadDefinition);
+            this.pnlSimulationStart.Controls.Add(this.btnSim);
+            this.pnlSimulationStart.Controls.Add(this.dtpSimFrom);
+            this.pnlSimulationStart.Controls.Add(this.dtpSimTo);
+            this.pnlSimulationStart.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSimulationStart.Location = new System.Drawing.Point(0, 0);
+            this.pnlSimulationStart.Name = "pnlSimulationStart";
+            this.pnlSimulationStart.Size = new System.Drawing.Size(251, 251);
+            this.pnlSimulationStart.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(28, 179);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Initial cash";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(28, 154);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "To";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(28, 129);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "From";
+            // 
+            // edtInitialCash
+            // 
+            this.edtInitialCash.Location = new System.Drawing.Point(124, 175);
+            this.edtInitialCash.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.edtInitialCash.Name = "edtInitialCash";
+            this.edtInitialCash.Size = new System.Drawing.Size(97, 20);
+            this.edtInitialCash.TabIndex = 4;
+            this.edtInitialCash.Value = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            // 
+            // btnSimLoadDefinition
+            // 
+            this.btnSimLoadDefinition.Location = new System.Drawing.Point(21, 48);
+            this.btnSimLoadDefinition.Name = "btnSimLoadDefinition";
+            this.btnSimLoadDefinition.Size = new System.Drawing.Size(200, 23);
+            this.btnSimLoadDefinition.TabIndex = 3;
+            this.btnSimLoadDefinition.Text = "Load definition";
+            this.btnSimLoadDefinition.UseVisualStyleBackColor = true;
+            this.btnSimLoadDefinition.Click += new System.EventHandler(this.btnSimLoadDefinition_Click);
+            // 
+            // btnSim
+            // 
+            this.btnSim.Location = new System.Drawing.Point(21, 201);
+            this.btnSim.Name = "btnSim";
+            this.btnSim.Size = new System.Drawing.Size(200, 23);
+            this.btnSim.TabIndex = 0;
+            this.btnSim.Text = "Simulate";
+            this.btnSim.UseVisualStyleBackColor = true;
+            this.btnSim.Click += new System.EventHandler(this.btnSim_Click);
+            // 
+            // dtpSimFrom
+            // 
+            this.dtpSimFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpSimFrom.Location = new System.Drawing.Point(124, 123);
+            this.dtpSimFrom.Name = "dtpSimFrom";
+            this.dtpSimFrom.Size = new System.Drawing.Size(97, 20);
+            this.dtpSimFrom.TabIndex = 1;
+            // 
+            // dtpSimTo
+            // 
+            this.dtpSimTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpSimTo.Location = new System.Drawing.Point(124, 149);
+            this.dtpSimTo.Name = "dtpSimTo";
+            this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
+            this.dtpSimTo.TabIndex = 2;
+            // 
+            // cbSystemChoice
+            // 
+            this.cbSystemChoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSystemChoice.FormattingEnabled = true;
+            this.cbSystemChoice.Location = new System.Drawing.Point(21, 21);
+            this.cbSystemChoice.Name = "cbSystemChoice";
+            this.cbSystemChoice.Size = new System.Drawing.Size(200, 21);
+            this.cbSystemChoice.TabIndex = 8;
+            // 
+            // lblSimSystemName
+            // 
+            this.lblSimSystemName.AutoSize = true;
+            this.lblSimSystemName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblSimSystemName.Location = new System.Drawing.Point(28, 97);
+            this.lblSimSystemName.Name = "lblSimSystemName";
+            this.lblSimSystemName.Size = new System.Drawing.Size(34, 13);
+            this.lblSimSystemName.TabIndex = 9;
+            this.lblSimSystemName.Text = "From";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1067,23 +1090,23 @@
             this.pnlSimDataResults.PerformLayout();
             this.tabSimDataPositions.ResumeLayout(false);
             this.tabSimDataDrawdowns.ResumeLayout(false);
-            this.tabSimDataProfits.ResumeLayout(false);
-            this.pnlTop.ResumeLayout(false);
-            this.pnlSimulationStart.ResumeLayout(false);
-            this.pnlSimulationStart.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
-            this.gbDDTicks.ResumeLayout(false);
-            this.gbDDPositions.ResumeLayout(false);
             this.splitDrawDowns.Panel1.ResumeLayout(false);
             this.splitDrawDowns.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitDrawDowns)).EndInit();
             this.splitDrawDowns.ResumeLayout(false);
+            this.gbDDTicks.ResumeLayout(false);
+            this.gbDDPositions.ResumeLayout(false);
+            this.tabSimDataProfits.ResumeLayout(false);
             this.splitProfits.Panel1.ResumeLayout(false);
             this.splitProfits.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitProfits)).EndInit();
             this.splitProfits.ResumeLayout(false);
             this.gbProfitsValue.ResumeLayout(false);
             this.gbProfitPcnt.ResumeLayout(false);
+            this.pnlTop.ResumeLayout(false);
+            this.pnlSimulationStart.ResumeLayout(false);
+            this.pnlSimulationStart.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1176,6 +1199,8 @@
         private Controls.PointChart.PointChart chartProfitValue;
         private System.Windows.Forms.GroupBox gbProfitPcnt;
         private Controls.PointChart.PointChart chartProfitPcnt;
+        private System.Windows.Forms.ComboBox cbSystemChoice;
+        private System.Windows.Forms.Label lblSimSystemName;
     }
 }
 

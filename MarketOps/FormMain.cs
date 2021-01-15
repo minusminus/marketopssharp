@@ -24,6 +24,7 @@ using System.Linq;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Types;
 using MarketOps.DataMappers;
+using MarketOps.SystemExecutor.ConfigSystemDefs;
 
 namespace MarketOps
 {
@@ -36,6 +37,8 @@ namespace MarketOps
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _systemDataLoader;
 
+        private readonly List<ConfigSystemDefinition> _configSystemDefinitions;
+        private readonly SystemDefinitionFactory _systemDefinitionFactory;
         private SystemDefinition _currentSimSystemDef;
 
         public FormMain()
@@ -44,6 +47,8 @@ namespace MarketOps
             _msgDisplay = new MsgDisplay(this, "MarketOps");
             _dataProvider = DataProvidersFactory.GetStockDataProvider();
             _systemDataLoader = SystemDataLoaderFactory.Get(_dataProvider);
+            _configSystemDefinitions = ConfigSystemDefsLoader.Load();
+            _systemDefinitionFactory = new SystemDefinitionFactory(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone());
 
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             tcCharts.TabPages.Clear();
@@ -87,6 +92,14 @@ namespace MarketOps
         {
             dtpSimTo.Value = DateTime.Now.Date;
             dtpSimFrom.Value = dtpSimTo.Value.AddYears(-5);
+            InitializeSimSystemChoice();
+        }
+
+        private void InitializeSimSystemChoice()
+        {
+            cbSystemChoice.DataSource = _configSystemDefinitions;
+            cbSystemChoice.DisplayMember = "Description";
+            cbSystemChoice.ValueMember = "Description";
         }
 
         private bool GetStockDefinition(IStockDataProvider dataProvider, out StockDefinition stockDef)
@@ -176,10 +189,12 @@ namespace MarketOps
 
         private void btnSimLoadDefinition_Click(object sender, EventArgs e)
         {
-            _currentSimSystemDef = new PriceCrossingSMA(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone());
-            _currentSimSystemDef.SystemParams.Set(PriceCrossingSMAParams.StockName, "KGHM");
-            _currentSimSystemDef.SystemParams.Set(PriceCrossingSMAParams.SMAPeriod, 20);
+            ConfigSystemDefinition config = (ConfigSystemDefinition)cbSystemChoice.SelectedItem;
+            _currentSimSystemDef = _systemDefinitionFactory.Get(config);
+            foreach (var paramDef in config.ParamsDefaults)
+                _currentSimSystemDef.SystemParams.Get(paramDef.Param).ValueString = paramDef.Value;
 
+            lblSimSystemName.Text = config.Description;
             paramsSim.LoadParams(_currentSimSystemDef.SystemParams);
         }
 

@@ -12,6 +12,7 @@ namespace MarketOps.Controls.StockData
 
         public void LoadParams(MOParams moParams)
         {
+            srcParams.Clear();
             foreach (var param in moParams)
                 srcParams.Add(new MOParamEditMapper(param.Clone()));
         }

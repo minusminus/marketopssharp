@@ -3,12 +3,12 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 
-namespace MarketOps.SystemExecutor.ConfigSystemDefs
+namespace MarketOps.Config.SystemExecutor
 {
     /// <summary>
     /// Systems definitions loader from configuration file.
     /// </summary>
-    internal static class ConfigSystemDefsLoader
+    public static class ConfigSystemDefsLoader
     {
         private readonly static string ConfigFilePath = @"MarketOpsSystems.json";
 

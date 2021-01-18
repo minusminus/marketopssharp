@@ -1,4 +1,4 @@
-﻿namespace MarketOps.SystemExecutor.ConfigSystemDefs
+﻿namespace MarketOps.Config.SystemExecutor
 {
     /// <summary>
     /// System definition from configuration file.

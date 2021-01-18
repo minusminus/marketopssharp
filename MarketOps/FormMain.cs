@@ -24,7 +24,8 @@ using System.Linq;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Types;
 using MarketOps.DataMappers;
-using MarketOps.SystemExecutor.ConfigSystemDefs;
+using MarketOps.Config.SystemExecutor;
+using MarketOps.Config.Stats;
 
 namespace MarketOps
 {
@@ -49,6 +50,7 @@ namespace MarketOps
             _systemDataLoader = SystemDataLoaderFactory.Get(_dataProvider);
             _configSystemDefinitions = ConfigSystemDefsLoader.Load();
             _systemDefinitionFactory = new SystemDefinitionFactory(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone());
+            StatsFactories.Initialize();
 
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             tcCharts.TabPages.Clear();

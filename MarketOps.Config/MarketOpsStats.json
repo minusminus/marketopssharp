@@ -1,0 +1,20 @@
+[
+  {
+    "StatName": "ATR",
+    "ClassName": "MarketOps.Stats.Stats.StatATR",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "Additional"
+  },
+  {
+    "StatName": "BB",
+    "ClassName": "MarketOps.Stats.Stats.StatBB",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
+  },
+  {
+    "StatName": "SMA",
+    "ClassName": "MarketOps.Stats.Stats.StatSMA",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
+  }
+]

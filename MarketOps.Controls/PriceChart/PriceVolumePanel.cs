@@ -5,7 +5,7 @@ using MarketOps.Controls.Extensions;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
-using MarketOps.Stats;
+using MarketOps.Config.Stats;
 
 namespace MarketOps.Controls.ChartsUtils
 {

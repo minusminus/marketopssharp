@@ -3,14 +3,13 @@ using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
 using System;
 using System.Linq;
-using System.Reflection;
 
-namespace MarketOps.SystemExecutor.ConfigSystemDefs
+namespace MarketOps.Config.SystemExecutor
 {
     /// <summary>
     /// Factory of SystemDefinition objects.
     /// </summary>
-    internal class SystemDefinitionFactory
+    public class SystemDefinitionFactory
     {
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _dataLoader;
@@ -27,17 +26,10 @@ namespace MarketOps.SystemExecutor.ConfigSystemDefs
 
         public SystemDefinition Get(ConfigSystemDefinition config)
         {
-            Type systemDefType = FindType(config.ClassName, config.ClassLibrary);
-            if (systemDefType == null)
-                throw new Exception($"Class {config.ClassName} not found in {config.ClassLibrary}");
-
-            SystemDefinition res = CreateObject(systemDefType);
+            SystemDefinition res = CreateObject(ClassesLoader.FindType(config.ClassLibrary, config.ClassName));
             SetDefaultParams(res, config.ParamsDefaults);
             return res;
         }
-
-        private Type FindType(string className, string libraryName) =>
-            Assembly.LoadFrom(libraryName).GetType(className);
 
         private SystemDefinition CreateObject(Type type)
         {

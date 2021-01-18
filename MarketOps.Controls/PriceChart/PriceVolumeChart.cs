@@ -16,15 +16,13 @@ namespace MarketOps.Controls.ChartsUtils
             DoubleBuffered = true;
             SetChartMode(PriceVolumeChartMode.Candles);
             PVChart.MouseWheel += PVChart_MouseWheel;
-            axisLabelX = new ChartAxisValueLabel(PVChart);
-            axisLabelY = new ChartAxisValueLabel(PVChart);
+            pnlCursorDataValues.BackColor = PVChart.BackColor;
         }
-
-        private ChartAxisValueLabel axisLabelX, axisLabelY;
 
         #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
 
+        public Chart PVChartControl => PVChart;
         public ChartAreaCollection ChartAreas => PVChart.ChartAreas;
         public Series PricesCandles => PVChart.Series["dataPricesCandles"];
         public Series PricesLine => PVChart.Series["dataPricesLine"];
@@ -182,13 +180,11 @@ namespace MarketOps.Controls.ChartsUtils
                     yval = currentArea.AxisY.ScaleView.ViewMinimum;
                     ypos = (int)((float)PVChart.Height * (currentArea.AxisY.ValueToPosition(yval)) / 100F);
                 }
-                axisLabelY.ShowCenterOnValueVertically(OnGetAxisYToolTip?.Invoke(yval), 0, ypos);
+                lblValueValue.Text = OnGetAxisYToolTip?.Invoke(yval);
             }
             if (xSelectedIndex >= 0)
             {
-                Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
-                int xAxisRoundedPosition = (int)PVChart.ChartAreas["areaPrices"].AxisX.ValueToPixelPosition(PVChart.ChartAreas["areaPrices"].CursorX.Position);
-                axisLabelX.ShowCenterOnValueHorizontally(OnGetAxisXToolTip?.Invoke(xSelectedIndex), xAxisRoundedPosition, (int)ay.ValueToPixelPosition(ay.ScaleView.ViewMinimum) + 2);
+                lblTSValue.Text = OnGetAxisXToolTip?.Invoke(xSelectedIndex);
             }
         }
 
@@ -200,8 +196,8 @@ namespace MarketOps.Controls.ChartsUtils
 
         public void HidePriceAreaToolTips()
         {
-            axisLabelX.Hide();
-            axisLabelY.Hide();
+            lblTSValue.Text = "";
+            lblValueValue.Text = "";
         }
 
         public void CreateNewArea(string areaName)
@@ -219,12 +215,12 @@ namespace MarketOps.Controls.ChartsUtils
         private void ResizeAreas(float positionModifier)
         {
             ChartArea areaPrices = PVChart.ChartAreas["areaPrices"];
-            areaPrices.Position.Height = 80F - (PVChart.ChartAreas.Count - 2) * positionModifier;
+            areaPrices.Position.Height = 80F - ((PVChart.ChartAreas.Count - 2) * positionModifier);
             for (int i = 0; i < PVChart.ChartAreas.Count; i++)
             {
                 ChartArea area = PVChart.ChartAreas[i];
                 if (area.Name == "areaPrices") continue;
-                area.Position.Y = areaPrices.Position.Height + (i - 1) * positionModifier;
+                area.Position.Y = areaPrices.Position.Height + ((i - 1) * positionModifier);
             }
         }
     }

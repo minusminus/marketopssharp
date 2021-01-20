@@ -5,7 +5,7 @@ namespace MarketOps.SystemData.Types
     /// <summary>
     /// Signal data.
     /// </summary>
-    public struct Signal
+    public class Signal
     {
         public StockDefinition Stock;
         public StockDataRange DataRange;

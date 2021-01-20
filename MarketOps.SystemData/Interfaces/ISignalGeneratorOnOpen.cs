@@ -9,6 +9,6 @@ namespace MarketOps.SystemData.Interfaces
     /// </summary>
     public interface ISignalGeneratorOnOpen
     {
-        List<Signal> GenerateOnOpen(DateTime ts, int leadingIndex);
+        List<Signal> GenerateOnOpen(DateTime ts, int leadingIndex, SystemState systemState);
     }
 }

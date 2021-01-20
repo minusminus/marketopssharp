@@ -1,4 +1,5 @@
-﻿using MarketOps.SystemData.Interfaces;
+﻿using MarketOps.StockData.Types;
+using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemExecutor.MM
@@ -8,9 +9,6 @@ namespace MarketOps.SystemExecutor.MM
     /// </summary>
     public class MMSignalVolumeOneItem : IMMSignalVolume
     {
-        public int GetSignalVolume(Signal signal)
-        {
-            return 1;
-        }
+        public int Calculate(SystemState systemState, StockType stockType, float price) => 1;
     }
 }

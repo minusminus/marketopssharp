@@ -99,14 +99,14 @@ namespace MarketOps.SystemExecutor.Processor
             UpdateActivePositions(systemState);
             ProcessStopsOnOpen(leadingPricesData.TS[leadingIndex], systemState);
             ProcessSignalsOnOpen(leadingPricesData.TS[leadingIndex], systemState);
-            GenerateSignalsOnOpen(leadingPricesData.TS[leadingIndex], leadingIndex, systemState.Signals);
+            GenerateSignalsOnOpen(leadingPricesData.TS[leadingIndex], leadingIndex, systemState);
 
             ProcessStopsOnPrice(leadingPricesData.TS[leadingIndex], systemState);
             ProcessSignalsOnPrice(leadingPricesData.TS[leadingIndex], systemState);
 
             ProcessStopsOnClose(leadingPricesData.TS[leadingIndex], systemState);
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], systemState);
-            GenerateSignalsOnClose(leadingPricesData.TS[leadingIndex], leadingIndex, systemState.Signals);
+            GenerateSignalsOnClose(leadingPricesData.TS[leadingIndex], leadingIndex, systemState);
 
             RecalculateStops(leadingPricesData.TS[leadingIndex], systemState);
             CalculateCurrentSystemValue(leadingPricesData.TS[leadingIndex], systemState);
@@ -142,16 +142,16 @@ namespace MarketOps.SystemExecutor.Processor
             signals.RemoveAll(s => s.Type == toRemove);
         }
 
-        private void GenerateSignalsOnOpen(DateTime ts, int leadingIndex, List<Signal> signals)
+        private void GenerateSignalsOnOpen(DateTime ts, int leadingIndex, SystemState systemState)
         {
             if (_signalGeneratorOnOpen == null) return;
-            signals.AddRange(_signalGeneratorOnOpen.GenerateOnOpen(ts, leadingIndex));
+            systemState.Signals.AddRange(_signalGeneratorOnOpen.GenerateOnOpen(ts, leadingIndex, systemState));
         }
 
-        private void GenerateSignalsOnClose(DateTime ts, int leadingIndex, List<Signal> signals)
+        private void GenerateSignalsOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             if (_signalGeneratorOnClose == null) return;
-            signals.AddRange(_signalGeneratorOnClose.GenerateOnClose(ts, leadingIndex));
+            systemState.Signals.AddRange(_signalGeneratorOnClose.GenerateOnClose(ts, leadingIndex, systemState));
         }
 
         private void ProcessStopsOnOpen(DateTime ts, SystemState systemState)

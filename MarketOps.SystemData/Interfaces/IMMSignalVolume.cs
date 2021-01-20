@@ -1,4 +1,5 @@
-﻿using MarketOps.SystemData.Types;
+﻿using MarketOps.StockData.Types;
+using MarketOps.SystemData.Types;
 
 namespace MarketOps.SystemData.Interfaces
 {
@@ -7,6 +8,6 @@ namespace MarketOps.SystemData.Interfaces
     /// </summary>
     public interface IMMSignalVolume
     {
-        int GetSignalVolume(Signal signal);
+        int Calculate(SystemState systemState, StockType stockType, float price);
     }
 }

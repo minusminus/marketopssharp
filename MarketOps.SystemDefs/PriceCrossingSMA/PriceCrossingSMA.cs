@@ -2,6 +2,7 @@
 using MarketOps.StockData.Interfaces;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
+using MarketOps.SystemExecutor.MM;
 
 namespace MarketOps.SystemDefs.PriceCrossingSMA
 {
@@ -31,7 +32,8 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 SystemParams.Get(PriceCrossingSMAParams.StockName).As<string>(),
                 StockData.Types.StockDataRange.Daily,
                 SystemParams.Get(PriceCrossingSMAParams.SMAPeriod).As<int>(),
-                _dataLoader, _dataProvider);
+                _dataLoader, _dataProvider,
+                new MMSignalVolumeOneItem());
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

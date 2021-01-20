@@ -166,8 +166,8 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         [Test, Combinatorial]
         public void Process_NoSignals__EmptyEquity([Values(false, true)] bool withGeneratorOnOpen, [Values(false, true)] bool withGeneratorOnClose)
         {
-            _signalGeneratorOnOpen.GenerateOnOpen(default, default).ReturnsForAnyArgs(new List<Signal>());
-            _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(new List<Signal>());
+            _signalGeneratorOnOpen.GenerateOnOpen(default, default, default).ReturnsForAnyArgs(new List<Signal>());
+            _signalGeneratorOnClose.GenerateOnClose(default, default, default).ReturnsForAnyArgs(new List<Signal>());
 
             TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, (withGeneratorOnOpen ? _signalGeneratorOnOpen : null), (withGeneratorOnClose ? _signalGeneratorOnClose : null), _commission, _slippage, _mmPositionCloseCalculator);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
@@ -187,7 +187,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         public void Process_SignalGeneratedOnOpen(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, float expectedPrice, int expectedPositionTicks)
         {
-            _signalGeneratorOnOpen.GenerateOnOpen(default, default).ReturnsForAnyArgs(args =>
+            _signalGeneratorOnOpen.GenerateOnOpen(default, default, default).ReturnsForAnyArgs(args =>
             {
                 if (args.ArgAt<int>(1) == 0)
                     return new List<Signal>() {
@@ -227,7 +227,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         public void Process_SignalGeneratedOnClose(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, float expectedPrice, int expectedPositionTicks)
         {
-            _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(args =>
+            _signalGeneratorOnClose.GenerateOnClose(default, default, default).ReturnsForAnyArgs(args =>
             {
                 if (args.ArgAt<int>(1) == 0)
                     return new List<Signal>() {
@@ -267,7 +267,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         public void Process_SignalReverse_NoOpenedPosition(SignalType signalType, PositionDir positionDir, float price,
             bool expectedHit, float expectedPrice, int expectedPositionTicks)
         {
-            _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(args =>
+            _signalGeneratorOnClose.GenerateOnClose(default, default, default).ReturnsForAnyArgs(args =>
             {
                 if (args.ArgAt<int>(1) == 0)
                     return new List<Signal>() {
@@ -319,7 +319,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
                 Volume = 1
             };
 
-            _signalGeneratorOnClose.GenerateOnClose(default, default).ReturnsForAnyArgs(args =>
+            _signalGeneratorOnClose.GenerateOnClose(default, default, default).ReturnsForAnyArgs(args =>
             {
                 if (args.ArgAt<int>(1) == 0)
                     return new List<Signal>() { sig };

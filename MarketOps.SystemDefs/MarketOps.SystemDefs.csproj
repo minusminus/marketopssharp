@@ -61,6 +61,10 @@
       <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
       <Name>MarketOps.SystemData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
+      <Project>{4C9D9AB7-7D39-496E-85FD-135D30819239}</Project>
+      <Name>MarketOps.SystemExecutor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

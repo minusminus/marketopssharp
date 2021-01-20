@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Shouldly;
 using System.Linq;
 using MarketOps.SystemData.Types;
+using MarketOps.StockData.Types;
 
 namespace MarketOps.SystemExecutor.Tests.MM
 {
@@ -12,26 +13,26 @@ namespace MarketOps.SystemExecutor.Tests.MM
     {
         private readonly MMSignalVolumeOneItem _testObj = new MMSignalVolumeOneItem();
 
-        [TestCase(-1)]
-        [TestCase(0)]
-        [TestCase(1)]
-        [TestCase(10)]
-        [TestCase(12345678)]
-        public void GetSignalVolume__ReturnsOne(int initialVolume)
+        [TestCase(-1, -1)]
+        [TestCase(0, 0)]
+        [TestCase(1, 1)]
+        [TestCase(10, 10)]
+        [TestCase(12345678, 12345678)]
+        public void Calculate__ReturnsOne(int cash, float price)
         {
-            Signal sig = new Signal() { Volume = initialVolume };
-            _testObj.GetSignalVolume(sig).ShouldBe(1);
+            _testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price).ShouldBe(1);
         }
 
         [Test]
-        public void GetSignalVolume_RandomValues__ReturnsOne()
+        public void Calculate_RandomValues__ReturnsOne()
         {
             Random r = new Random();
             Enumerable.Range(1, 10).ToList()
                 .ForEach(_ =>
                 {
                     int v = r.Next(1000);
-                    _testObj.GetSignalVolume(new Signal() { Volume = v }).ShouldBe(1, $"{v}");
+                    float p = (float)r.Next(1000);
+                    _testObj.Calculate(new SystemState() { Cash = v }, StockType.Stock, p).ShouldBe(1, $"{v}, {p}");
                 });
         }
     }

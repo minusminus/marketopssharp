@@ -18,16 +18,18 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
         private readonly int _smaPeriod;
         private readonly ISystemDataLoader _dataLoader;
         private readonly IStockDataProvider _dataProvider;
+        private readonly IMMSignalVolume _signalVolumeCalculator;
 
         private readonly StockDefinition _stock;
         private readonly StockStat _statSMA;
 
-        public SignalsPriceCrossingSMA(string stockName, StockDataRange dataRange, int smaPeriod, ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
+        public SignalsPriceCrossingSMA(string stockName, StockDataRange dataRange, int smaPeriod, ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator)
         {
             _dataRange = dataRange;
             _smaPeriod = smaPeriod;
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
+            _signalVolumeCalculator = signalVolumeCalculator;
 
             _stock = _dataProvider.GetStockDefinition(stockName);
             _statSMA = new StatSMA("")
@@ -46,7 +48,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 }
         };
 
-        public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex)
+        public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             List<Signal> res = new List<Signal>();
 
@@ -56,16 +58,16 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
 
             if ((data.C[leadingIndex - 1] <= _statSMA.Data(0)[leadingIndex - 1 - _statSMA.BackBufferLength])
                 && (data.C[leadingIndex] > _statSMA.Data(0)[leadingIndex - _statSMA.BackBufferLength]))
-                res.Add(CreateSignal(PositionDir.Long));
+                res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex]));
 
             if ((data.C[leadingIndex - 1] >= _statSMA.Data(0)[leadingIndex - 1 - _statSMA.BackBufferLength])
                 && (data.C[leadingIndex] < _statSMA.Data(0)[leadingIndex - _statSMA.BackBufferLength]))
-                res.Add(CreateSignal(PositionDir.Short));
+                res.Add(CreateSignal(PositionDir.Short, systemState, data.C[leadingIndex]));
 
             return res;
         }
 
-        private Signal CreateSignal(PositionDir dir) =>
+        private Signal CreateSignal(PositionDir dir, SystemState systemState, float currentClosePrice) =>
             new Signal()
             {
                 Stock = _stock,
@@ -74,7 +76,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 Type = SignalType.EnterOnOpen,
                 Direction = dir,
                 ReversePosition = true,
-                Volume = 1
+                Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };
     }
 }

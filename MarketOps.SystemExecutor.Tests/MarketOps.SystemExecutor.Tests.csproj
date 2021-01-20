@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="Commission\CommissionNoneTests.cs" />
     <Compile Include="DataLoaders\BufferedDataLoaderTests.cs" />
+    <Compile Include="MM\MMSignalVolumeForAllCashTests.cs" />
     <Compile Include="Mocks\CommissionUtils.cs" />
     <Compile Include="Mocks\SystemDataLoaderUtils.cs" />
     <Compile Include="Extensions\MoneyValueExtensionsTests.cs" />

@@ -20,6 +20,7 @@ namespace MarketOps.SystemExecutor.MM
         public int Calculate(SystemState systemState, StockType stockType, float price)
         {
             int res = (int)Math.Floor(systemState.Cash / price);
+            if (res <= 0) return 0;
             float commission = _commission.Calculate(stockType, res, price);
 
             if ((float)res * price + commission <= systemState.Cash) return res;

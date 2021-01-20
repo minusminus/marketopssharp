@@ -1,8 +1,6 @@
-﻿using System;
-using MarketOps.SystemExecutor.MM;
+﻿using MarketOps.SystemExecutor.MM;
 using NUnit.Framework;
 using Shouldly;
-using System.Linq;
 using MarketOps.SystemData.Types;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
@@ -13,14 +11,23 @@ namespace MarketOps.SystemExecutor.Tests.MM
     [TestFixture]
     public class MMSignalVolumeForAllCashTests
     {
-        private ICommission _commission;
-        private MMSignalVolumeForAllCash _testObj;
-
-        [SetUp]
-        public void SetUp()
+        [TestCase(0, 1, 0, 0)]
+        [TestCase(10, 100, 0, 0)]
+        [TestCase(-10, 100, 0, 0)]
+        [TestCase(0, 1, 0.5f, 0)]
+        [TestCase(10, 100, 0.5f, 0)]
+        [TestCase(10, 1, 0, 10)]
+        [TestCase(-10, 1, 0, 0)]
+        [TestCase(-10, 1, 0.5f, 0)]
+        [TestCase(10, 1, 0.5f, 9)]
+        [TestCase(10, 1, 1.5f, 8)]
+        public void Calculate__ReturnsCorrectValues(float cash, float price, float commission, int expectedVolume)
         {
-            _commission = Substitute.For<ICommission>();
-            _testObj = new MMSignalVolumeForAllCash(_commission);
+            ICommission commissionCalc = Substitute.For<ICommission>();
+            commissionCalc.Calculate(default, default, default).ReturnsForAnyArgs(commission);
+            MMSignalVolumeForAllCash testObj = new MMSignalVolumeForAllCash(commissionCalc);
+
+            testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price).ShouldBe(expectedVolume);
         }
-    }
+}
 }

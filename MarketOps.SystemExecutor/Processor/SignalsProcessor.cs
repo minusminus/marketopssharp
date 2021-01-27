@@ -44,12 +44,19 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void ProcessSignal(Signal signal, DateTime ts, SystemState systemState, Func<Signal, StockPricesData, int, float> openPriceSelector, StockPricesData pricesData, int pricesDataIndex)
         {
+            VerifySignal(signal);
             float openPrice = openPriceSelector(signal, pricesData, pricesDataIndex);
 
             if (signal.ReversePosition)
                 ReversePosition(signal, ts, systemState, openPrice);
             else
                 OpenPosition(signal, ts, systemState, openPrice);
+        }
+
+        private void VerifySignal(Signal signal)
+        {
+            if (signal.Volume == 0)
+                throw new Exception($"Signal volume 0 for: {signal.Stock.Name} (ID = {signal.Stock.ID})");
         }
 
         private StockPricesData GetPricesData(Signal signal, DateTime ts)

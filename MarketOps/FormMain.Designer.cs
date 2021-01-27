@@ -106,6 +106,8 @@
             this.pnlTop = new System.Windows.Forms.Panel();
             this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
             this.pnlSimulationStart = new System.Windows.Forms.Panel();
+            this.lblSimSystemName = new System.Windows.Forms.Label();
+            this.cbSystemChoice = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -114,8 +116,8 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.cbSystemChoice = new System.Windows.Forms.ComboBox();
-            this.lblSimSystemName = new System.Windows.Forms.Label();
+            this.lblSDRiskedUnitReturn = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -381,6 +383,8 @@
             // 
             // pnlSimDataResults
             // 
+            this.pnlSimDataResults.Controls.Add(this.lblSDRiskedUnitReturn);
+            this.pnlSimDataResults.Controls.Add(this.label22);
             this.pnlSimDataResults.Controls.Add(this.lblSDRMaxDDOnPositions);
             this.pnlSimDataResults.Controls.Add(this.label23);
             this.pnlSimDataResults.Controls.Add(this.lblSDRMaxDDOnTicks);
@@ -428,7 +432,7 @@
             // lblSDRMaxDDOnPositions
             // 
             this.lblSDRMaxDDOnPositions.AutoSize = true;
-            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(382, 154);
+            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(382, 170);
             this.lblSDRMaxDDOnPositions.Name = "lblSDRMaxDDOnPositions";
             this.lblSDRMaxDDOnPositions.Size = new System.Drawing.Size(26, 13);
             this.lblSDRMaxDDOnPositions.TabIndex = 56;
@@ -437,7 +441,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(248, 154);
+            this.label23.Location = new System.Drawing.Point(248, 170);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(105, 13);
             this.label23.TabIndex = 55;
@@ -446,7 +450,7 @@
             // lblSDRMaxDDOnTicks
             // 
             this.lblSDRMaxDDOnTicks.AutoSize = true;
-            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(382, 138);
+            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(382, 154);
             this.lblSDRMaxDDOnTicks.Name = "lblSDRMaxDDOnTicks";
             this.lblSDRMaxDDOnTicks.Size = new System.Drawing.Size(26, 13);
             this.lblSDRMaxDDOnTicks.TabIndex = 54;
@@ -455,7 +459,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(248, 138);
+            this.label21.Location = new System.Drawing.Point(248, 154);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(86, 13);
             this.label21.TabIndex = 53;
@@ -482,7 +486,7 @@
             // lblSDRExpectedPositionValue
             // 
             this.lblSDRExpectedPositionValue.AutoSize = true;
-            this.lblSDRExpectedPositionValue.Location = new System.Drawing.Point(382, 106);
+            this.lblSDRExpectedPositionValue.Location = new System.Drawing.Point(382, 122);
             this.lblSDRExpectedPositionValue.Name = "lblSDRExpectedPositionValue";
             this.lblSDRExpectedPositionValue.Size = new System.Drawing.Size(26, 13);
             this.lblSDRExpectedPositionValue.TabIndex = 50;
@@ -491,7 +495,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(248, 106);
+            this.label19.Location = new System.Drawing.Point(248, 122);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(120, 13);
             this.label19.TabIndex = 49;
@@ -511,9 +515,9 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(248, 90);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 13);
+            this.label14.Size = new System.Drawing.Size(52, 13);
             this.label14.TabIndex = 47;
-            this.label14.Text = "W/L Ratio";
+            this.label14.Text = "W/L ratio";
             // 
             // lblSDRLossProbability
             // 
@@ -962,6 +966,25 @@
             this.pnlSimulationStart.Size = new System.Drawing.Size(251, 251);
             this.pnlSimulationStart.TabIndex = 0;
             // 
+            // lblSimSystemName
+            // 
+            this.lblSimSystemName.AutoSize = true;
+            this.lblSimSystemName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblSimSystemName.Location = new System.Drawing.Point(28, 97);
+            this.lblSimSystemName.Name = "lblSimSystemName";
+            this.lblSimSystemName.Size = new System.Drawing.Size(34, 13);
+            this.lblSimSystemName.TabIndex = 9;
+            this.lblSimSystemName.Text = "From";
+            // 
+            // cbSystemChoice
+            // 
+            this.cbSystemChoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSystemChoice.FormattingEnabled = true;
+            this.cbSystemChoice.Location = new System.Drawing.Point(21, 21);
+            this.cbSystemChoice.Name = "cbSystemChoice";
+            this.cbSystemChoice.Size = new System.Drawing.Size(200, 21);
+            this.cbSystemChoice.TabIndex = 8;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -1042,24 +1065,23 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // cbSystemChoice
+            // lblSDRiskedUnitReturn
             // 
-            this.cbSystemChoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbSystemChoice.FormattingEnabled = true;
-            this.cbSystemChoice.Location = new System.Drawing.Point(21, 21);
-            this.cbSystemChoice.Name = "cbSystemChoice";
-            this.cbSystemChoice.Size = new System.Drawing.Size(200, 21);
-            this.cbSystemChoice.TabIndex = 8;
+            this.lblSDRiskedUnitReturn.AutoSize = true;
+            this.lblSDRiskedUnitReturn.Location = new System.Drawing.Point(382, 106);
+            this.lblSDRiskedUnitReturn.Name = "lblSDRiskedUnitReturn";
+            this.lblSDRiskedUnitReturn.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRiskedUnitReturn.TabIndex = 58;
+            this.lblSDRiskedUnitReturn.Text = "Avg";
             // 
-            // lblSimSystemName
+            // label22
             // 
-            this.lblSimSystemName.AutoSize = true;
-            this.lblSimSystemName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblSimSystemName.Location = new System.Drawing.Point(28, 97);
-            this.lblSimSystemName.Name = "lblSimSystemName";
-            this.lblSimSystemName.Size = new System.Drawing.Size(34, 13);
-            this.lblSimSystemName.TabIndex = 9;
-            this.lblSimSystemName.Text = "From";
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(248, 106);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(90, 13);
+            this.label22.TabIndex = 57;
+            this.label22.Text = "Risked unit return";
             // 
             // FormMain
             // 
@@ -1201,6 +1223,8 @@
         private Controls.PointChart.PointChart chartProfitPcnt;
         private System.Windows.Forms.ComboBox cbSystemChoice;
         private System.Windows.Forms.Label lblSimSystemName;
+        private System.Windows.Forms.Label lblSDRiskedUnitReturn;
+        private System.Windows.Forms.Label label22;
     }
 }
 

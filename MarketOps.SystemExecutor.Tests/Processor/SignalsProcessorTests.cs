@@ -137,6 +137,17 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         }
 
         [Test]
+        public void Process_SignalZeroVolume__Throws()
+        {
+            SystemState equity = new SystemState();
+            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, Price = 10, Volume = 0, ReversePosition = false });
+            Should.Throw<Exception>(() =>
+                TestObj.Process(LastDate, equity,
+                    (_, __, ___) => true,
+                    (_, __, ___) => -1));
+        }
+
+        [Test]
         public void Process_OpenLongOnPrice__OpensPosition()
         {
             TestOpenPosition((s) => (s.Direction == PositionDir.Long) && (!s.ReversePosition), PositionDir.Long);

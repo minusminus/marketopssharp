@@ -76,7 +76,16 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 Type = SignalType.EnterOnOpen,
                 Direction = dir,
                 ReversePosition = true,
-                Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
+                Volume = (systemState.PositionsActive.Count > 0)
+                    ? GetLastVolume(systemState)
+                    : _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };
+
+        private int GetLastVolume(SystemState systemState)
+        {
+            if (systemState.PositionsActive.Count > 1)
+                throw new Exception("More than 1 active position");
+            return systemState.PositionsActive[0].Volume;
+        }
     }
 }

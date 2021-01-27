@@ -14,7 +14,8 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             summary.ClosedPositionsCount = systemState.PositionsClosed.Count;
             SumWinsLossesAndCalcAvgs(summary, systemState);
             CalcProbabilities(summary);
-            CalcExpectedPositionValue(summary);
+            summary.ExpectedPositionValue = ExpectedValue(summary.WinProbability, summary.AvgWin, summary.AvgLoss);
+            summary.RiskedUnitReturn = ExpectedValue(summary.WinProbability, summary.AvgWinLossRatio, 1);
         }
 
         private static void SumWinsLossesAndCalcAvgs(SystemStateSummary summary, SystemState systemState)
@@ -44,9 +45,7 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             summary.LossProbability = summary.Losses / (float)summary.ClosedPositionsCount;
         }
 
-        private static void CalcExpectedPositionValue(SystemStateSummary summary)
-        {
-            summary.ExpectedPositionValue = (summary.WinProbability * summary.AvgWin) - (summary.LossProbability * summary.AvgLoss);
-        }
+        private static float ExpectedValue(float winProbability, float avgWin, float avgLoss) =>
+            (winProbability * avgWin) - ((1f - winProbability) * avgLoss);
     }
 }

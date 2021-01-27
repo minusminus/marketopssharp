@@ -33,7 +33,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 StockData.Types.StockDataRange.Daily,
                 SystemParams.Get(PriceCrossingSMAParams.SMAPeriod).As<int>(),
                 _dataLoader, _dataProvider,
-                new MMSignalVolumeOneItem());
+                new MMSignalVolumeForAllCash(_commission));
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

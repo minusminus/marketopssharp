@@ -51,6 +51,8 @@
             this.tcSimulationData = new System.Windows.Forms.TabControl();
             this.tabSimDataResults = new System.Windows.Forms.TabPage();
             this.pnlSimDataResults = new System.Windows.Forms.Panel();
+            this.lblSDRExpectedUnitReturn = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.lblSDRMaxDDOnPositions = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.lblSDRMaxDDOnTicks = new System.Windows.Forms.Label();
@@ -116,8 +118,6 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.lblSDRiskedUnitReturn = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -383,7 +383,7 @@
             // 
             // pnlSimDataResults
             // 
-            this.pnlSimDataResults.Controls.Add(this.lblSDRiskedUnitReturn);
+            this.pnlSimDataResults.Controls.Add(this.lblSDRExpectedUnitReturn);
             this.pnlSimDataResults.Controls.Add(this.label22);
             this.pnlSimDataResults.Controls.Add(this.lblSDRMaxDDOnPositions);
             this.pnlSimDataResults.Controls.Add(this.label23);
@@ -428,6 +428,24 @@
             this.pnlSimDataResults.Name = "pnlSimDataResults";
             this.pnlSimDataResults.Size = new System.Drawing.Size(933, 271);
             this.pnlSimDataResults.TabIndex = 0;
+            // 
+            // lblSDRExpectedUnitReturn
+            // 
+            this.lblSDRExpectedUnitReturn.AutoSize = true;
+            this.lblSDRExpectedUnitReturn.Location = new System.Drawing.Point(382, 106);
+            this.lblSDRExpectedUnitReturn.Name = "lblSDRExpectedUnitReturn";
+            this.lblSDRExpectedUnitReturn.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRExpectedUnitReturn.TabIndex = 58;
+            this.lblSDRExpectedUnitReturn.Text = "Avg";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(248, 106);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(102, 13);
+            this.label22.TabIndex = 57;
+            this.label22.Text = "Expected unit return";
             // 
             // lblSDRMaxDDOnPositions
             // 
@@ -1065,24 +1083,6 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // lblSDRiskedUnitReturn
-            // 
-            this.lblSDRiskedUnitReturn.AutoSize = true;
-            this.lblSDRiskedUnitReturn.Location = new System.Drawing.Point(382, 106);
-            this.lblSDRiskedUnitReturn.Name = "lblSDRiskedUnitReturn";
-            this.lblSDRiskedUnitReturn.Size = new System.Drawing.Size(26, 13);
-            this.lblSDRiskedUnitReturn.TabIndex = 58;
-            this.lblSDRiskedUnitReturn.Text = "Avg";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(248, 106);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(90, 13);
-            this.label22.TabIndex = 57;
-            this.label22.Text = "Risked unit return";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1223,7 +1223,7 @@
         private Controls.PointChart.PointChart chartProfitPcnt;
         private System.Windows.Forms.ComboBox cbSystemChoice;
         private System.Windows.Forms.Label lblSimSystemName;
-        private System.Windows.Forms.Label lblSDRiskedUnitReturn;
+        private System.Windows.Forms.Label lblSDRExpectedUnitReturn;
         private System.Windows.Forms.Label label22;
     }
 }

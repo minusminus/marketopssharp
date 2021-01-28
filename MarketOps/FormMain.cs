@@ -248,7 +248,7 @@ namespace MarketOps
             lblSDRSumLosses.Text = summary.SumLosses.ToDisplay();
             lblSDRAvgLoss.Text = summary.AvgLoss.ToDisplay();
             lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
-            lblSDRiskedUnitReturn.Text = summary.AvgLoss != 0 ? summary.RiskedUnitReturn.ToDisplay() : "---";
+            lblSDRExpectedUnitReturn.Text = summary.AvgLoss != 0 ? summary.ExpectedUnitReturn.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.AvgLoss != 0 ? summary.ExpectedPositionValue.ToDisplay() : "---";
 
             lblSDRMaxDDOnTicks.Text = summary.DDTicks.MaxDD().ToDisplayPcnt();

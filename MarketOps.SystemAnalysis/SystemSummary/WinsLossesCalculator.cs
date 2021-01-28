@@ -15,7 +15,7 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             SumWinsLossesAndCalcAvgs(summary, systemState);
             CalcProbabilities(summary);
             summary.ExpectedPositionValue = ExpectedValue(summary.WinProbability, summary.AvgWin, summary.AvgLoss);
-            summary.RiskedUnitReturn = ExpectedValue(summary.WinProbability, summary.AvgWinLossRatio, 1);
+            summary.ExpectedUnitReturn = ExpectedValue(summary.WinProbability, summary.AvgWinLossRatio, 1);
         }
 
         private static void SumWinsLossesAndCalcAvgs(SystemStateSummary summary, SystemState systemState)

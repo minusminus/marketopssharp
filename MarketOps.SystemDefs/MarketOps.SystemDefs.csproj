@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BBTrend\BBTrend.cs" />
+    <Compile Include="BBTrend\BBTrendParams.cs" />
+    <Compile Include="BBTrend\BBTrendRecognizer.cs" />
+    <Compile Include="BBTrend\BBTrendTypes.cs" />
+    <Compile Include="BBTrend\SignalsBBTrend.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMAParams.cs" />
     <Compile Include="PriceCrossingSMA\SignalsPriceCrossingSMA.cs" />

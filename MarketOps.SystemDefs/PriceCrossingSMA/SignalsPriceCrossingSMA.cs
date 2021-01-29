@@ -56,12 +56,12 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
 
             StockPricesData data = _dataLoader.Get(_stock.Name, _dataRange, 0, ts, ts);
 
-            if ((data.C[leadingIndex - 1] <= _statSMA.Data(0)[leadingIndex - 1 - _statSMA.BackBufferLength])
-                && (data.C[leadingIndex] > _statSMA.Data(0)[leadingIndex - _statSMA.BackBufferLength]))
+            if ((data.C[leadingIndex - 1] <= _statSMA.Data(StatSMAData.SMA)[leadingIndex - 1 - _statSMA.BackBufferLength])
+                && (data.C[leadingIndex] > _statSMA.Data(StatSMAData.SMA)[leadingIndex - _statSMA.BackBufferLength]))
                 res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex]));
 
-            if ((data.C[leadingIndex - 1] >= _statSMA.Data(0)[leadingIndex - 1 - _statSMA.BackBufferLength])
-                && (data.C[leadingIndex] < _statSMA.Data(0)[leadingIndex - _statSMA.BackBufferLength]))
+            if ((data.C[leadingIndex - 1] >= _statSMA.Data(StatSMAData.SMA)[leadingIndex - 1 - _statSMA.BackBufferLength])
+                && (data.C[leadingIndex] < _statSMA.Data(StatSMAData.SMA)[leadingIndex - _statSMA.BackBufferLength]))
                 res.Add(CreateSignal(PositionDir.Short, systemState, data.C[leadingIndex]));
 
             return res;

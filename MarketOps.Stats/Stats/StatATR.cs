@@ -16,8 +16,8 @@ namespace MarketOps.Stats.Stats
         {
             _name = "ATR";
             CreateDataStructures(1);
-            _dataColors[0] = Color.Red;
-            _dataNames[0] = "Indicator";
+            _dataColors[StatATRData.ATR] = Color.Red;
+            _dataNames[StatATRData.ATR] = "Indicator";
         }
 
         protected override void InitializeStatParams()
@@ -32,7 +32,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            _data[0] = (new ATR()).Calculate(data.H, data.L, data.C, _statParams.Get(StatATRParams.Period).As<int>());
+            _data[StatATRData.ATR] = (new ATR()).Calculate(data.H, data.L, data.C, _statParams.Get(StatATRParams.Period).As<int>());
         }
     }
 }

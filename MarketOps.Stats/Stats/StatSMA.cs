@@ -16,8 +16,8 @@ namespace MarketOps.Stats.Stats
         {
             _name = "SMA";
             CreateDataStructures(1);
-            _dataColors[0] = Color.Red;
-            _dataNames[0] = "Indicator";
+            _dataColors[StatSMAData.SMA] = Color.Red;
+            _dataNames[StatSMAData.SMA] = "Indicator";
         }
 
         protected override void InitializeStatParams()
@@ -32,7 +32,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            _data[0] = (new SMA()).Calculate(data.C, _statParams.Get(StatSMAParams.Period).As<int>());
+            _data[StatSMAData.SMA] = (new SMA()).Calculate(data.C, _statParams.Get(StatSMAParams.Period).As<int>());
         }
     }
 }

@@ -5,6 +5,14 @@
     /// </summary>
     public static class StatSMAParams
     {
-        public static string Period = "Period";
+        public static readonly string Period = "Period";
+    }
+
+    /// <summary>
+    /// SMA index data definition.
+    /// </summary>
+    public static class StatSMAData
+    {
+        public static readonly int SMA = 0;
     }
 }

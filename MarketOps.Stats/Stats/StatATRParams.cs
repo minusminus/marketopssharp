@@ -5,6 +5,14 @@
     /// </summary>
     public static class StatATRParams
     {
-        public static string Period = "Period";
+        public static readonly string Period = "Period";
+    }
+
+    /// <summary>
+    /// ATR index data definitions
+    /// </summary>
+    public static class StatATRData
+    {
+        public static readonly int ATR = 0;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using MarketOps.StockData.Types;
+﻿using MarketOps.StockData.Types;
 using MarketOps.Stats.Calculators;
 using MarketOps.StockData.Extensions;
 using System.Drawing;
@@ -17,12 +16,12 @@ namespace MarketOps.Stats.Stats
         {
             _name = "BB";
             CreateDataStructures(3);
-            _dataColors[0] = Color.SaddleBrown;
-            _dataColors[1] = Color.DarkRed;
-            _dataColors[2] = Color.SaddleBrown;
-            _dataNames[0] = "High band";
-            _dataNames[1] = "SMA band";
-            _dataNames[2] = "Low band";
+            _dataColors[StatBBData.BBH] = Color.SaddleBrown;
+            _dataColors[StatBBData.SMA] = Color.DarkRed;
+            _dataColors[StatBBData.BBL] = Color.SaddleBrown;
+            _dataNames[StatBBData.BBH] = "High band";
+            _dataNames[StatBBData.SMA] = "SMA band";
+            _dataNames[StatBBData.BBL] = "Low band";
         }
 
         protected override void InitializeStatParams()
@@ -39,9 +38,9 @@ namespace MarketOps.Stats.Stats
         public override void Calculate(StockPricesData data)
         {
             BBData res = (new BB()).Calculate(data.C, _statParams.Get(StatBBParams.Period).As<int>(), _statParams.Get(StatBBParams.SigmaWidth).As<float>());
-            _data[0] = res.BBL;
-            _data[1] = res.SMA;
-            _data[2] = res.BBH;
+            _data[StatBBData.BBH] = res.BBH;
+            _data[StatBBData.SMA] = res.SMA;
+            _data[StatBBData.BBL] = res.BBL;
         }
     }
 }

@@ -15,8 +15,22 @@
     ]
   },
   {
-    "Description": "ZZZZZZ test",
-    "ClassName": "",
-    "ClassLibrary": ""
+    "Description": "BBTrend",
+    "ClassName": "MarketOps.SystemDefs.BBTrend.BBTrend",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "BB period",
+        "Value": "40"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      }
+    ]
   }
 ]

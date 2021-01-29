@@ -2,7 +2,7 @@
 {
     public static class PriceCrossingSMAParams
     {
-        public static string StockName = "StockName";
-        public static string SMAPeriod = "SMA period";
+        public static readonly string StockName = "StockName";
+        public static readonly string SMAPeriod = "SMA period";
     }
 }

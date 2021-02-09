@@ -14,6 +14,6 @@ namespace MarketOps.SystemData.Extensions
             (dd.TopValue.Value - dd.BottomValue.Value) / Math.Abs(dd.TopValue.Value);
 
         public static float MaxDD(this List<SystemDrawDown> dds) =>
-            dds.Max(v => v.DD());
+            dds.Count == 0 ? 0 : dds.Max(v => v.DD());
     }
 }

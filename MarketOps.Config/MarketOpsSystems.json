@@ -32,5 +32,12 @@
         "Value": "2"
       }
     ]
+  },
+  {
+    "Description": "BBTrend Funds",
+    "ClassName": "MarketOps.SystemDefs.BBTrendFunds.BBTrendFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
   }
 ]

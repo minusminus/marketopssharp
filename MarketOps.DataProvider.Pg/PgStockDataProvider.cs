@@ -96,11 +96,8 @@ namespace MarketOps.DataProvider.Pg
             ProcessSelectQuery(qry, (reader) =>
             {
                 reader.Read();
-                if (reader.IsDBNull(0))
-                    throw new Exception($"No nearest tick data for stock name={stockDef.Name}");
-                if (reader.GetFieldValue<int>(1) != ticksBefore)
-                    throw new Exception($"Not enough ticks before for stock name={stockDef.Name}");
-                res = reader.GetFieldValue<DateTime>(0);
+                if ((!reader.IsDBNull(0)) && (reader.GetFieldValue<int>(1) == ticksBefore))
+                    res = reader.GetFieldValue<DateTime>(0);
             });
             return res;
         }

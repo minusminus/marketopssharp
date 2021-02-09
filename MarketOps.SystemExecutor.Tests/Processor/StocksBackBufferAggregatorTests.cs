@@ -53,11 +53,18 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         }
 
         [Test]
-        public void Calculate_OneStock_NoValue__ThrowsException()
+        public void Calculate_OneStock_NoValue__ReturnsZero()
         {
-            List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { Stock1() };
+            SystemStockDataDefinition stock1 = Stock1();
+            List<SystemStockDataDefinition> testData = new List<SystemStockDataDefinition>() { stock1 };
 
-            Should.Throw<InvalidOperationException>(() => StocksBackBufferAggregator.Calculate(testData));
+            //Should.Throw<InvalidOperationException>(() => StocksBackBufferAggregator.Calculate(testData));
+            StocksBackBufferAggregator.Calculate(testData).ShouldBe(
+                new List<(SystemStockDataDefinition, int)>()
+                {
+                    (stock1, 0)
+                }
+                );
         }
 
         [Test]

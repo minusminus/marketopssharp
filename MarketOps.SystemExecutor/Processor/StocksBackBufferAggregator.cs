@@ -1,4 +1,5 @@
-﻿using MarketOps.SystemData.Types;
+﻿using MarketOps.StockData.Types;
+using MarketOps.SystemData.Types;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,8 +13,11 @@ namespace MarketOps.SystemExecutor.Processor
         public static List<(SystemStockDataDefinition stock, int max)> Calculate(List<SystemStockDataDefinition> defs)
         {
             return defs
-                .Select(x => (stock: x, max: x.stats.Max(e => e.BackBufferLength)))
+                .Select(x => (stock: x, max: CalcMaxBufferLength(x.stats)))
                 .ToList();
         }
+
+        private static int CalcMaxBufferLength(List<StockStat> stats) =>
+            stats.Count == 0 ? 0 : stats.Max(e => e.BackBufferLength);
     }
 }

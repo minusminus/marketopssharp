@@ -105,15 +105,15 @@ namespace MarketOps.DataProvider.Pq.Tests
         }
 
         [Test]
-        public void GetNearestTickGETicksBefore_TSOutOfRange__Throws()
+        public void GetNearestTickGETicksBefore_TSOutOfRange__ReturnsMinDate()
         {
-            Should.Throw<Exception>(() => TestObj.GetNearestTickGETicksBefore(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(2118, 5, 2), 10));
+            TestObj.GetNearestTickGETicksBefore(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(2118, 5, 2), 10).ShouldBe(DateTime.MinValue);
         }
 
         [Test]
-        public void GetNearestTickGETicksBefore_TSInRange_NotEnoughTicks__Throws()
+        public void GetNearestTickGETicksBefore_TSInRange_NotEnoughTicks__ReturnsMinDate()
         {
-            Should.Throw<Exception>(() => TestObj.GetNearestTickGETicksBefore(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(2018, 5, 2), 1000000));
+            TestObj.GetNearestTickGETicksBefore(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(2018, 5, 2), 1000000).ShouldBe(DateTime.MinValue);
         }
     }
 }

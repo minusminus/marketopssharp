@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BBTrendFunds\BBTrendFunds.cs" />
+    <Compile Include="BBTrendFunds\SignalsBBTrendFunds.cs" />
     <Compile Include="BBTrend\BBTrend.cs" />
     <Compile Include="BBTrend\BBTrendParams.cs" />
     <Compile Include="BBTrend\BBTrendRecognizer.cs" />

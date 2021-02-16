@@ -1,12 +1,12 @@
-﻿using MarketOps.StockData.Interfaces;
+﻿using MarketOps.Stats.Stats;
+using MarketOps.StockData.Extensions;
+using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarketOps.SystemDefs.BBTrendFunds
 {
@@ -15,33 +15,36 @@ namespace MarketOps.SystemDefs.BBTrendFunds
     /// </summary>
     internal class SignalsBBTrendFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
-        private readonly List<StockDefinition> _stocks;
+        private readonly string[] _fundsNames = { "PKO021", "PKO909" }; //akcji plus, rynku zlota
+
+        private readonly List<StockDefinition> _stocks = new List<StockDefinition>();
+        private readonly List<StockStat> _statsBB = new List<StockStat>();
 
         public SignalsBBTrendFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
         {
-            _stocks = new List<StockDefinition>()
+            foreach (string fundName in _fundsNames)
             {
-                dataProvider.GetStockDefinition("PKO021"),  //akcji plus
-                dataProvider.GetStockDefinition("PKO909"),  //rynku zlota
-            };
+                _stocks.Add(dataProvider.GetStockDefinition(fundName));
+                StockStat statBB = new StatBB("")
+                    .SetParam(StatBBParams.Period, new MOParamInt() { Value = 10 })
+                    .SetParam(StatBBParams.SigmaWidth, new MOParamFloat() { Value = 2f });
+                _statsBB.Add(statBB);
+            }
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
         {
-            //stocks = new List<SystemStockDataDefinition>() {
-            //        new SystemStockDataDefinition()
-            //        {
-            //            stock = _stock,
-            //            dataRange = StockDataRange.Monthly,
-            //            stats = new List<StockStat>()
-            //        }
-            //    }
-            stocks = _stocks.Select(def => new SystemStockDataDefinition()
-            {
-                stock = def,
-                dataRange = StockDataRange.Monthly,
-                stats = new List<StockStat>()
-            }).ToList()
+            stocks = _stocks
+                .Select((def, i) =>
+                {
+                    return new SystemStockDataDefinition()
+                    {
+                        stock = def,
+                        dataRange = StockDataRange.Monthly,
+                        stats = new List<StockStat>() { _statsBB[i] }
+                    };
+                })
+                .ToList()
         };
 
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)

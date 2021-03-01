@@ -3,7 +3,7 @@
     /// <summary>
     /// Types of trend
     /// </summary>
-    internal enum BBTrendType
+    public enum BBTrendType
     {
         Unknown,
         Up,
@@ -13,7 +13,7 @@
     /// <summary>
     /// Expectation of future trend.
     /// </summary>
-    internal enum BBTrendExpectation
+    public enum BBTrendExpectation
     {
         Unknown,
         UpAndRaising,

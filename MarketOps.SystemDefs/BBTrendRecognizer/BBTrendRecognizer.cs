@@ -18,7 +18,7 @@ namespace MarketOps.SystemDefs.BBTrendRecognizer
     /// </summary>
     internal static class BBTrendRecognizer
     {
-        public static BBTrendType RecognizeTrend(StockPricesData data, StockStat statBB, int leadingIndex, BBTrendType currentTrend)
+        public static BBTrendType RecognizeTrend(StockPricesData data, StatBB statBB, int leadingIndex, BBTrendType currentTrend)
         {
             if (((currentTrend == BBTrendType.Unknown) || (currentTrend == BBTrendType.Up))
                 && ((data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength]) || (data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength - 1])))
@@ -29,7 +29,7 @@ namespace MarketOps.SystemDefs.BBTrendRecognizer
             return currentTrend;
         }
 
-        public static BBTrendExpectation GetExpectation(StockPricesData data, StockStat statBB, int leadingIndex, BBTrendType currentTrend)
+        public static BBTrendExpectation GetExpectation(StockPricesData data, StatBB statBB, int leadingIndex, BBTrendType currentTrend)
         {
             if (currentTrend == BBTrendType.Up)
                 return data.C[leadingIndex] > statBB.Data(StatBBData.SMA)[leadingIndex - statBB.BackBufferLength]

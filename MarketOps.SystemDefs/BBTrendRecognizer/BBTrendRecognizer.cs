@@ -1,10 +1,10 @@
 ﻿using MarketOps.Stats.Stats;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.SystemDefs.BBTrend
+namespace MarketOps.SystemDefs.BBTrendRecognizer
 {
     /// <summary>
-    /// Trend recognition based on BB .
+    /// Trend recognition based on BB.
     /// 
     /// Trend defined as:
     /// H over last or current BBH -> trend changed to up

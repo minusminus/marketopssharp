@@ -1,4 +1,4 @@
-﻿namespace MarketOps.SystemDefs.BBTrend
+﻿namespace MarketOps.SystemDefs.BBTrendRecognizer
 {
     /// <summary>
     /// Types of trend

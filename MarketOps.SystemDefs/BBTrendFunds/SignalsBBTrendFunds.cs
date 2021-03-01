@@ -4,7 +4,7 @@ using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using MarketOps.SystemDefs.BBTrend;
+using MarketOps.SystemDefs.BBTrendRecognizer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -74,8 +74,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 StockPricesData data = _dataLoader.Get(_stocks[i].Name, _dataRange, 0, ts, ts);
                 int dataIndex = data.FindByTS(ts);
                 if (dataIndex < _statsBB[i].BackBufferLength + 1) continue;
-                _currentTrends[i] = BBTrendRecognizer.RecognizeTrend(data, _statsBB[i], dataIndex, _currentTrends[i]);
-                _currentExpectations[i] = BBTrendRecognizer.GetExpectation(data, _statsBB[i], dataIndex, _currentTrends[i]);
+                _currentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(data, _statsBB[i], dataIndex, _currentTrends[i]);
+                _currentExpectations[i] = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, _statsBB[i], dataIndex, _currentTrends[i]);
             }
         }
 

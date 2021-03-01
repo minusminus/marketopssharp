@@ -47,8 +47,8 @@
     <Compile Include="BBTrendFunds\SignalsBBTrendFunds.cs" />
     <Compile Include="BBTrend\BBTrend.cs" />
     <Compile Include="BBTrend\BBTrendParams.cs" />
-    <Compile Include="BBTrend\BBTrendRecognizer.cs" />
-    <Compile Include="BBTrend\BBTrendTypes.cs" />
+    <Compile Include="BBTrendRecognizer\BBTrendRecognizer.cs" />
+    <Compile Include="BBTrendRecognizer\BBTrendTypes.cs" />
     <Compile Include="BBTrend\SignalsBBTrend.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMAParams.cs" />
@@ -73,5 +73,6 @@
       <Name>MarketOps.SystemExecutor</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

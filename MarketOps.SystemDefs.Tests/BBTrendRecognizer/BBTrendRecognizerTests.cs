@@ -11,7 +11,6 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
     public class BBTrendRecognizerTests
     {
         const int bbPeriod = 10;
-        const int analyzedPrices = 2;
         private StatBBMock _statBBMock;
         private StockPricesData _pricesData;
 
@@ -20,7 +19,7 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
         {
             _statBBMock = new StatBBMock("");
             _statBBMock.SetParam(StatBBParams.Period, new MOParamInt() { Value = bbPeriod });
-            _pricesData = new StockPricesData(bbPeriod + analyzedPrices);
+            _pricesData = new StockPricesData(bbPeriod + 1);
             _statBBMock.Calculate(_pricesData);
         }
 
@@ -38,6 +37,7 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
         [TestCase(1, 2, 3, 0.5f, 2, 3.5f, 1.5f, 0.75f, 2.5f, 3.25f, BBTrendType.Unknown, BBTrendType.Down)] //both bands break
         [TestCase(1, 2, 3, 0.5f, 2, 3.5f, 1.5f, 0.75f, 2.5f, 3.25f, BBTrendType.Up, BBTrendType.Down)]
         [TestCase(1, 2, 3, 0.5f, 2, 3.5f, 1.5f, 0.75f, 2.5f, 3.25f, BBTrendType.Down, BBTrendType.Up)]
+        [TestCase(104.96f, 114.14f, 123.32f, 106.44f, 113.22f, 119.99f, 108.88f, 105.22f, 113.05f, 114.64f, BBTrendType.Up, BBTrendType.Down)]  //test cases from stock data
         public void RecognizeTrend__RecognizesCorrectly(float prevBBL, float prevSMA, float prevBBH,
             float currBBL, float currSMA, float currBBH,
             float prevL, float currL,
@@ -50,12 +50,12 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
             _statBBMock.SMA[1] = currSMA;
             _statBBMock.BBH[0] = prevBBH;
             _statBBMock.BBH[1] = currBBH;
-            _pricesData.L[bbPeriod] = prevL;
-            _pricesData.L[bbPeriod + 1] = currL;
-            _pricesData.H[bbPeriod] = prevH;
-            _pricesData.H[bbPeriod + 1] = currH;
+            _pricesData.L[bbPeriod - 1] = prevL;
+            _pricesData.L[bbPeriod] = currL;
+            _pricesData.H[bbPeriod - 1] = prevH;
+            _pricesData.H[bbPeriod] = currH;
 
-            MarketOps.SystemDefs.BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(_pricesData, _statBBMock, bbPeriod + analyzedPrices - 1, currTrend).ShouldBe(expectedTrend);
+            MarketOps.SystemDefs.BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(_pricesData, _statBBMock, bbPeriod, currTrend).ShouldBe(expectedTrend);
         }
 
         [TestCase(2, 1, BBTrendType.Unknown, BBTrendExpectation.Unknown)]
@@ -71,9 +71,9 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
             BBTrendType currTrend, BBTrendExpectation expectedTrend)
         {
             _statBBMock.SMA[1] = currSMA;
-            _pricesData.C[bbPeriod + 1] = currC;
+            _pricesData.C[bbPeriod] = currC;
 
-            MarketOps.SystemDefs.BBTrendRecognizer.BBTrendRecognizer.GetExpectation(_pricesData, _statBBMock, bbPeriod + analyzedPrices - 1, currTrend).ShouldBe(expectedTrend);
+            MarketOps.SystemDefs.BBTrendRecognizer.BBTrendRecognizer.GetExpectation(_pricesData, _statBBMock, bbPeriod, currTrend).ShouldBe(expectedTrend);
         }
     }
 }

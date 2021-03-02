@@ -73,7 +73,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             {
                 StockPricesData data = _dataLoader.Get(_stocks[i].Name, _dataRange, 0, ts, ts);
                 int dataIndex = data.FindByTS(ts);
-                if (dataIndex < _statsBB[i].BackBufferLength + 1) continue;
+                if (dataIndex < _statsBB[i].BackBufferLength) continue;
                 _currentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(data, _statsBB[i], dataIndex, _currentTrends[i]);
                 _currentExpectations[i] = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, _statsBB[i], dataIndex, _currentTrends[i]);
             }

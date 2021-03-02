@@ -21,10 +21,10 @@ namespace MarketOps.SystemDefs.BBTrendRecognizer
         public static BBTrendType RecognizeTrend(StockPricesData data, StatBB statBB, int leadingIndex, BBTrendType currentTrend)
         {
             if (((currentTrend == BBTrendType.Unknown) || (currentTrend == BBTrendType.Up))
-                && ((data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength]) || (data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength - 1])))
+                && ((data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength + 1]) || (data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength])))
                 return BBTrendType.Down;
             if (((currentTrend == BBTrendType.Unknown) || (currentTrend == BBTrendType.Down))
-                && ((data.H[leadingIndex] > statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength]) || (data.H[leadingIndex] > statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength - 1])))
+                && ((data.H[leadingIndex] > statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength + 1]) || (data.H[leadingIndex] > statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength])))
                 return BBTrendType.Up;
             return currentTrend;
         }
@@ -32,11 +32,11 @@ namespace MarketOps.SystemDefs.BBTrendRecognizer
         public static BBTrendExpectation GetExpectation(StockPricesData data, StatBB statBB, int leadingIndex, BBTrendType currentTrend)
         {
             if (currentTrend == BBTrendType.Up)
-                return data.C[leadingIndex] > statBB.Data(StatBBData.SMA)[leadingIndex - statBB.BackBufferLength]
+                return data.C[leadingIndex] > statBB.Data(StatBBData.SMA)[leadingIndex - statBB.BackBufferLength + 1]
                     ? BBTrendExpectation.UpAndRaising
                     : BBTrendExpectation.UpButPossibleChange;
             if (currentTrend == BBTrendType.Down)
-                return data.C[leadingIndex] <= statBB.Data(StatBBData.SMA)[leadingIndex - statBB.BackBufferLength]
+                return data.C[leadingIndex] <= statBB.Data(StatBBData.SMA)[leadingIndex - statBB.BackBufferLength + 1]
                     ? BBTrendExpectation.DownAndFalling
                     : BBTrendExpectation.DownButPossibleChange;
             return BBTrendExpectation.Unknown;

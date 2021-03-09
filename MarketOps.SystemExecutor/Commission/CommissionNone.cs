@@ -8,7 +8,7 @@ namespace MarketOps.SystemExecutor.Commission
     /// </summary>
     public class CommissionNone : ICommission
     {
-        public float Calculate(StockType stockType, int volumme, float price)
+        public float Calculate(StockType stockType, float volumme, float price)
         {
             return 0;
         }

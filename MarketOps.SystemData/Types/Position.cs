@@ -19,7 +19,7 @@ namespace MarketOps.SystemData.Types
         public DateTime TSClose;
         public float Close;
         public float CloseCommission;
-        public int Volume;
+        public float Volume;
         public int TicksActive;
         public PositionCloseMode CloseMode;
         public float CloseModePrice;

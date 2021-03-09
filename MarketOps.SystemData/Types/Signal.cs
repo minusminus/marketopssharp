@@ -14,6 +14,6 @@ namespace MarketOps.SystemData.Types
         public PositionDir Direction;
         public bool ReversePosition;
         public float Price;
-        public int Volume;
+        public float Volume;
     }
 }

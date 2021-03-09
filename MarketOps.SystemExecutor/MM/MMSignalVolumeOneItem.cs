@@ -9,6 +9,6 @@ namespace MarketOps.SystemExecutor.MM
     /// </summary>
     public class MMSignalVolumeOneItem : IMMSignalVolume
     {
-        public int Calculate(SystemState systemState, StockType stockType, float price) => 1;
+        public float Calculate(SystemState systemState, StockType stockType, float price) => 1;
     }
 }

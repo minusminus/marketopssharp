@@ -8,6 +8,6 @@ namespace MarketOps.SystemData.Interfaces
     /// </summary>
     public interface ICommission
     {
-        float Calculate(StockType stockType, int volume, float price);
+        float Calculate(StockType stockType, float volume, float price);
     }
 }

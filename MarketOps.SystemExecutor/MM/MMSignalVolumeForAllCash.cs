@@ -17,14 +17,14 @@ namespace MarketOps.SystemExecutor.MM
             _commission = commission;
         }
 
-        public int Calculate(SystemState systemState, StockType stockType, float price)
+        public float Calculate(SystemState systemState, StockType stockType, float price)
         {
-            int res = (int)Math.Floor(systemState.Cash / price);
+            float res = (float)Math.Floor(systemState.Cash / price);
             if (res <= 0) return 0;
             float commission = _commission.Calculate(stockType, res, price);
 
-            if ((float)res * price + commission <= systemState.Cash) return res;
-            return res - (int)Math.Ceiling(commission / price);
+            if (res * price + commission <= systemState.Cash) return res;
+            return res - (float)Math.Ceiling(commission / price);
         }
     }
 }

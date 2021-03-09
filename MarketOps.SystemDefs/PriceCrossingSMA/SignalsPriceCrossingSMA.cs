@@ -81,7 +81,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                     : _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };
 
-        private int GetLastVolume(SystemState systemState)
+        private float GetLastVolume(SystemState systemState)
         {
             if (systemState.PositionsActive.Count > 1)
                 throw new Exception("More than 1 active position");

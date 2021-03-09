@@ -34,7 +34,7 @@ namespace MarketOps.Controls.SystemPositionsGrid
         public DateTime TSClose { get; }
         public float Close { get; }
         public float CloseCommission { get; }
-        public int Volume { get; }
+        public float Volume { get; }
         public int Ticks { get; }
         public float Profit { get; }
     }

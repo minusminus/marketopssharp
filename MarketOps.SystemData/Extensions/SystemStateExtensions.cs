@@ -11,7 +11,7 @@ namespace MarketOps.SystemData.Extensions
     /// </summary>
     public static class SystemStateExtensions
     {
-        public static void Open(this SystemState systemState, StockDefinition stock, PositionDir dir, DateTime ts, float price, int volume, float commission, StockDataRange dataRange, int intradayInterval, Signal entrySignal)
+        public static void Open(this SystemState systemState, StockDefinition stock, PositionDir dir, DateTime ts, float price, float volume, float commission, StockDataRange dataRange, int intradayInterval, Signal entrySignal)
         {
             Position pos = new Position
             {
@@ -75,7 +75,7 @@ namespace MarketOps.SystemData.Extensions
             });
         }
 
-        public static float CalculateCommission(this SystemState systemState, ICommission commission, StockType stockType, int volume, float price)
+        public static float CalculateCommission(this SystemState systemState, ICommission commission, StockType stockType, float volume, float price)
         {
             return commission.Calculate(stockType, volume, price);
         }

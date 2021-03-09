@@ -67,7 +67,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         }
 
         private void CheckPositionsActive(SystemState equity, int posIndex, Signal expectedSignal, PositionDir expectedDir,
-            float expectedOpen, int expectedVolume, DateTime expectedTS)
+            float expectedOpen, float expectedVolume, DateTime expectedTS)
         {
             equity.PositionsActive[posIndex].EntrySignal.ShouldBe(expectedSignal);
             equity.PositionsActive[posIndex].Direction.ShouldBe(expectedDir);
@@ -77,7 +77,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         }
 
         private void CheckPositionsClosed(SystemState equity, int posIndex, PositionDir expectedDir,
-            float expectedClose, int expectedVolume, DateTime expectedTS)
+            float expectedClose, float expectedVolume, DateTime expectedTS)
         {
             equity.PositionsClosed[posIndex].Direction.ShouldBe(expectedDir);
             equity.PositionsClosed[posIndex].Close.ShouldBe(expectedClose);

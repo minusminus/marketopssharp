@@ -37,19 +37,19 @@ namespace MarketOps.SystemData.Extensions
             systemState.Open(signal.Stock, dir, ts, openPrice, signal.Volume, systemState.CalculateCommission(commission, signal, openPrice), signal.DataRange, signal.IntradayInterval, signal);
         }
 
-        public static void Close(this SystemState system, int positionIndex, DateTime ts, float price, float commission)
+        public static void Close(this SystemState systemState, int positionIndex, DateTime ts, float price, float commission)
         {
-            Position pos = system.PositionsActive[positionIndex];
+            Position pos = systemState.PositionsActive[positionIndex];
             pos.Close = price;
             pos.CloseCommission = commission;
             pos.TSClose = ts;
-            system.PositionsActive.RemoveAt(positionIndex);
-            system.PositionsClosed.Add(pos);
-            system.Cash += pos.DirectionMultiplier() * pos.CloseValue();
-            system.Cash -= pos.CloseCommission;
-            system.ClosedPositionsEquity.Add(new SystemValue()
+            systemState.PositionsActive.RemoveAt(positionIndex);
+            systemState.PositionsClosed.Add(pos);
+            systemState.Cash += pos.DirectionMultiplier() * pos.CloseValue();
+            systemState.Cash -= pos.CloseCommission;
+            systemState.ClosedPositionsEquity.Add(new SystemValue()
             {
-                Value = system.ClosedPositionsEquity.LastOrDefault().Value + pos.Value() - pos.OpenCommission - pos.CloseCommission,
+                Value = systemState.ClosedPositionsEquity.LastOrDefault().Value + pos.Value() - pos.OpenCommission - pos.CloseCommission,
                 TS = ts
             });
         }
@@ -64,6 +64,22 @@ namespace MarketOps.SystemData.Extensions
         {
             while (systemState.PositionsActive.Count > 0)
                 systemState.Close(0, ts, price, slippage, commission);
+        }
+
+        public static void AddToPosition(this SystemState systemState, int positionIndex, DateTime ts, float price, float volume, Signal signal, ISlippage slippage, ICommission commission)
+        {
+            Position pos = systemState.PositionsActive[positionIndex];
+            systemState.Close(positionIndex, ts, price, slippage, commission);
+            if (pos.Volume + volume > 0)
+            {
+                float openPrice = systemState.CalculateSlippageOpen(slippage, ts, signal, price);
+                systemState.Open(signal.Stock, pos.Direction, ts, openPrice, pos.Volume + volume, systemState.CalculateCommission(commission, signal, openPrice), signal.DataRange, signal.IntradayInterval, signal);
+            }
+        }
+
+        public static void ReducePosition(this SystemState systemState, int positionIndex, DateTime ts, float price, float volume, Signal signal, ISlippage slippage, ICommission commission)
+        {
+            systemState.AddToPosition(positionIndex, ts, price, -volume, signal, slippage, commission);
         }
 
         public static void CalcCurrentValue(this SystemState systemState, DateTime ts, ISystemDataLoader dataLoader)

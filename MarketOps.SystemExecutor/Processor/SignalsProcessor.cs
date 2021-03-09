@@ -35,8 +35,7 @@ namespace MarketOps.SystemExecutor.Processor
         {
             for (int i = 0; i < systemState.Signals.Count; i++)
             {
-                StockPricesData pricesData = GetPricesData(systemState.Signals[i], ts);
-                int pricesDataIndex = pricesData.FindByTS(ts);
+                (StockPricesData pricesData, int pricesDataIndex) = GetPricesDataAndIndex(systemState.Signals[i].Stock.Name, systemState.Signals[i].DataRange, systemState.Signals[i].IntradayInterval, ts);
                 if (signalSelector(systemState.Signals[i], pricesData, pricesDataIndex))
                     ProcessSignal(systemState.Signals[i], ts, systemState, openPriceSelector, pricesData, pricesDataIndex);
             }
@@ -47,7 +46,13 @@ namespace MarketOps.SystemExecutor.Processor
             VerifySignal(signal);
             float openPrice = openPriceSelector(signal, pricesData, pricesDataIndex);
 
-            if (signal.ReversePosition)
+            if (signal.ConvertPosition)
+            {
+                (StockPricesData srcPricesData, int srcPricesDataIndex) = GetPricesDataAndIndex(signal.SrcStock.Name, signal.DataRange, signal.IntradayInterval, ts);
+                float srcPrice = openPriceSelector(signal, srcPricesData, srcPricesDataIndex);
+                ConvertPosition(signal, ts, systemState, openPrice, srcPrice);
+            }
+            else if (signal.ReversePosition)
                 ReversePosition(signal, ts, systemState, openPrice);
             else
                 OpenPosition(signal, ts, systemState, openPrice);
@@ -55,13 +60,26 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void VerifySignal(Signal signal)
         {
-            if (signal.Volume == 0)
-                throw new Exception($"Signal volume 0 for: {signal.Stock.Name} (ID = {signal.Stock.ID})");
+            void ThrowException(string header) => throw new Exception($"{header} for: {signal.Stock.Name} (ID = {signal.Stock.ID})");
+
+            if (signal.ConvertPosition)
+            {
+                if (signal.SrcStock == null)
+                    ThrowException("Signal convert source stock undefined");
+                if ((signal.ConvertAmount == 0) && (!signal.ConvertAll))
+                    ThrowException("Signal convert amount undefined");
+            }
+            else
+            {
+                if (signal.Volume == 0)
+                    ThrowException("Signal volume 0");
+            }
         }
 
-        private StockPricesData GetPricesData(Signal signal, DateTime ts)
+        private (StockPricesData pricesData, int pricesDataIndex) GetPricesDataAndIndex(string stockName, StockDataRange dataRange, int intradayInterval, DateTime ts)
         {
-            return _dataLoader.Get(signal.Stock.Name, signal.DataRange, signal.IntradayInterval, ts, ts);
+            StockPricesData data = _dataLoader.Get(stockName, dataRange, intradayInterval, ts, ts);
+            return (data, data.FindByTS(ts));
         }
 
         private void OpenPosition(Signal signal, DateTime ts, SystemState systemState, float openPrice)
@@ -75,10 +93,14 @@ namespace MarketOps.SystemExecutor.Processor
             int currPos = systemState.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
             if (currPos > -1)
             {
-                newPosDir = systemState.PositionsActive[currPos].ReverseDirection();
+                newPosDir = systemState.PositionsActive[currPos].ReversedDirection();
                 systemState.Close(currPos, ts, openPrice, _slippage, _commission);
             }
             systemState.Open(ts, newPosDir, openPrice, signal, _slippage, _commission);
+        }
+
+        private void ConvertPosition(Signal signal, DateTime ts, SystemState systemState, float openPrice, float srcPrice)
+        {
         }
     }
 }

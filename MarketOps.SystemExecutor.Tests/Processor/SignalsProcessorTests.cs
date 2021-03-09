@@ -148,6 +148,28 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         }
 
         [Test]
+        public void Process_ConvertSignalNullSrcStock__Throws()
+        {
+            SystemState equity = new SystemState();
+            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, ConvertPosition = true, SrcStock = null, ConvertAmount = 10, ConvertAll = false });
+            Should.Throw<Exception>(() =>
+                TestObj.Process(LastDate, equity,
+                    (_, __, ___) => true,
+                    (_, __, ___) => -1));
+        }
+
+        [Test]
+        public void Process_ConvertSignalConvertAmountZeroAndAllFalse__Throws()
+        {
+            SystemState equity = new SystemState();
+            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, ConvertPosition = true, SrcStock = _stock, ConvertAmount = 0, ConvertAll = false });
+            Should.Throw<Exception>(() =>
+                TestObj.Process(LastDate, equity,
+                    (_, __, ___) => true,
+                    (_, __, ___) => -1));
+        }
+
+        [Test]
         public void Process_OpenLongOnPrice__OpensPosition()
         {
             TestOpenPosition((s) => (s.Direction == PositionDir.Long) && (!s.ReversePosition), PositionDir.Long);

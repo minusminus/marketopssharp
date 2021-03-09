@@ -26,10 +26,10 @@ namespace MarketOps.SystemData.Tests.Extensions
 
         [TestCase(PositionDir.Long, PositionDir.Short)]
         [TestCase(PositionDir.Short, PositionDir.Long)]
-        public void ReverseDirection(PositionDir dir, PositionDir expected)
+        public void ReversedDirection(PositionDir dir, PositionDir expected)
         {
             _testObj.Direction = dir;
-            _testObj.ReverseDirection().ShouldBe(expected);
+            _testObj.ReversedDirection().ShouldBe(expected);
         }
 
         [TestCase(0, 0, 0)]

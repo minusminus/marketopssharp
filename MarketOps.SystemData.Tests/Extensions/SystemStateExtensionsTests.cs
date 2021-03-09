@@ -164,6 +164,11 @@ namespace MarketOps.SystemData.Tests.Extensions
             CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, Commission, CurrentTS, _testObj.ClosedPositionsEquity[0].Value);
         }
 
+        public void AddToPosition__ClosesCurrent_CreatesNewWithNewVolume()
+        {
+
+        }
+
         [Test]
         public void CalcCurrentValue_NoActivePositions__CalculatesOnlyCash()
         {

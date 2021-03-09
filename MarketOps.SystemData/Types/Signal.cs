@@ -8,6 +8,7 @@ namespace MarketOps.SystemData.Types
     public class Signal
     {
         public StockDefinition Stock;
+        public StockDefinition SrcStock;
         public StockDataRange DataRange;
         public int IntradayInterval;
         public SignalType Type;
@@ -15,5 +16,8 @@ namespace MarketOps.SystemData.Types
         public bool ReversePosition;
         public float Price;
         public float Volume;
+        public bool ConvertPosition;
+        public float ConvertAmount;
+        public bool ConvertAll;
     }
 }

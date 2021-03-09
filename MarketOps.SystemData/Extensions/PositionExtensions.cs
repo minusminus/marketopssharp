@@ -12,7 +12,7 @@ namespace MarketOps.SystemData.Extensions
             return pos.Direction.DirectionMultiplier();
         }
 
-        public static PositionDir ReverseDirection(this Position pos)
+        public static PositionDir ReversedDirection(this Position pos)
         {
             return pos.Direction.ReverseDirection();
         }

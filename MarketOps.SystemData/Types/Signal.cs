@@ -17,7 +17,7 @@ namespace MarketOps.SystemData.Types
         public float Price;
         public float Volume;
         public bool ConvertPosition;
-        public float ConvertAmount;
+        public float ConvertValue;
         public bool ConvertAll;
     }
 }

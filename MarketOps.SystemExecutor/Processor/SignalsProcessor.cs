@@ -43,7 +43,7 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void ProcessSignal(Signal signal, DateTime ts, SystemState systemState, Func<Signal, StockPricesData, int, float> openPriceSelector, StockPricesData pricesData, int pricesDataIndex)
         {
-            VerifySignal(signal);
+            VerifySignal(systemState, signal);
             float openPrice = openPriceSelector(signal, pricesData, pricesDataIndex);
 
             if (signal.ConvertPosition)
@@ -58,7 +58,7 @@ namespace MarketOps.SystemExecutor.Processor
                 OpenPosition(signal, ts, systemState, openPrice);
         }
 
-        private void VerifySignal(Signal signal)
+        private void VerifySignal(SystemState systemState, Signal signal)
         {
             void ThrowException(string header) => throw new Exception($"{header} for: {signal.Stock.Name} (ID = {signal.Stock.ID})");
 
@@ -66,8 +66,10 @@ namespace MarketOps.SystemExecutor.Processor
             {
                 if (signal.SrcStock == null)
                     ThrowException("Signal convert source stock undefined");
-                if ((signal.ConvertAmount == 0) && (!signal.ConvertAll))
-                    ThrowException("Signal convert amount undefined");
+                if ((signal.ConvertValue == 0) && (!signal.ConvertAll))
+                    ThrowException("Signal convert value undefined");
+                if (FindActivePositionIndex(systemState, signal.SrcStock) < 0)
+                    ThrowException("No active source stock position");
             }
             else
             {
@@ -90,7 +92,7 @@ namespace MarketOps.SystemExecutor.Processor
         private void ReversePosition(Signal signal, DateTime ts, SystemState systemState, float openPrice)
         {
             PositionDir newPosDir = signal.Direction;
-            int currPos = systemState.PositionsActive.FindIndex(p => p.Stock.ID == signal.Stock.ID);
+            int currPos = FindActivePositionIndex(systemState, signal.Stock);
             if (currPos > -1)
             {
                 newPosDir = systemState.PositionsActive[currPos].ReversedDirection();
@@ -101,6 +103,20 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void ConvertPosition(Signal signal, DateTime ts, SystemState systemState, float openPrice, float srcPrice)
         {
+            int srcPos = FindActivePositionIndex(systemState, signal.SrcStock);
+            float reduceVolume = Math.Min(systemState.PositionsActive[srcPos].Volume,
+                signal.ConvertAll ? systemState.PositionsActive[srcPos].Volume : (signal.ConvertValue / srcPrice));
+            systemState.ReducePosition(srcPos, ts, srcPrice, reduceVolume, signal, _slippage, _commission);
+
+            int destPos = FindActivePositionIndex(systemState, signal.Stock);
+            float addVolume = (srcPrice * reduceVolume) / openPrice;
+            if (destPos > -1)
+                systemState.AddToPosition(destPos, ts, openPrice, addVolume, signal, _slippage, _commission);
+            else
+                systemState.Open(ts, signal.Direction, openPrice, addVolume, signal, _slippage, _commission);
         }
+
+        private int FindActivePositionIndex(SystemState systemState, StockDefinition stock) =>
+            systemState.PositionsActive.FindIndex(p => p.Stock.ID == stock.ID);
     }
 }

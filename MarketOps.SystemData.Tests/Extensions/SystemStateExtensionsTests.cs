@@ -29,21 +29,29 @@ namespace MarketOps.SystemData.Tests.Extensions
         private const float Commission = 1;
         private readonly DateTime CurrentTS = DateTime.Now.Date;
         private readonly DateTime CurrentTS2 = DateTime.Now.AddDays(-1).Date;
-        private readonly Signal EntrySignal = new Signal();
+        private readonly Signal EntrySignal = new Signal()
+        {
+            DataRange = StockDataRange.Daily,
+            IntradayInterval = 0
+        };
 
         [SetUp]
         public void SetUp()
         {
-            _stock = new StockDefinition();
+            _stock = new StockDefinition()
+            {
+                Type = StockType.Stock
+            };
             _stock2 = new StockDefinition();
             _testObj = new SystemState() { Cash = CashValue };
             _stockPrices = new StockPricesData(1);
             _dataLoader = SystemDataLoaderUtils.CreateSubstitute(_stockPrices);
             _commission = CommissionUtils.CreateSubstitute(Commission);
             _slippage = SlippageUtils.CreateSusbstitute();
+            EntrySignal.Stock = _stock;
         }
 
-        private void CheckOpenedPosition(Position pos, StockDefinition stock, PositionDir dir, float open, int vol, float commission, DateTime ts, StockDataRange range, int interval)
+        private void CheckOpenedPosition(Position pos, StockDefinition stock, PositionDir dir, float open, float vol, float commission, DateTime ts, StockDataRange range, int interval)
         {
             pos.Stock.ShouldBe(stock);
             pos.Direction.ShouldBe(dir);
@@ -56,7 +64,7 @@ namespace MarketOps.SystemData.Tests.Extensions
             pos.EntrySignal.ShouldBe(EntrySignal);
         }
 
-        private void CheckClosedPosition(int index, PositionDir dir, float open, float close, int vol, float commission, DateTime ts, float prevValueOnPosition)
+        private void CheckClosedPosition(int index, PositionDir dir, float open, float close, float vol, float commission, DateTime ts, float prevValueOnPosition)
         {
             _testObj.PositionsClosed[index].Close.ShouldBe(close);
             _testObj.PositionsClosed[index].CloseCommission.ShouldBe(commission);
@@ -65,7 +73,7 @@ namespace MarketOps.SystemData.Tests.Extensions
             _testObj.ClosedPositionsEquity[index].TS.ShouldBe(ts);
         }
 
-        private Position CreatePosition(PositionDir dir, float open, int vol) => new Position()
+        private Position CreatePosition(PositionDir dir, float open, float vol) => new Position()
         {
             Stock = _stock,
             Direction = dir,
@@ -76,7 +84,7 @@ namespace MarketOps.SystemData.Tests.Extensions
         [TestCase(PositionDir.Long, 100, 10, StockDataRange.Daily, 0)]
         [TestCase(PositionDir.Short, 100, 10, StockDataRange.Weekly, 0)]
         [TestCase(PositionDir.Long, 10, 20, StockDataRange.Intraday, 60)]
-        public void Open__AddsToActive_SubsCash(PositionDir dir, float price, int vol, StockDataRange range, int intradayInterval)
+        public void Open__AddsToActive_SubsCash(PositionDir dir, float price, float vol, StockDataRange range, int intradayInterval)
         {
             _testObj.Open(_stock, dir, CurrentTS, price, vol, Commission, range, intradayInterval, EntrySignal);
             _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (price * vol) - Commission);
@@ -103,7 +111,7 @@ namespace MarketOps.SystemData.Tests.Extensions
         [TestCase(PositionDir.Long, 150, 100, 10)]
         [TestCase(PositionDir.Short, 100, 150, 10)]
         [TestCase(PositionDir.Short, 150, 100, 10)]
-        public void Close__MovesToClosed_AddsCash_AddsValueOnPosition(PositionDir dir, float open, float close, int vol)
+        public void Close__MovesToClosed_AddsCash_AddsValueOnPosition(PositionDir dir, float open, float close, float vol)
         {
             Position pos = CreatePosition(dir, open, vol);
             _testObj.PositionsActive.Add(pos);
@@ -164,9 +172,55 @@ namespace MarketOps.SystemData.Tests.Extensions
             CheckClosedPosition(1, PositionDir.Long, Price2, Close1, Vol2, Commission, CurrentTS, _testObj.ClosedPositionsEquity[0].Value);
         }
 
-        public void AddToPosition__ClosesCurrent_CreatesNewWithNewVolume()
+        [TestCase(PositionDir.Long, 100, 10, 150, 5)]
+        [TestCase(PositionDir.Long, 150, 10, 100, 5)]
+        [TestCase(PositionDir.Short, 150, 10, 100, 5)]
+        [TestCase(PositionDir.Short, 100, 10, 150, 5)]
+        [TestCase(PositionDir.Long, 100, 10, 150, -5)]
+        public void AddToPosition_NewVolPositive__ClosesCurrent_CreatesNewWithNewVolume(PositionDir dir, float open, float vol, float addPrice, float addVol)
         {
+            Position pos = CreatePosition(dir, open, vol);
+            _testObj.PositionsActive.Add(pos);
+            _testObj.AddToPosition(0, CurrentTS, addPrice, addVol, EntrySignal, _slippage, _commission);
+            _testObj.Cash.ShouldBe(CashValue - pos.DirectionMultiplier() * (addPrice * addVol) - (2 * Commission));
+            _testObj.PositionsClosed.Count.ShouldBe(1);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
+            CheckClosedPosition(0, dir, open, addPrice, vol, Commission, CurrentTS, 0);
+            _testObj.PositionsActive.Count.ShouldBe(1);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, addPrice, vol + addVol, Commission, CurrentTS, StockDataRange.Daily, 0);
+        }
 
+        [TestCase(PositionDir.Long, 100, 10, 150, -15)]
+        [TestCase(PositionDir.Long, 150, 10, 100, -15)]
+        [TestCase(PositionDir.Short, 150, 10, 100, -15)]
+        [TestCase(PositionDir.Short, 100, 10, 150, -15)]
+        public void AddToPosition_NewVolNegative__ClosesCurrent(PositionDir dir, float open, float vol, float addPrice, float addVol)
+        {
+            Position pos = CreatePosition(dir, open, vol);
+            _testObj.PositionsActive.Add(pos);
+            _testObj.AddToPosition(0, CurrentTS, addPrice, addVol, EntrySignal, _slippage, _commission);
+            _testObj.Cash.ShouldBe(CashValue + pos.DirectionMultiplier() * (addPrice * vol) - Commission);
+            _testObj.PositionsClosed.Count.ShouldBe(1);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
+            CheckClosedPosition(0, dir, open, addPrice, vol, Commission, CurrentTS, 0);
+            _testObj.PositionsActive.Count.ShouldBe(0);
+        }
+
+        [TestCase(PositionDir.Long, 100, 10, 150, 5)]
+        [TestCase(PositionDir.Long, 150, 10, 100, 5)]
+        [TestCase(PositionDir.Short, 150, 10, 100, 5)]
+        [TestCase(PositionDir.Short, 100, 10, 150, 5)]
+        public void ReducePosition__ClosesCurrent_CreatesNewWithReducedVolume(PositionDir dir, float open, float vol, float reducePrice, float reduceVol)
+        {
+            Position pos = CreatePosition(dir, open, vol);
+            _testObj.PositionsActive.Add(pos);
+            _testObj.ReducePosition(0, CurrentTS, reducePrice, reduceVol, EntrySignal, _slippage, _commission);
+            _testObj.Cash.ShouldBe(CashValue + pos.DirectionMultiplier() * (reducePrice * reduceVol) - (2 * Commission));
+            _testObj.PositionsClosed.Count.ShouldBe(1);
+            _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
+            CheckClosedPosition(0, dir, open, reducePrice, vol, Commission, CurrentTS, 0);
+            _testObj.PositionsActive.Count.ShouldBe(1);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, reducePrice, vol - reduceVol, Commission, CurrentTS, StockDataRange.Daily, 0);
         }
 
         [Test]

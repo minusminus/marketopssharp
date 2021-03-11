@@ -137,6 +137,17 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         }
 
         [Test]
+        public void Process_SignalNullStock__Throws()
+        {
+            SystemState equity = new SystemState();
+            equity.Signals.Add(new Signal() { Stock = null, Direction = PositionDir.Long });
+            Should.Throw<Exception>(() =>
+                TestObj.Process(LastDate, equity,
+                    (_, __, ___) => true,
+                    (_, __, ___) => -1));
+        }
+
+        [Test]
         public void Process_SignalZeroVolume__Throws()
         {
             SystemState equity = new SystemState();

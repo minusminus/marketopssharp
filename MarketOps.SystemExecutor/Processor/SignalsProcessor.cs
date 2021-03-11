@@ -62,6 +62,8 @@ namespace MarketOps.SystemExecutor.Processor
         {
             void ThrowException(string header) => throw new Exception($"{header} for: {signal.Stock.Name} (ID = {signal.Stock.ID})");
 
+            if (signal.Stock == null)
+                ThrowException("Signal stock undefined");
             if (signal.ConvertPosition)
             {
                 if (signal.SrcStock == null)

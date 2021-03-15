@@ -106,9 +106,11 @@
     <Compile Include="Processor\ClosingPositionSelectorTests.cs" />
     <Compile Include="Processor\OpenPriceSelectorTests.cs" />
     <Compile Include="Processor\PositionsCloserTests.cs" />
+    <Compile Include="Processor\PositionsRebalancerTests.cs" />
     <Compile Include="Processor\PricesDataRangeFinderTests.cs" />
     <Compile Include="Processor\SignalSelectorTests.cs" />
     <Compile Include="Processor\SignalsProcessorTests.cs" />
+    <Compile Include="Processor\SignalVerifierTests.cs" />
     <Compile Include="Processor\StocksBackBufferAggregatorTests.cs" />
     <Compile Include="Processor\StocksDataPreloaderTests.cs" />
     <Compile Include="Processor\SystemProcessorTests.cs" />

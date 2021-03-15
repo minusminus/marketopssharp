@@ -1,4 +1,5 @@
 ﻿using MarketOps.StockData.Types;
+using System.Collections.Generic;
 
 namespace MarketOps.SystemData.Types
 {
@@ -8,7 +9,6 @@ namespace MarketOps.SystemData.Types
     public class Signal
     {
         public StockDefinition Stock;
-        public StockDefinition SrcStock;
         public StockDataRange DataRange;
         public int IntradayInterval;
         public SignalType Type;
@@ -16,8 +16,7 @@ namespace MarketOps.SystemData.Types
         public bool ReversePosition;
         public float Price;
         public float Volume;
-        public bool ConvertPosition;
-        public float ConvertValue;
-        public bool ConvertAll;
+        public bool Rebalance;
+        public List<(StockDefinition stockDef, float balance)> NewBalance;
     }
 }

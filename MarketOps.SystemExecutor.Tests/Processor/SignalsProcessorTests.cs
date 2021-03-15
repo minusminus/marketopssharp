@@ -21,7 +21,7 @@ namespace MarketOps.SystemExecutor.Tests.Processor
         private const float SignalPrice = 10;
         private const int SignalVolume = 10;
 
-        private static readonly StockDefinition _stock = new StockDefinition() { ID = 1 };
+        private readonly StockDefinition _stock = new StockDefinition() { ID = 1 };
 
         private SignalsProcessor TestObj;
         private ISystemDataLoader _dataLoader;
@@ -134,61 +134,6 @@ namespace MarketOps.SystemExecutor.Tests.Processor
                 (_, __, ___) => { _signalSelectorCalled = true; return false; },
                 (_, __, ___) => { _openPriceLevelCalled = true; return -1; });
             CheckProcessResult(equity, true, false, 4, 0, 0);
-        }
-
-        [Test]
-        public void Process_SignalNullStock__Throws()
-        {
-            SystemState equity = new SystemState();
-            equity.Signals.Add(new Signal() { Stock = null, Direction = PositionDir.Long });
-            Should.Throw<Exception>(() =>
-                TestObj.Process(LastDate, equity,
-                    (_, __, ___) => true,
-                    (_, __, ___) => -1));
-        }
-
-        [Test]
-        public void Process_SignalZeroVolume__Throws()
-        {
-            SystemState equity = new SystemState();
-            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, Price = 10, Volume = 0, ReversePosition = false });
-            Should.Throw<Exception>(() =>
-                TestObj.Process(LastDate, equity,
-                    (_, __, ___) => true,
-                    (_, __, ___) => -1));
-        }
-
-        [Test]
-        public void Process_ConvertSignalNullSrcStock__Throws()
-        {
-            SystemState equity = new SystemState();
-            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, ConvertPosition = true, SrcStock = null, ConvertValue = 10, ConvertAll = false });
-            Should.Throw<Exception>(() =>
-                TestObj.Process(LastDate, equity,
-                    (_, __, ___) => true,
-                    (_, __, ___) => -1));
-        }
-
-        [Test]
-        public void Process_ConvertSignalConvertAmountZeroAndAllFalse__Throws()
-        {
-            SystemState equity = new SystemState();
-            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, ConvertPosition = true, SrcStock = _stock, ConvertValue = 0, ConvertAll = false });
-            Should.Throw<Exception>(() =>
-                TestObj.Process(LastDate, equity,
-                    (_, __, ___) => true,
-                    (_, __, ___) => -1));
-        }
-
-        [Test]
-        public void Process_ConvertSignalNoActiveSrcPosition__Throws()
-        {
-            SystemState equity = new SystemState();
-            equity.Signals.Add(new Signal() { Stock = _stock, Direction = PositionDir.Long, ConvertPosition = true, SrcStock = _stock, ConvertValue = 0, ConvertAll = true });
-            Should.Throw<Exception>(() =>
-                TestObj.Process(LastDate, equity,
-                    (_, __, ___) => true,
-                    (_, __, ___) => -1));
         }
 
         [Test]

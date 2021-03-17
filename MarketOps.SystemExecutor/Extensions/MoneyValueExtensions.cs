@@ -7,9 +7,7 @@ namespace MarketOps.SystemExecutor.Extensions
     /// </summary>
     public static class MoneyValueExtensions
     {
-        public static float TruncateTo2ndPlace(this float value)
-        {
-            return (float)(Math.Truncate(100m * (decimal)value) / 100m);
-        }
+        public static float TruncateTo2ndPlace(this float value) => 
+            (float)(Math.Truncate(100m * (decimal)value) / 100m);
     }
 }

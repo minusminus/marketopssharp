@@ -1,5 +1,6 @@
 ﻿using MarketOps.SystemData.Types;
 using System;
+using System.Linq;
 
 namespace MarketOps.SystemExecutor.Processor
 {
@@ -23,6 +24,8 @@ namespace MarketOps.SystemExecutor.Processor
                 ThrowException(signal, "New balance list undefined");
             if ((signal.Type != SignalType.EnterOnOpen) && (signal.Type != SignalType.EnterOnClose))
                 ThrowException(signal, $"Rebalance is suported only for OnOpen and OnClose signals (unsupported type: {signal.Type})");
+            if (signal.NewBalance.Sum(x => x.balance) > 1)
+                ThrowException(signal, $"Total new balance is greater than 1");
         }
 
         private static void VerifyStandardSignal(Signal signal)

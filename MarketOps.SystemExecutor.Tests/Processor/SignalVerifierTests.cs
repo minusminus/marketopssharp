@@ -55,5 +55,22 @@ namespace MarketOps.SystemExecutor.Tests.Processor
             Signal signal = new Signal() { Stock = null, Direction = PositionDir.Long, Type = signalType, Rebalance = true, NewBalance = new List<(StockDefinition stockDef, float balance)>() };
             SignalVerifier.Verify(signal);
         }
+
+        [Test]
+        public void Verify_Rebalance_NewBAlanceGreaterThan1__Throws()
+        {
+            Signal signal = new Signal()
+            {
+                Stock = null,
+                Rebalance = true,
+                NewBalance = new List<(StockDefinition stockDef, float balance)>()
+                {
+                    (_stock, 0.4f),
+                    (_stock, 0.3f),
+                    (_stock, 0.5f),
+                }
+            };
+            Should.Throw<Exception>(() => SignalVerifier.Verify(signal));
+        }
     }
 }

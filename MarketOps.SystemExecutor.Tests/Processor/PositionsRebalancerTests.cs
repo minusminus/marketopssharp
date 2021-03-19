@@ -54,9 +54,31 @@ namespace MarketOps.SystemExecutor.Tests.Processor
             TestObj.Rebalance(
                 new Signal()
                 {
-                    Stock = _stock,
                     Rebalance = true,
                     NewBalance = new List<(StockDefinition stockDef, float balance)>()
+                },
+                LastDate, systemState,
+                (_, __, ___) => { _openPriceLevelCalled = true; return Price; });
+
+            _openPriceLevelCalled.ShouldBe(activePositions > 0);
+            systemState.PositionsClosed.Count.ShouldBe(activePositions);
+            systemState.PositionsActive.Count.ShouldBe(0);
+            systemState.Cash.ShouldBe(InitialCash + Price * PositionVolume * activePositions);
+        }
+
+        [Test]
+        public void Rebalance_ZeroValueNewBalance__AllClosed_NoNewActive([Range(0, 2)] int activePositions)
+        {
+            SystemState systemState = CreateSystemState(activePositions);
+
+            TestObj.Rebalance(
+                new Signal()
+                {
+                    Rebalance = true,
+                    NewBalance = new List<(StockDefinition stockDef, float balance)>()
+                    {
+                        (_stock, 0)
+                    }
                 },
                 LastDate, systemState,
                 (_, __, ___) => { _openPriceLevelCalled = true; return Price; });
@@ -76,7 +98,6 @@ namespace MarketOps.SystemExecutor.Tests.Processor
             TestObj.Rebalance(
                 new Signal()
                 {
-                    Stock = _stock,
                     Rebalance = true,
                     NewBalance = new List<(StockDefinition stockDef, float balance)>()
                     {
@@ -104,7 +125,6 @@ namespace MarketOps.SystemExecutor.Tests.Processor
             TestObj.Rebalance(
                 new Signal()
                 {
-                    Stock = _stock,
                     Rebalance = true,
                     NewBalance = new List<(StockDefinition stockDef, float balance)>()
                     {

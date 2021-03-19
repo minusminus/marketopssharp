@@ -4,6 +4,7 @@ using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
 using MarketOps.SystemExecutor.Extensions;
 using System;
+using System.Linq;
 
 namespace MarketOps.SystemExecutor.Processor
 {
@@ -42,11 +43,11 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void OpenNewPositions(float totalValue, Signal signal, DateTime ts, SystemState systemState, Func<Signal, StockPricesData, int, float> openPriceSelector)
         {
-            foreach ((StockDefinition stockDef, float balance) in signal.NewBalance)
+            foreach ((StockDefinition stockDef, float balance) in signal.NewBalance.Where(x => x.balance > 0))
             {
                 float openPrice = CalculatePrice(stockDef.Name, signal.DataRange, signal.IntradayInterval, signal, ts, openPriceSelector);
-                float balancedVolume = (totalValue * balance / openPrice).TruncateToAllowedVolume(signal.Stock.Type);
-                systemState.Open(ts, signal.Direction, openPrice, balancedVolume, signal, _slippage, _commission);
+                float balancedVolume = (totalValue * balance / openPrice).TruncateToAllowedVolume(stockDef.Type);
+                systemState.Open(ts, signal.Direction, openPrice, balancedVolume, stockDef, signal, _slippage, _commission);
             }
         }
 

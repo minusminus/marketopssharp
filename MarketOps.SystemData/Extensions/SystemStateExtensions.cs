@@ -42,6 +42,12 @@ namespace MarketOps.SystemData.Extensions
             systemState.Open(signal.Stock, dir, ts, openPrice, volume, systemState.CalculateCommission(commission, signal, openPrice), signal.DataRange, signal.IntradayInterval, signal);
         }
 
+        public static void Open(this SystemState systemState, DateTime ts, PositionDir dir, float price, float volume, StockDefinition stock, Signal signal, ISlippage slippage, ICommission commission)
+        {
+            float openPrice = systemState.CalculateSlippageOpen(slippage, stock.Type, ts, signal.Direction, price);
+            systemState.Open(stock, dir, ts, openPrice, volume, systemState.CalculateCommission(commission, stock.Type, signal.Volume, openPrice), signal.DataRange, signal.IntradayInterval, signal);
+        }
+
         public static void Close(this SystemState systemState, int positionIndex, DateTime ts, float price, float commission)
         {
             Position pos = systemState.PositionsActive[positionIndex];

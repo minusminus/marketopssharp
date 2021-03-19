@@ -17,7 +17,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
     /// </summary>
     internal class SignalsBBTrendFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
-        private readonly string[] _fundsNames = { "PKO021", "PKO909" }; //akcji plus, rynku zlota
+        //private readonly string[] _fundsNames = { "PKO021", "PKO909" }; //akcji plus, rynku zlota
+        private readonly string[] _fundsNames = { "PKO014", "PKO021" }; //obl dlugoterm, akcji plus
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly StockDataRange _dataRange;
@@ -64,7 +65,10 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         {
             CalculateTrendsAndExpectations(ts);
             LogData(ts);
-            return new List<Signal>();
+            return new List<Signal>()
+            {
+                CreateSignal(CalculateBalance())
+            };
         }
 
         private void CalculateTrendsAndExpectations(DateTime ts)
@@ -77,6 +81,39 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 _currentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(data, _statsBB[i], dataIndex, _currentTrends[i]);
                 _currentExpectations[i] = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, _statsBB[i], dataIndex, _currentTrends[i]);
             }
+        }
+
+        private Signal CreateSignal(float[] newBalance)
+        {
+            return new Signal()
+            {
+                DataRange = StockDataRange.Monthly,
+                IntradayInterval = 0,
+                Type = SignalType.EnterOnOpen,
+                Direction = PositionDir.Long,
+                Rebalance = true,
+                NewBalance = new List<(StockDefinition stockDef, float balance)>()
+                {
+                    (_stocks[0], newBalance[0]),
+                    (_stocks[1], newBalance[1])
+                }
+            };
+        }
+
+        private float[] CalculateBalance()
+        {
+            float[] balance = new float[2] { 0, 0 };
+
+            switch (_currentExpectations[1])
+            {
+                case BBTrendExpectation.UpAndRaising: balance[0] = 0.2f; balance[1] = 0.8f; break;
+                case BBTrendExpectation.UpButPossibleChange: balance[0] = 0.8f; balance[1] = 0.2f; break;
+                case BBTrendExpectation.DownButPossibleChange: balance[0] = 0.8f; balance[1] = 0.2f; break;
+                case BBTrendExpectation.DownAndFalling: balance[0] = 1f; balance[1] = 0f; break;
+                case BBTrendExpectation.Unknown: balance[0] = 1f; balance[1] = 0f; break;
+            }
+
+            return balance;
         }
 
         private void LogData(DateTime ts)

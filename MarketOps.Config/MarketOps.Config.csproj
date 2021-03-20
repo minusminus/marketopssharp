@@ -69,6 +69,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\AppConfig.cs" />
+    <Compile Include="App\AppConfigCharts.cs" />
+    <Compile Include="App\AppConfigOps.cs" />
+    <Compile Include="App\AppConfigSimulation.cs" />
     <Compile Include="ClassesLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\ConfigDisplayStatType.cs" />

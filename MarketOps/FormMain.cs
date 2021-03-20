@@ -26,6 +26,7 @@ using MarketOps.SystemData.Types;
 using MarketOps.DataMappers;
 using MarketOps.Config.SystemExecutor;
 using MarketOps.Config.Stats;
+using MarketOps.Config.App;
 
 namespace MarketOps
 {
@@ -56,6 +57,12 @@ namespace MarketOps
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
             InitializeSim();
+            LoadConfig();
+        }
+
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SaveConfig();
         }
 
         #region price chart events
@@ -276,6 +283,48 @@ namespace MarketOps
         {
             chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed));
             chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed));
+        }
+
+        private void LoadConfig()
+        {
+            var appConfig = AppConfigOps.Load();
+            if (appConfig.Charts != null)
+            {
+                if (!string.IsNullOrEmpty(appConfig.Charts.StockName))
+                    edtStockName.Text = appConfig.Charts.StockName;
+                if (!string.IsNullOrEmpty(appConfig.Charts.StockDataRange))
+                    cbStockDataRange.Text = appConfig.Charts.StockDataRange;
+            }
+            if (appConfig.Simulation != null)
+            {
+                if (!string.IsNullOrEmpty(appConfig.Simulation.SystemChoice))
+                    cbSystemChoice.Text = appConfig.Simulation.SystemChoice;
+                if (appConfig.Simulation.SimFrom != DateTime.MinValue)
+                    dtpSimFrom.Value = appConfig.Simulation.SimFrom;
+                if (appConfig.Simulation.SimTo != DateTime.MinValue)
+                    dtpSimTo.Value = appConfig.Simulation.SimTo;
+                if (appConfig.Simulation.InitialCash > 0)
+                    edtInitialCash.Value = appConfig.Simulation.InitialCash;
+            }
+        }
+
+        private void SaveConfig()
+        {
+            var appConfig = new AppConfig
+            {
+                Charts = new AppConfigCharts(),
+                Simulation = new AppConfigSimulation()
+            };
+
+            appConfig.Charts.StockName = edtStockName.Text;
+            appConfig.Charts.StockDataRange = cbStockDataRange.Text;
+
+            appConfig.Simulation.SystemChoice = cbSystemChoice.Text;
+            appConfig.Simulation.SimFrom = dtpSimFrom.Value;
+            appConfig.Simulation.SimTo = dtpSimTo.Value;
+            appConfig.Simulation.InitialCash = edtInitialCash.Value;
+
+            AppConfigOps.Save(appConfig);
         }
     }
 }

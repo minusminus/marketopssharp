@@ -1094,6 +1094,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MarketOps";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.tcCharts.ResumeLayout(false);

@@ -64,7 +64,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             CalculateTrendsAndExpectations(ts);
-            LogData(ts);
+            //LogData(ts);
             return new List<Signal>()
             {
                 CreateSignal(CalculateBalance())

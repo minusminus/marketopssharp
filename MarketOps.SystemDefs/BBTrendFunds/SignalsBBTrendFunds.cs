@@ -17,8 +17,14 @@ namespace MarketOps.SystemDefs.BBTrendFunds
     /// </summary>
     internal class SignalsBBTrendFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
+        private const int BBPeriod = 10;
+        private const float BBSigmaWidth = 2f;
+        private const int RebalanceInterval = 3;
+
         //private readonly string[] _fundsNames = { "PKO021", "PKO909" }; //akcji plus, rynku zlota
         private readonly string[] _fundsNames = { "PKO014", "PKO021" }; //obl dlugoterm, akcji plus
+        //private readonly string[] _fundsNames = { "PKO014", "PKO909" }; //obl dlugoterm, rynku zlota
+        //private readonly string[] _fundsNames = { "PKO014", "PKO918" }; //obl dlugoterm, akcji amer
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly StockDataRange _dataRange;
@@ -41,14 +47,14 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             {
                 _stocks.Add(dataProvider.GetStockDefinition(_fundsNames[i]));
                 StockStat statBB = new StatBB("")
-                    .SetParam(StatBBParams.Period, new MOParamInt() { Value = 10 })
-                    .SetParam(StatBBParams.SigmaWidth, new MOParamFloat() { Value = 2f });
+                    .SetParam(StatBBParams.Period, new MOParamInt() { Value = BBPeriod })
+                    .SetParam(StatBBParams.SigmaWidth, new MOParamFloat() { Value = BBSigmaWidth });
                 _statsBB.Add((StatBB)statBB);
                 _currentTrends[i] = BBTrendType.Unknown;
                 _currentExpectations[i] = BBTrendExpectation.Unknown;
                 _expectationChanged[i] = false;
             }
-            _rebalanceSignal = new ModNCounter(3);
+            _rebalanceSignal = new ModNCounter(RebalanceInterval);
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
@@ -150,7 +156,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             string filePath = Path.Combine(Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath), "log.txt");
 
             string text = ts.Date.ToString() + ": "
-                + string.Join(", ", _stocks.Select((def, i) => $"{def.Name}({_currentTrends[i]}, {_currentExpectations[i]})").ToArray())
+                + string.Join(", ", _stocks.Select((def, i) => $"{def.StockName} {def.Name}({_currentTrends[i]}, {_currentExpectations[i]}, {_expectationChanged[i]})").ToArray())
                 + "\n";
 
             File.AppendAllText(filePath, text);

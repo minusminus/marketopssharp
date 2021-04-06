@@ -39,5 +39,12 @@
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
     ]
+  },
+  {
+    "Description": "BBTrend Multi Funds",
+    "ClassName": "MarketOps.SystemDefs.BBTrendFunds.BBTrendMultiFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
   }
 ]

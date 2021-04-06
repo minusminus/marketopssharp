@@ -11,9 +11,9 @@ using System.Linq;
 namespace MarketOps.SystemDefs.BBTrendFunds
 {
     /// <summary>
-    /// Signals for two funds bb trend.
+    /// Signals for multi funds bb trend.
     /// </summary>
-    internal class SignalsBBTrendFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
+    internal class SignalsBBTrendMultiFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private const int BBPeriod = 10;
         private const float BBSigmaWidth = 2f;
@@ -27,15 +27,15 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private readonly ISystemDataLoader _dataLoader;
         private readonly StockDataRange _dataRange;
         private BBTrendFundsData _fundsData;
-        private readonly ModNCounter _rebalanceSignal;
+        //private readonly ModNCounter _rebalanceSignal;
 
-        public SignalsBBTrendFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
+        public SignalsBBTrendMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
         {
             _dataLoader = dataLoader;
             _dataRange = StockDataRange.Monthly;
             _fundsData = new BBTrendFundsData(_fundsNames.Length);
             BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, dataProvider);
-            _rebalanceSignal = new ModNCounter(RebalanceInterval);
+            //_rebalanceSignal = new ModNCounter(RebalanceInterval);
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
@@ -58,36 +58,18 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             List<Signal> result = new List<Signal>();
 
             BBTrendFundsDataCalculator.CalculateTrendsAndExpectations(_fundsData, ts, _dataRange, _dataLoader);
-            ResetRebalanceCountersIfNeeded();
+            //ResetRebalanceCountersIfNeeded();
             //LogData(ts);
-            if (ExecuteRebalance())
-                result.Add(BBTrendFundsSignalFactory.CreateSignal(CalculateBalance(), _dataRange, _fundsData));
-            IncrementRebalanceCounters();
+            //if (ExecuteRebalance())
+            result.Add(BBTrendFundsSignalFactory.CreateSignal(CalculateBalance(), _dataRange, _fundsData));
+            //IncrementRebalanceCounters();
 
             return result;
         }
 
-        private void ResetRebalanceCountersIfNeeded()
-        {
-            if (_fundsData.ExpectationChanged[1])
-                _rebalanceSignal.Reset();
-        }
-
-        private void IncrementRebalanceCounters()
-        {
-            _rebalanceSignal.Next();
-        }
-
-        private bool ExecuteRebalance()
-        {
-            //return true;
-            return (_fundsData.CurrentExpectations[1] == BBTrendExpectation.Unknown)
-                || _rebalanceSignal.IsZero;
-        }
-
         private float[] CalculateBalance()
         {
-            float[] balance = new float[2] { 0, 0 };
+            float[] balance = new float[_fundsNames.Length];
 
             switch (_fundsData.CurrentExpectations[1])
             {
@@ -99,17 +81,6 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             }
 
             return balance;
-        }
-
-        private void LogData(DateTime ts)
-        {
-            string filePath = Path.Combine(Path.GetDirectoryName(new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath), "log.txt");
-
-            string text = ts.Date.ToString() + ": "
-                + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} {def.Name}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]}, {_fundsData.ExpectationChanged[i]})").ToArray())
-                + "\n";
-
-            File.AppendAllText(filePath, text);
         }
     }
 }

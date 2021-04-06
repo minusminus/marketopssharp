@@ -6,14 +6,14 @@ using System;
 namespace MarketOps.SystemDefs.BBTrendFunds
 {
     /// <summary>
-    /// Two funds strategy with BB trends.
+    /// Multi funds strategy with BB trends.
     /// </summary>
-    public class BBTrendFunds : SystemDefinition
+    public class BBTrendMultiFunds : SystemDefinition
     {
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _dataLoader;
 
-        public BBTrendFunds(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
+        public BBTrendMultiFunds(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
             ISlippage slippage, ICommission commission)
         {
             _dataProvider = dataProvider;
@@ -28,7 +28,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         public override void Prepare()
         {
-            SignalsBBTrendFunds signals = new SignalsBBTrendFunds(_dataLoader, _dataProvider);
+            SignalsBBTrendMultiFunds signals = new SignalsBBTrendMultiFunds(_dataLoader, _dataProvider);
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

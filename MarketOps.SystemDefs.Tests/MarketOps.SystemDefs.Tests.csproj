@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="BBTrendRecognizer\BBTrendRecognizerTests.cs" />
     <Compile Include="BBTrendRecognizer\StatBBMock.cs" />
+    <Compile Include="ModNCounterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

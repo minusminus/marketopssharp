@@ -26,6 +26,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private readonly List<StatBB> _statsBB = new List<StatBB>();
         private readonly BBTrendType[] _currentTrends;
         private readonly BBTrendExpectation[] _currentExpectations;
+        private readonly bool[] _expectationChanged;
+        private readonly ModNCounter _rebalanceSignal;
 
         public SignalsBBTrendFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
         {
@@ -33,6 +35,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             _dataRange = StockDataRange.Monthly;
             _currentTrends = new BBTrendType[_fundsNames.Length];
             _currentExpectations = new BBTrendExpectation[_fundsNames.Length];
+            _expectationChanged = new bool[_fundsNames.Length];
 
             for (int i = 0; i < _fundsNames.Length; i++)
             {
@@ -43,7 +46,9 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 _statsBB.Add((StatBB)statBB);
                 _currentTrends[i] = BBTrendType.Unknown;
                 _currentExpectations[i] = BBTrendExpectation.Unknown;
+                _expectationChanged[i] = false;
             }
+            _rebalanceSignal = new ModNCounter(3);
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
@@ -63,12 +68,16 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
+            List<Signal> result = new List<Signal>();
+
             CalculateTrendsAndExpectations(ts);
+            ResetRebalanceCountersIfNeeded();
             //LogData(ts);
-            return new List<Signal>()
-            {
-                CreateSignal(CalculateBalance())
-            };
+            if (ExecuteRebalance())
+                result.Add(CreateSignal(CalculateBalance()));
+            IncrementRebalanceCounters();
+
+            return result;
         }
 
         private void CalculateTrendsAndExpectations(DateTime ts)
@@ -79,8 +88,28 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 int dataIndex = data.FindByTS(ts);
                 if (dataIndex < _statsBB[i].BackBufferLength) continue;
                 _currentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(data, _statsBB[i], dataIndex, _currentTrends[i]);
+                BBTrendExpectation lastExpectation = _currentExpectations[i];
                 _currentExpectations[i] = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, _statsBB[i], dataIndex, _currentTrends[i]);
+                _expectationChanged[i] = (lastExpectation != _currentExpectations[i]);
             }
+        }
+
+        private void ResetRebalanceCountersIfNeeded()
+        {
+            if (_expectationChanged[1])
+                _rebalanceSignal.Reset();
+        }
+
+        private void IncrementRebalanceCounters()
+        {
+            _rebalanceSignal.Next();
+        }
+
+        private bool ExecuteRebalance()
+        {
+            //return true;
+            return (_currentExpectations[1] == BBTrendExpectation.Unknown)
+                || (_rebalanceSignal.IsZero);
         }
 
         private Signal CreateSignal(float[] newBalance)

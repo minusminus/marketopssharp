@@ -50,6 +50,7 @@
     <Compile Include="BBTrendRecognizer\BBTrendRecognizer.cs" />
     <Compile Include="BBTrendRecognizer\BBTrendTypes.cs" />
     <Compile Include="BBTrend\SignalsBBTrend.cs" />
+    <Compile Include="ModNCounter.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMAParams.cs" />
     <Compile Include="PriceCrossingSMA\SignalsPriceCrossingSMA.cs" />

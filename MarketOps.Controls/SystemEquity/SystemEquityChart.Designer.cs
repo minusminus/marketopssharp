@@ -105,6 +105,7 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Name = "seriesEquity";
             series1.XValueMember = "TS";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
             series1.YValueMembers = "Value";
             this.chartEquity.Series.Add(series1);
             this.chartEquity.Size = new System.Drawing.Size(877, 472);

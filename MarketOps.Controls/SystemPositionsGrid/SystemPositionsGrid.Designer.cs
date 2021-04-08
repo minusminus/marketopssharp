@@ -33,6 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dbgPositions = new System.Windows.Forms.DataGridView();
+            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             this.LP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dir = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,7 +46,6 @@
             this.CloseCommission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).BeginInit();
             this.SuspendLayout();
@@ -100,6 +100,7 @@
             // 
             // StockName
             // 
+            this.StockName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.StockName.DataPropertyName = "StockName";
             this.StockName.HeaderText = "Stock";
             this.StockName.Name = "StockName";

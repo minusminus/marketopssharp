@@ -55,6 +55,7 @@
     <Compile Include="Interfaces\ISlippage.cs" />
     <Compile Include="Interfaces\ISystemDataDefinitionProvider.cs" />
     <Compile Include="Interfaces\ISystemDataLoader.cs" />
+    <Compile Include="Interfaces\ISystemExecutionLogger.cs" />
     <Compile Include="Interfaces\ITickAdder.cs" />
     <Compile Include="Interfaces\ITickAligner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

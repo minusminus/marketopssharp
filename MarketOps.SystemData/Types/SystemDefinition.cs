@@ -9,6 +9,7 @@ namespace MarketOps.SystemData.Types
     /// </summary>
     public abstract class SystemDefinition
     {
+        protected ISystemExecutionLogger _systemExecutionLogger;
         protected ISystemDataDefinitionProvider _dataDefinitionProvider;
         protected ISignalGeneratorOnOpen _signalGeneratorOnOpen;
         protected ISignalGeneratorOnClose _signalGeneratorOnClose;

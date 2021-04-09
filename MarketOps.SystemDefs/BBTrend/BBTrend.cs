@@ -15,12 +15,13 @@ namespace MarketOps.SystemDefs.BBTrend
         private readonly ISystemDataLoader _dataLoader;
 
         public BBTrend(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
-            ISlippage slippage, ICommission commission)
+            ISlippage slippage, ICommission commission, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
             _slippage = slippage;
             _commission = commission;
+            _systemExecutionLogger = systemExecutionLogger;
 
             SystemParams.Set(BBTrendParams.StockName, "");
             SystemParams.Set(BBTrendParams.BBPeriod, 20);

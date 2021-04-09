@@ -1,7 +1,6 @@
 ﻿using MarketOps.StockData.Interfaces;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using System;
 
 namespace MarketOps.SystemDefs.BBTrendFunds
 {
@@ -14,12 +13,13 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private readonly ISystemDataLoader _dataLoader;
 
         public BBTrendFunds(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
-            ISlippage slippage, ICommission commission)
+            ISlippage slippage, ICommission commission, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
             _slippage = slippage;
             _commission = commission;
+            _systemExecutionLogger = systemExecutionLogger;
 
             //SystemParams.Set(BBTrendParams.StockName, "");
             //SystemParams.Set(BBTrendParams.BBPeriod, 20);

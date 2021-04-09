@@ -118,6 +118,8 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
+            this.tabSimDataLog = new System.Windows.Forms.TabPage();
+            this.edtSimDataLog = new System.Windows.Forms.TextBox();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -149,6 +151,7 @@
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
+            this.tabSimDataLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -363,6 +366,7 @@
             this.tcSimulationData.Controls.Add(this.tabSimDataPositions);
             this.tcSimulationData.Controls.Add(this.tabSimDataDrawdowns);
             this.tcSimulationData.Controls.Add(this.tabSimDataProfits);
+            this.tcSimulationData.Controls.Add(this.tabSimDataLog);
             this.tcSimulationData.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tcSimulationData.Location = new System.Drawing.Point(0, 364);
             this.tcSimulationData.Name = "tcSimulationData";
@@ -1083,6 +1087,29 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
+            // tabSimDataLog
+            // 
+            this.tabSimDataLog.Controls.Add(this.edtSimDataLog);
+            this.tabSimDataLog.Location = new System.Drawing.Point(4, 22);
+            this.tabSimDataLog.Name = "tabSimDataLog";
+            this.tabSimDataLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSimDataLog.Size = new System.Drawing.Size(939, 277);
+            this.tabSimDataLog.TabIndex = 4;
+            this.tabSimDataLog.Text = "Log";
+            this.tabSimDataLog.UseVisualStyleBackColor = true;
+            // 
+            // edtSimDataLog
+            // 
+            this.edtSimDataLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.edtSimDataLog.Location = new System.Drawing.Point(3, 3);
+            this.edtSimDataLog.Multiline = true;
+            this.edtSimDataLog.Name = "edtSimDataLog";
+            this.edtSimDataLog.ReadOnly = true;
+            this.edtSimDataLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.edtSimDataLog.Size = new System.Drawing.Size(933, 271);
+            this.edtSimDataLog.TabIndex = 0;
+            this.edtSimDataLog.WordWrap = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1130,6 +1157,8 @@
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
+            this.tabSimDataLog.ResumeLayout(false);
+            this.tabSimDataLog.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1226,6 +1255,8 @@
         private System.Windows.Forms.Label lblSimSystemName;
         private System.Windows.Forms.Label lblSDRExpectedUnitReturn;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TabPage tabSimDataLog;
+        private System.Windows.Forms.TextBox edtSimDataLog;
     }
 }
 

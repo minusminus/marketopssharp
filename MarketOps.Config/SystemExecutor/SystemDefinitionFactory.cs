@@ -11,17 +11,21 @@ namespace MarketOps.Config.SystemExecutor
     /// </summary>
     public class SystemDefinitionFactory
     {
+        private const int RequiredConstructorParamsCount = 5;
+
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISlippage _slippage;
         private readonly ICommission _commission;
+        private readonly ISystemExecutionLogger _systemExecutionLogger;
 
-        public SystemDefinitionFactory(IStockDataProvider dataProvider, ISystemDataLoader dataLoader, ISlippage slippage, ICommission commission)
+        public SystemDefinitionFactory(IStockDataProvider dataProvider, ISystemDataLoader dataLoader, ISlippage slippage, ICommission commission, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
             _slippage = slippage;
             _commission = commission;
+            _systemExecutionLogger = systemExecutionLogger;
         }
 
         public SystemDefinition Get(ConfigSystemDefinition config)
@@ -40,14 +44,15 @@ namespace MarketOps.Config.SystemExecutor
         }
 
         private bool ExpectedConstructorExists(Type type) =>
-            type.GetConstructors().Any(c => c.GetParameters().Length == 4);
+            type.GetConstructors().Any(c => c.GetParameters().Length == RequiredConstructorParamsCount);
 
         private object[] CreateConstructorParams() =>
             new object[] {
                 _dataProvider,
                 _dataLoader,
                 _slippage,
-                _commission
+                _commission,
+                _systemExecutionLogger
             };
 
         private void SetDefaultParams(SystemDefinition systemDefinition, ConfigSystemDefinitionParamDefault[] paramsDefaults)

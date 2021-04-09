@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StockDisplayDataInfoGenerator.cs" />
     <Compile Include="StockStatsInfoGenerator.cs" />
+    <Compile Include="SystemExecutionLoggerToTextBox.cs" />
     <EmbeddedResource Include="DataGen\Forms\FormDataGen.resx">
       <DependentUpon>FormDataGen.cs</DependentUpon>
     </EmbeddedResource>

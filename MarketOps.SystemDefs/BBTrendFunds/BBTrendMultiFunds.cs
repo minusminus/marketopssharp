@@ -14,12 +14,13 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private readonly ISystemDataLoader _dataLoader;
 
         public BBTrendMultiFunds(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
-            ISlippage slippage, ICommission commission)
+            ISlippage slippage, ICommission commission, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
             _slippage = slippage;
             _commission = commission;
+            _systemExecutionLogger = systemExecutionLogger;
 
             //SystemParams.Set(BBTrendParams.StockName, "");
             //SystemParams.Set(BBTrendParams.BBPeriod, 20);
@@ -28,7 +29,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         public override void Prepare()
         {
-            SignalsBBTrendMultiFunds signals = new SignalsBBTrendMultiFunds(_dataLoader, _dataProvider);
+            SignalsBBTrendMultiFunds signals = new SignalsBBTrendMultiFunds(_dataLoader, _dataProvider, _systemExecutionLogger);
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

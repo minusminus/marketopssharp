@@ -15,12 +15,13 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
         private readonly ISystemDataLoader _dataLoader;
 
         public PriceCrossingSMA(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
-            ISlippage slippage, ICommission commission)
+            ISlippage slippage, ICommission commission, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
             _slippage = slippage;
             _commission = commission;
+            _systemExecutionLogger = systemExecutionLogger;
 
             SystemParams.Set(PriceCrossingSMAParams.StockName, "");
             SystemParams.Set(PriceCrossingSMAParams.SMAPeriod, 20);

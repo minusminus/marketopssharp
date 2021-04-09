@@ -28,16 +28,18 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true };
 
         private readonly ISystemDataLoader _dataLoader;
+        private readonly ISystemExecutionLogger _systemExecutionLogger;
         private readonly StockDataRange _dataRange;
         private BBTrendFundsData _fundsData;
         //private readonly ModNCounter _rebalanceSignal;
 
-        public SignalsBBTrendMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider)
+        public SignalsBBTrendMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger)
         {
             if (_fundsNames.Length != _aggressiveFunds.Length)
                 throw new Exception("_fundsNames != _aggressiveFunds");
 
             _dataLoader = dataLoader;
+            _systemExecutionLogger = systemExecutionLogger;
             _dataRange = StockDataRange.Monthly;
             _fundsData = new BBTrendFundsData(_fundsNames.Length);
             BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, dataProvider);
@@ -68,11 +70,12 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             var sortedFunds = OrderStocksByProfit(ts, ProfitBackDataLength);
 
             //ResetRebalanceCountersIfNeeded();
-            //LogData(ts);
             //if (ExecuteRebalance())
-            result.Add(BBTrendFundsSignalFactory.CreateSignal(CalculateBalance(sortedFunds, NumberOfAggressiveFundsTaken), _dataRange, _fundsData));
+            float[] balance = CalculateBalance(sortedFunds, NumberOfAggressiveFundsTaken);
+            result.Add(BBTrendFundsSignalFactory.CreateSignal(balance, _dataRange, _fundsData));
             //IncrementRebalanceCounters();
 
+            LogData(ts, sortedFunds, balance);
             return result;
         }
 
@@ -136,6 +139,18 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             for (int i = 0; i < n; i++)
                 sum += (spData.C[dataIndex - i] - spData.C[dataIndex - i - 1]) / spData.C[dataIndex - i - 1];
             return sum / n;
+        }
+
+        private void LogData(DateTime ts, List<Tuple<StockDefinition, int, float>> sortedFunds, float[] balance)
+        {
+            string SortValue(float value) => value > float.MinValue ? (100f * value).ToString("F2") : "--";
+
+            _systemExecutionLogger.Add(
+                $"{ts.Date.ToString("yyyy-MM-dd")}:" + Environment.NewLine
+                + "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]})").ToArray()) + Environment.NewLine
+                + "sorted: " + string.Join(", ", sortedFunds.Select(x => $"{x.Item1.StockName} = {SortValue(x.Item3)}")) + Environment.NewLine
+                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b.ToString("F2")}").ToArray())
+                );
         }
     }
 }

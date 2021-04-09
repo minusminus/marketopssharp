@@ -14,13 +14,10 @@ using MarketOps.DataPump.Forms;
 using MarketOps.DataPump.Types;
 using MarketOps.Extensions;
 using MarketOps.SystemExecutor;
-using MarketOps.SystemDefs.PriceCrossingSMA;
 using MarketOps.SystemData.Interfaces;
-using MarketOps.StockData.Extensions;
 using MarketOps.SystemExecutor.Slippage;
 using MarketOps.SystemExecutor.Commission;
 using MarketOps.SystemAnalysis.SystemSummary;
-using System.Linq;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Types;
 using MarketOps.DataMappers;
@@ -39,6 +36,7 @@ namespace MarketOps
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _systemDataLoader;
 
+        private readonly SystemExecutionLoggerToTextBox _systemExecutionLogger;
         private readonly List<ConfigSystemDefinition> _configSystemDefinitions;
         private readonly SystemDefinitionFactory _systemDefinitionFactory;
         private SystemDefinition _currentSimSystemDef;
@@ -49,8 +47,9 @@ namespace MarketOps
             _msgDisplay = new MsgDisplay(this, "MarketOps");
             _dataProvider = DataProvidersFactory.GetStockDataProvider();
             _systemDataLoader = SystemDataLoaderFactory.Get(_dataProvider);
+            _systemExecutionLogger = new SystemExecutionLoggerToTextBox(edtSimDataLog);
             _configSystemDefinitions = ConfigSystemDefsLoader.Load();
-            _systemDefinitionFactory = new SystemDefinitionFactory(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone());
+            _systemDefinitionFactory = new SystemDefinitionFactory(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone(), _systemExecutionLogger);
             StatsFactories.Initialize();
 
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
@@ -213,6 +212,7 @@ namespace MarketOps
                 return;
             }
 
+            edtSimDataLog.Clear();
             paramsSim.SaveParams(_currentSimSystemDef.SystemParams);
 
             SystemState systemState = new SystemState() { InitialCash = (float)edtInitialCash.Value, Cash = (float)edtInitialCash.Value };

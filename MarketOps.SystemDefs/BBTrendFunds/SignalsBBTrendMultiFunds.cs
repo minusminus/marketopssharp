@@ -22,6 +22,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private const int RebalanceInterval = 3;
         private const int ProfitBackDataLength = 2;
         private const int NumberOfAggressiveFundsTaken = 3;
+        private const float AggressiveStopWidth = 0.07f;
 
         //obl dlugoterm, akcji plus, mis spolek, rynku zlota, akcji amer, akcji jap, pap dl usd
         private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910" };
@@ -65,7 +66,9 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         {
             List<Signal> result = new List<Signal>();
 
+            BBTrendFundsDataCalculator.CheckStops(_fundsData, ts, _dataRange, _dataLoader);
             BBTrendFundsDataCalculator.CalculateTrendsAndExpectations(_fundsData, ts, _dataRange, _dataLoader);
+            BBTrendFundsDataCalculator.CalculateMaxValuesAndStops(_fundsData, AggressiveStopWidth, ts, _dataRange, _dataLoader);
 
             var sortedFunds = OrderStocksByProfit(ts, ProfitBackDataLength);
 
@@ -79,15 +82,16 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             return result;
         }
 
-        private float[] CalculateBalance(List<Tuple<StockDefinition, int, float>> sortedFunds, int topN)
+        private float[] CalculateBalance(List<Tuple<StockDefinition, int, float>> fundsSortedByProfit, int topN)
         {
             //BBTrendExpectation[] acceptedExpectations = { BBTrendExpectation.UpAndRaising, BBTrendExpectation.UpButPossibleChange, BBTrendExpectation.DownButPossibleChange };
             BBTrendExpectation[] acceptedExpectations = { BBTrendExpectation.UpAndRaising, BBTrendExpectation.UpButPossibleChange };
 
             float[] balance = new float[_fundsNames.Length];
 
-            var filteredTop = sortedFunds
+            var filteredTop = fundsSortedByProfit
                 .Where(x => (x.Item3 > 0) && acceptedExpectations.Contains(_fundsData.CurrentExpectations[x.Item2]))
+                //.Where(x => !_fundsData.StoppedOut[x.Item2])
                 .Take(topN)
                 .ToList();
             //float singleMaxBalance = 1f / topN;
@@ -148,9 +152,14 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             _systemExecutionLogger.Add(
                 $"{ts.Date.ToString("yyyy-MM-dd")}:" + Environment.NewLine
                 + "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]})").ToArray()) + Environment.NewLine
+                + "stophit: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.StoppedOut[i]}").ToArray()) + Environment.NewLine
                 + "sorted: " + string.Join(", ", sortedFunds.Select(x => $"{x.Item1.StockName} = {SortValue(x.Item3)}")) + Environment.NewLine
-                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b.ToString("F2")}").ToArray())
+                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b.ToString("F2")}").ToArray()) + Environment.NewLine
+                + $"aggressive positions: {balance.Skip(1).Count(x => x > 0)}"
                 );
+            //_systemExecutionLogger.Add(
+            //    $"{ts.Date.ToString("yyyy-MM-dd")};{balance.Skip(1).Count(x => x > 0)}"
+            //    );
         }
     }
 }

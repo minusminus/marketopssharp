@@ -41,5 +41,45 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 data.ExpectationChanged[i] = (lastExpectation != data.CurrentExpectations[i]);
             }
         }
+
+        public static void CalculateMaxValuesAndStops(BBTrendFundsData data, float stopWidth, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
+        {
+            for (int i = 0; i < data.Stocks.Length; i++)
+            {
+                if (data.CurrentTrends[i] != BBTrendType.Up)
+                {
+                    data.UpTrendMaxValues[i] = float.MinValue;
+                    data.UpTrendStopValues[i] = float.MinValue;
+                    continue;
+                }
+
+                StockPricesData spData = dataLoader.Get(data.Stocks[i].Name, dataRange, 0, ts, ts);
+                int dataIndex = spData.FindByTS(ts);
+                if (dataIndex < 0) continue;
+                //data.UpTrendMaxValues[i] = Math.Max(spData.H[dataIndex], data.UpTrendMaxValues[i]);
+                data.UpTrendMaxValues[i] = Math.Max(spData.C[dataIndex], data.UpTrendMaxValues[i]);
+                data.UpTrendStopValues[i] = data.UpTrendMaxValues[i] * (1f - stopWidth);
+            }
+        }
+
+        public static void CheckStops(BBTrendFundsData data, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
+        {
+            for (int i = 0; i < data.Stocks.Length; i++)
+            {
+                if (data.CurrentTrends[i] != BBTrendType.Up)
+                {
+                    data.StoppedOut[i] = false;
+                    continue;
+                }
+
+                StockPricesData spData = dataLoader.Get(data.Stocks[i].Name, dataRange, 0, ts, ts);
+                int dataIndex = spData.FindByTS(ts);
+                if (dataIndex < 0) continue;
+                if (data.StoppedOut[i])
+                    data.StoppedOut[i] = (spData.C[dataIndex] <= data.StoppedOutValues[i]);
+                else
+                    data.StoppedOut[i] = (spData.C[dataIndex] <= data.UpTrendStopValues[i]);
+            }
+        }
     }
 }

@@ -25,8 +25,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private const float AggressiveStopWidth = 0.07f;
 
         //obl dlugoterm, akcji plus, mis spolek, rynku zlota, akcji amer, akcji jap, pap dl usd
-        private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910" };
-        private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true };
+        private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910", "PKO009", "PKO018", "PKO019", "PKO010" };
+        private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true, true, true, true, true };
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
@@ -121,6 +121,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             return _fundsData.Stocks
                 .Select((stockDef, i) => new Tuple<StockDefinition, int>(stockDef, i))
                 .Where(x => _aggressiveFunds[x.Item2])
+                .Where(x => LastDataTSNotBeforeSimulationEnds(x.Item1.Name, ts))
                 .Select(x => new Tuple<StockDefinition, int, float>(x.Item1, x.Item2, PcntProfitFromNTicks(x.Item1.Name, n, ts)))
                 .OrderByDescending(x => x.Item3)
                 .ToList();
@@ -143,6 +144,16 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             for (int i = 0; i < n; i++)
                 sum += (spData.C[dataIndex - i] - spData.C[dataIndex - i - 1]) / spData.C[dataIndex - i - 1];
             return sum / n;
+        }
+
+        private bool LastDataTSNotBeforeSimulationEnds(string fundName, DateTime ts)
+        {
+            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
+            int dataIndex = spData.FindByTS(ts);
+            if (dataIndex < 0) return false;
+            if (dataIndex < spData.Length - 2) return true;
+            StockPricesData spFirstData = _dataLoader.Get(_fundsData.Stocks[0].Name, _dataRange, 0, ts, ts);
+            return spData.TS[spData.Length - 1] == spFirstData.TS[spFirstData.Length - 1];
         }
 
         private void LogData(DateTime ts, List<Tuple<StockDefinition, int, float>> sortedFunds, float[] balance)

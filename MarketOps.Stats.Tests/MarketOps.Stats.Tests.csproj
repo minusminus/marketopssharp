@@ -80,10 +80,12 @@
     <Compile Include="Calculators\ATRTests.cs" />
     <Compile Include="Calculators\BBTests.cs" />
     <Compile Include="Calculators\CumulativeDataCalculatorTests.cs" />
+    <Compile Include="Calculators\RangeChangePcntTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Calculators\SMATests.cs" />
     <Compile Include="Stats\StatATRTests.cs" />
     <Compile Include="Stats\StatBBTests.cs" />
+    <Compile Include="Stats\StatRangeChangePcntTests.cs" />
     <Compile Include="Stats\StatSMATests.cs" />
   </ItemGroup>
   <ItemGroup>

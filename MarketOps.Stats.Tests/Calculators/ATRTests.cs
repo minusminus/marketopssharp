@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq.Expressions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 using MarketOps.Stats.Calculators;
 
-namespace MarketOps.Stats.Calculators.Tests
+namespace MarketOps.Stats.Tests.Calculators
 {
     [TestFixture]
     public class ATRTests

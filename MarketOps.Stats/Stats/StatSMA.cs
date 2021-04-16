@@ -16,7 +16,7 @@ namespace MarketOps.Stats.Stats
         {
             _name = "SMA";
             CreateDataStructures(1);
-            _dataColors[StatSMAData.SMA] = Color.Red;
+            _dataColors[StatSMAData.SMA] = Color.IndianRed;
             _dataNames[StatSMAData.SMA] = "Indicator";
         }
 

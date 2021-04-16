@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Shouldly;
 using MarketOps.Stats.Calculators;
 
-namespace MarketOps.Stats.Calculators.Tests
+namespace MarketOps.Stats.Tests.Calculators
 {
     internal class CumulativeDataCalculatorMock : CumulativeDataCalculator
     {

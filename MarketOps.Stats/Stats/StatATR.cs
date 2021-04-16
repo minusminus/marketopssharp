@@ -16,7 +16,7 @@ namespace MarketOps.Stats.Stats
         {
             _name = "ATR";
             CreateDataStructures(1);
-            _dataColors[StatATRData.ATR] = Color.Red;
+            _dataColors[StatATRData.ATR] = Color.IndianRed;
             _dataNames[StatATRData.ATR] = "Indicator";
         }
 

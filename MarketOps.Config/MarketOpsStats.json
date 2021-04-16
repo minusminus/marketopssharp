@@ -16,5 +16,11 @@
     "ClassName": "MarketOps.Stats.Stats.StatSMA",
     "ClassLibrary": "MarketOps.Stats.dll",
     "DisplayStatType": "PriceChart"
+  },
+  {
+    "StatName": "RangeChangePcnt",
+    "ClassName": "MarketOps.Stats.Stats.StatRangeChangePcnt",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "Additional"
   }
 ]

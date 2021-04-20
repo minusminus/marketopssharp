@@ -27,6 +27,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         //obl dlugoterm, akcji plus, mis spolek, rynku zlota, akcji amer, akcji jap, pap dl usd
         private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910", "PKO009", "PKO018", "PKO019", "PKO010" };
         private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true, true, true, true, true };
+        //private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910" };//, "PKO009", "PKO018", "PKO019", "PKO010" };
+        //private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true };//, true, true, true, true };
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
@@ -108,7 +110,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             switch (expectation)
             {
                 case BBTrendExpectation.UpAndRaising: return 0.8f;
-                case BBTrendExpectation.UpButPossibleChange: return 0.2f;
+                case BBTrendExpectation.UpButPossibleChange: return 0f;
                 case BBTrendExpectation.DownButPossibleChange: return 0.2f;
                 case BBTrendExpectation.DownAndFalling: return 0f;
                 case BBTrendExpectation.Unknown: return 0f;

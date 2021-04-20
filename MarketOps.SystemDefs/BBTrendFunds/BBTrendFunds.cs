@@ -28,7 +28,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         public override void Prepare()
         {
-            SignalsBBTrendFunds signals = new SignalsBBTrendFunds(_dataLoader, _dataProvider);
+            SignalsBBTrendFunds signals = new SignalsBBTrendFunds(_dataLoader, _dataProvider, _systemExecutionLogger);
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

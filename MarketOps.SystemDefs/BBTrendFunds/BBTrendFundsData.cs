@@ -14,6 +14,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         public readonly BBTrendType[] CurrentTrends;
         public readonly BBTrendExpectation[] CurrentExpectations;
         public readonly bool[] ExpectationChanged;
+        public readonly float[] UpTrendStartValues;
         public readonly float[] UpTrendMaxValues;
         public readonly float[] UpTrendStopValues;
         public readonly bool[] StoppedOut;
@@ -26,6 +27,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             CurrentTrends = new BBTrendType[length];
             CurrentExpectations = new BBTrendExpectation[length];
             ExpectationChanged = new bool[length];
+            UpTrendStartValues = new float[length];
             UpTrendMaxValues = new float[length];
             UpTrendStopValues = new float[length];
             StoppedOut = new bool[length];

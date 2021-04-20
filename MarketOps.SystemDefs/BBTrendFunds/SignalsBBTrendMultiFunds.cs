@@ -25,8 +25,12 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private const float AggressiveStopWidth = 0.07f;
 
         //obl dlugoterm, akcji plus, mis spolek, rynku zlota, akcji amer, akcji jap, pap dl usd
-        private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910", "PKO009", "PKO018", "PKO019", "PKO010" };
-        private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true, true, true, true, true };
+        private readonly string[] _fundsNames = { "PKO014",
+            "PKO008", "PKO009", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO020", "PKO021",
+            "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057", "PKO097", "PKO098", "PKO909", "PKO910",
+            "PKO913", "PKO918", "PKO919", "PKO925"};
+        private readonly bool[] _aggressiveFunds;
+        //private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true, true, true, true, true };
         //private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910" };//, "PKO009", "PKO018", "PKO019", "PKO010" };
         //private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true };//, true, true, true, true };
 
@@ -38,6 +42,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         public SignalsBBTrendMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger)
         {
+            _aggressiveFunds = _fundsNames.Select((_, i) => i > 0).ToArray();
+
             if (_fundsNames.Length != _aggressiveFunds.Length)
                 throw new Exception("_fundsNames != _aggressiveFunds");
 
@@ -72,7 +78,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             BBTrendFundsDataCalculator.CalculateTrendsAndExpectations(_fundsData, ts, _dataRange, _dataLoader);
             BBTrendFundsDataCalculator.CalculateMaxValuesAndStops(_fundsData, AggressiveStopWidth, ts, _dataRange, _dataLoader);
 
-            var sortedFunds = OrderStocksByProfit(ts, ProfitBackDataLength);
+            //var sortedFunds = OrderStocksByProfit(ts, ProfitBackDataLength);
+            var sortedFunds = OrderStocksByUpTrendProfit(ts);
 
             //ResetRebalanceCountersIfNeeded();
             //if (ExecuteRebalance())
@@ -110,7 +117,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             switch (expectation)
             {
                 case BBTrendExpectation.UpAndRaising: return 0.8f;
-                case BBTrendExpectation.UpButPossibleChange: return 0f;
+                case BBTrendExpectation.UpButPossibleChange: return 0.2f;
                 case BBTrendExpectation.DownButPossibleChange: return 0.2f;
                 case BBTrendExpectation.DownAndFalling: return 0f;
                 case BBTrendExpectation.Unknown: return 0f;
@@ -125,6 +132,17 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 .Where(x => _aggressiveFunds[x.Item2])
                 .Where(x => LastDataTSNotBeforeSimulationEnds(x.Item1.Name, ts))
                 .Select(x => new Tuple<StockDefinition, int, float>(x.Item1, x.Item2, PcntProfitFromNTicks(x.Item1.Name, n, ts)))
+                .OrderByDescending(x => x.Item3)
+                .ToList();
+        }
+
+        private List<Tuple<StockDefinition, int, float>> OrderStocksByUpTrendProfit(DateTime ts)
+        {
+            return _fundsData.Stocks
+                .Select((stockDef, i) => new Tuple<StockDefinition, int>(stockDef, i))
+                .Where(x => _aggressiveFunds[x.Item2])
+                .Where(x => LastDataTSNotBeforeSimulationEnds(x.Item1.Name, ts))
+                .Select(x => new Tuple<StockDefinition, int, float>(x.Item1, x.Item2, PcntProfitFromUpTrendStart(x.Item1.Name, x.Item2, ts)))
                 .OrderByDescending(x => x.Item3)
                 .ToList();
         }
@@ -146,6 +164,17 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             for (int i = 0; i < n; i++)
                 sum += (spData.C[dataIndex - i] - spData.C[dataIndex - i - 1]) / spData.C[dataIndex - i - 1];
             return sum / n;
+        }
+
+        private float PcntProfitFromUpTrendStart(string fundName, int stockIndex, DateTime ts)
+        {
+            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
+            int dataIndex = spData.FindByTS(ts);
+            //if (dataIndex < n) return float.MinValue;
+
+            if (_fundsData.CurrentTrends[stockIndex] == BBTrendType.Up)
+                return (spData.C[dataIndex] - _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.UpTrendStartValues[stockIndex];
+            return float.MinValue;
         }
 
         private bool LastDataTSNotBeforeSimulationEnds(string fundName, DateTime ts)

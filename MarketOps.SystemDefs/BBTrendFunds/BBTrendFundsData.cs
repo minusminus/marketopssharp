@@ -17,6 +17,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         public readonly float[] UpTrendStartValues;
         public readonly float[] UpTrendMaxValues;
         public readonly float[] UpTrendStopValues;
+        public readonly int[] TrendLength;
         public readonly bool[] StoppedOut;
         public readonly float[] StoppedOutValues;
 
@@ -30,6 +31,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             UpTrendStartValues = new float[length];
             UpTrendMaxValues = new float[length];
             UpTrendStopValues = new float[length];
+            TrendLength = new int[length];
             StoppedOut = new bool[length];
             StoppedOutValues = new float[length];
         }

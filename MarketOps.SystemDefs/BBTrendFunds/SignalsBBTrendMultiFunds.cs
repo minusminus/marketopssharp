@@ -100,7 +100,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
             var filteredTop = fundsSortedByProfit
                 .Where(x => (x.Item3 > 0) && acceptedExpectations.Contains(_fundsData.CurrentExpectations[x.Item2]))
-                //.Where(x => !_fundsData.StoppedOut[x.Item2])
+                .Where(x => !_fundsData.StoppedOut[x.Item2])
                 .Take(topN)
                 .ToList();
             //float singleMaxBalance = 1f / topN;
@@ -136,17 +136,6 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 .ToList();
         }
 
-        private List<Tuple<StockDefinition, int, float>> OrderStocksByUpTrendProfit(DateTime ts)
-        {
-            return _fundsData.Stocks
-                .Select((stockDef, i) => new Tuple<StockDefinition, int>(stockDef, i))
-                .Where(x => _aggressiveFunds[x.Item2])
-                .Where(x => LastDataTSNotBeforeSimulationEnds(x.Item1.Name, ts))
-                .Select(x => new Tuple<StockDefinition, int, float>(x.Item1, x.Item2, PcntProfitFromUpTrendStart(x.Item1.Name, x.Item2, ts)))
-                .OrderByDescending(x => x.Item3)
-                .ToList();
-        }
-
         private float PcntProfitFromNTicks(string fundName, int n, DateTime ts)
         {
             StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
@@ -166,6 +155,21 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             return sum / n;
         }
 
+        private List<Tuple<StockDefinition, int, float>> OrderStocksByUpTrendProfit(DateTime ts)
+        {
+            int[] mapBBTrendExpectationToSortOrder = new[] { 5, 1, 2, 3, 4 };
+
+            return _fundsData.Stocks
+                .Select((stockDef, i) => new Tuple<StockDefinition, int>(stockDef, i))
+                .Where(x => _aggressiveFunds[x.Item2])
+                .Where(x => LastDataTSNotBeforeSimulationEnds(x.Item1.Name, ts))
+                .Select(x => new Tuple<StockDefinition, int, float>(x.Item1, x.Item2, AvgPcntProfitOnTickFromUpTrendStart(x.Item1.Name, x.Item2, ts)))
+                //.OrderByDescending(x => x.Item3)
+                .OrderBy(x => mapBBTrendExpectationToSortOrder[(int)_fundsData.CurrentExpectations[x.Item2]])
+                .ThenByDescending(x => x.Item3)
+                .ToList();
+        }
+
         private float PcntProfitFromUpTrendStart(string fundName, int stockIndex, DateTime ts)
         {
             StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
@@ -174,6 +178,17 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
             if (_fundsData.CurrentTrends[stockIndex] == BBTrendType.Up)
                 return (spData.C[dataIndex] - _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.UpTrendStartValues[stockIndex];
+            return float.MinValue;
+        }
+
+        private float AvgPcntProfitOnTickFromUpTrendStart(string fundName, int stockIndex, DateTime ts)
+        {
+            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
+            int dataIndex = spData.FindByTS(ts);
+            //if (dataIndex < n) return float.MinValue;
+
+            if (_fundsData.CurrentTrends[stockIndex] == BBTrendType.Up)
+                return ((spData.C[dataIndex] - _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.TrendLength[stockIndex];
             return float.MinValue;
         }
 
@@ -193,9 +208,11 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
             _systemExecutionLogger.Add(
                 $"{ts.Date.ToString("yyyy-MM-dd")}:" + Environment.NewLine
-                + "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]})").ToArray()) + Environment.NewLine
-                + "stophit: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.StoppedOut[i]}").ToArray()) + Environment.NewLine
-                + "sorted: " + string.Join(", ", sortedFunds.Select(x => $"{x.Item1.StockName} = {SortValue(x.Item3)}")) + Environment.NewLine
+                //+ "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]})").ToArray()) + Environment.NewLine
+                //+ "trends start: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.UpTrendStartValues[i].ToString("F2")}").ToArray()) + Environment.NewLine
+                //+ "trends length: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.TrendLength[i]}").ToArray()) + Environment.NewLine
+                //+ "stophit: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.StoppedOut[i]}").ToArray()) + Environment.NewLine
+                + "sorted: " + string.Join(", ", sortedFunds.Select(x => $"{x.Item1.StockName}[{_fundsData.CurrentExpectations[x.Item2]}, {_fundsData.StoppedOut[x.Item2]}] = {SortValue(x.Item3)}")) + Environment.NewLine
                 + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b.ToString("F2")}").ToArray()) + Environment.NewLine
                 + $"aggressive positions: {balance.Skip(1).Count(x => x > 0)}"
                 );

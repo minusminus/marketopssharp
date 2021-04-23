@@ -36,9 +36,13 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 int dataIndex = spData.FindByTS(ts);
                 if (dataIndex < data.StatsBB[i].BackBufferLength) continue;
                 BBTrendType lastTrend = data.CurrentTrends[i];
-                data.CurrentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(spData, data.StatsBB[i], dataIndex, data.CurrentTrends[i]);
+                data.CurrentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(spData, data.StatsBB[i], dataIndex, data.CurrentTrends[i], out float trendStartLevel);
                 if (lastTrend != data.CurrentTrends[i])
-                    data.UpTrendStartValues[i] = spData.H[dataIndex];
+                {
+                    data.UpTrendStartValues[i] = trendStartLevel;// spData.H[dataIndex];
+                    data.TrendLength[i] = 0;
+                }
+                data.TrendLength[i]++;
                 BBTrendExpectation lastExpectation = data.CurrentExpectations[i];
                 data.CurrentExpectations[i] = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(spData, data.StatsBB[i], dataIndex, data.CurrentTrends[i]);
                 data.ExpectationChanged[i] = (lastExpectation != data.CurrentExpectations[i]);

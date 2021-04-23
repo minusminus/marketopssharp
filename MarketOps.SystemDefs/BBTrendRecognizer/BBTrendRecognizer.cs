@@ -1,5 +1,6 @@
 ﻿using MarketOps.Stats.Stats;
 using MarketOps.StockData.Types;
+using System;
 
 namespace MarketOps.SystemDefs.BBTrendRecognizer
 {
@@ -18,14 +19,21 @@ namespace MarketOps.SystemDefs.BBTrendRecognizer
     /// </summary>
     internal static class BBTrendRecognizer
     {
-        public static BBTrendType RecognizeTrend(StockPricesData data, StatBB statBB, int leadingIndex, BBTrendType currentTrend)
+        public static BBTrendType RecognizeTrend(StockPricesData data, StatBB statBB, int leadingIndex, BBTrendType currentTrend, out float trendStartLevel)
         {
+            trendStartLevel = 0;
             if (((currentTrend == BBTrendType.Unknown) || (currentTrend == BBTrendType.Up))
                 && ((data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength + 1]) || (data.L[leadingIndex] < statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength])))
+            {
+                trendStartLevel = Math.Max(statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength + 1], statBB.Data(StatBBData.BBL)[leadingIndex - statBB.BackBufferLength]);
                 return BBTrendType.Down;
+            }
             if (((currentTrend == BBTrendType.Unknown) || (currentTrend == BBTrendType.Down))
                 && ((data.H[leadingIndex] > statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength + 1]) || (data.H[leadingIndex] > statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength])))
+            {
+                trendStartLevel = Math.Min(statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength + 1], statBB.Data(StatBBData.BBH)[leadingIndex - statBB.BackBufferLength]);
                 return BBTrendType.Up;
+            }
             return currentTrend;
         }
 

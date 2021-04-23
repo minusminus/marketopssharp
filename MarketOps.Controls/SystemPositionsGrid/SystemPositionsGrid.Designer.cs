@@ -35,6 +35,7 @@
             this.dbgPositions = new System.Windows.Forms.DataGridView();
             this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             this.LP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StockSymbol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +60,7 @@
             this.dbgPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dbgPositions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.LP,
+            this.StockSymbol,
             this.StockName,
             this.Dir,
             this.Profit,
@@ -98,11 +100,19 @@
             this.LP.ReadOnly = true;
             this.LP.Width = 40;
             // 
+            // StockSymbol
+            // 
+            this.StockSymbol.DataPropertyName = "StockSymbol";
+            this.StockSymbol.HeaderText = "Stock";
+            this.StockSymbol.Name = "StockSymbol";
+            this.StockSymbol.ReadOnly = true;
+            this.StockSymbol.Width = 60;
+            // 
             // StockName
             // 
             this.StockName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.StockName.DataPropertyName = "StockName";
-            this.StockName.HeaderText = "Stock";
+            this.StockName.HeaderText = "Name";
             this.StockName.Name = "StockName";
             this.StockName.ReadOnly = true;
             // 
@@ -204,6 +214,7 @@
         private System.Windows.Forms.DataGridView dbgPositions;
         private System.Windows.Forms.BindingSource srcPositions;
         private System.Windows.Forms.DataGridViewTextBoxColumn LP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StockSymbol;
         private System.Windows.Forms.DataGridViewTextBoxColumn StockName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dir;
         private System.Windows.Forms.DataGridViewTextBoxColumn Profit;

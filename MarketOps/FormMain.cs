@@ -139,7 +139,7 @@ namespace MarketOps
 
         private void AddTabWithChart(StockDisplayData currentStock)
         {
-            TabPage tab = new TabPage($"{currentStock.Stock.Name} ({currentStock.Prices.Range})") {BorderStyle = BorderStyle.FixedSingle};
+            TabPage tab = new TabPage($"[{currentStock.Stock.StockName}] {currentStock.Stock.Name} ({currentStock.Prices.Range})") {BorderStyle = BorderStyle.FixedSingle};
             tcCharts.TabPages.Add(tab);
             PriceVolumePanel pvp = new PriceVolumePanel {Name = "pvp", Dock = DockStyle.Fill};
             pvp.OnPrependData += OnPrependChartData;

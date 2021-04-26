@@ -34,7 +34,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            HLChannelData res = (new HLChannel()).Calculate(data.H, data.L, _statParams.Get(StatHLChannelParams.Period).As<int>());
+            HLChannelData res = HLChannel.Calculate(data.H, data.L, _statParams.Get(StatHLChannelParams.Period).As<int>());
             _data[StatHLChannelData.H] = res.H;
             _data[StatHLChannelData.L] = res.L;
         }

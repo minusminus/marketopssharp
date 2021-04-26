@@ -6,29 +6,29 @@ namespace MarketOps.Stats.Calculators
     /// Executes operation on ring buffer with specified length.
     /// Returns array of calculated values.
     /// </summary>
-    public static class RingBufferCalculator
+    public static class RingBufferCalculator<T>
     {
-        public static float[] Calculate(float[] data, int bufferLength, Func<float[], float> operation)
+        public static T[] Calculate(T[] data, int bufferLength, Func<T[], T> operation)
         {
-            if (!CanCalculate(data, bufferLength)) return new float[0];
+            if (!CanCalculate(data, bufferLength)) return new T[0];
 
-            var buffer = new RingBuffer<float>(bufferLength);
+            var buffer = new RingBuffer<T>(bufferLength);
             InitialBufferFill(buffer, data);
             return CalculateResult(buffer, data, operation);
         }
 
-        private static bool CanCalculate(float[] data, int bufferLength) =>
+        private static bool CanCalculate(T[] data, int bufferLength) =>
             (data.Length >= bufferLength) && (bufferLength > 0);
 
-        private static void InitialBufferFill(RingBuffer<float> buffer, float[] data)
+        private static void InitialBufferFill(RingBuffer<T> buffer, T[] data)
         {
             for (int i = 0; i < buffer.Length - 1; i++)
                 buffer.Add(data[i]);
         }
 
-        private static float[] CalculateResult(RingBuffer<float> buffer, float[] data, Func<float[], float> operation)
+        private static T[] CalculateResult(RingBuffer<T> buffer, T[] data, Func<T[], T> operation)
         {
-            float[] res = new float[data.Length - buffer.Length + 1];
+            T[] res = new T[data.Length - buffer.Length + 1];
 
             for (int i = buffer.Length - 1; i < data.Length; i++)
             {

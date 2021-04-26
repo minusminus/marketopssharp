@@ -1,9 +1,7 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 using MarketOps.Stats.Stats;
 using MarketOps.StockData.Extensions;
-using MarketOps.StockData.Types;
 
 namespace MarketOps.Stats.Tests.Stats
 {

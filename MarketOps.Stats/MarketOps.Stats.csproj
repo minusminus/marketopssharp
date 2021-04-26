@@ -47,9 +47,15 @@
     <Compile Include="Calculators\BBData.cs" />
     <Compile Include="Calculators\BB.cs" />
     <Compile Include="Calculators\CumulativeDataCalculator.cs" />
+    <Compile Include="Calculators\HLChannel.cs" />
+    <Compile Include="Calculators\HLChannelData.cs" />
     <Compile Include="Calculators\RangeChangePcnt.cs" />
+    <Compile Include="Calculators\RingBuffer.cs" />
+    <Compile Include="Calculators\RingBufferCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\StatHLChannel.cs" />
+    <Compile Include="Stats\StatHLChannelParams.cs" />
     <Compile Include="Stats\StatRangeChangePcnt.cs" />
     <Compile Include="Stats\StatATR.cs" />
     <Compile Include="Stats\StatATRParams.cs" />

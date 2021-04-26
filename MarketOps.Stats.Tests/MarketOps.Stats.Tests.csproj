@@ -81,6 +81,7 @@
     <Compile Include="Calculators\BBTests.cs" />
     <Compile Include="Calculators\CumulativeDataCalculatorTests.cs" />
     <Compile Include="Calculators\RangeChangePcntTests.cs" />
+    <Compile Include="Calculators\RingBufferTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Calculators\SMATests.cs" />
     <Compile Include="Stats\StatATRTests.cs" />

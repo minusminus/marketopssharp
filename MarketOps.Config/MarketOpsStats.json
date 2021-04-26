@@ -22,5 +22,11 @@
     "ClassName": "MarketOps.Stats.Stats.StatRangeChangePcnt",
     "ClassLibrary": "MarketOps.Stats.dll",
     "DisplayStatType": "Additional"
+  },
+  {
+    "StatName": "HL Channel",
+    "ClassName": "MarketOps.Stats.Stats.StatHLChannel",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
   }
 ]

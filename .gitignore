@@ -328,5 +328,6 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-/MarketOps.DataProvider.Pq.Tests/App.config
+
 /MarketOps/App.config
+/MarketOps.Tests/App.config

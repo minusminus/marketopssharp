@@ -86,10 +86,95 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\MarketOps\DirectoryUtils.cs">
+      <Link>DataPump\DirectoryUtils.cs</Link>
+    </Compile>
+    <Compile Include="Controls\PositionChangeCheckerTests.cs" />
+    <Compile Include="DataGen\DataGenerators\DataAggregatorTests.cs" />
+    <Compile Include="DataProvider.Pg\Bossa\PgDataPumpProviderTests.cs" />
+    <Compile Include="DataProvider.Pg\DataTableSelectorTests.cs" />
+    <Compile Include="DataProvider.Pg\PgStockDataProviderTests.cs" />
+    <Compile Include="DataPump\Bossa\DailyDataFileIteratorTests.cs" />
+    <Compile Include="DataPump\Bossa\DailyDataFileLineToStockDataTests.cs" />
+    <Compile Include="DataPump\Bossa\DataFileDownloaderTests.cs" />
+    <Compile Include="DataPump\Bossa\DataFileTSSearcherTests.cs" />
+    <Compile Include="DataPump\Bossa\DataPumpWithoutDBWritesTests.cs" />
+    <Compile Include="DataPump\Bossa\DownloadDirectoriesTests.cs" />
+    <Compile Include="DataPump\Bossa\DownloadFilePathPreparatorTests.cs" />
+    <Compile Include="DataPump\Bossa\DownloadFilesQueueTests.cs" />
+    <Compile Include="DataPump\Bossa\DownloadPipeTests.cs" />
+    <Compile Include="DataPump\Bossa\DownloadUnzipPathPreparatorTests.cs" />
+    <Compile Include="DataPump\Bossa\DownloadUrlPreparatorTests.cs" />
+    <Compile Include="DataPump\DBWriter\DataPumpStockDataToDBWriterTests.cs" />
+    <Compile Include="DataPump\DBWriter\InsertCommandGeneratorTests.cs" />
+    <Compile Include="DataPump\DBWriter\StartTSUpdaterTests.cs" />
+    <Compile Include="DataPump\SystemFileUnzipperTests.cs" />
+    <Compile Include="DataPump\WebClientFileDownloaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\Calculators\ATRTests.cs" />
+    <Compile Include="Stats\Calculators\BBTests.cs" />
+    <Compile Include="Stats\Calculators\CumulativeDataCalculatorTests.cs" />
+    <Compile Include="Stats\Calculators\HLChannelTests.cs" />
+    <Compile Include="Stats\Calculators\RangeChangePcntTests.cs" />
+    <Compile Include="Stats\Calculators\RingBufferCalculatorTests.cs" />
+    <Compile Include="Stats\Calculators\RingBufferTests.cs" />
+    <Compile Include="Stats\Calculators\SMATests.cs" />
+    <Compile Include="Stats\Stats\StatATRTests.cs" />
+    <Compile Include="Stats\Stats\StatBBTests.cs" />
+    <Compile Include="Stats\Stats\StatHLChannelTests.cs" />
+    <Compile Include="Stats\Stats\StatRangeChangePcntTests.cs" />
+    <Compile Include="Stats\Stats\StatSMATests.cs" />
+    <Compile Include="StockData\MOParamsExtensionsTests.cs" />
+    <Compile Include="StockData\MOParamsTests.cs" />
+    <Compile Include="StockData\StockPricesDataFindByTSTests.cs" />
+    <Compile Include="StockData\StockPricesDataMergerTests.cs" />
+    <Compile Include="StockData\StockPricesDataTests.cs" />
+    <Compile Include="SystemAnalysis\DrawDowns\DrawDownsCalculatorTests.cs" />
+    <Compile Include="SystemAnalysis\SystemSummary\WinsLossesCalculatorTests.cs" />
+    <Compile Include="SystemData\Extensions\PositionDirExtensionsTests.cs" />
+    <Compile Include="SystemData\Extensions\PositionExtensionsTests.cs" />
+    <Compile Include="SystemData\Extensions\SystemStateExtensionsTests.cs" />
+    <Compile Include="SystemData\Extensions\SystemValueCalculatorTests.cs" />
+    <Compile Include="SystemExecutor\Commission\CommissionNoneTests.cs" />
+    <Compile Include="SystemExecutor\DataLoaders\BufferedDataLoaderTests.cs" />
+    <Compile Include="SystemExecutor\Extensions\MoneyValueExtensionsTests.cs" />
+    <Compile Include="SystemExecutor\Extensions\VolumeExtensionsTests.cs" />
+    <Compile Include="SystemExecutor\GPW\CommissionGPWBossaTests.cs" />
+    <Compile Include="SystemExecutor\GPW\GPWTickOpsTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMCloseCalculatorNoneTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnCloseTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMSignalVolumeForAllCashTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMSignalVolumeOneItemTests.cs" />
+    <Compile Include="SystemExecutor\Mocks\CommissionUtils.cs" />
+    <Compile Include="SystemExecutor\Mocks\SlippageUtils.cs" />
+    <Compile Include="SystemExecutor\Mocks\StockDataProviderUtils.cs" />
+    <Compile Include="SystemExecutor\Mocks\StockPricesDataUtils.cs" />
+    <Compile Include="SystemExecutor\Mocks\StockStatMock.cs" />
+    <Compile Include="SystemExecutor\Mocks\SystemDataLoaderUtils.cs" />
+    <Compile Include="SystemExecutor\Processor\ClosePriceSelectorTests.cs" />
+    <Compile Include="SystemExecutor\Processor\ClosingPositionSelectorTests.cs" />
+    <Compile Include="SystemExecutor\Processor\OpenPriceSelectorTests.cs" />
+    <Compile Include="SystemExecutor\Processor\PositionsCloserTests.cs" />
+    <Compile Include="SystemExecutor\Processor\PositionsRebalancerTests.cs" />
+    <Compile Include="SystemExecutor\Processor\PricesDataRangeFinderTests.cs" />
+    <Compile Include="SystemExecutor\Processor\SignalSelectorTests.cs" />
+    <Compile Include="SystemExecutor\Processor\SignalsProcessorTests.cs" />
+    <Compile Include="SystemExecutor\Processor\SignalVerifierTests.cs" />
+    <Compile Include="SystemExecutor\Processor\StocksBackBufferAggregatorTests.cs" />
+    <Compile Include="SystemExecutor\Processor\StocksDataPreloaderTests.cs" />
+    <Compile Include="SystemExecutor\Processor\SystemProcessorTests.cs" />
+    <Compile Include="SystemExecutor\Slippage\SlippageNoneTests.cs" />
+    <Compile Include="SystemExecutor\Slippage\SlippageTicksTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DataPump\TestFiles\testzip.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DataPump\TestFiles\USDPLN.mst">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +219,7 @@
       <Name>MarketOps.SystemExecutor</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

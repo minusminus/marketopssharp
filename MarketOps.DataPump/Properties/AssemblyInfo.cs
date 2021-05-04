@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("MarketOps.DataPump.Tests")]
+[assembly: InternalsVisibleTo("MarketOps.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 // Ustawienie elementu ComVisible na wartość false sprawia, że typy w tym zestawie są niewidoczne

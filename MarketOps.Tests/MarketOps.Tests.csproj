@@ -6,17 +6,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{60D54185-3E36-4A12-B740-9E7F5B44D11F}</ProjectGuid>
+    <ProjectGuid>{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarketOps.StockData.Tests</RootNamespace>
-    <AssemblyName>MarketOps.StockData.Tests</AssemblyName>
+    <RootNamespace>MarketOps.Tests</RootNamespace>
+    <AssemblyName>MarketOps.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,11 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="DiffEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c7a34512ecd69090, processorArchitecture=MSIL">
       <HintPath>..\packages\DiffEngine.6.4.9\lib\net461\DiffEngine.dll</HintPath>
     </Reference>
     <Reference Include="EmptyFiles, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c7a34512ecd69090, processorArchitecture=MSIL">
       <HintPath>..\packages\EmptyFiles.2.3.3\lib\net461\EmptyFiles.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute, Version=4.2.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.4.2.2\lib\net46\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.13.2.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.13.2\lib\net45\nunit.framework.dll</HintPath>
@@ -53,6 +57,7 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -70,6 +75,9 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,30 +86,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MOParamsExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StockPricesDataFindByTSTests.cs" />
-    <Compile Include="StockPricesDataMergerTests.cs" />
-    <Compile Include="StockPricesDataTests.cs" />
-    <Compile Include="MOParamsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Controls\MarketOps.Controls.csproj">
+      <Project>{107a7493-bf4d-48fc-aad4-b9d291ff8011}</Project>
+      <Name>MarketOps.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.DataGen\MarketOps.DataGen.csproj">
+      <Project>{8d445eca-baa2-427a-9e6e-a27923db0bfd}</Project>
+      <Name>MarketOps.DataGen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.DataProvider.Pg\MarketOps.DataProvider.Pg.csproj">
+      <Project>{dc50b64a-8c80-4562-b705-ed9c0f850e3c}</Project>
+      <Name>MarketOps.DataProvider.Pg</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.DataPump\MarketOps.DataPump.csproj">
+      <Project>{f91f2b3e-be20-4500-ac9d-7fb3dd9464e4}</Project>
+      <Name>MarketOps.DataPump</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
+      <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>
+      <Name>MarketOps.Stats</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\MarketOps.SystemAnalysis\MarketOps.SystemAnalysis.csproj">
+      <Project>{e77e14d1-5661-49d8-8259-664915c0bb01}</Project>
+      <Name>MarketOps.SystemAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemData\MarketOps.SystemData.csproj">
+      <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
+      <Name>MarketOps.SystemData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemDefs\MarketOps.SystemDefs.csproj">
+      <Project>{e9909ebc-1d6d-47cf-9258-e3fc3d7484f3}</Project>
+      <Name>MarketOps.SystemDefs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemExecutor\MarketOps.SystemExecutor.csproj">
+      <Project>{4c9d9ab7-7d39-496e-85fd-135d30819239}</Project>
+      <Name>MarketOps.SystemExecutor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>Ten projekt zawiera odwołania do pakietów NuGet, których nie ma na tym komputerze. Użyj przywracania pakietów NuGet, aby je pobrać. Aby uzyskać więcej informacji, zobacz http://go.microsoft.com/fwlink/?LinkID=322105. Brakujący plik: {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmptyFiles.2.3.3\build\EmptyFiles.targets'))" />
     <Error Condition="!Exists('..\packages\Shouldly.4.0.3\build\Shouldly.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Shouldly.4.0.3\build\Shouldly.props'))" />

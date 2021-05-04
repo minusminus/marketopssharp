@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1082
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.StockData", "MarketOps.StockData\MarketOps.StockData.csproj", "{302B5831-ECE5-4043-A944-1D8814C8F78E}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.Config", "MarketOps.Config\MarketOps.Config.csproj", "{A7360268-1F6D-4878-AA27-EA365F11E0A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemDefs.Tests", "MarketOps.SystemDefs.Tests\MarketOps.SystemDefs.Tests.csproj", "{6A72E26E-E0FF-4DF5-9C3D-6A89218EBB9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.Tests", "MarketOps.Tests\MarketOps.Tests.csproj", "{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{6A72E26E-E0FF-4DF5-9C3D-6A89218EBB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A72E26E-E0FF-4DF5-9C3D-6A89218EBB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A72E26E-E0FF-4DF5-9C3D-6A89218EBB9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

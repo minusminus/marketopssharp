@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>MarketOps.Controls</RootNamespace>
     <AssemblyName>MarketOps.Controls</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -184,6 +184,9 @@
       <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
       <Name>MarketOps.SystemData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

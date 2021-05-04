@@ -19,12 +19,12 @@ namespace MarketOps.SystemDefs.BBTrendFunds
     {
         private const int BBPeriod = 10;
         private const float BBSigmaWidth = 2f;
+        private const int HLPeriod = 5;
         private const int RebalanceInterval = 3;
         private const int ProfitBackDataLength = 2;
         private const int NumberOfAggressiveFundsTaken = 3;
         private const float AggressiveStopWidth = 0.07f;
 
-        //obl dlugoterm, akcji plus, mis spolek, rynku zlota, akcji amer, akcji jap, pap dl usd
         private readonly string[] _fundsNames = { "PKO014",
             "PKO008", "PKO009", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO020", "PKO021",
             "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057", "PKO097", "PKO098", "PKO909", "PKO910",
@@ -51,7 +51,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             _systemExecutionLogger = systemExecutionLogger;
             _dataRange = StockDataRange.Monthly;
             _fundsData = new BBTrendFundsData(_fundsNames.Length);
-            BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, dataProvider);
+            BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, HLPeriod, dataProvider);
             //_rebalanceSignal = new ModNCounter(RebalanceInterval);
         }
 
@@ -64,7 +64,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                     {
                         stock = def,
                         dataRange = _dataRange,
-                        stats = new List<StockStat>() { _fundsData.StatsBB[i] }
+                        stats = new List<StockStat>() { _fundsData.StatsBB[i], _fundsData.StatsHLChannel[i] }
                     };
                 })
                 .ToList()
@@ -108,6 +108,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             foreach (var item in filteredTop)
                 balance[item.Item2] = singleMaxBalance * CalculateBalanceForExpectation(_fundsData.CurrentExpectations[item.Item2]);
             balance[0] = 1f - balance.Skip(1).Sum();
+            //balance[0] = 0;
 
             return balance;
         }
@@ -207,13 +208,13 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             string SortValue(float value) => value > float.MinValue ? (100f * value).ToString("F2") : "--";
 
             _systemExecutionLogger.Add(
-                $"{ts.Date.ToString("yyyy-MM-dd")}:" + Environment.NewLine
+                $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
                 //+ "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]})").ToArray()) + Environment.NewLine
                 //+ "trends start: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.UpTrendStartValues[i].ToString("F2")}").ToArray()) + Environment.NewLine
                 //+ "trends length: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.TrendLength[i]}").ToArray()) + Environment.NewLine
                 //+ "stophit: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.StoppedOut[i]}").ToArray()) + Environment.NewLine
                 + "sorted: " + string.Join(", ", sortedFunds.Select(x => $"{x.Item1.StockName}[{_fundsData.CurrentExpectations[x.Item2]}, {_fundsData.StoppedOut[x.Item2]}] = {SortValue(x.Item3)}")) + Environment.NewLine
-                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b.ToString("F2")}").ToArray()) + Environment.NewLine
+                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b:F2}").ToArray()) + Environment.NewLine
                 + $"aggressive positions: {balance.Skip(1).Count(x => x > 0)}"
                 );
             //_systemExecutionLogger.Add(

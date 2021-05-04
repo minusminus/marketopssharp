@@ -13,7 +13,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
     /// </summary>
     internal static class BBTrendFundsDataCalculator
     {
-        public static void Initialize(BBTrendFundsData data, string[] fundsNames, int bbPeriod, float bbSigmaWidth, IStockDataProvider dataProvider)
+        public static void Initialize(BBTrendFundsData data, string[] fundsNames, int bbPeriod, float bbSigmaWidth, int hlPeriod, IStockDataProvider dataProvider)
         {
             for (int i = 0; i < fundsNames.Length; i++)
             {
@@ -24,6 +24,9 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 data.StatsBB[i] = (StatBB)statBB;
                 data.CurrentTrends[i] = BBTrendType.Unknown;
                 data.CurrentExpectations[i] = BBTrendExpectation.Unknown;
+                StockStat statHL = new StatHLChannel("")
+                    .SetParam(StatHLChannelParams.Period, new MOParamInt() { Value = hlPeriod });
+                data.StatsHLChannel[i] = (StatHLChannel)statHL;
                 data.ExpectationChanged[i] = false;
             }
         }
@@ -83,10 +86,17 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                 int dataIndex = spData.FindByTS(ts);
                 if (dataIndex < 0) continue;
                 if (data.StoppedOut[i])
-                    data.StoppedOut[i] = (spData.C[dataIndex] <= data.StoppedOutValues[i]);
+                    data.StoppedOut[i] = (spData.C[dataIndex] <= data.StoppedOutValues[i]) || !PriceAbovePrevMaxH(data, i, dataIndex, spData.C[dataIndex]);
                 else
                     data.StoppedOut[i] = (spData.C[dataIndex] <= data.UpTrendStopValues[i]);
             }
+        }
+
+        private static bool PriceAbovePrevMaxH(BBTrendFundsData data, int stockIndex, int dataIndex, float price)
+        {
+            StatHLChannel statHL = data.StatsHLChannel[stockIndex];
+            if (dataIndex < statHL.BackBufferLength + 1) return false;
+            return (statHL.Data(StatHLChannelData.H)[dataIndex - statHL.BackBufferLength] < price);
         }
     }
 }

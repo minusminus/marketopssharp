@@ -13,6 +13,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         public readonly StatBB[] StatsBB;
         public readonly BBTrendType[] CurrentTrends;
         public readonly BBTrendExpectation[] CurrentExpectations;
+        public readonly StatHLChannel[] StatsHLChannel;
         public readonly bool[] ExpectationChanged;
         public readonly float[] UpTrendStartValues;
         public readonly float[] UpTrendMaxValues;
@@ -27,6 +28,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             StatsBB = new StatBB[length];
             CurrentTrends = new BBTrendType[length];
             CurrentExpectations = new BBTrendExpectation[length];
+            StatsHLChannel = new StatHLChannel[length];
             ExpectationChanged = new bool[length];
             UpTrendStartValues = new float[length];
             UpTrendMaxValues = new float[length];

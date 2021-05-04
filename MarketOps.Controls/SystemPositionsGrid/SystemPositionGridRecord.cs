@@ -12,8 +12,7 @@ namespace MarketOps.Controls.SystemPositionsGrid
         public SystemPositionGridRecord(int lp, Position position)
         {
             LP = lp;
-            StockSymbol = position.Stock.StockName;
-            StockName = position.Stock.Name;
+            StockName = $"({position.Stock.StockName}) {position.Stock.Name}";
             Dir = position.Direction;
             TSOpen = position.TSOpen;
             Open = position.Open;
@@ -27,7 +26,6 @@ namespace MarketOps.Controls.SystemPositionsGrid
         }
 
         public int LP { get; }
-        public string StockSymbol { get; }
         public string StockName { get; }
         public PositionDir Dir { get; }
         public DateTime TSOpen { get; }

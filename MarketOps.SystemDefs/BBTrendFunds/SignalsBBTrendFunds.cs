@@ -17,6 +17,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
     {
         private const int BBPeriod = 10;
         private const float BBSigmaWidth = 2f;
+        private const int HLPeriod = 5;
         private const int RebalanceInterval = 1;
 
         //private readonly string[] _fundsNames = { "PKO021", "PKO909" }; //akcji plus, rynku zlota
@@ -37,7 +38,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             _systemExecutionLogger = systemExecutionLogger;
             _dataRange = StockDataRange.Monthly;
             _fundsData = new BBTrendFundsData(_fundsNames.Length);
-            BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, dataProvider);
+            BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, HLPeriod, dataProvider);
             _rebalanceSignal = new ModNCounter(RebalanceInterval);
         }
 
@@ -120,9 +121,9 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             //File.AppendAllText(filePath, text);
 
             _systemExecutionLogger.Add(
-                $"{ts.Date.ToString("yyyy-MM-dd")}:" + Environment.NewLine
+                $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
                 + "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} {def.Name}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]}, {_fundsData.ExpectationChanged[i]})").ToArray()) + Environment.NewLine
-                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b.ToString("F2")}").ToArray())
+                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b:F2}").ToArray())
                 );
         }
     }

@@ -216,7 +216,7 @@ namespace MarketOps.Controls.ChartsUtils
 
         private void OnClickAdditionalStat(object sender, EventArgs e)
         {
-            string newAreaName = $"Area{Guid.NewGuid().ToString("N")}";
+            string newAreaName = $"Area{Guid.NewGuid():N}";
 
             StockStat stat = StatsFactories.Additional.Get(sender.ToString(), newAreaName);
             if (!EditStat(stat)) return;

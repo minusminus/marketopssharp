@@ -33,7 +33,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dbgPositions = new System.Windows.Forms.DataGridView();
-            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             this.LP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dir = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,6 +45,7 @@
             this.CloseCommission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).BeginInit();
             this.SuspendLayout();
@@ -87,6 +87,7 @@
             this.dbgPositions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dbgPositions.Size = new System.Drawing.Size(1085, 274);
             this.dbgPositions.TabIndex = 0;
+            this.dbgPositions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dbgPositions_CellDoubleClick);
             // 
             // LP
             // 

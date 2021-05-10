@@ -40,6 +40,8 @@ namespace MarketOps
         private readonly List<ConfigSystemDefinition> _configSystemDefinitions;
         private readonly SystemDefinitionFactory _systemDefinitionFactory;
         private SystemDefinition _currentSimSystemDef;
+        private SystemState _currentSimSystemState;
+        private SystemStateSummary _currentSimSystemSummary;
 
         public FormMain()
         {
@@ -52,6 +54,8 @@ namespace MarketOps
             _systemDefinitionFactory = new SystemDefinitionFactory(_dataProvider, _systemDataLoader, new SlippageNone(), new CommissionNone(), _systemExecutionLogger);
             StatsFactories.Initialize();
 
+            dbgPositions.OnPositionClick += dbgPositions_OnPositionClick;
+
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
@@ -59,30 +63,31 @@ namespace MarketOps
             LoadConfig();
         }
 
+
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             SaveConfig();
         }
 
         #region price chart events
-        private StockPricesData OnGetChartData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo)
+        private StockPricesData OnGetChartData(StockDisplayData displayData, DateTime tsFrom, DateTime tsTo)
         {
-            currentData.TsFrom = tsFrom;
-            currentData.TsTo = tsTo;
-            return _dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            displayData.TsFrom = tsFrom;
+            displayData.TsTo = tsTo;
+            return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
         }
 
-        private StockPricesData OnPrependChartData(StockDisplayData currentData)
+        private StockPricesData OnPrependChartData(StockDisplayData displayData)
         {
-            DateTime ts = currentData.TsFrom;
-            currentData.TsFrom = currentData.TsFrom.AddDays(-1).AddYears(-1);
-            return _dataProvider.GetPricesData(currentData.Stock, currentData.Prices.Range, 0, currentData.TsFrom, ts);
+            DateTime ts = displayData.TsFrom;
+            displayData.TsFrom = displayData.TsFrom.AddDays(-1).AddYears(-1);
+            return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, displayData.TsFrom, ts);
         }
 
-        private void OnRecalculateStockStats(StockDisplayData currentData)
+        private void OnRecalculateStockStats(StockDisplayData displayData)
         {
-            foreach (var stat in currentData.Stats)
-                stat.Calculate(currentData.Prices);
+            foreach (var stat in displayData.Stats)
+                stat.Calculate(displayData.Prices);
         }
         #endregion
 
@@ -110,12 +115,12 @@ namespace MarketOps
             cbSystemChoice.ValueMember = "Description";
         }
 
-        private bool GetStockDefinition(IStockDataProvider dataProvider, out StockDefinition stockDef)
+        private bool GetStockDefinition(string stockName, out StockDefinition stockDef)
         {
             stockDef = null;
             try
             {
-                stockDef = dataProvider.GetStockDefinition(edtStockName.Text.Trim());
+                stockDef = _dataProvider.GetStockDefinition(stockName);
                 return true;
             } catch(Exception e)
             {
@@ -124,31 +129,38 @@ namespace MarketOps
             }
         }
 
-        private void btnLoad_Click(object sender, EventArgs e)
+        private bool GetStockDisplayData(string stockName, StockDataRange dataRange, DateTime tsFrom, DateTime tsTo, out StockDisplayData displayData)
         {
-            if (!GetStockDefinition(_dataProvider, out StockDefinition stockDef)) return;
-            StockDisplayData currentStock = new StockDisplayData()
+            displayData = null;
+            if (!GetStockDefinition(stockName, out StockDefinition stockDef)) return false;
+            displayData = new StockDisplayData()
             {
-                TsFrom = DateTime.Now.Date.AddYears(-1),
-                TsTo = DateTime.Now.Date,
+                TsFrom = tsFrom,
+                TsTo = tsTo,
                 Stock = stockDef
             };
-            currentStock.Prices = _dataProvider.GetPricesData(currentStock.Stock, (StockDataRange)cbStockDataRange.SelectedItem, 0, currentStock.TsFrom, currentStock.TsTo);
-            AddTabWithChart(currentStock);
+            displayData.Prices = _dataProvider.GetPricesData(stockDef, dataRange, 0, tsFrom, tsTo);
+            return true;
         }
 
-        private void AddTabWithChart(StockDisplayData currentStock)
+        private void btnLoad_Click(object sender, EventArgs e)
         {
-            TabPage tab = new TabPage($"[{currentStock.Stock.StockName}] {currentStock.Stock.Name} ({currentStock.Prices.Range})") {BorderStyle = BorderStyle.FixedSingle};
-            tcCharts.TabPages.Add(tab);
-            PriceVolumePanel pvp = new PriceVolumePanel {Name = "pvp", Dock = DockStyle.Fill};
+            if (!GetStockDisplayData(edtStockName.Text.Trim(), (StockDataRange)cbStockDataRange.SelectedItem, DateTime.Now.Date.AddYears(-1), DateTime.Now.Date, out StockDisplayData displayData)) return;
+            AddTabWithChart(tcCharts, displayData);
+        }
+
+        private void AddTabWithChart(TabControl tabControl, StockDisplayData displayData)
+        {
+            TabPage tab = new TabPage($"[{displayData.Stock.StockName}] {displayData.Stock.Name} ({displayData.Prices.Range})") { BorderStyle = BorderStyle.FixedSingle };
+            tabControl.TabPages.Add(tab);
+            PriceVolumePanel pvp = new PriceVolumePanel { Name = "pvp", Dock = DockStyle.Fill };
             pvp.OnPrependData += OnPrependChartData;
             pvp.OnGetData += OnGetChartData;
             pvp.OnRecalculateStockStats += OnRecalculateStockStats;
             tab.Controls.Add(pvp);
-            tcCharts.SelectTab(tab);
-            tcCharts.Refresh();
-            pvp.LoadData(currentStock, _stockInfoGenerator, _stockStatsInfoGenerator);
+            tabControl.SelectTab(tab);
+            tabControl.Refresh();
+            pvp.LoadData(displayData, _stockInfoGenerator, _stockStatsInfoGenerator);
         }
 
         private void tcCharts_MouseClick(object sender, MouseEventArgs e)
@@ -213,21 +225,27 @@ namespace MarketOps
             }
 
             edtSimDataLog.Clear();
+            while (tcSimulationCharts.TabCount > 2)
+                tcSimulationCharts.TabPages.RemoveAt(tcSimulationCharts.TabCount - 1);
             paramsSim.SaveParams(_currentSimSystemDef.SystemParams);
 
-            SystemState systemState = new SystemState() { InitialCash = (float)edtInitialCash.Value, Cash = (float)edtInitialCash.Value };
-
+            _currentSimSystemState = new SystemState() { InitialCash = (float)edtInitialCash.Value, Cash = (float)edtInitialCash.Value };
             SystemRunner runner = new SystemRunner(_dataProvider, _systemDataLoader);
-            runner.Run(_currentSimSystemDef, systemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
-            ShowSimulationResult(systemState);
-
-            //_msgDisplay.Info("zrobione");
+            runner.Run(_currentSimSystemDef, _currentSimSystemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
+            _currentSimSystemSummary = SystemStateSummaryCalculator.Calculate(_currentSimSystemState);
+            ShowSimulationResult(_currentSimSystemState, _currentSimSystemSummary);
         }
 
-        private void ShowSimulationResult(SystemState systemState)
+        private void dbgPositions_OnPositionClick(Position position)
         {
-            SystemStateSummary summary = SystemStateSummaryCalculator.Calculate(systemState);
+            if ((_currentSimSystemState == null) || (_currentSimSystemSummary == null)) return;
 
+            if (!GetStockDisplayData(position.Stock.StockName, position.DataRange, _currentSimSystemSummary.StartTS, _currentSimSystemSummary.StopTS, out StockDisplayData displayData)) return;
+            AddTabWithChart(tcSimulationCharts, displayData);
+        }
+
+        private void ShowSimulationResult(SystemState systemState, SystemStateSummary summary)
+        {
             DisplaySummary(summary);
             ShowPositions(systemState);
             ShowEquityCharts(systemState);

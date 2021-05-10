@@ -9,22 +9,6 @@ namespace MarketOps.Controls.SystemPositionsGrid
     /// </summary>
     internal class SystemPositionGridRecord
     {
-        public SystemPositionGridRecord(int lp, Position position)
-        {
-            LP = lp;
-            StockName = $"({position.Stock.StockName}) {position.Stock.Name}";
-            Dir = position.Direction;
-            TSOpen = position.TSOpen;
-            Open = position.Open;
-            OpenCommission = position.OpenCommission;
-            TSClose = position.TSClose;
-            Close = position.Close;
-            CloseCommission = position.CloseCommission;
-            Volume = position.Volume;
-            Ticks = position.TicksActive;
-            Profit = position.Value();
-        }
-
         public int LP { get; }
         public string StockName { get; }
         public PositionDir Dir { get; }
@@ -37,5 +21,25 @@ namespace MarketOps.Controls.SystemPositionsGrid
         public float Volume { get; }
         public int Ticks { get; }
         public float Profit { get; }
+
+        public readonly Position Position;
+
+        public SystemPositionGridRecord(int lp, Position pos)
+        {
+            Position = pos;
+
+            LP = lp;
+            StockName = $"({pos.Stock.StockName}) {pos.Stock.Name}";
+            Dir = pos.Direction;
+            TSOpen = pos.TSOpen;
+            Open = pos.Open;
+            OpenCommission = pos.OpenCommission;
+            TSClose = pos.TSClose;
+            Close = pos.Close;
+            CloseCommission = pos.CloseCommission;
+            Volume = pos.Volume;
+            Ticks = pos.TicksActive;
+            Profit = pos.Value();
+        }
     }
 }

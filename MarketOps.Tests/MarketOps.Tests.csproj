@@ -125,6 +125,7 @@
     <Compile Include="Stats\Stats\StatHLChannelTests.cs" />
     <Compile Include="Stats\Stats\StatRangeChangePcntTests.cs" />
     <Compile Include="Stats\Stats\StatSMATests.cs" />
+    <Compile Include="StockData\DateTimeOperationsTests.cs" />
     <Compile Include="StockData\MOParamsExtensionsTests.cs" />
     <Compile Include="StockData\MOParamsTests.cs" />
     <Compile Include="StockData\StockPricesDataFindByTSTests.cs" />

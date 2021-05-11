@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataFormatting.cs" />
+    <Compile Include="DateTimeOperations.cs" />
     <Compile Include="Extensions\MOParamsExtensions.cs" />
     <Compile Include="Extensions\StockDefinitionExtensions.cs" />
     <Compile Include="Extensions\StockStatExtensions.cs" />

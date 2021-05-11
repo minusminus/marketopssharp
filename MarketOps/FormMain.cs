@@ -24,6 +24,7 @@ using MarketOps.DataMappers;
 using MarketOps.Config.SystemExecutor;
 using MarketOps.Config.Stats;
 using MarketOps.Config.App;
+using MarketOps.StockData;
 
 namespace MarketOps
 {
@@ -79,8 +80,8 @@ namespace MarketOps
 
         private StockPricesData OnPrependChartData(StockDisplayData displayData)
         {
-            DateTime ts = displayData.TsFrom;
-            displayData.TsFrom = displayData.TsFrom.AddDays(-1).AddYears(-1);
+            DateTime ts = DateTimeOperations.OneTickBefore(displayData.TsFrom, displayData.Prices);
+            displayData.TsFrom = ts.AddDays(-1).AddYears(-1);
             return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, displayData.TsFrom, ts);
         }
 

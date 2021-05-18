@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using MarketOps.Controls.Extensions;
-using MarketOps.Controls.ChartsUtils;
+using MarketOps.Controls.PriceChart;
 using MarketOps.Controls.Types;
 using MarketOps.DataGen;
 using MarketOps.StockData.Types;
@@ -25,6 +25,7 @@ using MarketOps.Config.SystemExecutor;
 using MarketOps.Config.Stats;
 using MarketOps.Config.App;
 using MarketOps.StockData;
+using System.Linq;
 
 namespace MarketOps
 {
@@ -150,7 +151,7 @@ namespace MarketOps
             AddTabWithChart(tcCharts, displayData);
         }
 
-        private void AddTabWithChart(TabControl tabControl, StockDisplayData displayData)
+        private PriceVolumePanel AddTabWithChart(TabControl tabControl, StockDisplayData displayData)
         {
             TabPage tab = new TabPage($"[{displayData.Stock.StockName}] {displayData.Stock.Name} ({displayData.Prices.Range})") { BorderStyle = BorderStyle.FixedSingle };
             tabControl.TabPages.Add(tab);
@@ -162,6 +163,7 @@ namespace MarketOps
             tabControl.SelectTab(tab);
             tabControl.Refresh();
             pvp.LoadData(displayData, _stockInfoGenerator, _stockStatsInfoGenerator);
+            return pvp;
         }
 
         private void tcCharts_MouseClick(object sender, MouseEventArgs e)
@@ -242,7 +244,8 @@ namespace MarketOps
             if ((_currentSimSystemState == null) || (_currentSimSystemSummary == null)) return;
 
             if (!GetStockDisplayData(position.Stock.StockName, position.DataRange, _currentSimSystemSummary.StartTS, _currentSimSystemSummary.StopTS, out StockDisplayData displayData)) return;
-            AddTabWithChart(tcSimulationCharts, displayData);
+            var pvp = AddTabWithChart(tcSimulationCharts, displayData);
+            pvp.AddPositionsAnnotations(_currentSimSystemState.PositionsClosed.Where(p => p.Stock == position.Stock).ToList());
         }
 
         private void ShowSimulationResult(SystemState systemState, SystemStateSummary summary)

@@ -3,10 +3,11 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MarketOps.Controls.ChartsUtils;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.Controls.ChartsUtils
+namespace MarketOps.Controls.PriceChart
 {
     public partial class PriceVolumeChart : UserControl
     {
@@ -17,6 +18,7 @@ namespace MarketOps.Controls.ChartsUtils
             SetChartMode(PriceVolumeChartMode.Candles);
             PVChart.MouseWheel += PVChart_MouseWheel;
             pnlCursorDataValues.BackColor = PVChart.BackColor;
+            PrepareNamedImages();
         }
 
         #region public properties and events
@@ -222,6 +224,12 @@ namespace MarketOps.Controls.ChartsUtils
                 if (area.Name == "areaPrices") continue;
                 area.Position.Y = areaPrices.Position.Height + ((i - 1) * positionModifier);
             }
+        }
+
+        private void PrepareNamedImages()
+        {
+            foreach (var img in PositionOpenCloseImages.Images)
+                PVChart.Images.Add(new NamedImage(img.Key, img.Value));
         }
     }
 }

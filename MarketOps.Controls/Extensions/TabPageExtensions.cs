@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using MarketOps.Controls.ChartsUtils;
+using MarketOps.Controls.PriceChart;
 
 namespace MarketOps.Controls.Extensions
 {

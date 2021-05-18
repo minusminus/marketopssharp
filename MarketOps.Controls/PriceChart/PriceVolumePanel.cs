@@ -6,8 +6,9 @@ using MarketOps.Controls.Types;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 using MarketOps.Config.Stats;
+using MarketOps.SystemData.Types;
 
-namespace MarketOps.Controls.ChartsUtils
+namespace MarketOps.Controls.PriceChart
 {
     public partial class PriceVolumePanel : UserControl
     {
@@ -171,6 +172,11 @@ namespace MarketOps.Controls.ChartsUtils
         public void RefreshData()
         {
             ReloadCurrentData();
+        }
+
+        public void AddPositionsAnnotations(List<Position> positions)
+        {
+            chartPV.AddPositionsAnnotations(positions);
         }
 
         public void AddStat(StockStat stat)

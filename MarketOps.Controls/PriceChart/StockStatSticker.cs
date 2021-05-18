@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Types;
 
-namespace MarketOps.Controls.ChartsUtils
+namespace MarketOps.Controls.PriceChart
 {
     public partial class StockStatSticker : UserControl
     {

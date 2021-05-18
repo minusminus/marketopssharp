@@ -1,4 +1,4 @@
-﻿namespace MarketOps.Controls.ChartsUtils
+﻿namespace MarketOps.Controls.PriceChart
 {
     partial class FormSelectDataRange
     {

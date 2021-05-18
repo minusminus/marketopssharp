@@ -199,16 +199,16 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\downarrow_green.png" />
+    <EmbeddedResource Include="Resources\downarrow_green.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\downarrow_red.png" />
+    <EmbeddedResource Include="Resources\downarrow_red.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\uparrow_green.png" />
+    <EmbeddedResource Include="Resources\uparrow_green.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\uparrow_red.png" />
+    <EmbeddedResource Include="Resources\uparrow_red.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

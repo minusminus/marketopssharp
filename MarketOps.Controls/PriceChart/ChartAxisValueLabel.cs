@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace MarketOps.Controls.ChartsUtils
+namespace MarketOps.Controls.PriceChart
 {
     public partial class ChartAxisValueLabel : UserControl
     {

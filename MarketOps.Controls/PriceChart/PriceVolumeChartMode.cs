@@ -1,4 +1,4 @@
-﻿namespace MarketOps.Controls.ChartsUtils
+﻿namespace MarketOps.Controls.PriceChart
 {
     /// <summary>
     /// PriceVolume chart display mode

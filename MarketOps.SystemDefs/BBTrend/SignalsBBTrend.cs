@@ -59,7 +59,7 @@ namespace MarketOps.SystemDefs.BBTrend
             List<Signal> res = new List<Signal>();
             if (leadingIndex <= _statBB.BackBufferLength) return res;
 
-            StockPricesData data = _dataLoader.Get(_stock.Name, _dataRange, 0, ts, ts);
+            StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
             _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, (StatBB)_statBB, leadingIndex, _currentTrend);

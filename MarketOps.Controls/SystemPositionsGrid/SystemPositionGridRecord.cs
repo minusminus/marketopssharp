@@ -29,7 +29,7 @@ namespace MarketOps.Controls.SystemPositionsGrid
             Position = pos;
 
             LP = lp;
-            StockName = $"({pos.Stock.StockName}) {pos.Stock.Name}";
+            StockName = $"({pos.Stock.Name}) {pos.Stock.FullName}";
             Dir = pos.Direction;
             TSOpen = pos.TSOpen;
             Open = pos.Open;

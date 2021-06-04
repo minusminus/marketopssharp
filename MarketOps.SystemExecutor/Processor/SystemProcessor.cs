@@ -89,7 +89,7 @@ namespace MarketOps.SystemExecutor.Processor
 
         private StockPricesData GetLeadingData(SystemConfiguration systemConfiguration)
         {
-            StockPricesData res = _dataLoader.Get(systemConfiguration.dataDefinition.stocks[0].stock.Name, systemConfiguration.dataDefinition.stocks[0].dataRange, 0, systemConfiguration.tsFrom, systemConfiguration.tsTo);
+            StockPricesData res = _dataLoader.Get(systemConfiguration.dataDefinition.stocks[0].stock.FullName, systemConfiguration.dataDefinition.stocks[0].dataRange, 0, systemConfiguration.tsFrom, systemConfiguration.tsTo);
             if (res.Length == 0) throw new Exception("Leading prices data is empty.");
             return res;
         }

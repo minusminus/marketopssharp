@@ -44,7 +44,7 @@ namespace MarketOps.SystemExecutor.Processor
                 }
                 else
                 {
-                    (StockPricesData pricesData, int pricesDataIndex) = _dataLoader.GetPricesDataAndIndex(systemState.Signals[i].Stock.Name, systemState.Signals[i].DataRange, systemState.Signals[i].IntradayInterval, ts);
+                    (StockPricesData pricesData, int pricesDataIndex) = _dataLoader.GetPricesDataAndIndex(systemState.Signals[i].Stock.FullName, systemState.Signals[i].DataRange, systemState.Signals[i].IntradayInterval, ts);
                     if (signalSelector(systemState.Signals[i], pricesData, pricesDataIndex))
                         ProcessStandardSignal(systemState.Signals[i], ts, systemState, openPriceSelector, pricesData, pricesDataIndex);
                 }

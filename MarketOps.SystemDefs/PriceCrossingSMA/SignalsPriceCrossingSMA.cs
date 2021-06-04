@@ -54,7 +54,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
 
             if (leadingIndex <= _statSMA.BackBufferLength) return res;
 
-            StockPricesData data = _dataLoader.Get(_stock.Name, _dataRange, 0, ts, ts);
+            StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
             if ((data.C[leadingIndex - 1] <= _statSMA.Data(StatSMAData.SMA)[leadingIndex - 1 - _statSMA.BackBufferLength])
                 && (data.C[leadingIndex] > _statSMA.Data(StatSMAData.SMA)[leadingIndex - _statSMA.BackBufferLength]))

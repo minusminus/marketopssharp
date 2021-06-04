@@ -25,14 +25,14 @@ namespace MarketOps.Tests.SystemExecutor.Processor
 
         private SystemStockDataDefinition Stock1() => new SystemStockDataDefinition()
         {
-            stock = new StockDefinition() { Name = "KGHM" },
+            stock = new StockDefinition() { FullName = "KGHM" },
             dataRange = StockDataRange.Daily,
             stats = new List<StockStat>()
         };
 
         private SystemStockDataDefinition Stock2() => new SystemStockDataDefinition()
         {
-            stock = new StockDefinition() { Name = "PKOBP" },
+            stock = new StockDefinition() { FullName = "PKOBP" },
             dataRange = StockDataRange.Daily,
             stats = new List<StockStat>()
         };

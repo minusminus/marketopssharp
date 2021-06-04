@@ -37,6 +37,6 @@ namespace MarketOps.SystemExecutor.Processor
         }
 
         private static void ThrowException(Signal signal, string header) =>
-            throw new Exception($"{header} for: {signal.Stock.Name} (ID = {signal.Stock.ID})");
+            throw new Exception($"{header} for: {signal.Stock.FullName} (ID = {signal.Stock.ID})");
     }
 }

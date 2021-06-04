@@ -11,10 +11,11 @@ namespace MarketOps.DataProvider.Pg
         public static void ToStockDefinition(NpgsqlDataReader reader, StockDefinition data)
         {
             data.ID = reader.GetFieldValue<int>(reader.GetOrdinal("id"));
-            data.Type = (StockType)reader.GetFieldValue<int>(reader.GetOrdinal("typ"));
-            data.Name = reader.GetFieldValue<string>(reader.GetOrdinal("nazwaspolki"));
-            data.Enabled = reader.GetFieldValue<bool>(reader.GetOrdinal("aktywna"));
-            data.StockName = reader.GetFieldValue<string>(reader.GetOrdinal("nazwaakcji"));
+            data.Type = (StockType)reader.GetFieldValue<int>(reader.GetOrdinal("stock_type"));
+            data.Enabled = reader.GetFieldValue<bool>(reader.GetOrdinal("enabled"));
+            data.FullName = reader.GetFieldValue<string>(reader.GetOrdinal("stock_fullname"));
+            data.Name = reader.GetFieldValue<string>(reader.GetOrdinal("stock_name"));
+            data.FileNameDaily = reader.GetFieldValue<string>(reader.GetOrdinal("filename_daily"));
         }
     }
 }

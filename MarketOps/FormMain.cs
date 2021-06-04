@@ -153,7 +153,7 @@ namespace MarketOps
 
         private PriceVolumePanel AddTabWithChart(TabControl tabControl, StockDisplayData displayData)
         {
-            TabPage tab = new TabPage($"[{displayData.Stock.StockName}] {displayData.Stock.Name} ({displayData.Prices.Range})") { BorderStyle = BorderStyle.FixedSingle };
+            TabPage tab = new TabPage($"[{displayData.Stock.Name}] {displayData.Stock.FullName} ({displayData.Prices.Range})") { BorderStyle = BorderStyle.FixedSingle };
             tabControl.TabPages.Add(tab);
             PriceVolumePanel pvp = new PriceVolumePanel { Name = "pvp", Dock = DockStyle.Fill };
             pvp.OnPrependData += OnPrependChartData;
@@ -243,7 +243,7 @@ namespace MarketOps
         {
             if ((_currentSimSystemState == null) || (_currentSimSystemSummary == null)) return;
 
-            if (!GetStockDisplayData(position.Stock.StockName, position.DataRange, _currentSimSystemSummary.StartTS, _currentSimSystemSummary.StopTS, out StockDisplayData displayData)) return;
+            if (!GetStockDisplayData(position.Stock.Name, position.DataRange, _currentSimSystemSummary.StartTS, _currentSimSystemSummary.StopTS, out StockDisplayData displayData)) return;
             var pvp = AddTabWithChart(tcSimulationCharts, displayData);
             pvp.AddPositions(_currentSimSystemState.PositionsClosed.Where(p => p.Stock == position.Stock).ToList());
         }

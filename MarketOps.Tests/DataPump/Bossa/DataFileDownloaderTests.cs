@@ -50,18 +50,18 @@ namespace MarketOps.Tests.DataPump.Bossa
         [Test]
         public void InitializeDownload_Daily__DownloadsAndUnzipsFile()
         {
-            StockDefinition stock = new StockDefinition() { ID = 793, Type = StockType.NBPCurrency, Name = "USD" };
+            StockDefinition stock = new StockDefinition() { ID = 793, Type = StockType.NBPCurrency, FullName = "USD" };
             string downloadFilePath = TestObj.InitializeDownload(stock, DataPumpDownloadRange.Daily);
             downloadFilePath.ShouldBe(Path.Combine(_rootPath, ZipMstnbp));
             File.Exists(downloadFilePath).ShouldBeTrue();
             Directory.Exists(Path.Combine(_rootPath, "mstnbp")).ShouldBeTrue();
-            File.Exists(Path.Combine(_rootPath, "mstnbp", stock.Name + ".mst")).ShouldBeTrue();
+            File.Exists(Path.Combine(_rootPath, "mstnbp", stock.FullName + ".mst")).ShouldBeTrue();
         }
 
         [Test]
         public void InitializeDownload_Ticks__ThrowsNotImplemented()
         {
-            StockDefinition stock = new StockDefinition() { ID = 793, Type = StockType.NBPCurrency, Name = "USD" };
+            StockDefinition stock = new StockDefinition() { ID = 793, Type = StockType.NBPCurrency, FullName = "USD" };
             Should.Throw<NotImplementedException>(() => TestObj.InitializeDownload(stock, DataPumpDownloadRange.Ticks));
         }
 

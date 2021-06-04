@@ -34,7 +34,7 @@ namespace MarketOps.SystemExecutor.Processor
         {
             while (systemState.PositionsActive.Count > 0)
             {
-                float closePrice = CalculatePrice(systemState.PositionsActive[0].Stock.Name, systemState.PositionsActive[0].DataRange, systemState.PositionsActive[0].IntradayInterval, signal, ts, openPriceSelector);
+                float closePrice = CalculatePrice(systemState.PositionsActive[0].Stock.FullName, systemState.PositionsActive[0].DataRange, systemState.PositionsActive[0].IntradayInterval, signal, ts, openPriceSelector);
                 systemState.Close(0, ts, closePrice, _commission.Calculate(systemState.PositionsActive[0].Stock.Type, systemState.PositionsActive[0].Volume, closePrice));
             }
         }
@@ -45,7 +45,7 @@ namespace MarketOps.SystemExecutor.Processor
         {
             foreach ((StockDefinition stockDef, float balance) in signal.NewBalance.Where(x => x.balance > 0))
             {
-                float openPrice = CalculatePrice(stockDef.Name, signal.DataRange, signal.IntradayInterval, signal, ts, openPriceSelector);
+                float openPrice = CalculatePrice(stockDef.FullName, signal.DataRange, signal.IntradayInterval, signal, ts, openPriceSelector);
                 float balancedVolume = (totalValue * balance / openPrice).TruncateToAllowedVolume(stockDef.Type);
                 systemState.Open(ts, signal.Direction, openPrice, balancedVolume, stockDef, signal, _slippage, _commission);
             }

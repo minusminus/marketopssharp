@@ -35,7 +35,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         {
             for (int i = 0; i < data.Stocks.Length; i++)
             {
-                StockPricesData spData = dataLoader.Get(data.Stocks[i].Name, dataRange, 0, ts, ts);
+                StockPricesData spData = dataLoader.Get(data.Stocks[i].FullName, dataRange, 0, ts, ts);
                 int dataIndex = spData.FindByTS(ts);
                 if (dataIndex < data.StatsBB[i].BackBufferLength) continue;
                 BBTrendType lastTrend = data.CurrentTrends[i];
@@ -63,7 +63,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                     continue;
                 }
 
-                StockPricesData spData = dataLoader.Get(data.Stocks[i].Name, dataRange, 0, ts, ts);
+                StockPricesData spData = dataLoader.Get(data.Stocks[i].FullName, dataRange, 0, ts, ts);
                 int dataIndex = spData.FindByTS(ts);
                 if (dataIndex < 0) continue;
                 //data.UpTrendMaxValues[i] = Math.Max(spData.H[dataIndex], data.UpTrendMaxValues[i]);
@@ -82,7 +82,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                     continue;
                 }
 
-                StockPricesData spData = dataLoader.Get(data.Stocks[i].Name, dataRange, 0, ts, ts);
+                StockPricesData spData = dataLoader.Get(data.Stocks[i].FullName, dataRange, 0, ts, ts);
                 int dataIndex = spData.FindByTS(ts);
                 if (dataIndex < 0) continue;
                 if (data.StoppedOut[i])

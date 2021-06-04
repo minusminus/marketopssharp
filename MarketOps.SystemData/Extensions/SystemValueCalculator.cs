@@ -21,7 +21,7 @@ namespace MarketOps.SystemData.Extensions
         {
             return system.PositionsActive.Sum(p =>
             {
-                StockPricesData prices = dataLoader.Get(p.Stock.Name, p.DataRange, p.IntradayInterval, ts, ts);
+                StockPricesData prices = dataLoader.Get(p.Stock.FullName, p.DataRange, p.IntradayInterval, ts, ts);
                 int ix = prices.FindByTS(ts);
                 return p.DirectionMultiplier() * prices.C[ix] * p.Volume;
             });

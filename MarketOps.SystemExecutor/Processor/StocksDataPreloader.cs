@@ -25,8 +25,8 @@ namespace MarketOps.SystemExecutor.Processor
         {
             foreach (var backBuf in backBufferInfo)
             {
-                DateTime tsMovedBack = _dataProvider.GetNearestTickGETicksBefore(_dataProvider.GetStockDefinition(backBuf.stock.stock.Name), backBuf.stock.dataRange, 0, tsFrom, backBuf.max == 0 ? 1 : backBuf.max);
-                StockPricesData stockPricesData = _dataLoader.Get(backBuf.stock.stock.Name, backBuf.stock.dataRange, 0, tsMovedBack, tsTo);
+                DateTime tsMovedBack = _dataProvider.GetNearestTickGETicksBefore(_dataProvider.GetStockDefinition(backBuf.stock.stock.FullName), backBuf.stock.dataRange, 0, tsFrom, backBuf.max == 0 ? 1 : backBuf.max);
+                StockPricesData stockPricesData = _dataLoader.Get(backBuf.stock.stock.FullName, backBuf.stock.dataRange, 0, tsMovedBack, tsTo);
                 foreach (var stat in backBuf.stock.stats)
                     stat.Calculate(stockPricesData);
             }

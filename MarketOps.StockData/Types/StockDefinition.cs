@@ -6,9 +6,10 @@
     public class StockDefinition
     {
         public int ID;
-        public string Name;
         public StockType Type;
         public bool Enabled;
-        public string StockName;
+        public string FullName;
+        public string Name;
+        public string FileNameDaily;
     }
 }

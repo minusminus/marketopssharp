@@ -54,7 +54,7 @@ namespace MarketOps.SystemExecutor.Processor
 
         private StockPricesData GetPricesData(Position position, DateTime ts)
         {
-            return _dataLoader.Get(position.Stock.Name, position.DataRange, position.IntradayInterval, ts, ts);
+            return _dataLoader.Get(position.Stock.FullName, position.DataRange, position.IntradayInterval, ts, ts);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MarketOps.DataProvider.Pg
         {
             List<StockDefinition> res = new List<StockDefinition>();
 
-            string qry = $"select * from at_spolki";
+            string qry = $"select * from at_spolki2";
             ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows) return;

@@ -122,8 +122,8 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
             _systemExecutionLogger.Add(
                 $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
-                + "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} {def.Name}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]}, {_fundsData.ExpectationChanged[i]})").ToArray()) + Environment.NewLine
-                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].StockName} = {b:F2}").ToArray())
+                + "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.Name} {def.FullName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]}, {_fundsData.ExpectationChanged[i]})").ToArray()) + Environment.NewLine
+                + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].Name} = {b:F2}").ToArray())
                 );
         }
     }

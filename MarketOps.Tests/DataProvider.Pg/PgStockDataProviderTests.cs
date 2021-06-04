@@ -25,12 +25,12 @@ namespace MarketOps.Tests.DataProvider.Pg
         {
             StockDefinition data = TestObj.GetStockDefinition(1);
             data.ID.ShouldBe(1);
-            data.Name.ShouldBe("TRITON");
+            data.FullName.ShouldBe("TRITON");
             data.Type.ShouldBe(StockType.Stock);
 
             data = TestObj.GetStockDefinition(STOCKID_WIG);
             data.ID.ShouldBe(STOCKID_WIG);
-            data.Name.ShouldBe(STOCKNAME_WIG);
+            data.FullName.ShouldBe(STOCKNAME_WIG);
             data.Type.ShouldBe(StockType.Index);
         }
 
@@ -45,12 +45,12 @@ namespace MarketOps.Tests.DataProvider.Pg
         {
             StockDefinition data = TestObj.GetStockDefinition("TRITON");
             data.ID.ShouldBe(1);
-            data.Name.ShouldBe("TRITON");
+            data.FullName.ShouldBe("TRITON");
             data.Type.ShouldBe(StockType.Stock);
 
             data = TestObj.GetStockDefinition(STOCKNAME_WIG);
             data.ID.ShouldBe(STOCKID_WIG);
-            data.Name.ShouldBe(STOCKNAME_WIG);
+            data.FullName.ShouldBe(STOCKNAME_WIG);
             data.Type.ShouldBe(StockType.Index);
         }
 

@@ -83,7 +83,7 @@ namespace MarketOps.Tests.DataPump.Bossa
             _executedQueries.Clear();
             _dataPumpProvider.GetMaxTS(Arg.Compat.Any<StockDefinition>(), StockDataRange.Daily, 0).Returns(initialDateTime);
             TestObj.PumpDaily(stock);
-            Console.WriteLine($"{stock.Name}:");
+            Console.WriteLine($"{stock.FullName}:");
             Console.WriteLine(string.Join(Environment.NewLine, _executedQueries.ToArray()));
             _executedQueries.Count.ShouldBeGreaterThanOrEqualTo(5);
             for (int i = 0; i < 5; i++)
@@ -92,7 +92,7 @@ namespace MarketOps.Tests.DataPump.Bossa
 
         private void TestDailyWIGFor20191104(DateTime initialDateTime)
         {
-            StockDefinition wig = new StockDefinition() { ID = 288, Name = "WIG", Type = StockType.Index, StockName = "WIG" };
+            StockDefinition wig = new StockDefinition() { ID = 288, FullName = "WIG", Type = StockType.Index, FileNameDaily = "WIG" };
             List<string> expectedInserts = new List<string>() {
                 "insert into at_dzienne1(fk_id_spolki, ts, open, high, low, close, refcourse, volume) values (288, to_date('2019-11-04', 'YYYY-MM-DD'), 58294.4300, 59326.5200, 58250.4600, 59326.1300, 57783.0200, 1037276.603)",
                 "insert into at_dzienne1(fk_id_spolki, ts, open, high, low, close, refcourse, volume) values (288, to_date('2019-11-05', 'YYYY-MM-DD'), 59352.2000, 59651.5200, 59234.5300, 59517.7000, 59326.1300, 816794.889)",
@@ -105,7 +105,7 @@ namespace MarketOps.Tests.DataPump.Bossa
 
         private void TestDailyKGHMFor20191104(DateTime initialDateTime)
         {
-            StockDefinition kghm = new StockDefinition() { ID = 125, Name = "KGHM", Type = StockType.Stock, StockName = "KGHM" };
+            StockDefinition kghm = new StockDefinition() { ID = 125, FullName = "KGHM", Type = StockType.Stock, FileNameDaily = "KGHM" };
             List<string> expectedInserts = new List<string>() {
                 "insert into at_dzienne0(fk_id_spolki, ts, open, high, low, close, refcourse, volume) values (125, to_date('2019-11-04', 'YYYY-MM-DD'), 85.3200, 89.0000, 85.1200, 88.9200, 83.6400, 974976)",
                 "insert into at_dzienne0(fk_id_spolki, ts, open, high, low, close, refcourse, volume) values (125, to_date('2019-11-05', 'YYYY-MM-DD'), 89.9000, 92.6200, 89.3800, 91.6400, 88.9200, 962176)",

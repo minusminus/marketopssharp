@@ -33,14 +33,14 @@ namespace MarketOps.Tests.DataPump.Bossa
         [Test]
         public void Prepare_Daily__PreparesPath()
         {
-            StockDefinition stock = new StockDefinition() { ID = 1, Type = StockType.Stock, Name = "teststock" };
+            StockDefinition stock = new StockDefinition() { ID = 1, Type = StockType.Stock, FullName = "teststock" };
             CheckPreparedPathDaily(TestObj.Prepare(stock, DataPumpDownloadRange.Daily), stock);
         }
 
         [Test]
         public void Prepare_Daily_TwoTimes__PreparesPaths()
         {
-            StockDefinition stock = new StockDefinition() { ID = 1, Type = StockType.Stock, Name = "teststock" };
+            StockDefinition stock = new StockDefinition() { ID = 1, Type = StockType.Stock, FullName = "teststock" };
             CheckPreparedPathDaily(TestObj.Prepare(stock, DataPumpDownloadRange.Daily), stock);
             stock.ID = 2;
             stock.Type = StockType.Index;
@@ -50,7 +50,7 @@ namespace MarketOps.Tests.DataPump.Bossa
         [Test]
         public void Prepare_Ticks__ThrowsNotImplemented()
         {
-            StockDefinition stock = new StockDefinition() { ID = 1, Type = StockType.Stock, Name = "teststock" };
+            StockDefinition stock = new StockDefinition() { ID = 1, Type = StockType.Stock, FullName = "teststock" };
             Should.Throw<NotImplementedException>(
                 () => CheckPreparedPathDaily(TestObj.Prepare(stock, DataPumpDownloadRange.Ticks), stock));
         }

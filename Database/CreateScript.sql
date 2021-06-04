@@ -5,7 +5,7 @@
 -- Dumped from database version 10.3
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-04-08 14:05:35
+-- Started on 2021-06-04 14:59:37
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -27,7 +27,7 @@ CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
 
 
 --
--- TOC entry 2508 (class 0 OID 0)
+-- TOC entry 2518 (class 0 OID 0)
 -- Dependencies: 2
 -- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner: 
 --
@@ -36,7 +36,7 @@ COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, inclu
 
 
 --
--- TOC entry 274 (class 1255 OID 16385)
+-- TOC entry 275 (class 1255 OID 16385)
 -- Name: f_volavgselect(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -137,7 +137,7 @@ CREATE SEQUENCE public.at_biezace_id_seq
 ALTER TABLE public.at_biezace_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2509 (class 0 OID 0)
+-- TOC entry 2519 (class 0 OID 0)
 -- Dependencies: 201
 -- Name: at_biezace_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -203,7 +203,7 @@ CREATE SEQUENCE public.at_ciagle1_id_seq
 ALTER TABLE public.at_ciagle1_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2510 (class 0 OID 0)
+-- TOC entry 2520 (class 0 OID 0)
 -- Dependencies: 204
 -- Name: at_ciagle1_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -248,7 +248,7 @@ CREATE SEQUENCE public.at_ciagle2_id_seq
 ALTER TABLE public.at_ciagle2_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2511 (class 0 OID 0)
+-- TOC entry 2521 (class 0 OID 0)
 -- Dependencies: 206
 -- Name: at_ciagle2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -291,7 +291,7 @@ CREATE SEQUENCE public.at_ciagle6_id_seq
 ALTER TABLE public.at_ciagle6_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2512 (class 0 OID 0)
+-- TOC entry 2522 (class 0 OID 0)
 -- Dependencies: 208
 -- Name: at_ciagle6_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -315,7 +315,7 @@ CREATE SEQUENCE public.at_ciagle_id_seq
 ALTER TABLE public.at_ciagle_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2513 (class 0 OID 0)
+-- TOC entry 2523 (class 0 OID 0)
 -- Dependencies: 209
 -- Name: at_ciagle_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -343,7 +343,7 @@ CREATE TABLE public.at_dzienne0 (
 ALTER TABLE public.at_dzienne0 OWNER TO postgres;
 
 --
--- TOC entry 2514 (class 0 OID 0)
+-- TOC entry 2524 (class 0 OID 0)
 -- Dependencies: 210
 -- Name: COLUMN at_dzienne0.refcourse; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -371,7 +371,7 @@ CREATE TABLE public.at_dzienne1 (
 ALTER TABLE public.at_dzienne1 OWNER TO postgres;
 
 --
--- TOC entry 2515 (class 0 OID 0)
+-- TOC entry 2525 (class 0 OID 0)
 -- Dependencies: 211
 -- Name: COLUMN at_dzienne1.refcourse; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -639,7 +639,7 @@ CREATE TABLE public.at_serie (
 ALTER TABLE public.at_serie OWNER TO postgres;
 
 --
--- TOC entry 2516 (class 0 OID 0)
+-- TOC entry 2526 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: TABLE at_serie; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -665,7 +665,7 @@ CREATE TABLE public.at_split (
 ALTER TABLE public.at_split OWNER TO postgres;
 
 --
--- TOC entry 2517 (class 0 OID 0)
+-- TOC entry 2527 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: TABLE at_split; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -697,7 +697,7 @@ CREATE TABLE public.at_spolki (
 ALTER TABLE public.at_spolki OWNER TO postgres;
 
 --
--- TOC entry 2518 (class 0 OID 0)
+-- TOC entry 2528 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN at_spolki.typ; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -708,7 +708,7 @@ COMMENT ON COLUMN public.at_spolki.typ IS 'typ danych w tabeli:
 
 
 --
--- TOC entry 2519 (class 0 OID 0)
+-- TOC entry 2529 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN at_spolki.indexspolki; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -718,7 +718,7 @@ jako lista nazw akcji dla selecta';
 
 
 --
--- TOC entry 2520 (class 0 OID 0)
+-- TOC entry 2530 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN at_spolki.nazwaakcji2; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -727,7 +727,7 @@ COMMENT ON COLUMN public.at_spolki.nazwaakcji2 IS 'nazwa akcji dla danych dzienn
 
 
 --
--- TOC entry 2521 (class 0 OID 0)
+-- TOC entry 2531 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: COLUMN at_spolki.startts; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -751,13 +751,34 @@ CREATE SEQUENCE public.at_spolki_id_seq
 ALTER TABLE public.at_spolki_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2522 (class 0 OID 0)
+-- TOC entry 2532 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: at_spolki_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.at_spolki_id_seq OWNED BY public.at_spolki.id;
 
+
+--
+-- TOC entry 257 (class 1259 OID 17959)
+-- Name: at_spolki2; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.at_spolki2 (
+    id integer DEFAULT nextval('public.at_spolki_id_seq'::regclass) NOT NULL,
+    enabled boolean DEFAULT true NOT NULL,
+    stock_type integer NOT NULL,
+    stock_fullname character varying(500) NOT NULL,
+    stock_name character varying(50) NOT NULL,
+    stock_short character varying(20),
+    stock_description character varying(1000),
+    filename_daily character varying(100),
+    filename_intra character varying(100),
+    start_ts timestamp without time zone
+);
+
+
+ALTER TABLE public.at_spolki2 OWNER TO postgres;
 
 --
 -- TOC entry 228 (class 1259 OID 16584)
@@ -794,7 +815,7 @@ CREATE SEQUENCE public.at_ticks_id_seq
 ALTER TABLE public.at_ticks_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2523 (class 0 OID 0)
+-- TOC entry 2533 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: at_ticks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -954,7 +975,7 @@ CREATE SEQUENCE public.mp_dzienne30m2_id_seq
 ALTER TABLE public.mp_dzienne30m2_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2524 (class 0 OID 0)
+-- TOC entry 2534 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: mp_dzienne30m2_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -995,7 +1016,7 @@ CREATE SEQUENCE public.mp_dzienne30m2tpo_id_seq
 ALTER TABLE public.mp_dzienne30m2tpo_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2525 (class 0 OID 0)
+-- TOC entry 2535 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: mp_dzienne30m2tpo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1032,7 +1053,7 @@ CREATE TABLE public.s_log (
 ALTER TABLE public.s_log OWNER TO postgres;
 
 --
--- TOC entry 2526 (class 0 OID 0)
+-- TOC entry 2536 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: TABLE s_log; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1056,7 +1077,7 @@ CREATE SEQUENCE public.s_log_id_seq
 ALTER TABLE public.s_log_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2527 (class 0 OID 0)
+-- TOC entry 2537 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: s_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1080,7 +1101,7 @@ CREATE TABLE public.s_params (
 ALTER TABLE public.s_params OWNER TO postgres;
 
 --
--- TOC entry 2528 (class 0 OID 0)
+-- TOC entry 2538 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: TABLE s_params; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1113,7 +1134,7 @@ CREATE TABLE public.s_signals (
 ALTER TABLE public.s_signals OWNER TO postgres;
 
 --
--- TOC entry 2529 (class 0 OID 0)
+-- TOC entry 2539 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: TABLE s_signals; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1137,7 +1158,7 @@ CREATE SEQUENCE public.s_signals_id_seq
 ALTER TABLE public.s_signals_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2530 (class 0 OID 0)
+-- TOC entry 2540 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: s_signals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1165,7 +1186,7 @@ CREATE TABLE public.s_systems (
 ALTER TABLE public.s_systems OWNER TO postgres;
 
 --
--- TOC entry 2531 (class 0 OID 0)
+-- TOC entry 2541 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: TABLE s_systems; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1189,7 +1210,7 @@ CREATE SEQUENCE public.s_systems_id_seq
 ALTER TABLE public.s_systems_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2532 (class 0 OID 0)
+-- TOC entry 2542 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: s_systems_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -1213,7 +1234,7 @@ CREATE TABLE public.s_systemstocks (
 ALTER TABLE public.s_systemstocks OWNER TO postgres;
 
 --
--- TOC entry 2533 (class 0 OID 0)
+-- TOC entry 2543 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: TABLE s_systemstocks; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1237,7 +1258,7 @@ CREATE TABLE public.s_vars (
 ALTER TABLE public.s_vars OWNER TO postgres;
 
 --
--- TOC entry 2534 (class 0 OID 0)
+-- TOC entry 2544 (class 0 OID 0)
 -- Dependencies: 247
 -- Name: TABLE s_vars; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -1304,7 +1325,7 @@ CREATE TABLE public.tmp_spolki (
 ALTER TABLE public.tmp_spolki OWNER TO postgres;
 
 --
--- TOC entry 2245 (class 2604 OID 16682)
+-- TOC entry 2250 (class 2604 OID 16682)
 -- Name: at_biezace id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1312,7 +1333,7 @@ ALTER TABLE ONLY public.at_biezace ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 2246 (class 2604 OID 16683)
+-- TOC entry 2251 (class 2604 OID 16683)
 -- Name: at_ciagle0 id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1320,7 +1341,7 @@ ALTER TABLE ONLY public.at_ciagle0 ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 2247 (class 2604 OID 16684)
+-- TOC entry 2252 (class 2604 OID 16684)
 -- Name: at_ciagle1 id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1328,7 +1349,7 @@ ALTER TABLE ONLY public.at_ciagle1 ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 2248 (class 2604 OID 16685)
+-- TOC entry 2253 (class 2604 OID 16685)
 -- Name: at_ciagle2 id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1336,7 +1357,7 @@ ALTER TABLE ONLY public.at_ciagle2 ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 2249 (class 2604 OID 16686)
+-- TOC entry 2254 (class 2604 OID 16686)
 -- Name: at_ciagle6 id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1344,7 +1365,7 @@ ALTER TABLE ONLY public.at_ciagle6 ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 2256 (class 2604 OID 16711)
+-- TOC entry 2261 (class 2604 OID 16711)
 -- Name: at_spolki id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1352,7 +1373,7 @@ ALTER TABLE ONLY public.at_spolki ALTER COLUMN id SET DEFAULT nextval('public.at
 
 
 --
--- TOC entry 2257 (class 2604 OID 16712)
+-- TOC entry 2262 (class 2604 OID 16712)
 -- Name: at_ticks id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1360,7 +1381,7 @@ ALTER TABLE ONLY public.at_ticks ALTER COLUMN id SET DEFAULT nextval('public.at_
 
 
 --
--- TOC entry 2258 (class 2604 OID 16717)
+-- TOC entry 2263 (class 2604 OID 16717)
 -- Name: mp_dzienne30m2 id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1368,7 +1389,7 @@ ALTER TABLE ONLY public.mp_dzienne30m2 ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2259 (class 2604 OID 16718)
+-- TOC entry 2264 (class 2604 OID 16718)
 -- Name: mp_dzienne30m2tpo id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1376,7 +1397,7 @@ ALTER TABLE ONLY public.mp_dzienne30m2tpo ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
--- TOC entry 2260 (class 2604 OID 16719)
+-- TOC entry 2265 (class 2604 OID 16719)
 -- Name: s_signals id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1384,7 +1405,7 @@ ALTER TABLE ONLY public.s_signals ALTER COLUMN id SET DEFAULT nextval('public.s_
 
 
 --
--- TOC entry 2261 (class 2604 OID 16720)
+-- TOC entry 2266 (class 2604 OID 16720)
 -- Name: s_systems id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1392,7 +1413,7 @@ ALTER TABLE ONLY public.s_systems ALTER COLUMN id SET DEFAULT nextval('public.s_
 
 
 --
--- TOC entry 2378 (class 2606 OID 17813)
+-- TOC entry 2385 (class 2606 OID 17813)
 -- Name: bossa_downloadurls bossa_downloadurls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1401,7 +1422,7 @@ ALTER TABLE ONLY public.bossa_downloadurls
 
 
 --
--- TOC entry 2271 (class 2606 OID 17333)
+-- TOC entry 2278 (class 2606 OID 17333)
 -- Name: at_ciagle0 ix_pk_ciagle; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1410,7 +1431,7 @@ ALTER TABLE ONLY public.at_ciagle0
 
 
 --
--- TOC entry 2333 (class 2606 OID 17278)
+-- TOC entry 2340 (class 2606 OID 17278)
 -- Name: at_spolki ix_spolki; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1419,7 +1440,7 @@ ALTER TABLE ONLY public.at_spolki
 
 
 --
--- TOC entry 2286 (class 2606 OID 17860)
+-- TOC entry 2293 (class 2606 OID 17860)
 -- Name: at_dzienne0 pk_at_dzienne0; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1428,7 +1449,7 @@ ALTER TABLE ONLY public.at_dzienne0
 
 
 --
--- TOC entry 2289 (class 2606 OID 17856)
+-- TOC entry 2296 (class 2606 OID 17856)
 -- Name: at_dzienne1 pk_at_dzienne1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1437,7 +1458,7 @@ ALTER TABLE ONLY public.at_dzienne1
 
 
 --
--- TOC entry 2292 (class 2606 OID 17854)
+-- TOC entry 2299 (class 2606 OID 17854)
 -- Name: at_dzienne2 pk_at_dzienne2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1446,7 +1467,7 @@ ALTER TABLE ONLY public.at_dzienne2
 
 
 --
--- TOC entry 2295 (class 2606 OID 17852)
+-- TOC entry 2302 (class 2606 OID 17852)
 -- Name: at_dzienne4 pk_at_dzienne4; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1455,7 +1476,7 @@ ALTER TABLE ONLY public.at_dzienne4
 
 
 --
--- TOC entry 2298 (class 2606 OID 17850)
+-- TOC entry 2305 (class 2606 OID 17850)
 -- Name: at_dzienne5 pk_at_dzienne5; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1464,7 +1485,7 @@ ALTER TABLE ONLY public.at_dzienne5
 
 
 --
--- TOC entry 2301 (class 2606 OID 17848)
+-- TOC entry 2308 (class 2606 OID 17848)
 -- Name: at_dzienne6 pk_at_dzienne6; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1473,7 +1494,7 @@ ALTER TABLE ONLY public.at_dzienne6
 
 
 --
--- TOC entry 2304 (class 2606 OID 17866)
+-- TOC entry 2311 (class 2606 OID 17866)
 -- Name: at_intra15m2 pk_at_intra15m2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1482,7 +1503,7 @@ ALTER TABLE ONLY public.at_intra15m2
 
 
 --
--- TOC entry 2307 (class 2606 OID 17862)
+-- TOC entry 2314 (class 2606 OID 17862)
 -- Name: at_intra1m2 pk_at_intra1m2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1491,7 +1512,7 @@ ALTER TABLE ONLY public.at_intra1m2
 
 
 --
--- TOC entry 2310 (class 2606 OID 17864)
+-- TOC entry 2317 (class 2606 OID 17864)
 -- Name: at_intra5m2 pk_at_intra5m2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1500,7 +1521,7 @@ ALTER TABLE ONLY public.at_intra5m2
 
 
 --
--- TOC entry 2313 (class 2606 OID 17868)
+-- TOC entry 2320 (class 2606 OID 17868)
 -- Name: at_intra60m2 pk_at_intra60m2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1509,7 +1530,7 @@ ALTER TABLE ONLY public.at_intra60m2
 
 
 --
--- TOC entry 2316 (class 2606 OID 17838)
+-- TOC entry 2323 (class 2606 OID 17838)
 -- Name: at_mies1 pk_at_mies1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1518,7 +1539,7 @@ ALTER TABLE ONLY public.at_mies1
 
 
 --
--- TOC entry 2319 (class 2606 OID 17836)
+-- TOC entry 2326 (class 2606 OID 17836)
 -- Name: at_mies2 pk_at_mies2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1527,7 +1548,7 @@ ALTER TABLE ONLY public.at_mies2
 
 
 --
--- TOC entry 2322 (class 2606 OID 17834)
+-- TOC entry 2329 (class 2606 OID 17834)
 -- Name: at_mies4 pk_at_mies4; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1536,7 +1557,7 @@ ALTER TABLE ONLY public.at_mies4
 
 
 --
--- TOC entry 2325 (class 2606 OID 17832)
+-- TOC entry 2332 (class 2606 OID 17832)
 -- Name: at_mies5 pk_at_mies5; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1545,7 +1566,7 @@ ALTER TABLE ONLY public.at_mies5
 
 
 --
--- TOC entry 2264 (class 2606 OID 17870)
+-- TOC entry 2271 (class 2606 OID 17870)
 -- Name: at_pp pk_at_pp; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1554,7 +1575,7 @@ ALTER TABLE ONLY public.at_pp
 
 
 --
--- TOC entry 2328 (class 2606 OID 17872)
+-- TOC entry 2335 (class 2606 OID 17872)
 -- Name: at_serie pk_at_serie; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1563,7 +1584,16 @@ ALTER TABLE ONLY public.at_serie
 
 
 --
--- TOC entry 2340 (class 2606 OID 17846)
+-- TOC entry 2391 (class 2606 OID 17968)
+-- Name: at_spolki2 pk_at_spolki2; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.at_spolki2
+    ADD CONSTRAINT pk_at_spolki2 PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2347 (class 2606 OID 17846)
 -- Name: at_tyg1 pk_at_tyg1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1572,7 +1602,7 @@ ALTER TABLE ONLY public.at_tyg1
 
 
 --
--- TOC entry 2343 (class 2606 OID 17844)
+-- TOC entry 2350 (class 2606 OID 17844)
 -- Name: at_tyg2 pk_at_tyg2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1581,7 +1611,7 @@ ALTER TABLE ONLY public.at_tyg2
 
 
 --
--- TOC entry 2346 (class 2606 OID 17842)
+-- TOC entry 2353 (class 2606 OID 17842)
 -- Name: at_tyg4 pk_at_tyg4; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1590,7 +1620,7 @@ ALTER TABLE ONLY public.at_tyg4
 
 
 --
--- TOC entry 2349 (class 2606 OID 17840)
+-- TOC entry 2356 (class 2606 OID 17840)
 -- Name: at_tyg5 pk_at_tyg5; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1599,7 +1629,7 @@ ALTER TABLE ONLY public.at_tyg5
 
 
 --
--- TOC entry 2331 (class 2606 OID 17275)
+-- TOC entry 2338 (class 2606 OID 17275)
 -- Name: at_split pk_atsplit; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1608,7 +1638,7 @@ ALTER TABLE ONLY public.at_split
 
 
 --
--- TOC entry 2267 (class 2606 OID 17169)
+-- TOC entry 2274 (class 2606 OID 17169)
 -- Name: at_biezace pk_biezace; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1617,7 +1647,7 @@ ALTER TABLE ONLY public.at_biezace
 
 
 --
--- TOC entry 2275 (class 2606 OID 17325)
+-- TOC entry 2282 (class 2606 OID 17325)
 -- Name: at_ciagle1 pk_ciagle1; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1626,7 +1656,7 @@ ALTER TABLE ONLY public.at_ciagle1
 
 
 --
--- TOC entry 2279 (class 2606 OID 17327)
+-- TOC entry 2286 (class 2606 OID 17327)
 -- Name: at_ciagle2 pk_ciagle2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1635,7 +1665,7 @@ ALTER TABLE ONLY public.at_ciagle2
 
 
 --
--- TOC entry 2283 (class 2606 OID 17178)
+-- TOC entry 2290 (class 2606 OID 17178)
 -- Name: at_ciagle6 pk_ciagle6; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1644,7 +1674,7 @@ ALTER TABLE ONLY public.at_ciagle6
 
 
 --
--- TOC entry 2354 (class 2606 OID 17300)
+-- TOC entry 2361 (class 2606 OID 17300)
 -- Name: mp_dzienne30m2 pk_mp_dzienne30m2; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1653,7 +1683,7 @@ ALTER TABLE ONLY public.mp_dzienne30m2
 
 
 --
--- TOC entry 2357 (class 2606 OID 17303)
+-- TOC entry 2364 (class 2606 OID 17303)
 -- Name: mp_dzienne30m2tpo pk_mp_dzienne30m2tpo; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1662,7 +1692,7 @@ ALTER TABLE ONLY public.mp_dzienne30m2tpo
 
 
 --
--- TOC entry 2360 (class 2606 OID 17306)
+-- TOC entry 2367 (class 2606 OID 17306)
 -- Name: s_log pk_s_log; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1671,7 +1701,7 @@ ALTER TABLE ONLY public.s_log
 
 
 --
--- TOC entry 2363 (class 2606 OID 17309)
+-- TOC entry 2370 (class 2606 OID 17309)
 -- Name: s_params pk_s_params; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1680,7 +1710,7 @@ ALTER TABLE ONLY public.s_params
 
 
 --
--- TOC entry 2366 (class 2606 OID 17312)
+-- TOC entry 2373 (class 2606 OID 17312)
 -- Name: s_signals pk_s_signals; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1689,7 +1719,7 @@ ALTER TABLE ONLY public.s_signals
 
 
 --
--- TOC entry 2368 (class 2606 OID 17315)
+-- TOC entry 2375 (class 2606 OID 17315)
 -- Name: s_systems pk_s_systems; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1698,7 +1728,7 @@ ALTER TABLE ONLY public.s_systems
 
 
 --
--- TOC entry 2371 (class 2606 OID 17317)
+-- TOC entry 2378 (class 2606 OID 17317)
 -- Name: s_systemstocks pk_s_systemstocks; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1707,7 +1737,7 @@ ALTER TABLE ONLY public.s_systemstocks
 
 
 --
--- TOC entry 2374 (class 2606 OID 17320)
+-- TOC entry 2381 (class 2606 OID 17320)
 -- Name: s_vars pk_s_vars; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1716,7 +1746,7 @@ ALTER TABLE ONLY public.s_vars
 
 
 --
--- TOC entry 2381 (class 2606 OID 17877)
+-- TOC entry 2388 (class 2606 OID 17877)
 -- Name: test_dzienne pk_test_dzienne; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1725,7 +1755,7 @@ ALTER TABLE ONLY public.test_dzienne
 
 
 --
--- TOC entry 2337 (class 2606 OID 17281)
+-- TOC entry 2344 (class 2606 OID 17281)
 -- Name: at_ticks pk_ticks; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1734,7 +1764,7 @@ ALTER TABLE ONLY public.at_ticks
 
 
 --
--- TOC entry 2376 (class 2606 OID 17323)
+-- TOC entry 2383 (class 2606 OID 17323)
 -- Name: tmp_spolki pk_tmpspolki; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1743,7 +1773,7 @@ ALTER TABLE ONLY public.tmp_spolki
 
 
 --
--- TOC entry 2351 (class 2606 OID 17298)
+-- TOC entry 2358 (class 2606 OID 17298)
 -- Name: at_typy pk_typy; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1752,7 +1782,7 @@ ALTER TABLE ONLY public.at_typy
 
 
 --
--- TOC entry 2326 (class 1259 OID 17873)
+-- TOC entry 2333 (class 1259 OID 17873)
 -- Name: ix_at_serie_spolkanazwa; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1762,7 +1792,7 @@ ALTER TABLE public.at_serie CLUSTER ON ix_at_serie_spolkanazwa;
 
 
 --
--- TOC entry 2329 (class 1259 OID 17276)
+-- TOC entry 2336 (class 1259 OID 17276)
 -- Name: ix_atsplit_fkspolka_lastts; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1772,7 +1802,7 @@ ALTER TABLE public.at_split CLUSTER ON ix_atsplit_fkspolka_lastts;
 
 
 --
--- TOC entry 2265 (class 1259 OID 17170)
+-- TOC entry 2272 (class 1259 OID 17170)
 -- Name: ix_biezace_fkidspolki_ts; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1780,7 +1810,7 @@ CREATE INDEX ix_biezace_fkidspolki_ts ON public.at_biezace USING btree (fk_id_sp
 
 
 --
--- TOC entry 2272 (class 1259 OID 17328)
+-- TOC entry 2279 (class 1259 OID 17328)
 -- Name: ix_ciagle1_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1788,7 +1818,7 @@ CREATE UNIQUE INDEX ix_ciagle1_id ON public.at_ciagle1 USING btree (id);
 
 
 --
--- TOC entry 2273 (class 1259 OID 17329)
+-- TOC entry 2280 (class 1259 OID 17329)
 -- Name: ix_ciagle1_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1798,7 +1828,7 @@ ALTER TABLE public.at_ciagle1 CLUSTER ON ix_ciagle1_spolkats;
 
 
 --
--- TOC entry 2276 (class 1259 OID 17330)
+-- TOC entry 2283 (class 1259 OID 17330)
 -- Name: ix_ciagle2_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1806,7 +1836,7 @@ CREATE INDEX ix_ciagle2_id ON public.at_ciagle2 USING btree (id);
 
 
 --
--- TOC entry 2277 (class 1259 OID 17331)
+-- TOC entry 2284 (class 1259 OID 17331)
 -- Name: ix_ciagle2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1816,7 +1846,7 @@ ALTER TABLE public.at_ciagle2 CLUSTER ON ix_ciagle2_spolkats;
 
 
 --
--- TOC entry 2280 (class 1259 OID 17179)
+-- TOC entry 2287 (class 1259 OID 17179)
 -- Name: ix_ciagle6_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1824,7 +1854,7 @@ CREATE INDEX ix_ciagle6_id ON public.at_ciagle6 USING btree (id);
 
 
 --
--- TOC entry 2281 (class 1259 OID 17180)
+-- TOC entry 2288 (class 1259 OID 17180)
 -- Name: ix_ciagle6_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1834,7 +1864,7 @@ ALTER TABLE public.at_ciagle6 CLUSTER ON ix_ciagle6_spolkats;
 
 
 --
--- TOC entry 2268 (class 1259 OID 17334)
+-- TOC entry 2275 (class 1259 OID 17334)
 -- Name: ix_ciagle_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1842,7 +1872,7 @@ CREATE UNIQUE INDEX ix_ciagle_id ON public.at_ciagle0 USING btree (id);
 
 
 --
--- TOC entry 2269 (class 1259 OID 17335)
+-- TOC entry 2276 (class 1259 OID 17335)
 -- Name: ix_ciagle_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1852,7 +1882,7 @@ ALTER TABLE public.at_ciagle0 CLUSTER ON ix_ciagle_spolkats;
 
 
 --
--- TOC entry 2287 (class 1259 OID 17188)
+-- TOC entry 2294 (class 1259 OID 17188)
 -- Name: ix_dzienne1_dpolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1862,7 +1892,7 @@ ALTER TABLE public.at_dzienne1 CLUSTER ON ix_dzienne1_dpolkats;
 
 
 --
--- TOC entry 2290 (class 1259 OID 17192)
+-- TOC entry 2297 (class 1259 OID 17192)
 -- Name: ix_dzienne2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1872,7 +1902,7 @@ ALTER TABLE public.at_dzienne2 CLUSTER ON ix_dzienne2_spolkats;
 
 
 --
--- TOC entry 2293 (class 1259 OID 17196)
+-- TOC entry 2300 (class 1259 OID 17196)
 -- Name: ix_dzienne4_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1882,7 +1912,7 @@ ALTER TABLE public.at_dzienne4 CLUSTER ON ix_dzienne4_spolkats;
 
 
 --
--- TOC entry 2296 (class 1259 OID 17200)
+-- TOC entry 2303 (class 1259 OID 17200)
 -- Name: ix_dzienne5_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1892,7 +1922,7 @@ ALTER TABLE public.at_dzienne5 CLUSTER ON ix_dzienne5_spolkats;
 
 
 --
--- TOC entry 2299 (class 1259 OID 17204)
+-- TOC entry 2306 (class 1259 OID 17204)
 -- Name: ix_dzienne6_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1902,7 +1932,7 @@ ALTER TABLE public.at_dzienne6 CLUSTER ON ix_dzienne6_spolkats;
 
 
 --
--- TOC entry 2284 (class 1259 OID 17184)
+-- TOC entry 2291 (class 1259 OID 17184)
 -- Name: ix_dzienne_dpolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1912,7 +1942,7 @@ ALTER TABLE public.at_dzienne0 CLUSTER ON ix_dzienne_dpolkats;
 
 
 --
--- TOC entry 2302 (class 1259 OID 17208)
+-- TOC entry 2309 (class 1259 OID 17208)
 -- Name: ix_intra15m2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1922,7 +1952,7 @@ ALTER TABLE public.at_intra15m2 CLUSTER ON ix_intra15m2_spolkats;
 
 
 --
--- TOC entry 2305 (class 1259 OID 17222)
+-- TOC entry 2312 (class 1259 OID 17222)
 -- Name: ix_intra1m2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1932,7 +1962,7 @@ ALTER TABLE public.at_intra1m2 CLUSTER ON ix_intra1m2_spolkats;
 
 
 --
--- TOC entry 2308 (class 1259 OID 17235)
+-- TOC entry 2315 (class 1259 OID 17235)
 -- Name: ix_intra5m2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1942,7 +1972,7 @@ ALTER TABLE public.at_intra5m2 CLUSTER ON ix_intra5m2_spolkats;
 
 
 --
--- TOC entry 2311 (class 1259 OID 17247)
+-- TOC entry 2318 (class 1259 OID 17247)
 -- Name: ix_intra60m2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1952,7 +1982,7 @@ ALTER TABLE public.at_intra60m2 CLUSTER ON ix_intra60m2_spolkats;
 
 
 --
--- TOC entry 2314 (class 1259 OID 17259)
+-- TOC entry 2321 (class 1259 OID 17259)
 -- Name: ix_mies1_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1962,7 +1992,7 @@ ALTER TABLE public.at_mies1 CLUSTER ON ix_mies1_spolkats;
 
 
 --
--- TOC entry 2317 (class 1259 OID 17263)
+-- TOC entry 2324 (class 1259 OID 17263)
 -- Name: ix_mies2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1972,7 +2002,7 @@ ALTER TABLE public.at_mies2 CLUSTER ON ix_mies2_spolkats;
 
 
 --
--- TOC entry 2320 (class 1259 OID 17266)
+-- TOC entry 2327 (class 1259 OID 17266)
 -- Name: ix_mies4_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1982,7 +2012,7 @@ ALTER TABLE public.at_mies4 CLUSTER ON ix_mies4_spolkats;
 
 
 --
--- TOC entry 2323 (class 1259 OID 17269)
+-- TOC entry 2330 (class 1259 OID 17269)
 -- Name: ix_mies5_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -1992,7 +2022,7 @@ ALTER TABLE public.at_mies5 CLUSTER ON ix_mies5_spolkats;
 
 
 --
--- TOC entry 2352 (class 1259 OID 17301)
+-- TOC entry 2359 (class 1259 OID 17301)
 -- Name: ix_mp_dzienne30m2_idspolki_ts; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2002,7 +2032,7 @@ ALTER TABLE public.mp_dzienne30m2 CLUSTER ON ix_mp_dzienne30m2_idspolki_ts;
 
 
 --
--- TOC entry 2355 (class 1259 OID 17304)
+-- TOC entry 2362 (class 1259 OID 17304)
 -- Name: ix_mp_dzienne30m2tpo_fkmp; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2010,7 +2040,7 @@ CREATE INDEX ix_mp_dzienne30m2tpo_fkmp ON public.mp_dzienne30m2tpo USING btree (
 
 
 --
--- TOC entry 2358 (class 1259 OID 17307)
+-- TOC entry 2365 (class 1259 OID 17307)
 -- Name: ix_slog_system_stock_status; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2020,7 +2050,7 @@ ALTER TABLE public.s_log CLUSTER ON ix_slog_system_stock_status;
 
 
 --
--- TOC entry 2361 (class 1259 OID 17310)
+-- TOC entry 2368 (class 1259 OID 17310)
 -- Name: ix_sparams_systemstock; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2028,7 +2058,17 @@ CREATE INDEX ix_sparams_systemstock ON public.s_params USING btree (fk_system, f
 
 
 --
--- TOC entry 2334 (class 1259 OID 17279)
+-- TOC entry 2389 (class 1259 OID 17969)
+-- Name: ix_spolki2_id; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX ix_spolki2_id ON public.at_spolki2 USING btree (id);
+
+ALTER TABLE public.at_spolki2 CLUSTER ON ix_spolki2_id;
+
+
+--
+-- TOC entry 2341 (class 1259 OID 17279)
 -- Name: ix_spolki_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2038,7 +2078,7 @@ ALTER TABLE public.at_spolki CLUSTER ON ix_spolki_id;
 
 
 --
--- TOC entry 2364 (class 1259 OID 17313)
+-- TOC entry 2371 (class 1259 OID 17313)
 -- Name: ix_ssignals_systemstock; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2048,7 +2088,7 @@ ALTER TABLE public.s_signals CLUSTER ON ix_ssignals_systemstock;
 
 
 --
--- TOC entry 2369 (class 1259 OID 17318)
+-- TOC entry 2376 (class 1259 OID 17318)
 -- Name: ix_ssystemstock_system_stock; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2058,7 +2098,7 @@ ALTER TABLE public.s_systemstocks CLUSTER ON ix_ssystemstock_system_stock;
 
 
 --
--- TOC entry 2372 (class 1259 OID 17321)
+-- TOC entry 2379 (class 1259 OID 17321)
 -- Name: ix_svars_systemstockparam; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2068,7 +2108,7 @@ ALTER TABLE public.s_vars CLUSTER ON ix_svars_systemstockparam;
 
 
 --
--- TOC entry 2379 (class 1259 OID 17830)
+-- TOC entry 2386 (class 1259 OID 17830)
 -- Name: ix_test_dzienne_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2078,7 +2118,7 @@ ALTER TABLE public.test_dzienne CLUSTER ON ix_test_dzienne_spolkats;
 
 
 --
--- TOC entry 2335 (class 1259 OID 17282)
+-- TOC entry 2342 (class 1259 OID 17282)
 -- Name: ix_ticks_fkidspolki_ts; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2086,7 +2126,7 @@ CREATE INDEX ix_ticks_fkidspolki_ts ON public.at_ticks USING btree (fk_id_spolki
 
 
 --
--- TOC entry 2338 (class 1259 OID 17286)
+-- TOC entry 2345 (class 1259 OID 17286)
 -- Name: ix_tyg1_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2096,7 +2136,7 @@ ALTER TABLE public.at_tyg1 CLUSTER ON ix_tyg1_spolkats;
 
 
 --
--- TOC entry 2341 (class 1259 OID 17290)
+-- TOC entry 2348 (class 1259 OID 17290)
 -- Name: ix_tyg2_spolkats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2106,7 +2146,7 @@ ALTER TABLE public.at_tyg2 CLUSTER ON ix_tyg2_spolkats;
 
 
 --
--- TOC entry 2344 (class 1259 OID 17293)
+-- TOC entry 2351 (class 1259 OID 17293)
 -- Name: ix_tyg4_spokats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2116,7 +2156,7 @@ ALTER TABLE public.at_tyg4 CLUSTER ON ix_tyg4_spokats;
 
 
 --
--- TOC entry 2347 (class 1259 OID 17296)
+-- TOC entry 2354 (class 1259 OID 17296)
 -- Name: ix_tyg5_spokats; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -2125,7 +2165,7 @@ CREATE INDEX ix_tyg5_spokats ON public.at_tyg5 USING btree (fk_id_spolki, ts);
 ALTER TABLE public.at_tyg5 CLUSTER ON ix_tyg5_spokats;
 
 
--- Completed on 2021-04-08 14:05:36
+-- Completed on 2021-06-04 14:59:38
 
 --
 -- PostgreSQL database dump complete

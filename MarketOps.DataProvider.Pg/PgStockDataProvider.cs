@@ -15,7 +15,7 @@ namespace MarketOps.DataProvider.Pg
         {
             StockDefinition res = new StockDefinition();
 
-            string qry = $"select * from at_spolki where id={stockID}";
+            string qry = $"select * from at_spolki2 where id={stockID}";
             ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows)
@@ -30,11 +30,11 @@ namespace MarketOps.DataProvider.Pg
         {
             StockDefinition res = new StockDefinition();
 
-            string qry = $"select * from at_spolki where nazwaspolki='{stockName}' or nazwaakcji='{stockName.ToUpper()}'";
+            string qry = $"select * from at_spolki2 where stock_fullname='{stockName}' or stock_name='{stockName.ToUpper()}'";
             ProcessSelectQuery(qry, (reader) =>
             {
                 if (!reader.HasRows)
-                    throw new Exception($"No data for stock name={stockName}");
+                    throw new Exception($"No data for stock name = {stockName}");
                 reader.Read();
                 PgDataToStockDefinitionConverter.ToStockDefinition(reader, res);
             });
@@ -67,7 +67,7 @@ namespace MarketOps.DataProvider.Pg
             {
                 reader.Read();
                 if (reader.IsDBNull(0))
-                    throw new Exception($"No nearest tick data for stock name={stockDef.Name}");
+                    throw new Exception($"No nearest tick data for stock name = {stockDef.FullName}");
                 res = reader.GetFieldValue<DateTime>(0);
             });
             return res;

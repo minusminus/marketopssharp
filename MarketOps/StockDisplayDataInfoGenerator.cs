@@ -14,7 +14,7 @@ namespace MarketOps
             string nodatainfo = "";
             if (data.Prices.Length == 0)
                 nodatainfo = " - no data";
-            return $"{data.Stock.Name} {data.Prices.DataRangeToString()} [{data.TsFrom.ToString(data.Prices.DataRangeFormatString())} - {data.TsTo.ToString(data.Prices.DataRangeFormatString())}{nodatainfo}]";
+            return $"{data.Stock.FullName} {data.Prices.DataRangeToString()} [{data.TsFrom.ToString(data.Prices.DataRangeFormatString())} - {data.TsTo.ToString(data.Prices.DataRangeFormatString())}{nodatainfo}]";
         }
 
         public string GetStockSelectedInfo(StockDisplayData data, int selectedIndex) =>

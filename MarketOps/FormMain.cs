@@ -139,9 +139,9 @@ namespace MarketOps
             {
                 TsFrom = tsFrom,
                 TsTo = tsTo,
-                Stock = stockDef
+                Stock = stockDef,
+                Prices = _dataProvider.GetPricesData(stockDef, dataRange, 0, tsFrom, tsTo)
             };
-            displayData.Prices = _dataProvider.GetPricesData(stockDef, dataRange, 0, tsFrom, tsTo);
             return true;
         }
 
@@ -245,7 +245,7 @@ namespace MarketOps
 
             if (!GetStockDisplayData(position.Stock.StockName, position.DataRange, _currentSimSystemSummary.StartTS, _currentSimSystemSummary.StopTS, out StockDisplayData displayData)) return;
             var pvp = AddTabWithChart(tcSimulationCharts, displayData);
-            pvp.AddPositionsAnnotations(_currentSimSystemState.PositionsClosed.Where(p => p.Stock == position.Stock).ToList());
+            pvp.AddPositions(_currentSimSystemState.PositionsClosed.Where(p => p.Stock == position.Stock).ToList());
         }
 
         private void ShowSimulationResult(SystemState systemState, SystemStateSummary summary)

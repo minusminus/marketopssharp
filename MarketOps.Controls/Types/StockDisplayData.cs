@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MarketOps.StockData.Types;
 using System.Collections.Generic;
+using System;
+using MarketOps.SystemData.Types;
 
-namespace MarketOps.StockData.Types
+namespace MarketOps.Controls.Types
 {
     /// <summary>
-    /// gathers stock data to be displayed
+    /// Gathers stock data to be displayed.
     /// </summary>
     public class StockDisplayData
     {
@@ -13,5 +15,6 @@ namespace MarketOps.StockData.Types
         public StockDefinition Stock;
         public StockPricesData Prices;
         public readonly List<StockStat> Stats = new List<StockStat>();
+        public readonly List<Position> Positions = new List<Position>();
     }
 }

@@ -90,6 +90,7 @@ namespace MarketOps.Controls.Extensions
 
         public static void AddPositionsAnnotations(this PriceVolumeChart chart, List<Position> positions)
         {
+            chart.PVChartControl.Annotations.Clear();
             foreach (var position in positions)
                 AddPositionAnnotation(chart, position);
         }

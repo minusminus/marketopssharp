@@ -141,6 +141,7 @@ namespace MarketOps.Controls.PriceChart
                 foreach (var stat in _currentData.Stats)
                     chartPV.AppendStockStatData(_currentData.Prices, stat);
                 chartPV.SetYViewRange();
+                RecreatePositionsAnnotations();
             }
         }
 
@@ -174,11 +175,20 @@ namespace MarketOps.Controls.PriceChart
             ReloadCurrentData();
         }
 
-        public void AddPositionsAnnotations(List<Position> positions)
+        #region positions
+        public void AddPositions(List<Position> positions)
         {
-            chartPV.AddPositionsAnnotations(positions);
+            _currentData.Positions.AddRange(positions);
+            RecreatePositionsAnnotations();
         }
 
+        private void RecreatePositionsAnnotations()
+        {
+            chartPV.AddPositionsAnnotations(_currentData.Positions);
+        }
+        #endregion
+
+        #region stats
         public void AddStat(StockStat stat)
         {
             chartPV.AddStatSeries(stat);
@@ -263,5 +273,6 @@ namespace MarketOps.Controls.PriceChart
             RefreshData();
             Refresh();
         }
+        #endregion
     }
 }

@@ -60,7 +60,6 @@
     <Compile Include="Types\DataPumpDownloadDefinition.cs" />
     <Compile Include="Types\StockDataRange.cs" />
     <Compile Include="Types\StockDefinition.cs" />
-    <Compile Include="Types\StockDisplayData.cs" />
     <Compile Include="Types\StockPricesData.cs" />
     <Compile Include="Types\StockStat.cs" />
     <Compile Include="Types\MOParam.cs" />

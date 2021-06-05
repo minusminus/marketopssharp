@@ -22,7 +22,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private const int HLPeriod = 5;
         private const int RebalanceInterval = 3;
         private const int ProfitBackDataLength = 2;
-        private const int NumberOfAggressiveFundsTaken = 4;
+        private const int NumberOfAggressiveFundsTaken = 3;
         private const float AggressiveStopWidth = 0.07f;
 
         private readonly string[] _fundsNames = { "PKO014",

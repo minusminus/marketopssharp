@@ -22,7 +22,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         private const int HLPeriod = 5;
         private const int RebalanceInterval = 3;
         private const int ProfitBackDataLength = 2;
-        private const int NumberOfAggressiveFundsTaken = 3;
+        private const int NumberOfAggressiveFundsTaken = 4;
         private const float AggressiveStopWidth = 0.07f;
 
         private readonly string[] _fundsNames = { "PKO014",
@@ -30,9 +30,6 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057", "PKO097", "PKO098", "PKO909", "PKO910",
             "PKO913", "PKO918", "PKO919", "PKO925"};
         private readonly bool[] _aggressiveFunds;
-        //private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true, true, true, true, true };
-        //private readonly string[] _fundsNames = { "PKO014", "PKO021", "PKO015", "PKO909", "PKO918", "PKO919", "PKO910" };//, "PKO009", "PKO018", "PKO019", "PKO010" };
-        //private readonly bool[] _aggressiveFunds = { false, true, true, true, true, true, true };//, true, true, true, true };
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
@@ -209,17 +206,10 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
             _systemExecutionLogger.Add(
                 $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
-                //+ "trends: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName}({_fundsData.CurrentTrends[i]}, {_fundsData.CurrentExpectations[i]})").ToArray()) + Environment.NewLine
-                //+ "trends start: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.UpTrendStartValues[i].ToString("F2")}").ToArray()) + Environment.NewLine
-                //+ "trends length: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.TrendLength[i]}").ToArray()) + Environment.NewLine
-                //+ "stophit: " + string.Join(", ", _fundsData.Stocks.Select((def, i) => $"{def.StockName} = {_fundsData.StoppedOut[i]}").ToArray()) + Environment.NewLine
                 + "sorted: " + string.Join(", ", sortedFunds.Select(x => $"{x.Item1.Name}[{_fundsData.CurrentExpectations[x.Item2]}, {_fundsData.StoppedOut[x.Item2]}] = {SortValue(x.Item3)}")) + Environment.NewLine
                 + "balance: " + string.Join(", ", balance.Select((b, i) => $"{_fundsData.Stocks[i].Name} = {b:F2}").ToArray()) + Environment.NewLine
                 + $"aggressive positions: {balance.Skip(1).Count(x => x > 0)}"
                 );
-            //_systemExecutionLogger.Add(
-            //    $"{ts.Date.ToString("yyyy-MM-dd")};{balance.Skip(1).Count(x => x > 0)}"
-            //    );
         }
     }
 }

@@ -40,7 +40,6 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         public SignalsBBTrendMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger)
         {
             _aggressiveFunds = _fundsNames.Select((_, i) => i > 0).ToArray();
-
             if (_fundsNames.Length != _aggressiveFunds.Length)
                 throw new Exception("_fundsNames != _aggressiveFunds");
 

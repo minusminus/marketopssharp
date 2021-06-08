@@ -46,5 +46,12 @@
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
     ]
+  },
+  {
+    "Description": "Simplex Multi Funds",
+    "ClassName": "MarketOps.SystemDefs.SimplexFunds.SimplexMultiFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
   }
 ]

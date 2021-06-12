@@ -135,17 +135,13 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         private float PcntProfitFromNTicks(string fundName, int n, DateTime ts)
         {
-            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
-            int dataIndex = spData.FindByTS(ts);
-            if (dataIndex < n) return float.MinValue;
+            if (!_dataLoader.GetWithIndex(fundName, _dataRange, ts, n, out StockPricesData spData, out int dataIndex)) return float.MinValue;
             return (spData.C[dataIndex] - spData.C[dataIndex - n]) / spData.C[dataIndex - n];
         }
 
         private float AvgPcntProfitFromNTicks(string fundName, int n, DateTime ts)
         {
-            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
-            int dataIndex = spData.FindByTS(ts);
-            if (dataIndex < n) return float.MinValue;
+            if (!_dataLoader.GetWithIndex(fundName, _dataRange, ts, n, out StockPricesData spData, out int dataIndex)) return float.MinValue;
             float sum = 0;
             for (int i = 0; i < n; i++)
                 sum += (spData.C[dataIndex - i] - spData.C[dataIndex - i - 1]) / spData.C[dataIndex - i - 1];
@@ -169,9 +165,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         private float PcntProfitFromUpTrendStart(string fundName, int stockIndex, DateTime ts)
         {
-            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
-            int dataIndex = spData.FindByTS(ts);
-            //if (dataIndex < n) return float.MinValue;
+            _dataLoader.GetWithIndex(fundName, _dataRange, ts, out StockPricesData spData, out int dataIndex);
 
             if (_fundsData.CurrentTrends[stockIndex] == BBTrendType.Up)
                 return (spData.C[dataIndex] - _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.UpTrendStartValues[stockIndex];
@@ -180,9 +174,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         private float AvgPcntProfitOnTickFromUpTrendStart(string fundName, int stockIndex, DateTime ts)
         {
-            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
-            int dataIndex = spData.FindByTS(ts);
-            //if (dataIndex < n) return float.MinValue;
+            _dataLoader.GetWithIndex(fundName, _dataRange, ts, out StockPricesData spData, out int dataIndex);
 
             if (_fundsData.CurrentTrends[stockIndex] == BBTrendType.Up)
                 return ((spData.C[dataIndex] - _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.UpTrendStartValues[stockIndex]) / _fundsData.TrendLength[stockIndex];
@@ -191,9 +183,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
 
         private bool LastDataTSNotBeforeSimulationEnds(string fundName, DateTime ts)
         {
-            StockPricesData spData = _dataLoader.Get(fundName, _dataRange, 0, ts, ts);
-            int dataIndex = spData.FindByTS(ts);
-            if (dataIndex < 0) return false;
+            if (!_dataLoader.GetWithIndex(fundName, _dataRange, ts, out StockPricesData spData, out int dataIndex)) return false;
             if (dataIndex < spData.Length - 2) return true;
             StockPricesData spFirstData = _dataLoader.Get(_fundsData.Stocks[0].FullName, _dataRange, 0, ts, ts);
             return spData.TS[spData.Length - 1] == spFirstData.TS[spFirstData.Length - 1];

@@ -14,6 +14,22 @@ namespace MarketOps.SystemDefs.SimplexFunds
     /// Signals for multi funds with simplex balance calculation.
     /// 
     /// First fund in list is safe fund.
+    /// 
+    /// --== Original version ==--
+    /// acceptable_risk = 0.1
+    /// sigma_multiplier = 2
+    /// max_single_pos_size = 0.8
+    /// 
+    /// calculations:
+    /// average change close - close of 3 and 6 periods
+    /// stddev for avgchange(6)
+    /// 
+    /// simplex solver:
+    /// goal: max avg 3 periods profit
+    /// constaints for each decision:
+    /// - decision >= 0
+    /// - avgchange(6) + stddev * sigma_multiplier <= portoflio_value * acceptable_risk
+    /// - price * decision <= portoflio_value * max_single_pos_size
     /// </summary>
     internal class SignalsSimplexMultiFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {

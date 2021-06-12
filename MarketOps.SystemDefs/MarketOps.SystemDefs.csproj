@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplexFunds\SignalsSimplexMultiFunds.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFunds.cs" />
+    <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">

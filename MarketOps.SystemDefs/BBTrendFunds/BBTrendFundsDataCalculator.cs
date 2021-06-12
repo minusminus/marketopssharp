@@ -35,9 +35,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
         {
             for (int i = 0; i < data.Stocks.Length; i++)
             {
-                StockPricesData spData = dataLoader.Get(data.Stocks[i].FullName, dataRange, 0, ts, ts);
-                int dataIndex = spData.FindByTS(ts);
-                if (dataIndex < data.StatsBB[i].BackBufferLength) continue;
+                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, data.StatsBB[i].BackBufferLength, out StockPricesData spData, out int dataIndex)) continue;
                 BBTrendType lastTrend = data.CurrentTrends[i];
                 data.CurrentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(spData, data.StatsBB[i], dataIndex, data.CurrentTrends[i], out float trendStartLevel);
                 if (lastTrend != data.CurrentTrends[i])
@@ -63,9 +61,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                     continue;
                 }
 
-                StockPricesData spData = dataLoader.Get(data.Stocks[i].FullName, dataRange, 0, ts, ts);
-                int dataIndex = spData.FindByTS(ts);
-                if (dataIndex < 0) continue;
+                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, out StockPricesData spData, out int dataIndex)) continue;
                 //data.UpTrendMaxValues[i] = Math.Max(spData.H[dataIndex], data.UpTrendMaxValues[i]);
                 data.UpTrendMaxValues[i] = Math.Max(spData.C[dataIndex], data.UpTrendMaxValues[i]);
                 data.UpTrendStopValues[i] = data.UpTrendMaxValues[i] * (1f - stopWidth);
@@ -82,9 +78,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
                     continue;
                 }
 
-                StockPricesData spData = dataLoader.Get(data.Stocks[i].FullName, dataRange, 0, ts, ts);
-                int dataIndex = spData.FindByTS(ts);
-                if (dataIndex < 0) continue;
+                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, out StockPricesData spData, out int dataIndex)) continue;
                 if (data.StoppedOut[i])
                     data.StoppedOut[i] = (spData.C[dataIndex] <= data.StoppedOutValues[i]) || !PriceAbovePrevMaxH(data, i, dataIndex, spData.C[dataIndex]);
                 else

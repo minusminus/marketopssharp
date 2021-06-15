@@ -18,29 +18,15 @@ namespace MarketOps.SystemDefs.SimplexFunds
             }
         }
 
-        public static void SetCurrentPrices(SimplexFundsData data, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
+        public static void Calculate(SimplexFundsData data, DateTime ts, int profitRange, int changeRange, StockDataRange dataRange, ISystemDataLoader dataLoader)
         {
             for (int i = 0; i < data.Stocks.Length; i++)
             {
-                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, out StockPricesData spData, out int dataIndex)) continue;
+                data.Active[i] = dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, Math.Max(profitRange, changeRange) + 1, out StockPricesData spData, out int dataIndex);
+                if (!data.Active[i]) continue;
+
                 data.Prices[i] = spData.C[dataIndex];
-            }
-        }
-
-        public static void CalculateAvgProfit(SimplexFundsData data, int profitRange, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
-        {
-            for (int i = 0; i < data.Stocks.Length; i++)
-            {
-                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, profitRange + 1, out StockPricesData spData, out int dataIndex)) continue;
                 data.AvgProfit[i] = AvgChangeInPercent(spData.C, dataIndex, profitRange);
-            }
-        }
-
-        public static void CalculateAvgChange(SimplexFundsData data, int changeRange, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
-        {
-            for (int i = 0; i < data.Stocks.Length; i++)
-            {
-                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, changeRange + 1, out StockPricesData spData, out int dataIndex)) continue;
                 data.AvgChange[i] = AvgChangeInPercent(spData.C, dataIndex, changeRange);
                 data.AvgChangeSigma[i] = StdDev(spData.C, dataIndex, changeRange, data.AvgChange[i]);
             }
@@ -65,6 +51,6 @@ namespace MarketOps.SystemDefs.SimplexFunds
             return (double)Math.Sqrt(sum / (double)range);
         }
 
-        private static double ChangeInPercent(double current, double prev) => 100f * ((prev != 0) ? (current - prev) / prev : 0);
+        private static double ChangeInPercent(double current, double prev) => (prev != 0) ? (current - prev) / prev : 0;
     }
 }

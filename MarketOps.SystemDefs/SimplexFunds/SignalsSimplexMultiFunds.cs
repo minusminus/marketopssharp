@@ -3,7 +3,6 @@ using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using MarketOps.SystemDefs.BBTrendRecognizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,21 +78,33 @@ namespace MarketOps.SystemDefs.SimplexFunds
         {
             List<Signal> result = new List<Signal>();
 
-            SimplexFundsDataCalculator.SetCurrentPrices(_fundsData, ts, _dataRange, _dataLoader);
-            SimplexFundsDataCalculator.CalculateAvgProfit(_fundsData, AvgProfitRange, ts, _dataRange, _dataLoader);
-            SimplexFundsDataCalculator.CalculateAvgChange(_fundsData, AvgChangeRange, ts, _dataRange, _dataLoader);
+            SimplexFundsDataCalculator.Calculate(_fundsData, ts, AvgProfitRange, AvgChangeRange, _dataRange, _dataLoader);
 
-            SimplexExecutor.Execute(_fundsNames, _fundsData, systemState.Equity.Count > 0 ? systemState.Equity.Last().Value : systemState.Cash, 0.1, 2, 0.8);
+            float[] balance = SimplexExecutor.Execute(_fundsNames, _fundsData, systemState.Equity.Count > 0 ? systemState.Equity.Last().Value : systemState.Cash, 0.1, 2, 0.8);
+            result.Add(CreateSignal(balance, _dataRange, _fundsData));
 
-            LogData(ts);
+            LogData(ts, balance);
             return result;
         }
 
-        private void LogData(DateTime ts)
+        private Signal CreateSignal(float[] newBalance, StockDataRange dataRange, SimplexFundsData fundsData) =>
+            new Signal()
+            {
+                DataRange = dataRange,
+                IntradayInterval = 0,
+                Type = SignalType.EnterOnOpen,
+                Direction = PositionDir.Long,
+                Rebalance = true,
+                NewBalance = fundsData.Stocks.Select((def, i) => (def, newBalance[i])).ToList()
+            };
+
+
+        private void LogData(DateTime ts, float[] balance)
         {
             _systemExecutionLogger.Add(
                 $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
-                + string.Join(", ", _fundsNames.Select((name, i) => $"{name}[{_fundsData.AvgProfit[i]:F2}, {_fundsData.AvgChange[i]:F2}, {_fundsData.AvgChangeSigma[i]:F2}]"))
+                + string.Join(", ", _fundsNames.Select((name, i) => $"{name}[{_fundsData.Active[i]}, {100f * _fundsData.AvgProfit[i]:F2}, {100f * _fundsData.AvgChange[i]:F2}, {100f * _fundsData.AvgChangeSigma[i]:F2}]")) + Environment.NewLine
+                + "balance: " + string.Join(", ", _fundsNames.Select((name, i) => $"{name}[{100f * balance[i]:F2}]")) + Environment.NewLine
                 );
         }
     }

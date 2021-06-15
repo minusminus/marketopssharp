@@ -8,6 +8,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
     internal class SimplexFundsData
     {
         public readonly StockDefinition[] Stocks;
+        public readonly bool[] Active;
         public readonly double[] Prices;
         public readonly double[] AvgChange;
         public readonly double[] AvgChangeSigma;
@@ -16,6 +17,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
         public SimplexFundsData(int length)
         {
             Stocks = new StockDefinition[length];
+            Active = new bool[length];
             Prices = new double[length];
             AvgChange = new double[length];
             AvgChangeSigma = new double[length];

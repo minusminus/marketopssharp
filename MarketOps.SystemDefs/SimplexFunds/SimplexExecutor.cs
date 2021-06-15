@@ -32,27 +32,28 @@ namespace MarketOps.SystemDefs.SimplexFunds
         }
 
         public static float[] Execute(string[] fundsName, SimplexFundsData fundsData, 
-            double portfolioValue, double acceptableRisk, double riskSigmaMultiplier, double maxSinglePositionSize)
+            double portfolioValue, double acceptableSingleDD, double riskSigmaMultiplier, double maxSinglePositionSize, double maxPortfolioRisk)
         {
             SimplexExecutorData data = new SimplexExecutorData(fundsData);
             if (data.ActiveFunds.Length == 0) return new float[fundsData.Stocks.Length];
 
-            double riskValue = portfolioValue * acceptableRisk;
-            double maxAggressiveValue = portfolioValue * maxSinglePositionSize;
+            double maxSingleDDValue = portfolioValue * acceptableSingleDD;
+            double maxPositionValue = portfolioValue * maxSinglePositionSize;
+            double maxPortfolioAggressiveValue = portfolioValue * maxPortfolioRisk;
 
             SolverContext solverContext = new SolverContext();
             Model model = solverContext.CreateModel();
 
             model.AddDecisions(data.ActiveFunds.Select(i => new Decision(Domain.RealNonnegative, $"_{i}")).ToArray());
 
-            model.AddConstraint("acceptable_risk",
-                TermBuilder.SumProducts(model.Decisions, (i) => data.Prices[i] * (data.AvgChange[i] + data.AvgChangeSigma[i] * riskSigmaMultiplier)) <= riskValue);
+            model.AddConstraint("acceptable_single_DD",
+                TermBuilder.SumProducts(model.Decisions, (i) => data.Prices[i] * (data.AvgChange[i] + data.AvgChangeSigma[i] * riskSigmaMultiplier)) <= maxSingleDDValue);
 
-            model.AddConstraint("max_aggressive_value", 
-                TermBuilder.SumProducts(model.Decisions, data.Prices) <= maxAggressiveValue);
+            model.AddConstraint("max_portfolio_aggressive_value", 
+                TermBuilder.SumProducts(model.Decisions, data.Prices) <= maxPortfolioAggressiveValue);
 
             model.AddConstraints("max_single_position_size",
-                TermBuilder.BuildTerms(model.Decisions, (decision, i) => data.Prices[i] * decision <= maxAggressiveValue));
+                TermBuilder.BuildTerms(model.Decisions, (decision, i) => data.Prices[i] * decision <= maxPositionValue));
 
             model.AddConstraints("nonnegative", 
                 TermBuilder.NonNegative(model.Decisions));

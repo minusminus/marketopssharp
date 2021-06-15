@@ -31,8 +31,8 @@ namespace MarketOps.SystemDefs.SimplexFunds
                 if (!data.Active[i]) continue;
 
                 data.Prices[i] = spData.C[dataIndex];
-                data.AvgProfit[i] = AvgChangeInPercent(spData.C, dataIndex, profitRange);
-                data.AvgChange[i] = AvgChangeInPercent(spData.C, dataIndex, changeRange);
+                data.AvgProfit[i] = AvgChangeInPercent(spData.C, dataIndex, profitRange, null);
+                data.AvgChange[i] = AvgChangeInPercent(spData.C, dataIndex, changeRange, Math.Abs);
                 data.AvgChangeSigma[i] = StdDev(spData.C, dataIndex, changeRange, data.AvgChange[i]);
             }
         }
@@ -40,11 +40,17 @@ namespace MarketOps.SystemDefs.SimplexFunds
         private static bool NotLastButOneDataIndex(StockPricesData spData, int dataIndex, DateTime simLastTs) =>
             (spData.TS[spData.TS.Length - 1] == simLastTs) || (dataIndex < spData.Length - 2);
 
-        private static double AvgChangeInPercent(float[] tbl, int startIndex, int range)
+        private static double AvgChangeInPercent(float[] tbl, int startIndex, int range, Func<double, double> operation)
         {
             double sum = 0;
             for (int i = 0; i < range; i++)
-                sum += ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
+            {
+                double change = ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
+                if (operation != null)
+                    change = operation(change);
+                //sum += ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
+                sum += change;
+            }
             return sum / (double)range;
         }
 
@@ -53,7 +59,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
             double sum = 0;
             for (int i = 0; i < range; i++)
             {
-                double value = ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
+                double value = Math.Abs(ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]));
                 sum += (avgValue - value) * (avgValue - value);
             }
             return (double)Math.Sqrt(sum / (double)range);

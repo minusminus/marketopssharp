@@ -42,6 +42,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
         private readonly StockDataRange _dataRange;
+        private SimplexFundsData _fundsData;
 
         public SignalsSimplexMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger)
         {
@@ -52,18 +53,43 @@ namespace MarketOps.SystemDefs.SimplexFunds
             _dataLoader = dataLoader;
             _systemExecutionLogger = systemExecutionLogger;
             _dataRange = StockDataRange.Monthly;
-            //_fundsData = new BBTrendFundsData(_fundsNames.Length);
-            //BBTrendFundsDataCalculator.Initialize(_fundsData, _fundsNames, BBPeriod, BBSigmaWidth, HLPeriod, dataProvider);
+            _fundsData = new SimplexFundsData(_fundsNames.Length);
+            SimplexFundsDataCalculator.Initialize(_fundsData, _fundsNames, dataProvider);
         }
 
-        public SystemDataDefinition GetDataDefinition()
+        public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
         {
-            throw new NotImplementedException();
-        }
+            stocks = _fundsData.Stocks
+                .Select((def, i) =>
+                {
+                    return new SystemStockDataDefinition()
+                    {
+                        stock = def,
+                        dataRange = _dataRange,
+                        stats = new List<StockStat>() { }
+                    };
+                })
+                .ToList()
+        };
 
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
-            throw new NotImplementedException();
+            List<Signal> result = new List<Signal>();
+
+            SimplexFundsDataCalculator.CalculateAvgProfit(_fundsData, 3, ts, _dataRange, _dataLoader);
+            SimplexFundsDataCalculator.CalculateAvgChange(_fundsData, 6, ts, _dataRange, _dataLoader);
+
+            LogData(ts);
+
+            return result;
+        }
+
+        private void LogData(DateTime ts)
+        {
+            _systemExecutionLogger.Add(
+                $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
+                + string.Join(", ", _fundsNames.Select((name, i) => $"{name}[{_fundsData.AvgProfit[i]:F2}, {_fundsData.AvgChange[i]:F2}, {_fundsData.AvgChangeSigma[i]:F2}]"))
+                );
         }
     }
 }

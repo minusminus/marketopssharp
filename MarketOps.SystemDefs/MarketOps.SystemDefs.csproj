@@ -64,6 +64,8 @@
     <Compile Include="PriceCrossingSMA\SignalsPriceCrossingSMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplexFunds\SignalsSimplexMultiFunds.cs" />
+    <Compile Include="SimplexFunds\SimplexFundsData.cs" />
+    <Compile Include="SimplexFunds\SimplexFundsDataCalculator.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFunds.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>

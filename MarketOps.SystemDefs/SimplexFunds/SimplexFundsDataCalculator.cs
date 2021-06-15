@@ -18,6 +18,15 @@ namespace MarketOps.SystemDefs.SimplexFunds
             }
         }
 
+        public static void SetCurrentPrices(SimplexFundsData data, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
+        {
+            for (int i = 0; i < data.Stocks.Length; i++)
+            {
+                if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, out StockPricesData spData, out int dataIndex)) continue;
+                data.Prices[i] = spData.C[dataIndex];
+            }
+        }
+
         public static void CalculateAvgProfit(SimplexFundsData data, int profitRange, DateTime ts, StockDataRange dataRange, ISystemDataLoader dataLoader)
         {
             for (int i = 0; i < data.Stocks.Length; i++)
@@ -37,25 +46,25 @@ namespace MarketOps.SystemDefs.SimplexFunds
             }
         }
 
-        private static float AvgChangeInPercent(float[] tbl, int startIndex, int range)
+        private static double AvgChangeInPercent(float[] tbl, int startIndex, int range)
         {
-            float sum = 0;
+            double sum = 0;
             for (int i = 0; i < range; i++)
                 sum += ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
-            return sum / (float)range;
+            return sum / (double)range;
         }
 
-        private static float StdDev(float[] tbl, int startIndex, int range, float avgValue)
+        private static double StdDev(float[] tbl, int startIndex, int range, double avgValue)
         {
-            float sum = 0;
+            double sum = 0;
             for (int i = 0; i < range; i++)
             {
-                float value = ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
+                double value = ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
                 sum += (avgValue - value) * (avgValue - value);
             }
-            return (float)Math.Sqrt(sum / (float)range);
+            return (double)Math.Sqrt(sum / (double)range);
         }
 
-        private static float ChangeInPercent(float current, float prev) => 100f * ((prev != 0) ? (current - prev) / prev : 0);
+        private static double ChangeInPercent(double current, double prev) => 100f * ((prev != 0) ? (current - prev) / prev : 0);
     }
 }

@@ -33,10 +33,13 @@ namespace MarketOps.SystemDefs.SimplexFunds
     /// </summary>
     internal class SignalsSimplexMultiFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
+        private const int AvgProfitRange = 3;
+        private const int AvgChangeRange = 6;
+
         private readonly string[] _fundsNames = { "PKO014",
-            "PKO008", "PKO009", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO020", "PKO021",
-            "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057", "PKO097", "PKO098", "PKO909", "PKO910",
-            "PKO913", "PKO918", "PKO919", "PKO925"};
+            "PKO008", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO020", "PKO021",
+            "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057", "PKO097", "PKO098", "PKO909", 
+            "PKO910", "PKO913", "PKO918", "PKO919", "PKO925"};
         private readonly bool[] _aggressiveFunds;
 
         private readonly ISystemDataLoader _dataLoader;
@@ -76,11 +79,13 @@ namespace MarketOps.SystemDefs.SimplexFunds
         {
             List<Signal> result = new List<Signal>();
 
-            SimplexFundsDataCalculator.CalculateAvgProfit(_fundsData, 3, ts, _dataRange, _dataLoader);
-            SimplexFundsDataCalculator.CalculateAvgChange(_fundsData, 6, ts, _dataRange, _dataLoader);
+            SimplexFundsDataCalculator.SetCurrentPrices(_fundsData, ts, _dataRange, _dataLoader);
+            SimplexFundsDataCalculator.CalculateAvgProfit(_fundsData, AvgProfitRange, ts, _dataRange, _dataLoader);
+            SimplexFundsDataCalculator.CalculateAvgChange(_fundsData, AvgChangeRange, ts, _dataRange, _dataLoader);
+
+            SimplexExecutor.Execute(_fundsNames, _fundsData, systemState.Equity.Count > 0 ? systemState.Equity.Last().Value : systemState.Cash, 0.1, 2, 0.8);
 
             LogData(ts);
-
             return result;
         }
 

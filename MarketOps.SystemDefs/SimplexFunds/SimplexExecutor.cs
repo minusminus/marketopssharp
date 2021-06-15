@@ -22,8 +22,8 @@ namespace MarketOps.SystemDefs.SimplexFunds
 
             public SimplexExecutorData(SimplexFundsData fundsData)
             {
-                //ActiveFunds = fundsData.Active.Select((b, i) => (b, i)).Where(x => x.b && (x.i > 0)).Select(x => x.i).ToArray();
-                ActiveFunds = fundsData.Active.Select((b, i) => (b, i)).Where(x => x.b).Select(x => x.i).ToArray();
+                ActiveFunds = fundsData.Active.Select((b, i) => (b, i)).Where(x => x.b && (x.i > 0)).Select(x => x.i).ToArray();
+                //ActiveFunds = fundsData.Active.Select((b, i) => (b, i)).Where(x => x.b).Select(x => x.i).ToArray();
                 Prices = ActiveFunds.Select(i => fundsData.Prices[i]).ToArray();
                 AvgChange = ActiveFunds.Select(i => fundsData.AvgChange[i]).ToArray();
                 AvgChangeSigma = ActiveFunds.Select(i => fundsData.AvgChangeSigma[i]).ToArray();
@@ -38,6 +38,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
             if (data.ActiveFunds.Length == 0) return new float[fundsData.Stocks.Length];
 
             double riskValue = portfolioValue * acceptableRisk;
+            double maxAggressiveValue = portfolioValue * maxSinglePositionSize;
 
             SolverContext solverContext = new SolverContext();
             Model model = solverContext.CreateModel();
@@ -47,11 +48,11 @@ namespace MarketOps.SystemDefs.SimplexFunds
             model.AddConstraint("acceptable_risk",
                 TermBuilder.SumProducts(model.Decisions, (i) => data.Prices[i] * (data.AvgChange[i] + data.AvgChangeSigma[i] * riskSigmaMultiplier)) <= riskValue);
 
-            model.AddConstraint("current_value", 
-                TermBuilder.SumProducts(model.Decisions, data.Prices) <= portfolioValue);
+            model.AddConstraint("max_aggressive_value", 
+                TermBuilder.SumProducts(model.Decisions, data.Prices) <= maxAggressiveValue);
 
             model.AddConstraints("max_single_position_size",
-                TermBuilder.BuildTerms(model.Decisions, (decision, i) => data.Prices[i] * decision <= portfolioValue * maxSinglePositionSize));
+                TermBuilder.BuildTerms(model.Decisions, (decision, i) => data.Prices[i] * decision <= maxAggressiveValue));
 
             model.AddConstraints("nonnegative", 
                 TermBuilder.NonNegative(model.Decisions));
@@ -70,7 +71,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
                 int idx = Int32.Parse(decision.Name.Substring(1));
                 result[idx] = (float)(fundsData.Prices[idx] * decision.ToDouble() / portfolioValue);
             }
-            //result[0] = 1f - result.Skip(1).Sum();
+            result[0] = 1f - result.Skip(1).Sum();
 
             return result;
         }

@@ -20,9 +20,14 @@ namespace MarketOps.SystemDefs.SimplexFunds
 
         public static void Calculate(SimplexFundsData data, DateTime ts, int profitRange, int changeRange, StockDataRange dataRange, ISystemDataLoader dataLoader)
         {
+            dataLoader.GetWithIndex(data.Stocks[0].FullName, dataRange, ts, 0, out StockPricesData spData0, out _);
+            DateTime simLastTs = spData0.TS[spData0.TS.Length - 1];
+
             for (int i = 0; i < data.Stocks.Length; i++)
             {
                 data.Active[i] = dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, Math.Max(profitRange, changeRange) + 1, out StockPricesData spData, out int dataIndex);
+                if (!data.Active[i]) continue;
+                data.Active[i] = NotLastButOneDataIndex(spData, dataIndex, simLastTs);
                 if (!data.Active[i]) continue;
 
                 data.Prices[i] = spData.C[dataIndex];
@@ -31,6 +36,9 @@ namespace MarketOps.SystemDefs.SimplexFunds
                 data.AvgChangeSigma[i] = StdDev(spData.C, dataIndex, changeRange, data.AvgChange[i]);
             }
         }
+
+        private static bool NotLastButOneDataIndex(StockPricesData spData, int dataIndex, DateTime simLastTs) =>
+            (spData.TS[spData.TS.Length - 1] == simLastTs) || (dataIndex < spData.Length - 2);
 
         private static double AvgChangeInPercent(float[] tbl, int startIndex, int range)
         {

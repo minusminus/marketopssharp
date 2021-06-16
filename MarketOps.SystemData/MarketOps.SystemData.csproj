@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Extensions\DrawDownsExtensions.cs" />
     <Compile Include="Extensions\ISystemDataLoaderExtensions.cs" />
+    <Compile Include="Extensions\MoneyValueExtensions.cs" />
     <Compile Include="Extensions\PositionDirExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
     <Compile Include="Extensions\SystemStateExtensions.cs" />

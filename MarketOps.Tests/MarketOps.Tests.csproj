@@ -139,7 +139,7 @@
     <Compile Include="SystemData\Extensions\SystemValueCalculatorTests.cs" />
     <Compile Include="SystemExecutor\Commission\CommissionNoneTests.cs" />
     <Compile Include="SystemExecutor\DataLoaders\BufferedDataLoaderTests.cs" />
-    <Compile Include="SystemExecutor\Extensions\MoneyValueExtensionsTests.cs" />
+    <Compile Include="SystemData\Extensions\MoneyValueExtensionsTests.cs" />
     <Compile Include="SystemExecutor\Extensions\VolumeExtensionsTests.cs" />
     <Compile Include="SystemExecutor\GPW\CommissionGPWBossaTests.cs" />
     <Compile Include="SystemExecutor\GPW\GPWTickOpsTests.cs" />

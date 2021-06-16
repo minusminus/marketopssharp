@@ -48,7 +48,6 @@ namespace MarketOps.SystemDefs.SimplexFunds
                 double change = ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
                 if (operation != null)
                     change = operation(change);
-                //sum += ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
                 sum += change;
             }
             return sum / (double)range;

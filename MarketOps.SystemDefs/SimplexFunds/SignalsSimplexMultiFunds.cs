@@ -36,8 +36,9 @@ namespace MarketOps.SystemDefs.SimplexFunds
         private const int AvgChangeRange = 6;
         private const double AcceptableSingleDD = 0.1;
         private const double RiskSigmaMultiplier = 2;
-        private const double MaxSinglePositionSize = 0.4;
+        private const double MaxSinglePositionSize = 0.8;
         private const double MaxPortfolioRisk = 0.8;
+        private const int TruncateBalanceToNthPlace = 3;    //balans in range <0..1> - truncate to first place after comma
 
         private readonly string[] _fundsNames = { "PKO014",
             "PKO008", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO020", "PKO021",
@@ -85,7 +86,9 @@ namespace MarketOps.SystemDefs.SimplexFunds
             SimplexFundsDataCalculator.Calculate(_fundsData, ts, AvgProfitRange, AvgChangeRange, _dataRange, _dataLoader);
 
             float portfolioValue = new SystemValueCalculator().Calc(systemState, ts, _dataLoader);
-            float[] balance = SimplexExecutor.Execute(_fundsNames, _fundsData, portfolioValue, AcceptableSingleDD, RiskSigmaMultiplier, MaxSinglePositionSize, MaxPortfolioRisk);
+            float[] balance = SimplexExecutor.Execute(_fundsNames, _fundsData, 
+                portfolioValue, AcceptableSingleDD, RiskSigmaMultiplier, MaxSinglePositionSize, MaxPortfolioRisk,
+                TruncateBalanceToNthPlace);
             result.Add(CreateSignal(balance, _dataRange, _fundsData));
 
             LogData(ts, balance);

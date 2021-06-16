@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MarketOps.SystemData.Extensions;
 using Microsoft.SolverFoundation.Services;
 
 namespace MarketOps.SystemDefs.SimplexFunds
@@ -32,7 +33,8 @@ namespace MarketOps.SystemDefs.SimplexFunds
         }
 
         public static float[] Execute(string[] fundsName, SimplexFundsData fundsData, 
-            double portfolioValue, double acceptableSingleDD, double riskSigmaMultiplier, double maxSinglePositionSize, double maxPortfolioRisk)
+            double portfolioValue, double acceptableSingleDD, double riskSigmaMultiplier, double maxSinglePositionSize, double maxPortfolioRisk,
+            int truncateBalanceToNthPlace)
         {
             SimplexExecutorData data = new SimplexExecutorData(fundsData);
             if (data.ActiveFunds.Length == 0) return new float[fundsData.Stocks.Length];
@@ -60,17 +62,17 @@ namespace MarketOps.SystemDefs.SimplexFunds
 
             model.AddGoal("max_avg_profit", GoalKind.Maximize, TermBuilder.SumProducts(model.Decisions, data.AvgProfit));
 
-            return CalculateBalance(solverContext.Solve(new SimplexDirective()), fundsData, portfolioValue);
+            return CalculateBalance(solverContext.Solve(new SimplexDirective()), fundsData, portfolioValue, truncateBalanceToNthPlace);
         }
 
-        private static float[] CalculateBalance(Solution solution, SimplexFundsData fundsData, double portfolioValue)
+        private static float[] CalculateBalance(Solution solution, SimplexFundsData fundsData, double portfolioValue, int truncateBalanceToNthPlace)
         {
             float[] result = new float[fundsData.Stocks.Length];
 
             foreach (Decision decision in solution.Decisions)
             {
                 int idx = Int32.Parse(decision.Name.Substring(1));
-                result[idx] = (float)(fundsData.Prices[idx] * decision.ToDouble() / portfolioValue);
+                result[idx] = ((float)(fundsData.Prices[idx] * decision.ToDouble() / portfolioValue)).TruncateToNthPlace(truncateBalanceToNthPlace);
             }
             result[0] = 1f - result.Skip(1).Sum();
 

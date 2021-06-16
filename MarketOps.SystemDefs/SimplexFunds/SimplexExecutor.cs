@@ -32,7 +32,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
             }
         }
 
-        public static float[] Execute(string[] fundsName, SimplexFundsData fundsData, 
+        public static float[] Execute(SimplexFundsData fundsData, 
             double portfolioValue, double acceptableSingleDD, double riskSigmaMultiplier, double maxSinglePositionSize, double maxPortfolioRisk,
             int truncateBalanceToNthPlace)
         {
@@ -56,6 +56,9 @@ namespace MarketOps.SystemDefs.SimplexFunds
 
             model.AddConstraints("max_single_position_size",
                 TermBuilder.BuildTerms(model.Decisions, (decision, i) => data.Prices[i] * decision <= maxPositionValue));
+
+            model.AddConstraints("all_positions_positive",
+                TermBuilder.BuildTerms(model.Decisions, (decision, i) => data.AvgProfit[i] * decision >= 0));
 
             model.AddConstraints("nonnegative", 
                 TermBuilder.NonNegative(model.Decisions));

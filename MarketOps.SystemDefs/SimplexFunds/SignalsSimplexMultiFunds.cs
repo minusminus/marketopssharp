@@ -1,5 +1,6 @@
 ﻿using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
+using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
 using System;
@@ -35,7 +36,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
         private const int AvgChangeRange = 6;
         private const double AcceptableSingleDD = 0.1;
         private const double RiskSigmaMultiplier = 2;
-        private const double MaxSinglePositionSize = 0.8;
+        private const double MaxSinglePositionSize = 0.4;
         private const double MaxPortfolioRisk = 0.8;
 
         private readonly string[] _fundsNames = { "PKO014",
@@ -83,7 +84,8 @@ namespace MarketOps.SystemDefs.SimplexFunds
 
             SimplexFundsDataCalculator.Calculate(_fundsData, ts, AvgProfitRange, AvgChangeRange, _dataRange, _dataLoader);
 
-            float[] balance = SimplexExecutor.Execute(_fundsNames, _fundsData, systemState.Equity.Count > 0 ? systemState.Equity.Last().Value : systemState.Cash, AcceptableSingleDD, RiskSigmaMultiplier, MaxSinglePositionSize, MaxPortfolioRisk);
+            float portfolioValue = new SystemValueCalculator().Calc(systemState, ts, _dataLoader);
+            float[] balance = SimplexExecutor.Execute(_fundsNames, _fundsData, portfolioValue, AcceptableSingleDD, RiskSigmaMultiplier, MaxSinglePositionSize, MaxPortfolioRisk);
             result.Add(CreateSignal(balance, _dataRange, _fundsData));
 
             LogData(ts, balance);

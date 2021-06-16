@@ -10,7 +10,7 @@ namespace MarketOps.SystemData.Extensions
     /// <summary>
     /// Calculates system equity value.
     /// </summary>
-    internal class SystemValueCalculator
+    public class SystemValueCalculator
     {
         public float Calc(SystemState system, DateTime ts, ISystemDataLoader dataLoader)
         {

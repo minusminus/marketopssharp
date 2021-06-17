@@ -68,6 +68,7 @@
     <Compile Include="SimplexFunds\SimplexFundsData.cs" />
     <Compile Include="SimplexFunds\SimplexFundsDataCalculator.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFunds.cs" />
+    <Compile Include="SimplexFunds\SimplexMultiFundsParams.cs" />
     <Compile Include="SimplexFunds\TermBuilder.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>

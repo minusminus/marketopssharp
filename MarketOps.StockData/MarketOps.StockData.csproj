@@ -58,6 +58,7 @@
     <Compile Include="StockPricesDataMerger.cs" />
     <Compile Include="Types\DataGenDailyMode.cs" />
     <Compile Include="Types\DataPumpDownloadDefinition.cs" />
+    <Compile Include="Types\MOParamDouble.cs" />
     <Compile Include="Types\StockDataRange.cs" />
     <Compile Include="Types\StockDefinition.cs" />
     <Compile Include="Types\StockPricesData.cs" />

@@ -35,6 +35,14 @@ namespace MarketOps.Tests.StockData
         }
 
         [Test]
+        public void Set_Double__SetsCorrectValue()
+        {
+            const double testValue = 123.123f;
+            testObj.Set(ParamName, testValue);
+            testObj.Get(ParamName).As<double>().ShouldBe(testValue);
+        }
+
+        [Test]
         public void Set_String__SetsCorrectValue()
         {
             const string testValue = "abcdefkgofdsa dfgsdfg";

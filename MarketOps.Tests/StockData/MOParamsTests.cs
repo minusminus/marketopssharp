@@ -28,6 +28,15 @@ namespace MarketOps.Tests.StockData
         }
 
         [Test]
+        public void Set_Double__GetsCorrectValue()
+        {
+            MOParams testObj = new MOParams();
+            const double testValue = 123.123;
+            testObj.Set("test", new MOParamDouble() { Value = testValue });
+            testObj.Get("test").As<double>().ShouldBe(testValue);
+        }
+
+        [Test]
         public void Set_String__GetsCorrectValue()
         {
             MOParams testObj = new MOParams();

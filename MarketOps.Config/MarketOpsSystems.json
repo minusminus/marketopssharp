@@ -53,5 +53,40 @@
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
     ]
+  },
+  {
+    "Description": "Simplex Multi Funds - live",
+    "ClassName": "MarketOps.SystemDefs.SimplexFunds.SimplexMultiFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+       {
+        "Param": "AvgProfitRange",
+        "Value": "3"
+      },
+      {
+        "Param": "AvgChangeRange",
+        "Value": "6"
+      },
+      {
+        "Param": "AcceptableSingleDD",
+        "Value": "0,2"
+      },
+      {
+        "Param": "RiskSigmaMultiplier",
+        "Value": "2,0"
+      },
+      {
+        "Param": "MaxSinglePositionSize",
+        "Value": "0,6"
+      },
+      {
+        "Param": "MaxPortfolioRisk",
+        "Value": "0,6"
+      },
+      {
+        "Param": "TruncateBalanceToNthPlace",
+        "Value": "3"
+      }
+   ]
   }
 ]

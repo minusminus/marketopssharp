@@ -266,6 +266,7 @@ namespace MarketOps
             lblSDRInitialValue.Text = summary.InitialValue.ToDisplay();
             lblSDRFinalValueOnClosedPositions.Text = summary.FinalValueOnClosedPositions.ToDisplay();
             lblSDRFinalValueOnLastTick.Text = summary.FinalValueOnLastTick.ToDisplay();
+            lblSDRProfitPcntOnTicks.Text = summary.CummYProfitPcntOnTicks.ToDisplayPcnt();
 
             lblSDRClosedPositionsCount.Text = summary.ClosedPositionsCount.ToDisplay();
             lblSDRWins.Text = summary.Wins.ToDisplay();
@@ -282,6 +283,9 @@ namespace MarketOps
 
             lblSDRMaxDDOnTicks.Text = summary.DDTicks.MaxDD().ToDisplayPcnt();
             lblSDRMaxDDOnPositions.Text = summary.DDClosedPositions.MaxDD().ToDisplayPcnt();
+
+            lblSDREqDistrAvg.Text = summary.EquityDistribution.Average.ToDisplay(4);
+            lblSDREqDistrStdDev.Text = summary.EquityDistribution.StdDev.ToDisplay(4);
         }
 
         private void ShowPositions(SystemState systemState)

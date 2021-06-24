@@ -132,6 +132,7 @@
     <Compile Include="StockData\StockPricesDataMergerTests.cs" />
     <Compile Include="StockData\StockPricesDataTests.cs" />
     <Compile Include="SystemAnalysis\DrawDowns\DrawDownsCalculatorTests.cs" />
+    <Compile Include="SystemAnalysis\Equity\EquityDistributionCalculatorTests.cs" />
     <Compile Include="SystemAnalysis\SystemSummary\WinsLossesCalculatorTests.cs" />
     <Compile Include="SystemData\Extensions\PositionDirExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionExtensionsTests.cs" />

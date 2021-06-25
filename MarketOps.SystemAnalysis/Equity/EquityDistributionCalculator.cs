@@ -34,7 +34,7 @@ namespace MarketOps.SystemAnalysis.Equity
 
         private static float CalculateStdDev(float[] values, float average)
         {
-            float total = values.Aggregate((sum, val) => sum += (average - val) * (average - val));
+            float total = values.Aggregate(0f, (sum, val) => sum + (average - val) * (average - val));
             return (float)Math.Sqrt(total / (float)values.Length);
         }
     }

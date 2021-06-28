@@ -26,6 +26,8 @@ using MarketOps.Config.Stats;
 using MarketOps.Config.App;
 using MarketOps.StockData;
 using System.Linq;
+using MarketOps.Controls;
+using System.Threading.Tasks;
 
 namespace MarketOps
 {
@@ -219,7 +221,7 @@ namespace MarketOps
             paramsSim.LoadParams(_currentSimSystemDef.SystemParams);
         }
 
-        private void btnSim_Click(object sender, EventArgs e)
+        private async Task btnSim_Click(object sender, EventArgs e)
         {
             if (_currentSimSystemDef == null)
             {
@@ -232,11 +234,15 @@ namespace MarketOps
                 tcSimulationCharts.TabPages.RemoveAt(tcSimulationCharts.TabCount - 1);
             paramsSim.SaveParams(_currentSimSystemDef.SystemParams);
 
-            _currentSimSystemState = new SystemState() { InitialCash = (float)edtInitialCash.Value, Cash = (float)edtInitialCash.Value };
-            SystemRunner runner = new SystemRunner(_dataProvider, _systemDataLoader);
-            runner.Run(_currentSimSystemDef, _currentSimSystemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
-            _currentSimSystemSummary = SystemStateSummaryCalculator.Calculate(_currentSimSystemState);
-            ShowSimulationResult(_currentSimSystemState, _currentSimSystemSummary);
+            using (var frm = new FormLongLastingWork())
+                await frm.Execute("Processing simulation...", "Simulation error", () =>
+                {
+                    _currentSimSystemState = new SystemState() { InitialCash = (float)edtInitialCash.Value, Cash = (float)edtInitialCash.Value };
+                    SystemRunner runner = new SystemRunner(_dataProvider, _systemDataLoader);
+                    runner.Run(_currentSimSystemDef, _currentSimSystemState, dtpSimFrom.Value.Date, dtpSimTo.Value.Date);
+                    _currentSimSystemSummary = SystemStateSummaryCalculator.Calculate(_currentSimSystemState);
+                    ShowSimulationResult(_currentSimSystemState, _currentSimSystemSummary);
+                });
         }
 
         private void dbgPositions_OnPositionClick(Position position)

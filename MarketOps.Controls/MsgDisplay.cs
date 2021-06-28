@@ -1,11 +1,11 @@
 ﻿using System.Windows.Forms;
 
-namespace MarketOps
+namespace MarketOps.Controls
 {
     /// <summary>
     /// Displays message boxes
     /// </summary>
-    internal class MsgDisplay
+    public class MsgDisplay
     {
         private readonly IWin32Window _owner;
         private readonly string _caption;

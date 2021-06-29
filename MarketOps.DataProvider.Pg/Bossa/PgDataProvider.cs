@@ -49,7 +49,8 @@ namespace MarketOps.DataProvider.Pg.Bossa
             {
                 if (!reader.HasRows) return;
                 reader.Read();
-                res = reader.GetFieldValue<DateTime>(0);
+                if (!reader.IsDBNull(0))
+                    res = reader.GetFieldValue<DateTime>(0);
             });
             return res;
         }

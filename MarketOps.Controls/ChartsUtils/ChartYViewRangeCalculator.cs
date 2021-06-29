@@ -16,7 +16,9 @@ namespace MarketOps.Controls.ChartsUtils
 
         public static Tuple<double, double> PostprocessRange(Tuple<double, double> currRange)
         {
-            double addition = (currRange.Item2 - currRange.Item1) * 0.05;
+            double rangeWidth = currRange.Item2 - currRange.Item1;
+            if (rangeWidth <= 0) rangeWidth = 1;
+            double addition = rangeWidth * 0.05;
             return new Tuple<double, double>(Math.Floor(currRange.Item1 - addition), Math.Ceiling(currRange.Item2 + addition));
         }
 

@@ -138,7 +138,7 @@ namespace MarketOps.Controls.PriceChart
             Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
 
             Tuple<double, double> range = ChartYViewRangeCalculator.CalculateRangeCandles(ax, PricesCandles.Points, ChartYViewRangeCalculator.InitialRange());
-            var list = PVChart.Series.Where(x => (x.ChartArea == "areaPrices") && (x.Name != "dataPricesCandles") && (x.Name != "dataPricesLines")).ToList();
+            var list = PVChart.Series.Where(x => (x.ChartArea == "areaPrices") && (x.Name != "dataPricesCandles") && (x.Name != "dataPricesLine")).ToList();
             foreach (var s in list)
                 range = ChartYViewRangeCalculator.CalculateRangeLine(ax, s.Points, range);
             range = ChartYViewRangeCalculator.PostprocessRange(range);

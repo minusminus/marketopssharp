@@ -40,6 +40,7 @@ namespace MarketOps.SystemExecutor.DataLoaders
         private bool TryGetFromBuffer(string key, DateTime tsFrom, DateTime tsTo, out StockPricesData res)
         {
             if (!_buffer.TryGetValue(key, out res)) return false;
+            if (res.TS.Length == 0) return true;
             if ((res.TS.First() > tsFrom) || (res.TS.Last() < tsTo)) return false;
             return true;
         }

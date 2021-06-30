@@ -69,6 +69,26 @@ namespace MarketOps.Tests.SystemExecutor.DataLoaders
             data.TS[1].ShouldBe(tsTo);
         }
 
+        private void SubstituteEmptyGetPricesData()
+        {
+            _dataProvider.GetPricesData(Arg.Compat.Any<StockDefinition>(), StockDataRange.Daily, 0,
+                Arg.Compat.Any<DateTime>(), Arg.Compat.Any<DateTime>())
+                .Returns((x) =>
+                {
+                    _getPricesDataCalls++;
+                    return new StockPricesData(0)
+                    {
+                        Range = StockDataRange.Daily,
+                        IntrradayInterval = 0
+                    };
+                });
+        }
+
+        private void CheckEmptyPricesData(StockPricesData data)
+        {
+            data.TS.Length.ShouldBe(0);
+        }
+
         private void CheckDBAccess(int expectedStockDefinitionCalls, int expectedPricesDataCalls)
         {
             _getStockDefinitionCalls.ShouldBe(expectedStockDefinitionCalls);
@@ -179,6 +199,21 @@ namespace MarketOps.Tests.SystemExecutor.DataLoaders
             SubstituteGetPricesData(TSFrom2, TSTo2);
             CheckPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom2, TSTo2), TSFrom2, TSTo2);
             CheckDBAccess(3, 3);
+        }
+
+        [Test]
+        public void Get_EmptyData__ReturnsEmptyData()
+        {
+            SubstituteEmptyGetPricesData();
+            CheckEmptyPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom1, TSTo1));
+        }
+
+        [Test]
+        public void Get_EmptyDataTwice__ReturnsEmptyDataTwice()
+        {
+            SubstituteEmptyGetPricesData();
+            CheckEmptyPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom1, TSTo1));
+            CheckEmptyPricesData(_testObj.Get(Stock1, StockDataRange.Daily, 0, TSFrom1, TSTo1));
         }
     }
 }

@@ -10,10 +10,11 @@ namespace MarketOps.Controls.PointChart
             InitializeComponent();
         }
 
-        public void LoadData(List<PointChartData> data)
+        public void LoadData(List<PointChartData> data, string seriesTooltip)
         {
             FillBindingSource(data);
             BindChartData();
+            chartPoints.Series["seriesPoints"].ToolTip = seriesTooltip;
         }
 
         private void FillBindingSource(List<PointChartData> data)

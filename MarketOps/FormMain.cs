@@ -314,14 +314,19 @@ namespace MarketOps
 
         private void ShowDDCharts(SystemStateSummary summary)
         {
-            chartDDTicks.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDTicks));
-            chartDDPositions.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDClosedPositions));
+            const string SimulationDDTooltipFormat = "#VALX{N2}%, Length: #VAL";
+
+            chartDDTicks.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDTicks), SimulationDDTooltipFormat);
+            chartDDPositions.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDClosedPositions), SimulationDDTooltipFormat);
         }
 
         private void ShowProfitCharts(SystemState systemState)
         {
-            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed));
-            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed));
+            const string SimulationProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
+            const string SimulationProfitPcntTooltipFormat = "#VALX{N2}%, Length: #VAL";
+
+            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitValueTooltipFormat);
+            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitPcntTooltipFormat);
         }
 
         private void LoadConfig()

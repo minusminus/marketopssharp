@@ -8,7 +8,7 @@
         public readonly float[,] data;
 
         public int Wins, Losses;
-        public float WinsPcnt, LosesPcnt;
+        public float WinsPcnt, LossesPcnt;
 
         public MonteCarloResult(int count, int length)
         {

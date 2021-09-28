@@ -34,7 +34,7 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
                 data.Wins += (data.data[i, rowLength - 1] > InitialValue) ? 1 : 0;
             data.Losses = rowsCount - data.Wins;
             data.WinsPcnt = (float)data.Wins / (float)rowsCount;
-            data.LosesPcnt = 1.0f - data.WinsPcnt;
+            data.LossesPcnt = 1.0f - data.WinsPcnt;
         }
 
         private static void CalculateSingleRow(float[,] data, int rowIndex, float winProbability, float avgPcntWin, float avgPcntLoss, Random randomGenerator)

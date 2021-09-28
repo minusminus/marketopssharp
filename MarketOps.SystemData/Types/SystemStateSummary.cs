@@ -27,6 +27,8 @@ namespace MarketOps.SystemData.Types
         public float AvgWin;
         public float AvgLoss;
         public float AvgWinLossRatio;
+        public float AvgPcntWin;
+        public float AvgPcntLoss;
         public float ExpectedPositionValue;
         public float ExpectedUnitReturn;
 

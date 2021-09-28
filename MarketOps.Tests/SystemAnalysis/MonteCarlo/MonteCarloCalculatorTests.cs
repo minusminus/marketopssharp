@@ -23,7 +23,7 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
             result.Wins.ShouldBe(Count);
             result.Losses.ShouldBe(0);
             result.WinsPcnt.ShouldBe(1f);
-            result.LosesPcnt.ShouldBe(0f);
+            result.LossesPcnt.ShouldBe(0f);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
             result.Wins.ShouldBe(0);
             result.Losses.ShouldBe(Count);
             result.WinsPcnt.ShouldBe(0f);
-            result.LosesPcnt.ShouldBe(1f);
+            result.LossesPcnt.ShouldBe(1f);
         }
     }
 }

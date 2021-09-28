@@ -20,6 +20,9 @@ namespace MarketOps.SystemAnalysis.SystemSummary
 
         private static void SumWinsLossesAndCalcAvgs(SystemStateSummary summary, SystemState systemState)
         {
+            float sumPcntWins = 0;
+            float sumPcntLosses = 0;
+
             systemState.PositionsClosed.ForEach(p =>
             {
                 float value = p.Value();
@@ -27,14 +30,24 @@ namespace MarketOps.SystemAnalysis.SystemSummary
                 {
                     summary.Wins++;
                     summary.SumWins += value;
+                    sumPcntWins += value / p.OpenValue();
                 } else
                 {
                     summary.Losses++;
                     summary.SumLosses -= value;
+                    sumPcntLosses += value / p.OpenValue();
                 }
             });
-            if (summary.Wins > 0) summary.AvgWin = summary.SumWins / summary.Wins;
-            if (summary.Losses > 0) summary.AvgLoss = summary.SumLosses / summary.Losses;
+            if (summary.Wins > 0)
+            {
+                summary.AvgWin = summary.SumWins / summary.Wins;
+                summary.AvgPcntWin = sumPcntWins / summary.Wins;
+            }
+            if (summary.Losses > 0)
+            {
+                summary.AvgLoss = summary.SumLosses / summary.Losses;
+                summary.AvgPcntLoss = sumPcntLosses / summary.Losses;
+            }
             if (summary.AvgLoss != 0) summary.AvgWinLossRatio = summary.AvgWin / summary.AvgLoss;
         }
 

@@ -28,6 +28,7 @@ using MarketOps.StockData;
 using System.Linq;
 using MarketOps.Controls;
 using System.Threading.Tasks;
+using MarketOps.SystemAnalysis.MonteCarlo;
 
 namespace MarketOps
 {
@@ -284,12 +285,14 @@ namespace MarketOps
             lblSDRClosedPositionsCount.Text = summary.ClosedPositionsCount.ToDisplay();
             lblSDRWins.Text = summary.Wins.ToDisplay();
             lblSDRWinProbability.Text = summary.WinProbability.ToDisplay();
-            lblSDRSumWins.Text = summary.SumWins.ToDisplay();
-            lblSDRAvgWin.Text = summary.AvgWin.ToDisplay();
             lblSDRLosses.Text = summary.Losses.ToDisplay();
             lblSDRLossProbability.Text = summary.LossProbability.ToDisplay();
+            lblSDRSumWins.Text = summary.SumWins.ToDisplay();
+            lblSDRAvgWin.Text = summary.AvgWin.ToDisplay();
+            lblSDRAvgPcntWin.Text = summary.AvgPcntWin.ToDisplayPcnt();
             lblSDRSumLosses.Text = summary.SumLosses.ToDisplay();
             lblSDRAvgLoss.Text = summary.AvgLoss.ToDisplay();
+            lblSDRAvgPcntLoss.Text = summary.AvgPcntLoss.ToDisplayPcnt();
             lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
             lblSDRExpectedUnitReturn.Text = summary.AvgLoss != 0 ? summary.ExpectedUnitReturn.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.AvgLoss != 0 ? summary.ExpectedPositionValue.ToDisplay() : "---";
@@ -299,6 +302,10 @@ namespace MarketOps
 
             lblSDREqDistrAvg.Text = summary.EquityDistribution.Average.ToDisplay(4);
             lblSDREqDistrStdDev.Text = summary.EquityDistribution.StdDev.ToDisplay(4);
+
+            edtMonteCarloWinProb.Value = (decimal)summary.WinProbability;
+            edtMonteCarloAvgPcntWin.Value = (decimal)(100f * summary.AvgPcntWin);
+            edtMonteCarloAvgPcntLoss.Value = (decimal)(100f * summary.AvgPcntLoss);
         }
 
         private void ShowPositions(SystemState systemState)
@@ -369,6 +376,19 @@ namespace MarketOps
             appConfig.Simulation.InitialCash = edtInitialCash.Value;
 
             AppConfigOps.Save(appConfig);
+        }
+
+        private void btnMonteCarloSim_Click(object sender, EventArgs e)
+        {
+            var result = MonteCarloCalculator.Calculate(
+                (int)edtMonteCarloCount.Value,
+                (int)edtMonteCarloLength.Value,
+                (float)edtMonteCarloWinProb.Value,
+                (float)edtMonteCarloAvgPcntWin.Value / 100f,
+                -(float)edtMonteCarloAvgPcntLoss.Value / 100f
+                );
+            lblMonteCarloSimWins.Text = $"{result.Wins} ({result.WinsPcnt.ToDisplayPcnt()})";
+            lblMonteCarloSimLosses.Text = $"{result.Losses} ({result.LossesPcnt.ToDisplayPcnt()})";
         }
     }
 }

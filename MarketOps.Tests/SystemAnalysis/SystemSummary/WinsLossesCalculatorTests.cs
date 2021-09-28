@@ -39,7 +39,9 @@ namespace MarketOps.Tests.SystemAnalysis.SystemSummary
             _summary.SumWins.ShouldBe(0);
             _summary.SumLosses.ShouldBe(0);
             _summary.AvgWin.ShouldBe(0);
+            _summary.AvgPcntWin.ShouldBe(0);
             _summary.AvgLoss.ShouldBe(0);
+            _summary.AvgPcntLoss.ShouldBe(0);
             _summary.AvgWinLossRatio.ShouldBe(0);
             _summary.ExpectedPositionValue.ShouldBe(0);
         }
@@ -83,7 +85,9 @@ namespace MarketOps.Tests.SystemAnalysis.SystemSummary
             _summary.SumWins.ShouldBe(10);
             _summary.SumLosses.ShouldBe(3);
             _summary.AvgWin.ShouldBe(10f);
+            _summary.AvgPcntWin.ShouldBe(1f);
             _summary.AvgLoss.ShouldBe(1f);
+            _summary.AvgPcntLoss.ShouldBe(-0.1f);
             _summary.AvgWinLossRatio.ShouldBe(10f);
             _summary.ExpectedPositionValue.ShouldBe(1.75f);
         }

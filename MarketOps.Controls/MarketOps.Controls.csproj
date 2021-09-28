@@ -58,6 +58,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MarketOps.Controls.resx</DependentUpon>
     </Compile>
+    <Compile Include="MonteCarlo\MonteCarloDataChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MonteCarlo\MonteCarloDataChart.Designer.cs">
+      <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="MsgDisplay.cs" />
     <Compile Include="PointChart\PointChart.cs">
       <SubType>UserControl</SubType>
@@ -158,6 +164,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>MarketOps.Controls.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="MonteCarlo\MonteCarloDataChart.resx">
+      <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PointChart\PointChart.resx">
       <DependentUpon>PointChart.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,6 +210,10 @@
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemAnalysis\MarketOps.SystemAnalysis.csproj">
+      <Project>{e77e14d1-5661-49d8-8259-664915c0bb01}</Project>
+      <Name>MarketOps.SystemAnalysis</Name>
     </ProjectReference>
     <ProjectReference Include="..\MarketOps.SystemData\MarketOps.SystemData.csproj">
       <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>

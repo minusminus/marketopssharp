@@ -117,7 +117,16 @@
             this.edtSimDataLog = new System.Windows.Forms.TextBox();
             this.tabSimMonteCarlo = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lblMonteCarloSimLosses = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimWins = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnMonteCarloSim = new System.Windows.Forms.Button();
+            this.edtMonteCarloAvgPcntLoss = new System.Windows.Forms.NumericUpDown();
+            this.edtMonteCarloAvgPcntWin = new System.Windows.Forms.NumericUpDown();
+            this.edtMonteCarloWinProb = new System.Windows.Forms.NumericUpDown();
             this.edtMonteCarloLength = new System.Windows.Forms.NumericUpDown();
             this.edtMonteCarloCount = new System.Windows.Forms.NumericUpDown();
             this.label31 = new System.Windows.Forms.Label();
@@ -138,15 +147,7 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.edtMonteCarloWinProb = new System.Windows.Forms.NumericUpDown();
-            this.edtMonteCarloAvgPcntWin = new System.Windows.Forms.NumericUpDown();
-            this.edtMonteCarloAvgPcntLoss = new System.Windows.Forms.NumericUpDown();
-            this.btnMonteCarloSim = new System.Windows.Forms.Button();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label32 = new System.Windows.Forms.Label();
-            this.lblMonteCarloSimWins = new System.Windows.Forms.Label();
-            this.lblMonteCarloSimLosses = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
+            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -178,16 +179,16 @@
             this.tabSimDataLog.SuspendLayout();
             this.tabSimMonteCarlo.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloLength)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloCount)).BeginInit();
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).BeginInit();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -1104,12 +1105,61 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.chartMonteCarloData);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(207, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(729, 271);
             this.panel2.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.lblMonteCarloSimLosses);
+            this.panel3.Controls.Add(this.label34);
+            this.panel3.Controls.Add(this.lblMonteCarloSimWins);
+            this.panel3.Controls.Add(this.label32);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(729, 28);
+            this.panel3.TabIndex = 0;
+            // 
+            // lblMonteCarloSimLosses
+            // 
+            this.lblMonteCarloSimLosses.AutoSize = true;
+            this.lblMonteCarloSimLosses.Location = new System.Drawing.Point(195, 8);
+            this.lblMonteCarloSimLosses.Name = "lblMonteCarloSimLosses";
+            this.lblMonteCarloSimLosses.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLosses.TabIndex = 29;
+            this.lblMonteCarloSimLosses.Text = "Wins:";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(146, 8);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(43, 13);
+            this.label34.TabIndex = 28;
+            this.label34.Text = "Losses:";
+            // 
+            // lblMonteCarloSimWins
+            // 
+            this.lblMonteCarloSimWins.AutoSize = true;
+            this.lblMonteCarloSimWins.Location = new System.Drawing.Point(46, 8);
+            this.lblMonteCarloSimWins.Name = "lblMonteCarloSimWins";
+            this.lblMonteCarloSimWins.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimWins.TabIndex = 27;
+            this.lblMonteCarloSimWins.Text = "Wins:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(6, 8);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(34, 13);
+            this.label32.TabIndex = 26;
+            this.label32.Text = "Wins:";
             // 
             // panel1
             // 
@@ -1129,6 +1179,60 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(204, 271);
             this.panel1.TabIndex = 0;
+            // 
+            // btnMonteCarloSim
+            // 
+            this.btnMonteCarloSim.Location = new System.Drawing.Point(15, 142);
+            this.btnMonteCarloSim.Name = "btnMonteCarloSim";
+            this.btnMonteCarloSim.Size = new System.Drawing.Size(172, 23);
+            this.btnMonteCarloSim.TabIndex = 35;
+            this.btnMonteCarloSim.Text = "Simulate";
+            this.btnMonteCarloSim.UseVisualStyleBackColor = true;
+            this.btnMonteCarloSim.Click += new System.EventHandler(this.btnMonteCarloSim_Click);
+            // 
+            // edtMonteCarloAvgPcntLoss
+            // 
+            this.edtMonteCarloAvgPcntLoss.DecimalPlaces = 2;
+            this.edtMonteCarloAvgPcntLoss.Location = new System.Drawing.Point(108, 102);
+            this.edtMonteCarloAvgPcntLoss.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.edtMonteCarloAvgPcntLoss.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            -2147483648});
+            this.edtMonteCarloAvgPcntLoss.Name = "edtMonteCarloAvgPcntLoss";
+            this.edtMonteCarloAvgPcntLoss.Size = new System.Drawing.Size(79, 20);
+            this.edtMonteCarloAvgPcntLoss.TabIndex = 34;
+            // 
+            // edtMonteCarloAvgPcntWin
+            // 
+            this.edtMonteCarloAvgPcntWin.DecimalPlaces = 2;
+            this.edtMonteCarloAvgPcntWin.Location = new System.Drawing.Point(108, 80);
+            this.edtMonteCarloAvgPcntWin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.edtMonteCarloAvgPcntWin.Name = "edtMonteCarloAvgPcntWin";
+            this.edtMonteCarloAvgPcntWin.Size = new System.Drawing.Size(79, 20);
+            this.edtMonteCarloAvgPcntWin.TabIndex = 33;
+            // 
+            // edtMonteCarloWinProb
+            // 
+            this.edtMonteCarloWinProb.DecimalPlaces = 2;
+            this.edtMonteCarloWinProb.Location = new System.Drawing.Point(108, 58);
+            this.edtMonteCarloWinProb.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.edtMonteCarloWinProb.Name = "edtMonteCarloWinProb";
+            this.edtMonteCarloWinProb.Size = new System.Drawing.Size(79, 20);
+            this.edtMonteCarloWinProb.TabIndex = 32;
             // 
             // edtMonteCarloLength
             // 
@@ -1355,107 +1459,13 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // edtMonteCarloWinProb
+            // chartMonteCarloData
             // 
-            this.edtMonteCarloWinProb.DecimalPlaces = 2;
-            this.edtMonteCarloWinProb.Location = new System.Drawing.Point(108, 58);
-            this.edtMonteCarloWinProb.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.edtMonteCarloWinProb.Name = "edtMonteCarloWinProb";
-            this.edtMonteCarloWinProb.Size = new System.Drawing.Size(79, 20);
-            this.edtMonteCarloWinProb.TabIndex = 32;
-            // 
-            // edtMonteCarloAvgPcntWin
-            // 
-            this.edtMonteCarloAvgPcntWin.DecimalPlaces = 2;
-            this.edtMonteCarloAvgPcntWin.Location = new System.Drawing.Point(108, 80);
-            this.edtMonteCarloAvgPcntWin.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.edtMonteCarloAvgPcntWin.Name = "edtMonteCarloAvgPcntWin";
-            this.edtMonteCarloAvgPcntWin.Size = new System.Drawing.Size(79, 20);
-            this.edtMonteCarloAvgPcntWin.TabIndex = 33;
-            // 
-            // edtMonteCarloAvgPcntLoss
-            // 
-            this.edtMonteCarloAvgPcntLoss.DecimalPlaces = 2;
-            this.edtMonteCarloAvgPcntLoss.Location = new System.Drawing.Point(108, 102);
-            this.edtMonteCarloAvgPcntLoss.Maximum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.edtMonteCarloAvgPcntLoss.Minimum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            -2147483648});
-            this.edtMonteCarloAvgPcntLoss.Name = "edtMonteCarloAvgPcntLoss";
-            this.edtMonteCarloAvgPcntLoss.Size = new System.Drawing.Size(79, 20);
-            this.edtMonteCarloAvgPcntLoss.TabIndex = 34;
-            // 
-            // btnMonteCarloSim
-            // 
-            this.btnMonteCarloSim.Location = new System.Drawing.Point(15, 142);
-            this.btnMonteCarloSim.Name = "btnMonteCarloSim";
-            this.btnMonteCarloSim.Size = new System.Drawing.Size(172, 23);
-            this.btnMonteCarloSim.TabIndex = 35;
-            this.btnMonteCarloSim.Text = "Simulate";
-            this.btnMonteCarloSim.UseVisualStyleBackColor = true;
-            this.btnMonteCarloSim.Click += new System.EventHandler(this.btnMonteCarloSim_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.lblMonteCarloSimLosses);
-            this.panel3.Controls.Add(this.label34);
-            this.panel3.Controls.Add(this.lblMonteCarloSimWins);
-            this.panel3.Controls.Add(this.label32);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(729, 28);
-            this.panel3.TabIndex = 0;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(6, 8);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(34, 13);
-            this.label32.TabIndex = 26;
-            this.label32.Text = "Wins:";
-            // 
-            // lblMonteCarloSimWins
-            // 
-            this.lblMonteCarloSimWins.AutoSize = true;
-            this.lblMonteCarloSimWins.Location = new System.Drawing.Point(46, 8);
-            this.lblMonteCarloSimWins.Name = "lblMonteCarloSimWins";
-            this.lblMonteCarloSimWins.Size = new System.Drawing.Size(34, 13);
-            this.lblMonteCarloSimWins.TabIndex = 27;
-            this.lblMonteCarloSimWins.Text = "Wins:";
-            // 
-            // lblMonteCarloSimLosses
-            // 
-            this.lblMonteCarloSimLosses.AutoSize = true;
-            this.lblMonteCarloSimLosses.Location = new System.Drawing.Point(195, 8);
-            this.lblMonteCarloSimLosses.Name = "lblMonteCarloSimLosses";
-            this.lblMonteCarloSimLosses.Size = new System.Drawing.Size(34, 13);
-            this.lblMonteCarloSimLosses.TabIndex = 29;
-            this.lblMonteCarloSimLosses.Text = "Wins:";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(146, 8);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(43, 13);
-            this.label34.TabIndex = 28;
-            this.label34.Text = "Losses:";
+            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 28);
+            this.chartMonteCarloData.Name = "chartMonteCarloData";
+            this.chartMonteCarloData.Size = new System.Drawing.Size(729, 243);
+            this.chartMonteCarloData.TabIndex = 1;
             // 
             // FormMain
             // 
@@ -1504,19 +1514,19 @@
             this.tabSimDataLog.PerformLayout();
             this.tabSimMonteCarlo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloLength)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloCount)).EndInit();
             this.pnlTop.ResumeLayout(false);
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1642,6 +1652,7 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label lblMonteCarloSimWins;
         private System.Windows.Forms.Label label32;
+        private Controls.MonteCarlo.MonteCarloDataChart chartMonteCarloData;
     }
 }
 

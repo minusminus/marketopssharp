@@ -11,5 +11,7 @@ namespace MarketOps.Config.App
         public DateTime SimFrom { get; set; }
         public DateTime SimTo { get; set; }
         public decimal InitialCash { get; set; }
+        public decimal MonteCarloCount { get; set; }
+        public decimal MonteCarloLength { get; set; }
     }
 }

@@ -356,6 +356,10 @@ namespace MarketOps
                     dtpSimTo.Value = appConfig.Simulation.SimTo;
                 if (appConfig.Simulation.InitialCash > 0)
                     edtInitialCash.Value = appConfig.Simulation.InitialCash;
+                if (appConfig.Simulation.MonteCarloCount > 0)
+                    edtMonteCarloCount.Value = appConfig.Simulation.MonteCarloCount;
+                if (appConfig.Simulation.MonteCarloLength > 0)
+                    edtMonteCarloLength.Value = appConfig.Simulation.MonteCarloLength;
             }
         }
 
@@ -374,12 +378,16 @@ namespace MarketOps
             appConfig.Simulation.SimFrom = dtpSimFrom.Value;
             appConfig.Simulation.SimTo = dtpSimTo.Value;
             appConfig.Simulation.InitialCash = edtInitialCash.Value;
+            appConfig.Simulation.MonteCarloCount = edtMonteCarloCount.Value;
+            appConfig.Simulation.MonteCarloLength = edtMonteCarloLength.Value;
 
             AppConfigOps.Save(appConfig);
         }
 
         private void btnMonteCarloSim_Click(object sender, EventArgs e)
         {
+            if (_currentSimSystemSummary == null) return;
+
             var result = MonteCarloCalculator.Calculate(
                 (int)edtMonteCarloCount.Value,
                 (int)edtMonteCarloLength.Value,
@@ -389,6 +397,7 @@ namespace MarketOps
                 );
             lblMonteCarloSimWins.Text = $"{result.Wins} ({result.WinsPcnt.ToDisplayPcnt()})";
             lblMonteCarloSimLosses.Text = $"{result.Losses} ({result.LossesPcnt.ToDisplayPcnt()})";
+            chartMonteCarloData.LoadData(result);
         }
     }
 }

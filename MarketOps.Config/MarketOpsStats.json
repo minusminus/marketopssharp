@@ -1,0 +1,32 @@
+[
+  {
+    "StatName": "ATR",
+    "ClassName": "MarketOps.Stats.Stats.StatATR",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "Additional"
+  },
+  {
+    "StatName": "BB",
+    "ClassName": "MarketOps.Stats.Stats.StatBB",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
+  },
+  {
+    "StatName": "SMA",
+    "ClassName": "MarketOps.Stats.Stats.StatSMA",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
+  },
+  {
+    "StatName": "RangeChangePcnt",
+    "ClassName": "MarketOps.Stats.Stats.StatRangeChangePcnt",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "Additional"
+  },
+  {
+    "StatName": "HL Channel",
+    "ClassName": "MarketOps.Stats.Stats.StatHLChannel",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
+  }
+]

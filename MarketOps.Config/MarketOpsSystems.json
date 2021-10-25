@@ -1,0 +1,92 @@
+[
+  {
+    "Description": "PriceCrossingSMA",
+    "ClassName": "MarketOps.SystemDefs.PriceCrossingSMA.PriceCrossingSMA",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "SMA period",
+        "Value": "20"
+      }
+    ]
+  },
+  {
+    "Description": "BBTrend",
+    "ClassName": "MarketOps.SystemDefs.BBTrend.BBTrend",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "BB period",
+        "Value": "40"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      }
+    ]
+  },
+  {
+    "Description": "BBTrend Funds",
+    "ClassName": "MarketOps.SystemDefs.BBTrendFunds.BBTrendFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
+  },
+  {
+    "Description": "BBTrend Multi Funds",
+    "ClassName": "MarketOps.SystemDefs.BBTrendFunds.BBTrendMultiFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
+  },
+  {
+    "Description": "Simplex Multi Funds",
+    "ClassName": "MarketOps.SystemDefs.SimplexFunds.SimplexMultiFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
+  },
+  {
+    "Description": "Simplex Multi Funds - live",
+    "ClassName": "MarketOps.SystemDefs.SimplexFunds.SimplexMultiFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+       {
+        "Param": "AvgProfitRange",
+        "Value": "3"
+      },
+      {
+        "Param": "AvgChangeRange",
+        "Value": "6"
+      },
+      {
+        "Param": "AcceptableSingleDD",
+        "Value": "0,2"
+      },
+      {
+        "Param": "RiskSigmaMultiplier",
+        "Value": "2,0"
+      },
+      {
+        "Param": "MaxSinglePositionSize",
+        "Value": "0,6"
+      },
+      {
+        "Param": "MaxPortfolioRisk",
+        "Value": "0,6"
+      },
+      {
+        "Param": "TruncateBalanceToNthPlace",
+        "Value": "3"
+      }
+   ]
+  }
+]

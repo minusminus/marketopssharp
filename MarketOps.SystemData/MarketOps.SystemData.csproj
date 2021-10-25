@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1719A4ED-27A2-44B0-9F75-A61E0FF26A3D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MarketOps.SystemData</RootNamespace>
+    <AssemblyName>MarketOps.SystemData</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\DrawDownsExtensions.cs" />
+    <Compile Include="Extensions\ISystemDataLoaderExtensions.cs" />
+    <Compile Include="Extensions\MoneyValueExtensions.cs" />
+    <Compile Include="Extensions\PositionDirExtensions.cs" />
+    <Compile Include="Extensions\PositionExtensions.cs" />
+    <Compile Include="Extensions\SystemStateExtensions.cs" />
+    <Compile Include="Extensions\SystemValueCalculator.cs" />
+    <Compile Include="Interfaces\ICommission.cs" />
+    <Compile Include="Interfaces\IMMPositionCloseCalculator.cs" />
+    <Compile Include="Interfaces\IMMSignalVolume.cs" />
+    <Compile Include="Interfaces\ISignalGeneratorOnClose.cs" />
+    <Compile Include="Interfaces\ISignalGeneratorOnOpen.cs" />
+    <Compile Include="Interfaces\ISlippage.cs" />
+    <Compile Include="Interfaces\ISystemDataDefinitionProvider.cs" />
+    <Compile Include="Interfaces\ISystemDataLoader.cs" />
+    <Compile Include="Interfaces\ISystemExecutionLogger.cs" />
+    <Compile Include="Interfaces\ITickAdder.cs" />
+    <Compile Include="Interfaces\ITickAligner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\EquityDistribution.cs" />
+    <Compile Include="Types\Position.cs" />
+    <Compile Include="Types\PositionCloseMode.cs" />
+    <Compile Include="Types\PositionDir.cs" />
+    <Compile Include="Types\Signal.cs" />
+    <Compile Include="Types\SignalType.cs" />
+    <Compile Include="Types\SystemConfiguration.cs" />
+    <Compile Include="Types\SystemDataDefinition.cs" />
+    <Compile Include="Types\SystemDefinition.cs" />
+    <Compile Include="Types\SystemDrawDown.cs" />
+    <Compile Include="Types\SystemState.cs" />
+    <Compile Include="Types\SystemStateSummary.cs" />
+    <Compile Include="Types\SystemStockDataDefinition.cs" />
+    <Compile Include="Types\SystemValue.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
+      <Name>MarketOps.StockData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

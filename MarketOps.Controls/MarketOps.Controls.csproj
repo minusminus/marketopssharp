@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{107A7493-BF4D-48FC-AAD4-B9D291FF8011}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MarketOps.Controls</RootNamespace>
+    <AssemblyName>MarketOps.Controls</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChartAreaFactory.cs" />
+    <Compile Include="Extensions\ShowDialogExtensions.cs" />
+    <Compile Include="FormLongLastingWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLongLastingWork.Designer.cs">
+      <DependentUpon>FormLongLastingWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MarketOps.Controls.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketOps.Controls.resx</DependentUpon>
+    </Compile>
+    <Compile Include="MonteCarlo\MonteCarloDataChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MonteCarlo\MonteCarloDataChart.Designer.cs">
+      <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MsgDisplay.cs" />
+    <Compile Include="PointChart\PointChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PointChart\PointChart.Designer.cs">
+      <DependentUpon>PointChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointChart\PointChartData.cs" />
+    <Compile Include="Extensions\TabPageExtensions.cs" />
+    <Compile Include="PriceChart\ChartAxisValueLabel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceChart\ChartAxisValueLabel.Designer.cs">
+      <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChartsUtils\ChartYViewRangeCalculator.cs" />
+    <Compile Include="PriceChart\ChartZoomCalculator.cs" />
+    <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
+    <Compile Include="PriceChart\FormEditStockStatParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PriceChart\FormEditStockStatParams.Designer.cs">
+      <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceChart\FormSelectDataRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PriceChart\FormSelectDataRange.Designer.cs">
+      <DependentUpon>FormSelectDataRange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PositionChangeChecker.cs" />
+    <Compile Include="PriceChart\PositionOpenCloseImages.cs" />
+    <Compile Include="PriceChart\PriceVolumeChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceChart\PriceVolumeChart.Designer.cs">
+      <DependentUpon>PriceVolumeChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceChart\PriceVolumeChartMode.cs" />
+    <Compile Include="PriceChart\PriceVolumePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceChart\PriceVolumePanel.Designer.cs">
+      <DependentUpon>PriceVolumePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceChart\StockStatSticker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceChart\StockStatSticker.Designer.cs">
+      <DependentUpon>StockStatSticker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceChart\StockStatStickersPositioner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StockData\MOParamsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StockData\MOParamsEditor.Designer.cs">
+      <DependentUpon>MOParamsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StockStatSeriesFactory.cs" />
+    <Compile Include="SuspendDrawingUpdate.cs" />
+    <Compile Include="SystemEquity\SystemEquityChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SystemEquity\SystemEquityChart.Designer.cs">
+      <DependentUpon>SystemEquityChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SystemEquity\SystemValueMapper.cs" />
+    <Compile Include="SystemPositionsGrid\SystemPositionGridRecord.cs" />
+    <Compile Include="SystemPositionsGrid\SystemPositionsGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SystemPositionsGrid\SystemPositionsGrid.Designer.cs">
+      <DependentUpon>SystemPositionsGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolTipExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolTipExtended.Designer.cs">
+      <DependentUpon>ToolTipExtended.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Types\IStockInfoGenerator.cs" />
+    <Compile Include="Types\IStockStatsInfoGenerator.cs" />
+    <Compile Include="StockData\MOParamEditMapper.cs" />
+    <Compile Include="Types\StockDisplayData.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FormLongLastingWork.resx">
+      <DependentUpon>FormLongLastingWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MarketOps.Controls.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MarketOps.Controls.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MonteCarlo\MonteCarloDataChart.resx">
+      <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointChart\PointChart.resx">
+      <DependentUpon>PointChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceChart\ChartAxisValueLabel.resx">
+      <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceChart\FormEditStockStatParams.resx">
+      <DependentUpon>FormEditStockStatParams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceChart\FormSelectDataRange.resx">
+      <DependentUpon>FormSelectDataRange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceChart\PriceVolumeChart.resx">
+      <DependentUpon>PriceVolumeChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceChart\PriceVolumePanel.resx">
+      <DependentUpon>PriceVolumePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PriceChart\StockStatSticker.resx">
+      <DependentUpon>StockStatSticker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StockData\MOParamsEditor.resx">
+      <DependentUpon>MOParamsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemEquity\SystemEquityChart.resx">
+      <DependentUpon>SystemEquityChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemPositionsGrid\SystemPositionsGrid.resx">
+      <DependentUpon>SystemPositionsGrid.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Config\MarketOps.Config.csproj">
+      <Project>{a7360268-1f6d-4878-aa27-ea365f11e0a7}</Project>
+      <Name>MarketOps.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
+      <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
+      <Name>MarketOps.StockData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemAnalysis\MarketOps.SystemAnalysis.csproj">
+      <Project>{e77e14d1-5661-49d8-8259-664915c0bb01}</Project>
+      <Name>MarketOps.SystemAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.SystemData\MarketOps.SystemData.csproj">
+      <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
+      <Name>MarketOps.SystemData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\downarrow_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\downarrow_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\uparrow_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\uparrow_red.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -41,11 +41,14 @@ namespace MarketOps.SystemDefs.SimplexStocks
         private double _maxPortfolioRisk;// = 0.8;
         private int _truncateBalanceToNthPlace;// = 3;    //balance in range <0..1> - truncate to first place after comma
 
+        //spolki o obrocie >50000 z ost 3 miesiecy od 2021-09-01 do 12-01
         private readonly string[] _stocksNames = { "PKO014",
-            "PKO008", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO021",
-            "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057",
-            "PKO072", "PKO073", "PKO074", "PKO097", "PKO098", "PKO909",
-            "PKO910", "PKO913", "PKO918", "PKO919", "PKO925"};
+            "KGHM", "PKOBP", "PEKAO", "PZU", "PKNORLEN", "CDPROJEKT", "JSW", "MBANK", "LPP", "PGNIG", "ALIOR", "CYFRPLSAT", "SANPL", "PGE", "LOTOS", "CCC", "MERCATOR", 
+            "ORANGEPL", "MABION", "BUMECH", "BOGDANKA", "TAURONPE", "MILLENNIUM", "KRUK", "GETINOBLE", "ASSECOPOL", "KERNEL", "CIECH", "KETY", "ASBIS", "GRUPAAZOTY", 
+            "FAMUR", "ZEPAK", "XTB", "BIOMEDLUB", "EUROCASH", "HANDLOWY", "ENEA", "INGBSK", "GPW", "LIVECHAT", "INTERCARS", "11BIT", "BUDIMEX", "PKPCARGO", "AMREST", 
+            "COALENERG", "WIRTUALNA", "COGNOR", "STALPROD", "CLNPHARMA", "BENEFIT", "CIGAMES", "POLIMEXMS", "SERINUS", "NEUCA", "TIM", "DOMDEV", "ASTARTA", "ACTION", 
+            "WIELTON", "RAFAKO", "PLAYWAY", "BOS", "BOWIM", "AMICA", "GROCLIN", "MILKILAND", "GETIN", "CEZ", "AUTOPARTN", "ALUMETAL", "ASSECOSEE", "MIRBUD", "TOYA", 
+            "SELVITA", "COMARCH", "GRODNO", "PRAIRIE", "OPONEO.PL", "KSGAGRO", "ARCTIC", "TRAKCJA", "SANOK", "FERRO"};
 
         private readonly bool[] _aggressiveFunds;
 

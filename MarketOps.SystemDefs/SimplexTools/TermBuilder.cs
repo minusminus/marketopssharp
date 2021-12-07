@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.SolverFoundation.Services;
 
-namespace MarketOps.SystemDefs.SimplexFunds
+namespace MarketOps.SystemDefs.SimplexTools
 {
     /// <summary>
     /// Solver term builder.

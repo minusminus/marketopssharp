@@ -59,7 +59,7 @@
     "ClassName": "MarketOps.SystemDefs.SimplexFunds.SimplexMultiFunds",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
-       {
+      {
         "Param": "AvgProfitRange",
         "Value": "3"
       },
@@ -87,6 +87,13 @@
         "Param": "TruncateBalanceToNthPlace",
         "Value": "3"
       }
-   ]
+    ]
+  },
+  {
+    "Description": "Simplex Multi Stocks",
+    "ClassName": "MarketOps.SystemDefs.SimplexStocks.SimplexMultiStocks",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
   }
 ]

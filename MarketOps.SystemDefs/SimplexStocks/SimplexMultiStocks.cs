@@ -33,7 +33,7 @@ namespace MarketOps.SystemDefs.SimplexStocks
 
         public override void Prepare()
         {
-            SignalsSimplexMultiFunds signals = new SignalsSimplexMultiFunds(_dataLoader, _dataProvider, _systemExecutionLogger, SystemParams);
+            SignalsSimplexMultiStocks signals = new SignalsSimplexMultiStocks(_dataLoader, _dataProvider, _systemExecutionLogger, SystemParams);
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

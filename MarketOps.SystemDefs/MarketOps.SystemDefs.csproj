@@ -69,7 +69,7 @@
     <Compile Include="SimplexFunds\SimplexFundsDataCalculator.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFunds.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFundsParams.cs" />
-    <Compile Include="SimplexStocks\SignalsSimplexMultiFunds.cs" />
+    <Compile Include="SimplexStocks\SignalsSimplexMultiStocks.cs" />
     <Compile Include="SimplexStocks\SimplexExecutor.cs" />
     <Compile Include="SimplexStocks\SimplexMultiStocks.cs" />
     <Compile Include="SimplexStocks\SimplexMultiStocksParams.cs" />

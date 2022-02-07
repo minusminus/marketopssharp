@@ -1,6 +1,6 @@
 [
   {
-    "Description": "PriceCrossingSMA",
+    "Description": ".PriceCrossingSMA",
     "ClassName": "MarketOps.SystemDefs.PriceCrossingSMA.PriceCrossingSMA",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
@@ -15,7 +15,7 @@
     ]
   },
   {
-    "Description": "BBTrend",
+    "Description": ".BBTrend",
     "ClassName": "MarketOps.SystemDefs.BBTrend.BBTrend",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
@@ -34,14 +34,14 @@
     ]
   },
   {
-    "Description": "BBTrend Funds",
+    "Description": ".BBTrend Funds",
     "ClassName": "MarketOps.SystemDefs.BBTrendFunds.BBTrendFunds",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
     ]
   },
   {
-    "Description": "BBTrend Multi Funds",
+    "Description": ".BBTrend Multi Funds",
     "ClassName": "MarketOps.SystemDefs.BBTrendFunds.BBTrendMultiFunds",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
@@ -90,7 +90,7 @@
     ]
   },
   {
-    "Description": "Simplex Multi Stocks",
+    "Description": ".Simplex Multi Stocks",
     "ClassName": "MarketOps.SystemDefs.SimplexStocks.SimplexMultiStocks",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [

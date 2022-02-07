@@ -17,6 +17,7 @@ namespace MarketOps.Config.SystemExecutor
             string jsonConfig = File.ReadAllText(ConfigFilePath);
             return JsonSerializer
                 .Deserialize<IEnumerable<ConfigSystemDefinition>>(jsonConfig)
+                .Where(x => !x.Description.StartsWith("."))
                 .OrderBy(x => x.Description)
                 .ToList();
         }

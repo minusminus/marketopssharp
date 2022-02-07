@@ -31,7 +31,7 @@ namespace MarketOps.SystemDefs.SimplexStocks
     /// - avgchange(6) + stddev * sigma_multiplier <= portoflio_value * acceptable_risk
     /// - price * decision <= portoflio_value * max_single_pos_size
     /// </summary>
-    internal class SignalsSimplexMultiFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
+    internal class SignalsSimplexMultiStocks : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private int _avgProfitRange;// = 3;
         private int _avgChangeRange;// = 6;
@@ -57,7 +57,7 @@ namespace MarketOps.SystemDefs.SimplexStocks
         private readonly StockDataRange _dataRange;
         private SimplexStocksData _fundsData;
 
-        public SignalsSimplexMultiFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger, MOParams systemParams)
+        public SignalsSimplexMultiStocks(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger, MOParams systemParams)
         {
             _avgProfitRange = systemParams.Get(SimplexMultiStocksParams.AvgProfitRange).As<int>();
             _avgChangeRange = systemParams.Get(SimplexMultiStocksParams.AvgChangeRange).As<int>();

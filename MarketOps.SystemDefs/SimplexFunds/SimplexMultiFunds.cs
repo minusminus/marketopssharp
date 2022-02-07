@@ -2,7 +2,6 @@
 using MarketOps.StockData.Interfaces;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using System;
 
 namespace MarketOps.SystemDefs.SimplexFunds
 {

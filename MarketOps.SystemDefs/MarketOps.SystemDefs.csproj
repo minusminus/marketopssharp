@@ -69,7 +69,13 @@
     <Compile Include="SimplexFunds\SimplexFundsDataCalculator.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFunds.cs" />
     <Compile Include="SimplexFunds\SimplexMultiFundsParams.cs" />
-    <Compile Include="SimplexFunds\TermBuilder.cs" />
+    <Compile Include="SimplexStocks\SignalsSimplexMultiStocks.cs" />
+    <Compile Include="SimplexStocks\SimplexExecutor.cs" />
+    <Compile Include="SimplexStocks\SimplexMultiStocks.cs" />
+    <Compile Include="SimplexStocks\SimplexMultiStocksParams.cs" />
+    <Compile Include="SimplexStocks\SimplexStocksData.cs" />
+    <Compile Include="SimplexStocks\SimplexStocksDataCalculator.cs" />
+    <Compile Include="SimplexTools\TermBuilder.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -58,6 +58,9 @@
     <Compile Include="BBTrendRecognizer\BBTrendRecognizer.cs" />
     <Compile Include="BBTrendRecognizer\BBTrendTypes.cs" />
     <Compile Include="BBTrend\SignalsBBTrend.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendStocks.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendStocksParams.cs" />
+    <Compile Include="LongBBTrendStocks\SignalsLongBBTrendStocks.cs" />
     <Compile Include="ModNCounter.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMAParams.cs" />

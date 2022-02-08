@@ -95,5 +95,24 @@
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
     ]
+  },
+  {
+    "Description": "LongBBTrend Stocks",
+    "ClassName": "MarketOps.SystemDefs.LongBBTrendStocks.LongBBTrendStocks",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      }
+    ]
   }
 ]

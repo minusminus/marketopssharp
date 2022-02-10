@@ -37,7 +37,7 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             {
                 if (!dataLoader.GetWithIndex(data.Stocks[i].FullName, dataRange, ts, data.StatsBB[i].BackBufferLength, out StockPricesData spData, out int dataIndex)) continue;
                 BBTrendType lastTrend = data.CurrentTrends[i];
-                data.CurrentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(spData, data.StatsBB[i], dataIndex, data.CurrentTrends[i], out float trendStartLevel);
+                data.CurrentTrends[i] = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnLH(spData, data.StatsBB[i], dataIndex, data.CurrentTrends[i], out float trendStartLevel);
                 if (lastTrend != data.CurrentTrends[i])
                 {
                     data.UpTrendStartValues[i] = trendStartLevel;// spData.H[dataIndex];

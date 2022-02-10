@@ -66,7 +66,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
             StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
-            _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrend(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _);
+            _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, (StatBB)_statBB, leadingIndex, _currentTrend);
 
             if (systemState.PositionsActive.Count > 0)
@@ -78,7 +78,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             }
             else
             {
-                if ((expectation == BBTrendExpectation.UpAndRaising) || (expectation == BBTrendExpectation.UpButPossibleChange))
+                //if ((expectation == BBTrendExpectation.UpAndRaising) || (expectation == BBTrendExpectation.UpButPossibleChange))
+                if (expectation == BBTrendExpectation.UpAndRaising)
                     res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex]));
             }
 

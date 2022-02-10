@@ -35,6 +35,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 StockData.Types.StockDataRange.Monthly,
                 SystemParams.Get(LongBBTrendStocksParams.BBPeriod).As<int>(),
                 SystemParams.Get(LongBBTrendStocksParams.BBSigmaWidth).As<float>(),
+                20,
                 _dataLoader, _dataProvider,
                 new MMSignalVolumeForAllCash(_commission));
 

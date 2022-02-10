@@ -14,7 +14,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     /// Signals for long trends on stocks.
     /// 
     /// Trend starts when price breaks BBH. 
-    /// Enter: on next tick open after trned start
+    /// Enter: on next tick open after trend start
     /// Exit options:
     /// - stop on sma
     /// - stop on min of 3 lows
@@ -29,10 +29,10 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private readonly IMMSignalVolume _signalVolumeCalculator;
 
         private readonly StockDefinition _stock;
-        private readonly StockStat _statBB;
+        private readonly StockStat _statBB, _statATR;
 
         private BBTrendType _currentTrend = BBTrendType.Unknown;
-        public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator)
+        public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator)
         {
             _dataRange = dataRange;
             _bbPeriod = bbPeriod;
@@ -45,6 +45,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             _statBB = new StatBB("")
                 .SetParam(StatBBParams.Period, new MOParamInt() { Value = _bbPeriod })
                 .SetParam(StatBBParams.SigmaWidth, new MOParamFloat() { Value = _bbSigmaWidth });
+            _statATR = new StatATR("")
+                .SetParam(StatATRParams.Period, new MOParamInt() { Value = atrPeriod });
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
@@ -54,7 +56,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                     {
                         stock = _stock,
                         dataRange = _dataRange,
-                        stats = new List<StockStat>() { _statBB }
+                        stats = new List<StockStat>() { _statBB, _statATR }
                     }
                 }
         };
@@ -67,19 +69,22 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
             _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _);
+            //_currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, BBTrendType.Unknown, out _);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, (StatBB)_statBB, leadingIndex, _currentTrend);
 
             if (systemState.PositionsActive.Count > 0)
             {
                 if (systemState.PositionsActive.Count > 1)
                     throw new Exception("More than 1 active position");
-                if ((expectation == BBTrendExpectation.DownAndFalling) || (expectation == BBTrendExpectation.DownButPossibleChange))
-                    systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnOpen;
+                //if ((expectation == BBTrendExpectation.DownAndFalling) || (expectation == BBTrendExpectation.DownButPossibleChange))
+                //    systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnOpen;
+                systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnStopHit;
+                systemState.PositionsActive[0].CloseModePrice = Math.Max(systemState.PositionsActive[0].CloseModePrice, MinOfL(data, leadingIndex, 3));
             }
             else
             {
-                //if ((expectation == BBTrendExpectation.UpAndRaising) || (expectation == BBTrendExpectation.UpButPossibleChange))
-                if (expectation == BBTrendExpectation.UpAndRaising)
+                if ((expectation == BBTrendExpectation.UpAndRaising)
+                    && PriceAboveMaxOfPreviousH(data, leadingIndex, 4, data.C[leadingIndex]))
                     res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex]));
             }
 
@@ -97,5 +102,22 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 ReversePosition = false,
                 Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };
+
+        private float MinOfL(StockPricesData data, int leadingIndex, int length)
+        {
+            float currentMin = data.L[leadingIndex];
+            for (int i = 1; i < length; i++)
+                if (data.L[leadingIndex - i] < currentMin)
+                    currentMin = data.L[leadingIndex - i];
+            return currentMin;
+        }
+
+        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int leadingIndex, int length, float price)
+        {
+            for (int i = 1; i <= length; i++)
+                if (data.H[leadingIndex - i] > price)
+                    return false;
+            return true;
+        }
     }
 }

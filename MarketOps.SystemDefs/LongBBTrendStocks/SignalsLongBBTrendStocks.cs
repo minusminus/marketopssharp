@@ -32,6 +32,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private readonly StockStat _statBB, _statATR;
 
         private BBTrendType _currentTrend = BBTrendType.Unknown;
+        private int _currentTrendStartIndex = -1;
+
         public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator)
         {
             _dataRange = dataRange;
@@ -68,7 +70,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
             StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
-            _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _);
+            _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _, ref _currentTrendStartIndex);
             //_currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, BBTrendType.Unknown, out _);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, (StatBB)_statBB, leadingIndex, _currentTrend);
 
@@ -79,12 +81,13 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 //if ((expectation == BBTrendExpectation.DownAndFalling) || (expectation == BBTrendExpectation.DownButPossibleChange))
                 //    systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnOpen;
                 systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnStopHit;
-                systemState.PositionsActive[0].CloseModePrice = Math.Max(systemState.PositionsActive[0].CloseModePrice, MinOfL(data, leadingIndex, 3));
+                systemState.PositionsActive[0].CloseModePrice = Math.Max(systemState.PositionsActive[0].CloseModePrice, MinOfL(data, leadingIndex, 5));
             }
             else
             {
                 if ((expectation == BBTrendExpectation.UpAndRaising)
-                    && PriceAboveMaxOfPreviousH(data, leadingIndex, 4, data.C[leadingIndex]))
+                    //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 4, data.C[leadingIndex]))
+                    && TrendStartedNotLaterThanNTicksAgo(leadingIndex, 1))
                     res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex]));
             }
 
@@ -119,5 +122,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                     return false;
             return true;
         }
+
+        private bool TrendStartedNotLaterThanNTicksAgo(int leadingIndex, int n) =>
+            (leadingIndex - _currentTrendStartIndex) <= n;
     }
 }

@@ -61,7 +61,8 @@ namespace MarketOps.SystemDefs.BBTrend
 
             StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
-            _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnLH(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _);
+            int trendStartIndex = 0;
+            _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnLH(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _, ref trendStartIndex);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, (StatBB)_statBB, leadingIndex, _currentTrend);
 
             if (systemState.PositionsActive.Count > 0)

@@ -54,8 +54,9 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
             _pricesData.L[bbPeriod] = currL;
             _pricesData.H[bbPeriod - 1] = prevH;
             _pricesData.H[bbPeriod] = currH;
+            int trendStartIndex = -1;
 
-            SystemDefs.BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnLH(_pricesData, _statBBMock, bbPeriod, currTrend, out _).ShouldBe(expectedTrend);
+            SystemDefs.BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnLH(_pricesData, _statBBMock, bbPeriod, currTrend, out _, ref trendStartIndex).ShouldBe(expectedTrend);
         }
 
         [TestCase(1, 2, 3, 1, 2, 3, 1.5f, 1.5f, BBTrendType.Unknown, BBTrendType.Unknown)]  //no break
@@ -83,8 +84,9 @@ namespace MarketOps.SystemDefs.Tests.BBTrendRecognizer
             _statBBMock.BBH[1] = currBBH;
             _pricesData.C[bbPeriod - 1] = prevC;
             _pricesData.C[bbPeriod] = currC;
+            int trendStartIndex = -1;
 
-            SystemDefs.BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(_pricesData, _statBBMock, bbPeriod, currTrend, out _).ShouldBe(expectedTrend);
+            SystemDefs.BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(_pricesData, _statBBMock, bbPeriod, currTrend, out _, ref trendStartIndex).ShouldBe(expectedTrend);
         }
 
         [TestCase(2, 1, BBTrendType.Unknown, BBTrendExpectation.Unknown)]

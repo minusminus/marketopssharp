@@ -66,12 +66,11 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             List<Signal> res = new List<Signal>();
-            if (leadingIndex <= _statBB.BackBufferLength) return res;
+            if ((leadingIndex <= _statBB.BackBufferLength) || (leadingIndex <= _statATR.BackBufferLength)) return res;
 
             StockPricesData data = _dataLoader.Get(_stock.FullName, _dataRange, 0, ts, ts);
 
             _currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, _currentTrend, out _, ref _currentTrendStartIndex);
-            //_currentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, (StatBB)_statBB, leadingIndex, BBTrendType.Unknown, out _);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, (StatBB)_statBB, leadingIndex, _currentTrend);
 
             if (systemState.PositionsActive.Count > 0)
@@ -88,13 +87,13 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 if ((expectation == BBTrendExpectation.UpAndRaising)
                     //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 4, data.C[leadingIndex]))
                     && TrendStartedNotLaterThanNTicksAgo(leadingIndex, 1))
-                    res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex]));
+                    res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex], _statATR.Data(StatATRData.ATR)[leadingIndex - _statATR.BackBufferLength]));
             }
 
             return res;
         }
 
-        private Signal CreateSignal(PositionDir dir, SystemState systemState, float currentClosePrice) =>
+        private Signal CreateSignal(PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr) =>
             new Signal()
             {
                 Stock = _stock,
@@ -102,6 +101,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 IntradayInterval = 0,
                 Type = SignalType.EnterOnOpen,
                 Direction = dir,
+                InitialStopMode = SignalInitialStopMode.OnPrice,
+                InitialStopValue = currentClosePrice - currentAtr,
                 ReversePosition = false,
                 Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };

@@ -16,6 +16,8 @@ namespace MarketOps.SystemData.Types
         public bool ReversePosition;
         public float Price;
         public float Volume;
+        public SignalInitialStopMode InitialStopMode;
+        public float InitialStopValue;
         public bool Rebalance;
         public List<(StockDefinition stockDef, float balance)> NewBalance;
     }

@@ -24,6 +24,8 @@ namespace MarketOps.SystemData.Extensions
                 TSOpen = ts,
                 Volume = volume,
                 EntrySignal = entrySignal,
+                CloseMode = (entrySignal.InitialStopMode == SignalInitialStopMode.OnPrice) ? PositionCloseMode.OnStopHit : PositionCloseMode.DontClose,
+                CloseModePrice = (entrySignal.InitialStopMode == SignalInitialStopMode.OnPrice) ? entrySignal.InitialStopValue : 0,
                 TicksActive = 1
             };
             systemState.PositionsActive.Add(pos);

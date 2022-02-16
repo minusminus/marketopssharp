@@ -49,9 +49,12 @@ namespace MarketOps.Tests.SystemData.Extensions
             _commission = CommissionUtils.CreateSubstitute(Commission);
             _slippage = SlippageUtils.CreateSusbstitute();
             EntrySignal.Stock = _stock;
+            EntrySignal.InitialStopMode = SignalInitialStopMode.NoStop;
+            EntrySignal.InitialStopValue = 0;
         }
 
-        private void CheckOpenedPosition(Position pos, StockDefinition stock, PositionDir dir, float open, float vol, float commission, DateTime ts, StockDataRange range, int interval)
+        private void CheckOpenedPosition(Position pos, StockDefinition stock, PositionDir dir, float open, float vol, float commission, DateTime ts, 
+            StockDataRange range, int interval, PositionCloseMode closeMode, float closeModePrice)
         {
             pos.Stock.ShouldBe(stock);
             pos.Direction.ShouldBe(dir);
@@ -62,6 +65,8 @@ namespace MarketOps.Tests.SystemData.Extensions
             pos.DataRange.ShouldBe(range);
             pos.IntradayInterval.ShouldBe(interval);
             pos.EntrySignal.ShouldBe(EntrySignal);
+            pos.CloseMode.ShouldBe(closeMode);
+            pos.CloseModePrice.ShouldBe(closeModePrice);
         }
 
         private void CheckClosedPosition(int index, PositionDir dir, float open, float close, float vol, float commission, DateTime ts, float prevValueOnPosition)
@@ -89,7 +94,7 @@ namespace MarketOps.Tests.SystemData.Extensions
             _testObj.Open(_stock, dir, CurrentTS, price, vol, Commission, range, intradayInterval, EntrySignal);
             _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (price * vol) - Commission);
             _testObj.PositionsActive.Count.ShouldBe(1);
-            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, price, vol, Commission, CurrentTS, range, intradayInterval);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, price, vol, Commission, CurrentTS, range, intradayInterval, PositionCloseMode.DontClose, 0);
         }
 
         [Test]
@@ -98,13 +103,25 @@ namespace MarketOps.Tests.SystemData.Extensions
             _testObj.Open(_stock, PositionDir.Long, CurrentTS, Price1, Vol1, Commission, StockDataRange.Daily, 0, EntrySignal);
             _testObj.PositionsActive.Count.ShouldBe(1);
             _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (Price1 * Vol1) - Commission);
-            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, Commission, CurrentTS, StockDataRange.Daily, 0);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, Commission, CurrentTS, StockDataRange.Daily, 0, PositionCloseMode.DontClose, 0);
 
             _testObj.Open(_stock2, PositionDir.Short, CurrentTS2, Price2, Vol2, Commission, StockDataRange.Daily, 10, EntrySignal);
             _testObj.PositionsActive.Count.ShouldBe(2);
             _testObj.Cash.ShouldBe(CashValue - _testObj.PositionsActive[0].DirectionMultiplier() * (Price1 * Vol1) - _testObj.PositionsActive[1].DirectionMultiplier() * (Price2 * Vol2) - Commission * 2);
-            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, Commission, CurrentTS, StockDataRange.Daily, 0);
-            CheckOpenedPosition(_testObj.PositionsActive[1], _stock2, PositionDir.Short, Price2, Vol2, Commission, CurrentTS2, StockDataRange.Daily, 10);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, Price1, Vol1, Commission, CurrentTS, StockDataRange.Daily, 0, PositionCloseMode.DontClose, 0);
+            CheckOpenedPosition(_testObj.PositionsActive[1], _stock2, PositionDir.Short, Price2, Vol2, Commission, CurrentTS2, StockDataRange.Daily, 10, PositionCloseMode.DontClose, 0);
+        }
+
+        [Test]
+        public void Open_WithInitialStop__InitializesPositionStop([Values] SignalInitialStopMode initialStopMode)
+        {
+            EntrySignal.InitialStopMode = initialStopMode;
+            EntrySignal.InitialStopValue = (initialStopMode == SignalInitialStopMode.OnPrice) ? 10f : 0;
+            _testObj.Open(_stock, PositionDir.Long, CurrentTS, 100f, 1, Commission, StockDataRange.Daily, 0, EntrySignal);
+            _testObj.PositionsActive.Count.ShouldBe(1);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, PositionDir.Long, 100f, 1, Commission, CurrentTS, StockDataRange.Daily, 0, 
+                (initialStopMode == SignalInitialStopMode.OnPrice) ? PositionCloseMode.OnStopHit : PositionCloseMode.DontClose,
+                (initialStopMode == SignalInitialStopMode.OnPrice) ? 10f : 0);
         }
 
         [TestCase(PositionDir.Long, 100, 150, 10)]
@@ -187,7 +204,7 @@ namespace MarketOps.Tests.SystemData.Extensions
             _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
             CheckClosedPosition(0, dir, open, addPrice, vol, Commission, CurrentTS, 0);
             _testObj.PositionsActive.Count.ShouldBe(1);
-            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, addPrice, vol + addVol, Commission, CurrentTS, StockDataRange.Daily, 0);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, addPrice, vol + addVol, Commission, CurrentTS, StockDataRange.Daily, 0, PositionCloseMode.DontClose, 0);
         }
 
         [TestCase(PositionDir.Long, 100, 10, 150, -15)]
@@ -220,7 +237,7 @@ namespace MarketOps.Tests.SystemData.Extensions
             _testObj.ClosedPositionsEquity.Count.ShouldBe(1);
             CheckClosedPosition(0, dir, open, reducePrice, vol, Commission, CurrentTS, 0);
             _testObj.PositionsActive.Count.ShouldBe(1);
-            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, reducePrice, vol - reduceVol, Commission, CurrentTS, StockDataRange.Daily, 0);
+            CheckOpenedPosition(_testObj.PositionsActive[0], _stock, dir, reducePrice, vol - reduceVol, Commission, CurrentTS, StockDataRange.Daily, 0, PositionCloseMode.DontClose, 0);
         }
 
         [Test]

@@ -133,7 +133,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _stockStatMock.CalculateCallCount.ShouldBe(1);
         }
 
-        private void CheckPositionStopped(PositionDir expectedDir, float expectedOpenPrice, float expectedStopPrice, int expectedClosedPositionTicks)
+        private void CheckPositionStopped(PositionDir expectedDir, float expectedOpenPrice, float expectedStopPrice, int expectedClosedPositionTicks, int expectedEquityCount = PricesCount, float equityFirstValue = InitialCash)
         {
             float finalCashValue = InitialCash - expectedDir.DirectionMultiplier() * expectedOpenPrice + expectedDir.DirectionMultiplier() * expectedStopPrice;
             _systemState.Cash.ShouldBe(finalCashValue);
@@ -143,13 +143,13 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsClosed[0].Close.ShouldBe(expectedStopPrice);
             _systemState.PositionsClosed[0].TicksActive.ShouldBe(expectedClosedPositionTicks);
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
-            _systemState.Equity.Count.ShouldBe(PricesCount);
-            _systemState.Equity.First().Value.ShouldBe(InitialCash);
+            _systemState.Equity.Count.ShouldBe(expectedEquityCount);
+            _systemState.Equity.First().Value.ShouldBe(equityFirstValue);
             _systemState.Equity.Skip(1).All(x => x.Value == finalCashValue).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
         }
 
-        private void CheckPositionNotStopped(PositionDir expectedDir, float expectedOpenPrice, int expectedPositionTicks)
+        private void CheckPositionNotStopped(PositionDir expectedDir, float expectedOpenPrice, int expectedPositionTicks, int expectedEquityCount = PricesCount)
         {
             _systemState.Cash.ShouldBe(InitialCash - expectedDir.DirectionMultiplier() * expectedOpenPrice);
             _systemState.PositionsActive.Count.ShouldBe(1);
@@ -158,7 +158,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
             _systemState.PositionsClosed.Count.ShouldBe(0);
             _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
-            _systemState.Equity.Count.ShouldBe(PricesCount);
+            _systemState.Equity.Count.ShouldBe(expectedEquityCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
         }
@@ -365,6 +365,28 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                 CheckPositionStopped(positionDir, StartingPrice, expectedStopPrice, expectedPositionTicks);
             else
                 CheckPositionNotStopped(positionDir, StartingPrice, expectedPositionTicks);
+        }
+
+        [TestCase(PositionDir.Long, StartingPrice, true, StartingPrice)]
+        [TestCase(PositionDir.Long, StartingPrice + PriceRange, true, StartingPrice)]
+        [TestCase(PositionDir.Long, StartingPrice + PriceRange + 1, true, StartingPrice)]
+        [TestCase(PositionDir.Long, StartingPrice - PriceRange, true, StartingPrice - PriceRange)]
+        [TestCase(PositionDir.Long, StartingPrice - PriceRange - 1, false, 0)]
+        [TestCase(PositionDir.Short, StartingPrice, true, StartingPrice)]
+        [TestCase(PositionDir.Short, StartingPrice + PriceRange, true, StartingPrice + PriceRange)]
+        [TestCase(PositionDir.Short, StartingPrice + PriceRange + 1, false, 0)]
+        [TestCase(PositionDir.Short, StartingPrice - PriceRange, true, StartingPrice)]
+        [TestCase(PositionDir.Short, StartingPrice - PriceRange - 1, true, StartingPrice)]
+        public void Process_StopHitInFirstTick(PositionDir positionDir, float stopPrice, bool expectedHit, float expectedStopPrice)
+        {
+            _systemState.Signals.Add(new Signal() { Type = SignalType.EnterOnOpen, Direction = positionDir, Stock = _stock, Volume = 1, InitialStopMode = SignalInitialStopMode.OnPrice, InitialStopValue = stopPrice });
+
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, null, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj.Process(_systemState, LastDate, LastDate);
+            if (expectedHit)
+                CheckPositionStopped(positionDir, StartingPrice, expectedStopPrice, 1, 1, InitialCash - positionDir.DirectionMultiplier() * (StartingPrice - expectedStopPrice));
+            else
+                CheckPositionNotStopped(positionDir, StartingPrice, 1, 1);
         }
     }
 }

@@ -103,6 +103,7 @@ namespace MarketOps.SystemExecutor.Processor
 
             ProcessStopsOnPrice(leadingPricesData.TS[leadingIndex], systemState);
             ProcessSignalsOnPrice(leadingPricesData.TS[leadingIndex], systemState);
+            ProcessStopsOnPriceInFirstTick(leadingPricesData.TS[leadingIndex], systemState);
 
             ProcessStopsOnClose(leadingPricesData.TS[leadingIndex], systemState);
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], systemState);
@@ -172,6 +173,13 @@ namespace MarketOps.SystemExecutor.Processor
         {
             _positionCloser.Process(ts, systemState,
                 ClosingPositionSelector.OnStopHit,
+                ClosePriceSelector.OnStopHit);
+        }
+
+        private void ProcessStopsOnPriceInFirstTick(DateTime ts, SystemState systemState)
+        {
+            _positionCloser.Process(ts, systemState,
+                ClosingPositionSelector.OnStopHitInFirstTick,
                 ClosePriceSelector.OnStopHit);
         }
 

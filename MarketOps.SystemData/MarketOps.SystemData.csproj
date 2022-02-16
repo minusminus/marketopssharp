@@ -66,6 +66,7 @@
     <Compile Include="Types\PositionCloseMode.cs" />
     <Compile Include="Types\PositionDir.cs" />
     <Compile Include="Types\Signal.cs" />
+    <Compile Include="Types\SignalInitialStopMode.cs" />
     <Compile Include="Types\SignalType.cs" />
     <Compile Include="Types\SystemConfiguration.cs" />
     <Compile Include="Types\SystemDataDefinition.cs" />

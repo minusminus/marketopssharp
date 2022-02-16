@@ -52,5 +52,21 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                 StockPricesDataUtils.CreatePricesData(0, 100, 50, 0),
                 0).ShouldBe(expected);
         }
+
+        [TestCase(PositionDir.Long, 125, 1, true)]
+        [TestCase(PositionDir.Long, 125, 2, false)]
+        [TestCase(PositionDir.Long, 25, 1, false)]
+        [TestCase(PositionDir.Long, 25, 2, false)]
+        [TestCase(PositionDir.Short, 125, 1, false)]
+        [TestCase(PositionDir.Short, 125, 2, false)]
+        [TestCase(PositionDir.Short, 25, 1, true)]
+        [TestCase(PositionDir.Short, 25, 2, false)]
+        public void OnStopHitInFirstTick(PositionDir positionDir, float closeModePrice, int ticksActive, bool expected)
+        {
+            ClosingPositionSelector.OnStopHitInFirstTick(
+                new Position() { Direction = positionDir, CloseMode = PositionCloseMode.OnStopHit, CloseModePrice = closeModePrice, TicksActive = ticksActive },
+                StockPricesDataUtils.CreatePricesData(0, 100, 50, 0),
+                0).ShouldBe(expected);
+        }
     }
 }

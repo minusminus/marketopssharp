@@ -21,5 +21,9 @@ namespace MarketOps.SystemExecutor.Processor
                 ((position.Direction == PositionDir.Long) && (position.CloseModePrice >= pricesData.L[priceIndex]))
                 || ((position.Direction == PositionDir.Short) && (position.CloseModePrice <= pricesData.H[priceIndex]))
             );
+
+        public static bool OnStopHitInFirstTick(Position position, StockPricesData pricesData, int priceIndex) =>
+            (position.TicksActive == 1)
+            && OnStopHit(position, pricesData, priceIndex);
     }
 }

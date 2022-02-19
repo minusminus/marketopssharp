@@ -88,6 +88,20 @@ namespace MarketOps.Controls.Extensions
             }
         }
 
+        public static void AddPositionsTrailingStops(this PriceVolumeChart chart, List<Position> positions)
+        {
+            chart.TrailingStopL.Points.Clear();
+            chart.TrailingStopL.Enabled = true;
+            foreach (var position in positions)
+                AddTrailingStopData(chart, position.TrailingStop);
+        }
+
+        public static void AddTrailingStopData(this PriceVolumeChart chart, List<PositionTrailingStopData> data)
+        {
+            for (int i = 0; i < data.Count; i++)
+                chart.TrailingStopL.Points.AddXY(data[i].TS, data[i].Value);
+        }
+
         public static void AddPositionsAnnotations(this PriceVolumeChart chart, List<Position> positions)
         {
             chart.PVChartControl.Annotations.Clear();

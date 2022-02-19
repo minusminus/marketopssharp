@@ -28,6 +28,7 @@ namespace MarketOps.Controls.PriceChart
         public ChartAreaCollection ChartAreas => PVChart.ChartAreas;
         public Series PricesCandles => PVChart.Series["dataPricesCandles"];
         public Series PricesLine => PVChart.Series["dataPricesLine"];
+        public Series TrailingStopL => PVChart.Series["dataTrailingStopL"];
         public Series Volume => PVChart.Series["dataVolume"];
 
         public delegate void ChartValueSelected(int selectedIndex);
@@ -138,7 +139,7 @@ namespace MarketOps.Controls.PriceChart
             Axis ay = PVChart.ChartAreas["areaPrices"].AxisY;
 
             Tuple<double, double> range = ChartYViewRangeCalculator.CalculateRangeCandles(ax, PricesCandles.Points, ChartYViewRangeCalculator.InitialRange());
-            var list = PVChart.Series.Where(x => (x.ChartArea == "areaPrices") && (x.Name != "dataPricesCandles") && (x.Name != "dataPricesLine")).ToList();
+            var list = PVChart.Series.Where(x => (x.ChartArea == "areaPrices") && (x.Name != "dataPricesCandles") && (x.Name != "dataPricesLine"));
             foreach (var s in list)
                 range = ChartYViewRangeCalculator.CalculateRangeLine(ax, s.Points, range);
             range = ChartYViewRangeCalculator.PostprocessRange(range);

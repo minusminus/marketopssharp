@@ -180,11 +180,17 @@ namespace MarketOps.Controls.PriceChart
         {
             _currentData.Positions.AddRange(positions);
             RecreatePositionsAnnotations();
+            RecreatePositionsTrailingStops();
         }
 
         private void RecreatePositionsAnnotations()
         {
             chartPV.AddPositionsAnnotations(_currentData.Positions);
+        }
+
+        private void RecreatePositionsTrailingStops()
+        {
+            chartPV.AddPositionsTrailingStops(_currentData.Positions);
         }
         #endregion
 

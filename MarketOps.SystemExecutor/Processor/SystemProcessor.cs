@@ -96,7 +96,7 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void ProcessSingleTick(StockPricesData leadingPricesData, int leadingIndex, SystemState systemState)
         {
-            UpdateActivePositions(systemState);
+            UpdateActivePositionsTicksCount(systemState);
             ProcessStopsOnOpen(leadingPricesData.TS[leadingIndex], systemState);
             ProcessSignalsOnOpen(leadingPricesData.TS[leadingIndex], systemState);
             GenerateSignalsOnOpen(leadingPricesData.TS[leadingIndex], leadingIndex, systemState);
@@ -109,6 +109,7 @@ namespace MarketOps.SystemExecutor.Processor
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], systemState);
             GenerateSignalsOnClose(leadingPricesData.TS[leadingIndex], leadingIndex, systemState);
 
+            UpdateActivePositionsTrailingStopData(leadingPricesData.TS[leadingIndex], systemState);
             RecalculateStops(leadingPricesData.TS[leadingIndex], systemState);
             CalculateCurrentSystemValue(leadingPricesData.TS[leadingIndex], systemState);
             UpdateLastProcessedTS(leadingPricesData.TS[leadingIndex], systemState);
@@ -183,9 +184,18 @@ namespace MarketOps.SystemExecutor.Processor
                 ClosePriceSelector.OnStopHit);
         }
 
-        private void UpdateActivePositions(SystemState systemState)
+        private void UpdateActivePositionsTicksCount(SystemState systemState)
         {
             systemState.PositionsActive.ForEach(pos => pos.TicksActive++);
+        }
+
+        private void UpdateActivePositionsTrailingStopData(DateTime ts, SystemState systemState)
+        {
+            systemState.PositionsActive.ForEach(pos =>
+            {
+                if (pos.CloseMode == PositionCloseMode.OnStopHit)
+                    pos.TrailingStop.Add(new PositionTrailingStopData() { TS = ts, Value = pos.CloseModePrice });
+            });
         }
 
         private void RecalculateStops(DateTime ts, SystemState systemState)

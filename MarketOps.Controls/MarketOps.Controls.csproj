@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChartAreaFactory.cs" />
+    <Compile Include="Extensions\PriceVolumeChartPositionAnnotationsExtensions.cs" />
+    <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
     <Compile Include="FormLongLastingWork.cs">
       <SubType>Form</SubType>

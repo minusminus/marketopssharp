@@ -2,9 +2,6 @@
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketOps.Controls.PriceChart;
 using MarketOps.StockData.Extensions;
-using System.Collections.Generic;
-using MarketOps.SystemData.Types;
-using System;
 
 namespace MarketOps.Controls.Extensions
 {
@@ -86,50 +83,6 @@ namespace MarketOps.Controls.Extensions
                 Series s = chart.GetSeries(stat.ChartSeriesName(i));
                 s.Color = stat.DataColor[i];
             }
-        }
-
-        public static void AddPositionsTrailingStops(this PriceVolumeChart chart, List<Position> positions)
-        {
-            chart.TrailingStopL.Points.Clear();
-            chart.TrailingStopL.Enabled = true;
-            foreach (var position in positions)
-                AddTrailingStopData(chart, position.TrailingStop);
-        }
-
-        public static void AddTrailingStopData(this PriceVolumeChart chart, List<PositionTrailingStopData> data)
-        {
-            for (int i = 0; i < data.Count; i++)
-                chart.TrailingStopL.Points.AddXY(data[i].TS, data[i].Value);
-        }
-
-        public static void AddPositionsAnnotations(this PriceVolumeChart chart, List<Position> positions)
-        {
-            chart.PVChartControl.Annotations.Clear();
-            foreach (var position in positions)
-                AddPositionAnnotation(chart, position);
-        }
-
-        private static void AddPositionAnnotation(PriceVolumeChart chart, Position position)
-        {
-            AddAnnotation(chart, PositionOpenCloseImages.IndexOpen, position.Direction, position.TSOpen);
-            AddAnnotation(chart, PositionOpenCloseImages.IndexClose, position.Direction, position.TSClose);
-        }
-
-        private static void AddAnnotation(PriceVolumeChart chart, int imageIndex, PositionDir dir, DateTime ts)
-        {
-            DataPoint dataPoint = chart.PricesCandles.Points.FindByValue(ts.ToOADate(), "X");
-            if (dataPoint == null) return;
-
-            ImageAnnotation annotation = new ImageAnnotation()
-            {
-                AnchorDataPoint = dataPoint,
-                AnchorY = dataPoint.YValues[PositionOpenCloseImages.AnnotationAnchorYValueIndex[dir][imageIndex]],
-                AnchorAlignment = PositionOpenCloseImages.AnnotationContentAlignment[dir][imageIndex],
-                Image = PositionOpenCloseImages.ImageName[dir][imageIndex],
-                AnchorOffsetY = 2
-            };
-
-            chart.PVChartControl.Annotations.Add(annotation);
         }
     }
 }

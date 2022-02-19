@@ -120,6 +120,7 @@
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
             series3.ChartArea = "areaPrices";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine;
+            series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             series3.Enabled = false;
             series3.IsXValueIndexed = true;
             series3.Name = "dataTrailingStopL";

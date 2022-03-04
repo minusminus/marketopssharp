@@ -112,6 +112,10 @@
       {
         "Param": "BB sigma width",
         "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
       }
     ]
   }

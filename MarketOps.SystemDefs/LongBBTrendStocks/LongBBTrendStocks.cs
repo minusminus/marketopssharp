@@ -2,6 +2,7 @@
 using MarketOps.StockData.Interfaces;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
+using MarketOps.SystemExecutor.GPW;
 using MarketOps.SystemExecutor.MM;
 
 namespace MarketOps.SystemDefs.LongBBTrendStocks
@@ -13,6 +14,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     {
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _dataLoader;
+        private readonly GPWTickOps _gpwTickOps = new GPWTickOps();
 
         public LongBBTrendStocks(IStockDataProvider dataProvider, ISystemDataLoader dataLoader,
             ISlippage slippage, ICommission commission, ISystemExecutionLogger systemExecutionLogger)
@@ -26,6 +28,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             SystemParams.Set(LongBBTrendStocksParams.StockName, "");
             SystemParams.Set(LongBBTrendStocksParams.BBPeriod, 5);
             SystemParams.Set(LongBBTrendStocksParams.BBSigmaWidth, 2f);
+            SystemParams.Set(LongBBTrendStocksParams.ATRWidth, 10);
         }
 
         public override void Prepare()
@@ -35,9 +38,12 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 StockData.Types.StockDataRange.Monthly,
                 SystemParams.Get(LongBBTrendStocksParams.BBPeriod).As<int>(),
                 SystemParams.Get(LongBBTrendStocksParams.BBSigmaWidth).As<float>(),
-                10,
+                SystemParams.Get(LongBBTrendStocksParams.ATRWidth).As<int>(),
                 _dataLoader, _dataProvider,
-                new MMSignalVolumeForAllCash(_commission));
+                new MMSignalVolumeForAllCash(_commission),
+                _gpwTickOps,
+                _gpwTickOps
+                );
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;

@@ -17,16 +17,21 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     /// Enter: on next tick open after trend start
     /// Exit options:
     /// - stop on sma
-    /// - stop on min of 3 lows
+    /// - stop on min of N lows (3, 5)
     /// </summary>
     internal class SignalsLongBBTrendStocks : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
+        private const int TrailingStopTicksBelow = -1;
+        private const int TrailingStopMinOfL = 5;
+
         private readonly StockDataRange _dataRange;
         private readonly int _bbPeriod;
         private readonly float _bbSigmaWidth;
         private readonly ISystemDataLoader _dataLoader;
         private readonly IStockDataProvider _dataProvider;
         private readonly IMMSignalVolume _signalVolumeCalculator;
+        private readonly ITickAdder _tickAdder;
+        private readonly ITickAligner _tickAligner;
 
         private readonly StockDefinition _stock;
         private readonly StockStat _statBB, _statATR;
@@ -34,7 +39,9 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private BBTrendType _currentTrend = BBTrendType.Unknown;
         private int _currentTrendStartIndex = -1;
 
-        public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator)
+        public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, 
+            ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator,
+            ITickAdder tickAdder, ITickAligner tickAligner)
         {
             _dataRange = dataRange;
             _bbPeriod = bbPeriod;
@@ -42,6 +49,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
             _signalVolumeCalculator = signalVolumeCalculator;
+            _tickAdder = tickAdder;
+            _tickAligner = tickAligner;
 
             _stock = _dataProvider.GetStockDefinition(stockName);
             _statBB = new StatBB("")
@@ -79,21 +88,21 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                     throw new Exception("More than 1 active position");
                 //if ((expectation == BBTrendExpectation.DownAndFalling) || (expectation == BBTrendExpectation.DownButPossibleChange))
                 //    systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnOpen;
-                systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnStopHit;
-                systemState.PositionsActive[0].CloseModePrice = Math.Max(systemState.PositionsActive[0].CloseModePrice, MinOfL(data, leadingIndex, 5));
+
+                CalculateTrailingStop(ts, systemState.PositionsActive[0], data, leadingIndex);
             }
             else
             {
                 if ((expectation == BBTrendExpectation.UpAndRaising)
                     //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 4, data.C[leadingIndex]))
                     && TrendStartedNotLaterThanNTicksAgo(leadingIndex, 1))
-                    res.Add(CreateSignal(PositionDir.Long, systemState, data.C[leadingIndex], _statATR.Data(StatATRData.ATR)[leadingIndex - _statATR.BackBufferLength]));
+                    res.Add(CreateSignal(ts, PositionDir.Long, systemState, data.C[leadingIndex], _statATR.Data(StatATRData.ATR)[leadingIndex - _statATR.BackBufferLength]));
             }
 
             return res;
         }
 
-        private Signal CreateSignal(PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr) =>
+        private Signal CreateSignal(DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr) =>
             new Signal()
             {
                 Stock = _stock,
@@ -102,10 +111,25 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 Type = SignalType.EnterOnOpen,
                 Direction = dir,
                 InitialStopMode = SignalInitialStopMode.OnPrice,
-                InitialStopValue = currentClosePrice - currentAtr,
+                InitialStopValue = AlignDown(_stock.Type, ts, currentClosePrice - currentAtr),
                 ReversePosition = false,
                 Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };
+
+        private void CalculateTrailingStop(DateTime ts, Position position, StockPricesData data, int leadingIndex)
+        {
+            position.CloseMode = PositionCloseMode.OnStopHit;
+            position.CloseModePrice = Math.Max(
+                position.CloseModePrice,
+                AddTicks(position.Stock.Type, ts, MinOfL(data, leadingIndex, TrailingStopMinOfL), TrailingStopTicksBelow)
+                );
+        }
+
+        private float AlignDown(StockType stockType, DateTime ts, float value) => 
+            (_tickAligner != null) ? _tickAligner.AlignDown(stockType, ts, value) : value;
+
+        private float AddTicks(StockType stockType, DateTime ts, float value, int ticks) =>
+            (_tickAdder != null) ? _tickAdder.AddTicks(stockType, ts, value, ticks) : value;
 
         private float MinOfL(StockPricesData data, int leadingIndex, int length)
         {

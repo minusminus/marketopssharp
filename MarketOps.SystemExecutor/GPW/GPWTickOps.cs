@@ -10,12 +10,13 @@ namespace MarketOps.SystemExecutor.GPW
     /// Alignes value to possible price according to specifed date for GPW.
     /// Adds ticks to price according to specifed date for GPW.
     /// 
-    /// For stocks: before and after 2019-03-04 in 6 liquidity streams.
+    /// For stocks: before and after 2019-03-04 in 6 liquidity streams (numbered/indexed from 0 to 5).
     /// By default highest liquidity stream is taken.
     /// </summary>
     public class GPWTickOps : ITickAligner, ITickAdder
     {
         private readonly DateTime _changeDate = new DateTime(2019, 3, 4);
+        private readonly int _stockLiquidityStream;
 
         private readonly decimal[][] _stocksTicksPre20190304 =
         {
@@ -50,6 +51,11 @@ namespace MarketOps.SystemExecutor.GPW
         private readonly decimal[] _stocksPriceBordersPost20190304 =
             {0.1M, 0.2M, 0.5M, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, Decimal.MaxValue,};
 
+        public GPWTickOps(int stockLiquidityStream = 5)
+        {
+            _stockLiquidityStream = stockLiquidityStream;
+        }
+
         public float AlignUp(StockType stockType, DateTime ts, float value) => 
             (float)ExecuteUpDown(Math.Ceiling, stockType, ts, (decimal)value);
 
@@ -71,8 +77,8 @@ namespace MarketOps.SystemExecutor.GPW
 
         private decimal GetStockTickSize(DateTime ts, decimal value) => 
             (ts < _changeDate)
-                ? GetStockTickSizeFromArrays(value, _stocksPriceBordersPre20190304[0], _stocksTicksPre20190304[0])
-                : GetStockTickSizeFromArrays(value, _stocksPriceBordersPost20190304, _stocksTicksPost20190304[5]);
+                ? GetStockTickSizeFromArrays(value, _stocksPriceBordersPre20190304[_stockLiquidityStream], _stocksTicksPre20190304[_stockLiquidityStream])
+                : GetStockTickSizeFromArrays(value, _stocksPriceBordersPost20190304, _stocksTicksPost20190304[_stockLiquidityStream]);
 
         private decimal GetStockTickSizeFromArrays(decimal value, decimal[] priceBorders, decimal[] ticks) => 
             ticks[Array.FindIndex(priceBorders, f => value < f)];

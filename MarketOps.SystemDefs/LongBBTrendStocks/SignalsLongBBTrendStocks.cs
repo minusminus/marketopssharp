@@ -21,7 +21,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     /// </summary>
     internal class SignalsLongBBTrendStocks : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
-        private const int TrailingStopTicksBelow = -1;
+        private const int TrailingStopTicksBelow = -2;
         private const int TrailingStopMinOfL = 5;
 
         private readonly StockDataRange _dataRange;

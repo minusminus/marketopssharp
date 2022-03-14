@@ -88,6 +88,7 @@
             this.dbgPositions.Size = new System.Drawing.Size(1085, 274);
             this.dbgPositions.TabIndex = 0;
             this.dbgPositions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dbgPositions_CellDoubleClick);
+            this.dbgPositions.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dbgPositions_RowPrePaint);
             // 
             // LP
             // 

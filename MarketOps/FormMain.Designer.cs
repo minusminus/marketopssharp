@@ -117,6 +117,7 @@
             this.edtSimDataLog = new System.Windows.Forms.TextBox();
             this.tabSimMonteCarlo = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblMonteCarloSimLosses = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
@@ -147,7 +148,6 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -969,7 +969,7 @@
             this.gbDDTicks.Size = new System.Drawing.Size(468, 275);
             this.gbDDTicks.TabIndex = 2;
             this.gbDDTicks.TabStop = false;
-            this.gbDDTicks.Text = "Ticks";
+            this.gbDDTicks.Text = "On ticks (length / percentage)";
             // 
             // chartDDTicks
             // 
@@ -989,7 +989,7 @@
             this.gbDDPositions.Size = new System.Drawing.Size(463, 275);
             this.gbDDPositions.TabIndex = 3;
             this.gbDDPositions.TabStop = false;
-            this.gbDDPositions.Text = "Positions";
+            this.gbDDPositions.Text = "On positions (length / percentage)";
             // 
             // chartDDPositions
             // 
@@ -1037,7 +1037,7 @@
             this.gbProfitsValue.Size = new System.Drawing.Size(473, 277);
             this.gbProfitsValue.TabIndex = 3;
             this.gbProfitsValue.TabStop = false;
-            this.gbProfitsValue.Text = "Value";
+            this.gbProfitsValue.Text = "Ticks length / Value";
             // 
             // chartProfitValue
             // 
@@ -1057,7 +1057,7 @@
             this.gbProfitPcnt.Size = new System.Drawing.Size(462, 277);
             this.gbProfitPcnt.TabIndex = 3;
             this.gbProfitPcnt.TabStop = false;
-            this.gbProfitPcnt.Text = "Percentage";
+            this.gbProfitPcnt.Text = "Ticks length / Percentage";
             // 
             // chartProfitPcnt
             // 
@@ -1112,6 +1112,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(729, 271);
             this.panel2.TabIndex = 1;
+            // 
+            // chartMonteCarloData
+            // 
+            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 28);
+            this.chartMonteCarloData.Name = "chartMonteCarloData";
+            this.chartMonteCarloData.Size = new System.Drawing.Size(729, 243);
+            this.chartMonteCarloData.TabIndex = 1;
             // 
             // panel3
             // 
@@ -1458,14 +1466,6 @@
             this.dtpSimTo.Name = "dtpSimTo";
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
-            // 
-            // chartMonteCarloData
-            // 
-            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 28);
-            this.chartMonteCarloData.Name = "chartMonteCarloData";
-            this.chartMonteCarloData.Size = new System.Drawing.Size(729, 243);
-            this.chartMonteCarloData.TabIndex = 1;
             // 
             // FormMain
             // 

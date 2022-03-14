@@ -142,6 +142,7 @@ namespace MarketOps.Controls.PriceChart
                     chartPV.AppendStockStatData(_currentData.Prices, stat);
                 chartPV.SetYViewRange();
                 RecreatePositionsAnnotations();
+                RecreatePositionsTrailingStops();
             }
         }
 

@@ -39,6 +39,12 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private BBTrendType _currentTrend = BBTrendType.Unknown;
         private int _currentTrendStartIndex = -1;
 
+        //spolki o min obrocie 300k w ostatnim roku
+        //private readonly string[] _stocksNames = { "KGHM","PKOBP","ALLEGRO","PKNORLEN","PZU","CDPROJEKT","PEKAO","DINOPL","JSW","PGNIG","CCC",
+        //    "ORANGEPL","LOTOS","SANPL","PGE","LPP","ALIOR","CYFRPLSAT","MBANK","TAURONPE","MILLENNIUM","MERCATOR","ASSECOPOL","KERNEL","TSGAMES",
+        //    "ENEA","HUUUGE","XTB","GPW","PEPCO","GRUPAAZOTY","KRUK","CIECH","PKPCARGO","EUROCASH","AMREST","11BIT","KETY","ASBIS","BUDIMEX",
+        //    "LIVECHAT","BIOMEDLUB"};
+
         public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, 
             ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator,
             ITickAdder tickAdder, ITickAligner tickAligner)

@@ -28,6 +28,7 @@ namespace MarketOps.Controls.Extensions
 
         private static void AddTrailingStopData(PriceVolumeChart chart, List<PositionTrailingStopData> data)
         {
+            if (data.Count == 0) return;
             int startIndex = FindTSIndex(chart, data[0].TS);
             for (int i = 0; i < data.Count; i++)
                 EnableTrailingStopValue(chart.TrailingStopL, startIndex + i, data[i].Value);

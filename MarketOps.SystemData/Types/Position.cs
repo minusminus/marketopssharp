@@ -31,5 +31,7 @@ namespace MarketOps.SystemData.Types
         public PositionCloseMode CloseMode;
         public float CloseModePrice;
         public readonly List<PositionTrailingStopData> TrailingStop = new List<PositionTrailingStopData>();
+        public float R;
+        public float RProfit;
     }
 }

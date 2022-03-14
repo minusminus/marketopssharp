@@ -14,6 +14,8 @@ namespace MarketOps.Controls.SystemPositionsGrid
         public SystemPositionsGrid()
         {
             InitializeComponent();
+            dbgPositions.Columns["R"].DefaultCellStyle.Format = "F4";
+            dbgPositions.Columns["RProfit"].DefaultCellStyle.Format = "F2";
         }
 
         public void LoadData(SystemState systemState)

@@ -33,10 +33,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dbgPositions = new System.Windows.Forms.DataGridView();
+            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             this.LP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.R = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RProfit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TSOpen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Open = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OpenCommission = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,7 +48,6 @@
             this.CloseCommission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).BeginInit();
             this.SuspendLayout();
@@ -62,6 +64,8 @@
             this.StockName,
             this.Dir,
             this.Profit,
+            this.R,
+            this.RProfit,
             this.TSOpen,
             this.Open,
             this.OpenCommission,
@@ -125,6 +129,22 @@
             this.Profit.Name = "Profit";
             this.Profit.ReadOnly = true;
             this.Profit.Width = 70;
+            // 
+            // R
+            // 
+            this.R.DataPropertyName = "R";
+            this.R.HeaderText = "R value";
+            this.R.Name = "R";
+            this.R.ReadOnly = true;
+            this.R.Width = 70;
+            // 
+            // RProfit
+            // 
+            this.RProfit.DataPropertyName = "RProfit";
+            this.RProfit.HeaderText = "R profit";
+            this.RProfit.Name = "RProfit";
+            this.RProfit.ReadOnly = true;
+            this.RProfit.Width = 50;
             // 
             // TSOpen
             // 
@@ -209,6 +229,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn StockName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dir;
         private System.Windows.Forms.DataGridViewTextBoxColumn Profit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn R;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RProfit;
         private System.Windows.Forms.DataGridViewTextBoxColumn TSOpen;
         private System.Windows.Forms.DataGridViewTextBoxColumn Open;
         private System.Windows.Forms.DataGridViewTextBoxColumn OpenCommission;

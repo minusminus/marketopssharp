@@ -56,6 +56,8 @@ namespace MarketOps.SystemData.Extensions
             pos.Close = price;
             pos.CloseCommission = commission;
             pos.TSClose = ts;
+            pos.R = pos.RValue();
+            pos.RProfit = pos.CalculateRProfit();
             systemState.PositionsActive.RemoveAt(positionIndex);
             systemState.PositionsClosed.Add(pos);
             systemState.Cash += pos.DirectionMultiplier() * pos.CloseValue();

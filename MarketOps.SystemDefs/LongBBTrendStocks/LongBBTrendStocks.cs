@@ -44,18 +44,16 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 SystemParams.Get(LongBBTrendStocksParams.ATRWidth).As<int>(),
                 _dataLoader, _dataProvider,
                 new MMSignalVolumeForAllCash(_commission),
-                _gpwTickOps,
                 _gpwTickOps
                 );
-
-            MMTrailingStopMinMaxOfN trailingStopCloseCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);
+            MMTrailingStopMinMaxOfN trailingStopCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = trailingStopCloseCalculator;// null;
+            _mmPositionCloseCalculator = trailingStopCalculator;// null;
         }
     }
 }

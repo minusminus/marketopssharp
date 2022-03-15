@@ -96,11 +96,12 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 //    systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnOpen;
 
                 //CalculateTrailingStop(ts, systemState.PositionsActive[0], data, leadingIndex);
+                MoveStopOnOpenIfLAboveOpen(systemState.PositionsActive[0], data, leadingIndex);
             }
             else
             {
                 if ((expectation == BBTrendExpectation.UpAndRaising)
-                    //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 4, data.C[leadingIndex]))
+                    //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 3, data.H[leadingIndex])
                     && TrendStartedNotLaterThanNTicksAgo(leadingIndex, 1))
                     res.Add(CreateSignal(ts, PositionDir.Long, systemState, data.C[leadingIndex], _statATR.Data(StatATRData.ATR)[leadingIndex - _statATR.BackBufferLength]));
             }
@@ -147,5 +148,11 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         private bool TrendStartedNotLaterThanNTicksAgo(int leadingIndex, int n) =>
             (leadingIndex - _currentTrendStartIndex) <= n;
+
+        private void MoveStopOnOpenIfLAboveOpen(Position position, StockPricesData data, int currentIndex)
+        {
+            if (position.Open >= data.L[currentIndex]) return;
+            position.CloseModePrice = Math.Max(position.CloseModePrice, position.Open);
+        }
     }
 }

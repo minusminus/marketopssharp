@@ -54,6 +54,7 @@
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnOpen.cs" />
     <Compile Include="MM\MMSignalVolumeForAllCash.cs" />
     <Compile Include="MM\MMSignalVolumeOneItem.cs" />
+    <Compile Include="MM\MMTrailingStopMinMaxOfN.cs" />
     <Compile Include="Processor\ClosePriceSelector.cs" />
     <Compile Include="Processor\ClosingPositionSelector.cs" />
     <Compile Include="Processor\OpenPriceSelector.cs" />

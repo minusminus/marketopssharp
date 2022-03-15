@@ -21,8 +21,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     /// </summary>
     internal class SignalsLongBBTrendStocks : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
-        private const int TrailingStopTicksBelow = -2;
-        private const int TrailingStopMinOfL = 5;
+        //private const int TrailingStopTicksBelow = -2;
+        //private const int TrailingStopMinOfL = 5;
 
         private readonly StockDataRange _dataRange;
         private readonly int _bbPeriod;
@@ -95,7 +95,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 //if ((expectation == BBTrendExpectation.DownAndFalling) || (expectation == BBTrendExpectation.DownButPossibleChange))
                 //    systemState.PositionsActive[0].CloseMode = PositionCloseMode.OnOpen;
 
-                CalculateTrailingStop(ts, systemState.PositionsActive[0], data, leadingIndex);
+                //CalculateTrailingStop(ts, systemState.PositionsActive[0], data, leadingIndex);
             }
             else
             {
@@ -122,29 +122,20 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
             };
 
-        private void CalculateTrailingStop(DateTime ts, Position position, StockPricesData data, int leadingIndex)
-        {
-            position.CloseMode = PositionCloseMode.OnStopHit;
-            position.CloseModePrice = Math.Max(
-                position.CloseModePrice,
-                AddTicks(position.Stock.Type, ts, MinOfL(data, leadingIndex, TrailingStopMinOfL), TrailingStopTicksBelow)
-                );
-        }
+        //private void CalculateTrailingStop(DateTime ts, Position position, StockPricesData data, int leadingIndex)
+        //{
+        //    position.CloseMode = PositionCloseMode.OnStopHit;
+        //    position.CloseModePrice = Math.Max(
+        //        position.CloseModePrice,
+        //        AddTicks(position.Stock.Type, ts, data.MinOfL(leadingIndex, TrailingStopMinOfL), TrailingStopTicksBelow)
+        //        );
+        //}
 
         private float AlignDown(StockType stockType, DateTime ts, float value) => 
             (_tickAligner != null) ? _tickAligner.AlignDown(stockType, ts, value) : value;
 
-        private float AddTicks(StockType stockType, DateTime ts, float value, int ticks) =>
-            (_tickAdder != null) ? _tickAdder.AddTicks(stockType, ts, value, ticks) : value;
-
-        private float MinOfL(StockPricesData data, int leadingIndex, int length)
-        {
-            float currentMin = data.L[leadingIndex];
-            for (int i = 1; i < length; i++)
-                if (data.L[leadingIndex - i] < currentMin)
-                    currentMin = data.L[leadingIndex - i];
-            return currentMin;
-        }
+        //private float AddTicks(StockType stockType, DateTime ts, float value, int ticks) =>
+        //    (_tickAdder != null) ? _tickAdder.AddTicks(stockType, ts, value, ticks) : value;
 
         private bool PriceAboveMaxOfPreviousH(StockPricesData data, int leadingIndex, int length, float price)
         {

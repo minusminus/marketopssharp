@@ -128,7 +128,7 @@
     <Compile Include="StockData\DateTimeOperationsTests.cs" />
     <Compile Include="StockData\MOParamsExtensionsTests.cs" />
     <Compile Include="StockData\MOParamsTests.cs" />
-    <Compile Include="StockData\StockPricesDataFindByTSTests.cs" />
+    <Compile Include="StockData\StockPricesDataExtensionsTests.cs" />
     <Compile Include="StockData\StockPricesDataMergerTests.cs" />
     <Compile Include="StockData\StockPricesDataTests.cs" />
     <Compile Include="SystemAnalysis\DrawDowns\DrawDownsCalculatorTests.cs" />
@@ -150,6 +150,7 @@
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />
     <Compile Include="SystemExecutor\MM\MMSignalVolumeForAllCashTests.cs" />
     <Compile Include="SystemExecutor\MM\MMSignalVolumeOneItemTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMTrailingStopMinMaxOfNTests.cs" />
     <Compile Include="SystemExecutor\Mocks\CommissionUtils.cs" />
     <Compile Include="SystemExecutor\Mocks\SlippageUtils.cs" />
     <Compile Include="SystemExecutor\Mocks\StockDataProviderUtils.cs" />

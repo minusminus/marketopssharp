@@ -12,6 +12,9 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     /// </summary>
     public class LongBBTrendStocks : SystemDefinition
     {
+        private const int TrailingStopTicksBelow = 2;
+        private const int TrailingStopMinOfL = 5;
+
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _dataLoader;
         private readonly GPWTickOps _gpwTickOps = new GPWTickOps();
@@ -45,12 +48,14 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 _gpwTickOps
                 );
 
+            MMTrailingStopMinMaxOfN trailingStopCloseCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);
+
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = null;
+            _mmPositionCloseCalculator = trailingStopCloseCalculator;// null;
         }
     }
 }

@@ -149,6 +149,7 @@
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnCloseTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />
     <Compile Include="SystemExecutor\MM\MMSignalVolumeForAllCashTests.cs" />
+    <Compile Include="SystemExecutor\MM\MMSignalVolumeForSystemValuePercentTests.cs" />
     <Compile Include="SystemExecutor\MM\MMSignalVolumeOneItemTests.cs" />
     <Compile Include="SystemExecutor\MM\MMTrailingStopMinMaxOfNTests.cs" />
     <Compile Include="SystemExecutor\Mocks\CommissionUtils.cs" />

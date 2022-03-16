@@ -36,19 +36,24 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             return null;
         }
 
-        private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr) =>
-            new Signal()
-            {
-                Stock = stock,
-                DataRange = _dataRange,
-                IntradayInterval = 0,
-                Type = SignalType.EnterOnOpen,
-                Direction = dir,
-                InitialStopMode = SignalInitialStopMode.OnPrice,
-                InitialStopValue = AlignDown(stock.Type, ts, currentClosePrice - currentAtr),
-                ReversePosition = false,
-                Volume = _signalVolumeCalculator.Calculate(systemState, stock.Type, currentClosePrice)
-            };
+        private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr)
+        {
+            float volume = _signalVolumeCalculator.Calculate(systemState, stock.Type, currentClosePrice);
+            return (volume > 0)
+                ? new Signal()
+                    {
+                        Stock = stock,
+                        DataRange = _dataRange,
+                        IntradayInterval = 0,
+                        Type = SignalType.EnterOnOpen,
+                        Direction = dir,
+                        InitialStopMode = SignalInitialStopMode.OnPrice,
+                        InitialStopValue = AlignDown(stock.Type, ts, currentClosePrice - currentAtr),
+                        ReversePosition = false,
+                        Volume = volume
+                    }
+                : null;
+        }
 
         private float AlignDown(StockType stockType, DateTime ts, float value) =>
             (_tickAligner != null) ? _tickAligner.AlignDown(stockType, ts, value) : value;

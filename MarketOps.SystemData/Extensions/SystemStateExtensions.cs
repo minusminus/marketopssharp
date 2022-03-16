@@ -101,7 +101,7 @@ namespace MarketOps.SystemData.Extensions
         {
             systemState.Equity.Add(new SystemValue()
             {
-                Value = new SystemValueCalculator().Calc(systemState, ts, dataLoader),
+                Value = SystemValueCalculator.Calc(systemState, ts, dataLoader),
                 TS = ts
             });
         }

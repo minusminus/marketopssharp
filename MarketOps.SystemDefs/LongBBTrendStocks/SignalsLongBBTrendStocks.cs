@@ -6,7 +6,6 @@ using MarketOps.StockData.Extensions;
 using MarketOps.Stats.Stats;
 using MarketOps.StockData.Interfaces;
 using MarketOps.SystemData.Types;
-using System.Linq;
 
 namespace MarketOps.SystemDefs.LongBBTrendStocks
 {
@@ -31,12 +30,6 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private LongBBTrendInfo _trendInfo = new LongBBTrendInfo();
         private readonly StockDefinition _stock;
         private readonly StockStat _statBB, _statATR;
-
-        //spolki o min obrocie 300k w ostatnim roku
-        //private readonly string[] _stocksNames = { "KGHM","PKOBP","ALLEGRO","PKNORLEN","PZU","CDPROJEKT","PEKAO","DINOPL","JSW","PGNIG","CCC",
-        //    "ORANGEPL","LOTOS","SANPL","PGE","LPP","ALIOR","CYFRPLSAT","MBANK","TAURONPE","MILLENNIUM","MERCATOR","ASSECOPOL","KERNEL","TSGAMES",
-        //    "ENEA","HUUUGE","XTB","GPW","PEPCO","GRUPAAZOTY","KRUK","CIECH","PKPCARGO","EUROCASH","AMREST","11BIT","KETY","ASBIS","BUDIMEX",
-        //    "LIVECHAT","BIOMEDLUB"};
 
         public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, 
             ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator,
@@ -82,6 +75,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         private List<Signal> GenerateSignals(DateTime ts, StockPricesData data, int leadingIndex, SystemState systemState)
         {
+            if (systemState.PositionsActive.Count > 0) return new List<Signal>();
+
             Signal signal = _signalGenerator.Generate(_stock, ts, leadingIndex, systemState, _trendInfo, data, (StatBB)_statBB, (StatATR)_statATR);
             return (signal != null)
                 ? new List<Signal>() { signal }

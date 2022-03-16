@@ -140,5 +140,8 @@ namespace MarketOps.SystemData.Extensions
         {
             return systemState.CalculateSlippageClose(slippage, systemState.PositionsActive[positionIndex].Stock.Type, ts, systemState.PositionsActive[positionIndex].Direction, price);
         }
+
+        public static int FindActivePositionIndex(this SystemState systemState, string stockFullName) => 
+            systemState.PositionsActive.FindIndex(p => p.Stock.FullName == stockFullName);
     }
 }

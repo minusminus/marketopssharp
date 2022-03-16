@@ -118,5 +118,24 @@
         "Value": "10"
       }
     ]
+  },
+  {
+    "Description": "LongBBTrend Multi Stocks",
+    "ClassName": "MarketOps.SystemDefs.LongBBTrendStocks.LongBBTrendMultiStocks",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
   }
 ]

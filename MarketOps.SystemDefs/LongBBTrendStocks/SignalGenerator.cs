@@ -29,11 +29,10 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, statBB, currentIndex, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, statBB, currentIndex, trendInfo.CurrentTrend);
 
-            if (systemState.PositionsActive.Count == 0)
-                if ((expectation == BBTrendExpectation.UpAndRaising)
-                    //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 3, data.H[leadingIndex])
-                    && TrendStartedNotLaterThanNTicksAgo(trendInfo, currentIndex, 1))
-                    return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[currentIndex], statATR.Data(StatATRData.ATR)[currentIndex - statATR.BackBufferLength]);
+            if ((expectation == BBTrendExpectation.UpAndRaising)
+                //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 3, data.H[leadingIndex])
+                && TrendStartedNotLaterThanNTicksAgo(trendInfo, currentIndex, 1))
+                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[currentIndex], statATR.Data(StatATRData.ATR)[currentIndex - statATR.BackBufferLength]);
             return null;
         }
 

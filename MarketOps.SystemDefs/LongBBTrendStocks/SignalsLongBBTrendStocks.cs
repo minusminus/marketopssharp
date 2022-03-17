@@ -24,6 +24,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private readonly float _bbSigmaWidth;
         private readonly ISystemDataLoader _dataLoader;
         private readonly IStockDataProvider _dataProvider;
+        private readonly ISystemExecutionLogger _systemExecutionLogger;
         private readonly SignalGenerator _signalGenerator;
         private readonly PositionManager _positionManager;
 
@@ -33,13 +34,14 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, 
             ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator,
-            ITickAligner tickAligner)
+            ITickAligner tickAligner, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataRange = dataRange;
             _bbPeriod = bbPeriod;
             _bbSigmaWidth = bbSigmaWidth;
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
+            _systemExecutionLogger = systemExecutionLogger;
             _signalGenerator = new SignalGenerator(dataRange, signalVolumeCalculator, tickAligner);
             _positionManager = new PositionManager();
 
@@ -78,6 +80,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             if (systemState.PositionsActive.Count > 0) return new List<Signal>();
 
             Signal signal = _signalGenerator.Generate(_stock, ts, leadingIndex, systemState, _trendInfo, data, (StatBB)_statBB, (StatATR)_statATR);
+            _systemExecutionLogger.Add($"{ts.Date:yyyy-MM-dd}: {_trendInfo.CurrentTrend}, from: {_trendInfo.CurrentTrendStartIndex}, length: {leadingIndex - _trendInfo.CurrentTrendStartIndex}");
             return (signal != null)
                 ? new List<Signal>() { signal }
                 : new List<Signal>();

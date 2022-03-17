@@ -46,6 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChartAreaFactory.cs" />
+    <Compile Include="ColumnChart\ColumnChartData.cs" />
+    <Compile Include="ColumnChart\ColumnChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColumnChart\ColumnChart.Designer.cs">
+      <DependentUpon>ColumnChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\PriceVolumeChartPositionAnnotationsExtensions.cs" />
     <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
@@ -159,6 +166,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ColumnChart\ColumnChart.resx">
+      <DependentUpon>ColumnChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLongLastingWork.resx">
       <DependentUpon>FormLongLastingWork.cs</DependentUpon>
     </EmbeddedResource>

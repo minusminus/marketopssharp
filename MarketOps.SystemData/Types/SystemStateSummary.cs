@@ -31,7 +31,9 @@ namespace MarketOps.SystemData.Types
         public float AvgPcntLoss;
         public float ExpectedPositionValue;
         public float ExpectedUnitReturn;
+        public float AvgRProfit;
 
+        public List<RProfitDistribution> RProfitDistribution;
         public List<SystemDrawDown> DDTicks;
         public List<SystemDrawDown> DDClosedPositions;
 

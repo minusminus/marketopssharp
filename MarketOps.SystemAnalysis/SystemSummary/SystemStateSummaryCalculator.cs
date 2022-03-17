@@ -1,5 +1,6 @@
 ﻿using MarketOps.SystemAnalysis.DrawDowns;
 using MarketOps.SystemAnalysis.Equity;
+using MarketOps.SystemAnalysis.R;
 using MarketOps.SystemData.Types;
 using System;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             ProcessWinsLosses(summary, systemState);
             CalculateDrawDowns(summary, systemState);
             CalculateEquityDistribution(summary, systemState);
+            CalculateRProfit(summary, systemState);
             return summary;
         }
 
@@ -49,5 +51,8 @@ namespace MarketOps.SystemAnalysis.SystemSummary
         {
             summary.EquityDistribution = EquityDistributionCalculator.Calculate(systemState.Equity);
         }
+
+        private static void CalculateRProfit(SystemStateSummary summary, SystemState systemState) =>
+            RProfitCalculator.Calculate(summary, systemState);
     }
 }

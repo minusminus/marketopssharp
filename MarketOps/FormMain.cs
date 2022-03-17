@@ -267,6 +267,7 @@ namespace MarketOps
             DisplaySummary(summary);
             ShowPositions(systemState);
             ShowEquityCharts(systemState);
+            ShowRCharts(systemState, summary);
             ShowDDCharts(summary);
             ShowProfitCharts(systemState);
         }
@@ -296,6 +297,7 @@ namespace MarketOps
             lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
             lblSDRExpectedUnitReturn.Text = summary.AvgLoss != 0 ? summary.ExpectedUnitReturn.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.AvgLoss != 0 ? summary.ExpectedPositionValue.ToDisplay() : "---";
+            lblSDRRProfitAvg.Text = summary.AvgRProfit.ToDisplay();
 
             lblSDRMaxDDOnTicks.Text = summary.DDTicks.MaxDD().ToDisplayPcnt();
             lblSDRMaxDDOnPositions.Text = summary.DDClosedPositions.MaxDD().ToDisplayPcnt();
@@ -317,6 +319,15 @@ namespace MarketOps
         {
             chartEquity.LoadData(systemState.Equity);
             chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity);
+        }
+
+        private void ShowRCharts(SystemState systemState, SystemStateSummary summary)
+        {
+            const string SimulationRProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
+            const string SimulationRProfitDistributionValueTooltipFormat = "#VALX{N2}, Count: #VAL";
+
+            chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat);
+            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), SimulationRProfitDistributionValueTooltipFormat);
         }
 
         private void ShowDDCharts(SystemStateSummary summary)

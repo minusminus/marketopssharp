@@ -9,7 +9,6 @@ namespace MarketOps.DataMappers
     /// </summary>
     internal class SystemDrawDownPointChartData : PointChartData
     {
-
         public SystemDrawDownPointChartData(SystemDrawDown dd)
         {
             _x = 100f * dd.DD();

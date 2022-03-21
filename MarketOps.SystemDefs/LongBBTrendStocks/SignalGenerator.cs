@@ -29,12 +29,26 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, statBB, currentIndex, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
             BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, statBB, currentIndex, trendInfo.CurrentTrend);
 
-            if ((expectation == BBTrendExpectation.UpAndRaising)
-                //&& PriceAboveMaxOfPreviousH(data, leadingIndex, 3, data.H[leadingIndex])
-                && TrendStartedNotLaterThanNTicksAgo(trendInfo, currentIndex, 1))
+            if (expectation != BBTrendExpectation.UpAndRaising) return null;
+
+            if (TrendStartedNotLaterThanNTicksAgo(trendInfo, currentIndex, 1))
                 return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[currentIndex], statATR.Data(StatATRData.ATR)[currentIndex - statATR.BackBufferLength]);
+            else if(PriceAboveMaxOfPreviousH(data, currentIndex, 10, data.H[currentIndex]))
+                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[currentIndex], statATR.Data(StatATRData.ATR)[currentIndex - statATR.BackBufferLength]);
+
             return null;
         }
+
+        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int currentIndex, int length, float price)
+        {
+            for (int i = 1; i <= length; i++)
+                if (data.H[currentIndex - i] > price)
+                    return false;
+            return true;
+        }
+
+        private bool TrendStartedNotLaterThanNTicksAgo(LongBBTrendInfo trendInfo, int currentIndex, int n) =>
+            (currentIndex - trendInfo.CurrentTrendStartIndex) <= n;
 
         private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr)
         {
@@ -57,16 +71,5 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         private float AlignDown(StockType stockType, DateTime ts, float value) =>
             (_tickAligner != null) ? _tickAligner.AlignDown(stockType, ts, value) : value;
-
-        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int currentIndex, int length, float price)
-        {
-            for (int i = 1; i <= length; i++)
-                if (data.H[currentIndex - i] > price)
-                    return false;
-            return true;
-        }
-
-        private bool TrendStartedNotLaterThanNTicksAgo(LongBBTrendInfo trendInfo, int currentIndex, int n) =>
-            (currentIndex - trendInfo.CurrentTrendStartIndex) <= n;
     }
 }

@@ -19,6 +19,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private readonly StockDataRange _dataRange;
         private readonly ISystemDataLoader _dataLoader;
         private readonly IStockDataProvider _dataProvider;
+        private readonly ISystemExecutionLogger _systemExecutionLogger;
         private readonly SignalGenerator _signalGenerator;
         private readonly PositionManager _positionManager;
 
@@ -32,12 +33,13 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             "LIVECHAT","BIOMEDLUB"};
 
         public SignalsLongBBTrendMultiStocks(StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod,
-            ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator,
-            ITickAligner tickAligner)
+            ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger,
+            IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
         {
             _dataRange = dataRange;
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
+            _systemExecutionLogger = systemExecutionLogger;
             _signalGenerator = new SignalGenerator(dataRange, signalVolumeCalculator, tickAligner);
             _positionManager = new PositionManager();
 
@@ -64,7 +66,9 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             ManageCurrentPositions(ts, systemState);
-            return GenerateSignals(ts, systemState);
+            var signals = GenerateSignals(ts, systemState);
+            LogData(ts, systemState, signals);
+            return signals;
         }
 
         private void InitializeStocksData(int bbPeriod, float bbSigmaWidth, int atrPeriod)
@@ -109,5 +113,13 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         private bool PositionExists(int stockIndex, SystemState systemState) =>
             systemState.FindActivePositionIndex(_stocks.Stocks[stockIndex].FullName) > -1;
+
+        private void LogData(DateTime ts, SystemState systemState, List<Signal> signals)
+        {
+            _systemExecutionLogger.Add(
+                $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
+                + $"active pos: {systemState.PositionsActive.Count}, signals: {signals.Count}"
+                );
+        }
     }
 }

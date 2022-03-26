@@ -42,7 +42,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 SystemParams.Get(LongBBTrendStocksParams.BBPeriod).As<int>(),
                 SystemParams.Get(LongBBTrendStocksParams.BBSigmaWidth).As<float>(),
                 SystemParams.Get(LongBBTrendStocksParams.ATRWidth).As<int>(),
-                _dataLoader, _dataProvider,
+                _dataLoader, _dataProvider, _systemExecutionLogger,
                 new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),// new MMSignalVolumeOneItem(),
                 _gpwTickOps
                 );

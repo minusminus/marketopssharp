@@ -109,8 +109,8 @@ namespace MarketOps.SystemExecutor.Processor
             ProcessSignalsOnClose(leadingPricesData.TS[leadingIndex], systemState);
             GenerateSignalsOnClose(leadingPricesData.TS[leadingIndex], leadingIndex, systemState);
 
-            UpdateActivePositionsTrailingStopData(leadingPricesData.TS[leadingIndex], systemState);
             RecalculateStops(leadingPricesData.TS[leadingIndex], systemState);
+            UpdateActivePositionsTrailingStopData(leadingPricesData.TS[leadingIndex], systemState);
             CalculateCurrentSystemValue(leadingPricesData.TS[leadingIndex], systemState);
             UpdateLastProcessedTS(leadingPricesData.TS[leadingIndex], systemState);
         }

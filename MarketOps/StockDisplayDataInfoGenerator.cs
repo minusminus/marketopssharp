@@ -1,5 +1,4 @@
-﻿using MarketOps.StockData.Types;
-using MarketOps.Controls.Types;
+﻿using MarketOps.Controls.Types;
 using MarketOps.StockData.Extensions;
 
 namespace MarketOps
@@ -11,9 +10,7 @@ namespace MarketOps
     {
         public string GetStockInfo(StockDisplayData data)
         {
-            string nodatainfo = "";
-            if (data.Prices.Length == 0)
-                nodatainfo = " - no data";
+            string nodatainfo = (data.Prices.Length == 0) ? " - no data" : string.Empty;
             return $"{data.Stock.FullName} {data.Prices.DataRangeToString()} [{data.TsFrom.ToString(data.Prices.DataRangeFormatString())} - {data.TsTo.ToString(data.Prices.DataRangeFormatString())}{nodatainfo}]";
         }
 

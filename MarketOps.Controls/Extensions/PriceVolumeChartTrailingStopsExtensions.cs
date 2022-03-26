@@ -15,7 +15,7 @@ namespace MarketOps.Controls.Extensions
         {
             InitializeTrailingStopsSeriesWithEmptyPoints(chart);
             foreach (var position in positions)
-                AddTrailingStopData(chart, position.TrailingStop);
+                AddTrailingStopData(chart, position.EntrySignal.InitialStopValue, position.TrailingStop);
             chart.TrailingStopL.Enabled = true;
         }
 
@@ -26,14 +26,13 @@ namespace MarketOps.Controls.Extensions
                 AddDisabledTrailingStopValue(chart.TrailingStopL, chart.PricesCandles.Points[i].XValue);
         }
 
-        private static void AddTrailingStopData(PriceVolumeChart chart, List<PositionTrailingStopData> data)
+        private static void AddTrailingStopData(PriceVolumeChart chart, float initialStop, List<PositionTrailingStopData> data)
         {
             if (data.Count == 0) return;
             int startIndex = FindTSIndex(chart, data[0].TS);
+            EnableTrailingStopValue(chart.TrailingStopL, startIndex, initialStop);
             for (int i = 0; i < data.Count; i++)
-                EnableTrailingStopValue(chart.TrailingStopL, startIndex + i, data[i].Value);
-            if ((startIndex + data.Count) < chart.PricesCandles.Points.Count)
-                EnableTrailingStopValue(chart.TrailingStopL, startIndex + data.Count, data[data.Count - 1].Value);
+                EnableTrailingStopValue(chart.TrailingStopL, startIndex + i + 1, data[i].Value);
         }
 
         private static void AddDisabledTrailingStopValue(Series series, double ts)

@@ -36,7 +36,7 @@ namespace MarketOps
             if (selectedIndex < emptyStart) return "";
 
             return string.Join(", ",
-                Enumerable.Range(0, stat.DataCount - 1)
+                Enumerable.Range(0, stat.DataCount)
                     .Select(i => DataFormatting.FormatStatValue(stat.Data(i)[selectedIndex - emptyStart]))
                 );
         }

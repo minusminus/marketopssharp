@@ -58,6 +58,7 @@
     <Compile Include="BBTrendRecognizer\BBTrendRecognizer.cs" />
     <Compile Include="BBTrendRecognizer\BBTrendTypes.cs" />
     <Compile Include="BBTrend\SignalsBBTrend.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendFW20.cs" />
     <Compile Include="LongBBTrendStocks\LongBBTrendInfo.cs" />
     <Compile Include="LongBBTrendStocks\LongBBTrendMultiStocks.cs" />
     <Compile Include="LongBBTrendStocks\LongBBTrendStocks.cs" />

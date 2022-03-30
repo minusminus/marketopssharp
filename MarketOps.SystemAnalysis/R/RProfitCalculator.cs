@@ -17,7 +17,9 @@ namespace MarketOps.SystemAnalysis.R
         }
 
         private static float CalculateRProfiAvg(SystemState systemState) =>
-            systemState.PositionsClosed.Average(p => p.RProfit);
+            (systemState.PositionsClosed.Count > 0)
+                ? systemState.PositionsClosed.Average(p => p.RProfit)
+                : 0;
 
         private static List<RProfitDistribution> CalculateRProfitDistribution(SystemState systemState) => 
             systemState.PositionsClosed

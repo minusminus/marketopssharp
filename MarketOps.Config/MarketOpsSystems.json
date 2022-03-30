@@ -137,5 +137,28 @@
         "Value": "10"
       }
     ]
+  },
+  {
+    "Description": "LongBBTrend FW20",
+    "ClassName": "MarketOps.SystemDefs.LongBBTrendStocks.LongBBTrendFW20",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "FW20"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
   }
 ]

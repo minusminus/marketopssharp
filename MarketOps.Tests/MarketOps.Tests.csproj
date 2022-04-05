@@ -135,6 +135,7 @@
     <Compile Include="SystemAnalysis\Equity\EquityDistributionCalculatorTests.cs" />
     <Compile Include="SystemAnalysis\MonteCarlo\MonteCarloCalculatorTests.cs" />
     <Compile Include="SystemAnalysis\SystemSummary\WinsLossesCalculatorTests.cs" />
+    <Compile Include="SystemData\Extensions\FloatExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionDirExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\SystemStateExtensionsTests.cs" />

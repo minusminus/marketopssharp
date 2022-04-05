@@ -3,7 +3,7 @@
 namespace MarketOps.SystemData.Extensions
 {
     /// <summary>
-    /// Extensions for mone value calculations.
+    /// Extensions for money value calculations.
     /// </summary>
     public static class MoneyValueExtensions
     {

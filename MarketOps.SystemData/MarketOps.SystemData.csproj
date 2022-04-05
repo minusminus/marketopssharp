@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DrawDownsExtensions.cs" />
+    <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="Extensions\ISystemDataLoaderExtensions.cs" />
     <Compile Include="Extensions\MoneyValueExtensions.cs" />
     <Compile Include="Extensions\PositionDirExtensions.cs" />

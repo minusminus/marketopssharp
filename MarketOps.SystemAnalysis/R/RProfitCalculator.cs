@@ -1,7 +1,7 @@
 ﻿using MarketOps.SystemData.Types;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using MarketOps.SystemData.Extensions;
 
 namespace MarketOps.SystemAnalysis.R
 {
@@ -23,7 +23,7 @@ namespace MarketOps.SystemAnalysis.R
 
         private static List<RProfitDistribution> CalculateRProfitDistribution(SystemState systemState) => 
             systemState.PositionsClosed
-                    .Select(p => (float)Math.Floor(p.RProfit))
+                    .Select(p => p.RProfit.FlooredMultipleOfN(0.5f))
                     .GroupBy(x => x)
                     .Select(g => new RProfitDistribution() { R = g.Key, Count = g.Count() })
                     .ToList();

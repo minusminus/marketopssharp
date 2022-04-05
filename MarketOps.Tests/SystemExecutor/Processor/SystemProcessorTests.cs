@@ -75,7 +75,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.Cash.ShouldBe(InitialCash);
             _systemState.PositionsActive.Count.ShouldBe(0);
             _systemState.PositionsClosed.Count.ShouldBe(0);
-            _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
@@ -91,7 +91,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsActive[0].Open.ShouldBe(expectedPrice);
             _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
             _systemState.PositionsClosed.Count.ShouldBe(0);
-            _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
@@ -110,7 +110,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsClosed[0].Direction.ShouldBe(expectedClosedDir);
             _systemState.PositionsClosed[0].Open.ShouldBe(expectedActivePrice);
             _systemState.PositionsClosed[0].TicksActive.ShouldBe(expectedClosedPositionTicks);
-            _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(1 + 1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
@@ -142,7 +142,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsClosed[0].Direction.ShouldBe(expectedDir);
             _systemState.PositionsClosed[0].Close.ShouldBe(expectedStopPrice);
             _systemState.PositionsClosed[0].TicksActive.ShouldBe(expectedClosedPositionTicks);
-            _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(1 + 1);
             _systemState.Equity.Count.ShouldBe(expectedEquityCount);
             _systemState.Equity.First().Value.ShouldBe(equityFirstValue);
             _systemState.Equity.Skip(1).All(x => x.Value == finalCashValue).ShouldBeTrue();
@@ -157,7 +157,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsActive[0].Open.ShouldBe(expectedOpenPrice);
             _systemState.PositionsActive[0].TicksActive.ShouldBe(expectedPositionTicks);
             _systemState.PositionsClosed.Count.ShouldBe(0);
-            _systemState.ClosedPositionsEquity.Count.ShouldBe(0);
+            _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(expectedEquityCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);

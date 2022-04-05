@@ -81,6 +81,7 @@ namespace MarketOps.SystemExecutor.Processor
 
         private void ProcessConfiguredSystem(SystemConfiguration systemConfiguration, SystemState systemState)
         {
+            systemState.ClosedPositionsEquity.Add(new SystemValue() { TS = systemConfiguration.tsFrom, Value = systemState.Cash });
             StockPricesData leadingPricesData = GetLeadingData(systemConfiguration);
             var (from, to) = PricesDataRangeFinder.Find(leadingPricesData, systemConfiguration.tsFrom, systemConfiguration.tsTo);
             for (int i = from; i <= to; i++)

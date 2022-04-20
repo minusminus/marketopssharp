@@ -16,10 +16,10 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
         [Test]
         public void Calculate_AllWins__CalculatesCorrectly()
         {
-            MonteCarloResult result = MonteCarloCalculator.Calculate(Count, Length, 1, 0.1f, 0.1f);
+            MonteCarloResult result = MonteCarloCalculator.Calculate(Count, Length, 1, 0.1f, 0.1f, 1);
 
-            result.data.GetLength(0).ShouldBe(Count);
-            result.data.GetLength(1).ShouldBe(Length);
+            result.Data.GetLength(0).ShouldBe(Count);
+            result.Data.GetLength(1).ShouldBe(Length);
             result.Wins.ShouldBe(Count);
             result.Losses.ShouldBe(0);
             result.WinsPcnt.ShouldBe(1f);
@@ -29,10 +29,10 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
         [Test]
         public void Calculate_AllLosses__CalculatesCorrectly()
         {
-            MonteCarloResult result = MonteCarloCalculator.Calculate(Count, Length, 0, 0.1f, 0.1f);
+            MonteCarloResult result = MonteCarloCalculator.Calculate(Count, Length, 0, 0.1f, 0.1f, 1);
 
-            result.data.GetLength(0).ShouldBe(Count);
-            result.data.GetLength(1).ShouldBe(Length);
+            result.Data.GetLength(0).ShouldBe(Count);
+            result.Data.GetLength(1).ShouldBe(Length);
             result.Wins.ShouldBe(0);
             result.Losses.ShouldBe(Count);
             result.WinsPcnt.ShouldBe(0f);

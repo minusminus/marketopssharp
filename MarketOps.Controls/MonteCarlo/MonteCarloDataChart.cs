@@ -21,36 +21,51 @@ namespace MarketOps.Controls.MonteCarlo
 
         public void LoadData(MonteCarloResult data)
         {
+            int rowsCount = data.Data.GetLength(0);
+            int rowLength = data.Data.GetLength(1);
             chartData.Series.Clear();
-            CreateSeriesWithPoints(data);
+            DrawDataSeries(data.Data, rowsCount, rowLength);
+            DrawAverageDataSerie(data.AverageData, rowLength);
         }
 
-        private void CreateSeriesWithPoints(MonteCarloResult data)
+        private void DrawDataSeries(float[,] data, int rowsCount, int rowLength)
         {
-            int rowsCount = data.data.GetLength(0);
             for (int i = 0; i < rowsCount; i++)
-            {
-                CreateSeries(i);
-                AddSingleRow(data, i);
-            }
+                AddDataRow(CreateDataSeries(i), data, i, rowLength);
         }
 
-        private void CreateSeries(int rowIndex)
+        private void DrawAverageDataSerie(float[] data, int rowLength) => 
+            AddAverageDataRow(CreateAverageDataSeries(), data, rowLength);
+
+        private Series CreateDataSeries(int rowIndex) =>
+            CreateSeries($"series{rowIndex}", Color.LightSteelBlue, 1);
+
+        private Series CreateAverageDataSeries() => 
+            CreateSeries("seriesAverageData", Color.LightCoral, 2);
+
+        private void AddDataRow(Series series, float[,] data, int rowIndex, int rowLength)
         {
-            Series series = chartData.Series.Add($"series{rowIndex}");
+            for (int i = 0; i < rowLength; i++)
+                series.Points.AddXY(i, data[rowIndex, i]);
+        }
+
+        private void AddAverageDataRow(Series series, float[] data, int rowLength)
+        {
+            for (int i = 0; i < rowLength; i++)
+                series.Points.AddXY(i, data[i]);
+        }
+
+        private Series CreateSeries(string name, Color color, int lineWidth)
+        {
+            Series series = chartData.Series.Add(name);
             series.ChartArea = "areaData";
             series.ChartType = SeriesChartType.Line;
-            series.Color = Color.LightSteelBlue;
+            series.Color = color;
+            series.BorderWidth = lineWidth;
             series.IsXValueIndexed = true;
             series.XValueType = ChartValueType.Int32;
             series.YValueType = ChartValueType.Single;
-        }
-
-        private void AddSingleRow(MonteCarloResult data, int rowIndex)
-        {
-            int rowLength = data.data.GetLength(1);
-            for (int i = 0; i < rowLength; i++)
-                chartData.Series[rowIndex].Points.AddXY(i, data.data[rowIndex, i]);
+            return series;
         }
     }
 }

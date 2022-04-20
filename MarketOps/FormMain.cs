@@ -282,6 +282,7 @@ namespace MarketOps
             lblSDRFinalValueOnClosedPositions.Text = summary.FinalValueOnClosedPositions.ToDisplay();
             lblSDRFinalValueOnLastTick.Text = summary.FinalValueOnLastTick.ToDisplay();
             lblSDRProfitPcntOnTicks.Text = summary.CummYProfitPcntOnTicks.ToDisplayPcnt();
+            lblSDRTransactionsPerYear.Text = $"{summary.TransactionsPerYear}";
 
             lblSDRClosedPositionsCount.Text = summary.ClosedPositionsCount.ToDisplay();
             lblSDRWins.Text = summary.Wins.ToDisplay();
@@ -404,10 +405,15 @@ namespace MarketOps
                 (int)edtMonteCarloLength.Value,
                 (float)edtMonteCarloWinProb.Value,
                 (float)edtMonteCarloAvgPcntWin.Value / 100f,
-                -(float)edtMonteCarloAvgPcntLoss.Value / 100f
+                -(float)edtMonteCarloAvgPcntLoss.Value / 100f,
+                _currentSimSystemSummary.TransactionsPerYear
                 );
+
             lblMonteCarloSimWins.Text = $"{result.Wins} ({result.WinsPcnt.ToDisplayPcnt()})";
             lblMonteCarloSimLosses.Text = $"{result.Losses} ({result.LossesPcnt.ToDisplayPcnt()})";
+            lblMonteCarloSimBest.Text = $"{result.BestCase} ({result.BestCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimWorst.Text = $"{result.WorstCase} ({result.WorstCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimAvg.Text = $"{result.AverageCase} ({result.AverageCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
             chartMonteCarloData.LoadData(result);
         }
     }

@@ -35,7 +35,8 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             summary.FinalValueOnClosedPositions = systemState.ClosedPositionsEquity.LastOrDefault().Value;
 
             double yearsOfSim = (summary.StopTS - summary.StartTS).TotalDays / 365.0;
-            summary.CummYProfitPcntOnTicks = (float)Math.Pow(summary.FinalValueOnLastTick / summary.InitialValue, 1 / yearsOfSim) - 1f;
+            summary.CummYProfitPcntOnTicks = (float)CummulativeProfit.Calculate(summary.InitialValue, summary.FinalValueOnLastTick, yearsOfSim);
+            summary.TransactionsPerYear = (int)Math.Floor(systemState.PositionsClosed.Count / yearsOfSim);
         }
 
         private static void ProcessWinsLosses(SystemStateSummary summary, SystemState systemState) => 

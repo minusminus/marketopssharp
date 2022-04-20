@@ -5,14 +5,19 @@
     /// </summary>
     public class MonteCarloResult
     {
-        public readonly float[,] data;
+        public readonly float[,] Data;
+        public readonly float[] AverageData;
 
         public int Wins, Losses;
         public float WinsPcnt, LossesPcnt;
 
+        public float BestCase, WorstCase, AverageCase;
+        public float BestCaseYPcnt, WorstCaseYPcnt, AverageCaseYPcnt;
+
         public MonteCarloResult(int count, int length)
         {
-            data = new float[count, length];
+            Data = new float[count, length];
+            AverageData = new float[length];
         }
     }
 }

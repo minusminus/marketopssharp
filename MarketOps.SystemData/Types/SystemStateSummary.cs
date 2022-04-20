@@ -16,6 +16,7 @@ namespace MarketOps.SystemData.Types
         public float FinalValueOnLastTick;
         public float FinalValueOnClosedPositions;
         public float CummYProfitPcntOnTicks;
+        public int TransactionsPerYear;
 
         public int ClosedPositionsCount;
         public int Wins;

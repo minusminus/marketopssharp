@@ -43,7 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CummulativeProfit.cs" />
-    <Compile Include="DrawDowns\DrawDownsCalculator.cs" />
+    <Compile Include="DrawDowns\SystemDrawDownsCalculator.cs" />
     <Compile Include="Equity\EquityDistributionCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloConsts.cs" />

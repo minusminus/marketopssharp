@@ -8,7 +8,7 @@ namespace MarketOps.SystemAnalysis.DrawDowns
     /// System drawdowns calculator.
     /// Drawdown is active until next value is higher then its top
     /// </summary>
-    public static class DrawDownsCalculator
+    public static class SystemDrawDownsCalculator
     {
         public static List<SystemDrawDown> Calculate(List<SystemValue> equity)
         {

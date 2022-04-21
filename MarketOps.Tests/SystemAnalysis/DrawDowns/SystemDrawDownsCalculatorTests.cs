@@ -9,7 +9,7 @@ using MarketOps.SystemData.Types;
 namespace MarketOps.Tests.SystemAnalysis.DrawDowns
 {
     [TestFixture]
-    public class DrawDownsCalculatorTests
+    public class SystemDrawDownsCalculatorTests
     {
         private List<SystemValue> CreateInput(float[] values) =>
             Enumerable
@@ -30,31 +30,31 @@ namespace MarketOps.Tests.SystemAnalysis.DrawDowns
         [Test]
         public void Calculate_EmptyList__ReturnsEmptyList()
         {
-            DrawDownsCalculator.Calculate(new List<SystemValue>()).ShouldBeEmpty();
+            SystemDrawDownsCalculator.Calculate(new List<SystemValue>()).ShouldBeEmpty();
         }
 
         [Test]
         public void Calculate_OneElement__ReturnsEmptyList()
         {
-            DrawDownsCalculator.Calculate(CreateInput(new float[] { 1 })).ShouldBeEmpty();
+            SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 1 })).ShouldBeEmpty();
         }
 
         [Test]
         public void Calculate_EqualValues__ReturnsEmptyList()
         {
-            DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 1, 1 })).ShouldBeEmpty();
+            SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 1, 1 })).ShouldBeEmpty();
         }
 
         [Test]
         public void Calculate_RaisingValues__ReturnsEmptyList()
         {
-            DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 4 })).ShouldBeEmpty();
+            SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 4 })).ShouldBeEmpty();
         }
 
         [Test]
         public void Calculate_FallingValues__ReturnsOneElement()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 4, 3, 2, 1 })),
+            CheckOutput(SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 4, 3, 2, 1 })),
                 new Tuple<float, float>[]
                 {
                     Tuple.Create(4f, 1f)
@@ -64,7 +64,7 @@ namespace MarketOps.Tests.SystemAnalysis.DrawDowns
         [Test]
         public void Calculate_TwoDDs__ReturnsTwoDDs()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 4, 3, 2, 6, 7, 8, 7, 5, 1, 3 })),
+            CheckOutput(SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 4, 3, 2, 6, 7, 8, 7, 5, 1, 3 })),
                 new Tuple<float, float>[]
                 {
                     Tuple.Create(4f, 2f),
@@ -75,7 +75,7 @@ namespace MarketOps.Tests.SystemAnalysis.DrawDowns
         [Test]
         public void Calculate_SawShapedFall__ReturnsCorrectly()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 10, 9, 5, 6, 7, 8, 9, 6, 5, 4, 3 })),
+            CheckOutput(SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 10, 9, 5, 6, 7, 8, 9, 6, 5, 4, 3 })),
                 new Tuple<float, float>[]
                 {
                     Tuple.Create(10f, 3f)
@@ -85,7 +85,7 @@ namespace MarketOps.Tests.SystemAnalysis.DrawDowns
         [Test]
         public void Calculate_SawShapedRaise__ReturnsCorrectly()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 5, 4, 3, 4, 5, 6, 7, 10, 9, 8 })),
+            CheckOutput(SystemDrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 5, 4, 3, 4, 5, 6, 7, 10, 9, 8 })),
                 new Tuple<float, float>[]
                 {
                     Tuple.Create(5f, 3f),

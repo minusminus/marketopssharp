@@ -309,6 +309,7 @@ namespace MarketOps
             edtMonteCarloWinProb.Value = (decimal)summary.WinProbability;
             edtMonteCarloAvgPcntWin.Value = (decimal)(100f * summary.AvgPcntWin);
             edtMonteCarloAvgPcntLoss.Value = (decimal)(100f * summary.AvgPcntLoss);
+            edtMonteCarloTransactionsPerYear.Value = (decimal)summary.TransactionsPerYear;
         }
 
         private void ShowPositions(SystemState systemState)
@@ -406,14 +407,14 @@ namespace MarketOps
                 (float)edtMonteCarloWinProb.Value,
                 (float)edtMonteCarloAvgPcntWin.Value / 100f,
                 -(float)edtMonteCarloAvgPcntLoss.Value / 100f,
-                _currentSimSystemSummary.TransactionsPerYear
+                (int)edtMonteCarloTransactionsPerYear.Value
                 );
 
             lblMonteCarloSimWins.Text = $"{result.Wins} ({result.WinsPcnt.ToDisplayPcnt()})";
             lblMonteCarloSimLosses.Text = $"{result.Losses} ({result.LossesPcnt.ToDisplayPcnt()})";
-            lblMonteCarloSimBest.Text = $"{result.BestCase} ({result.BestCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
-            lblMonteCarloSimWorst.Text = $"{result.WorstCase} ({result.WorstCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
-            lblMonteCarloSimAvg.Text = $"{result.AverageCase} ({result.AverageCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimBest.Text = $"{result.BestCase.ToDisplay()} ({result.BestCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimWorst.Text = $"{result.WorstCase.ToDisplay()} ({result.WorstCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimAvg.Text = $"{result.AverageCase.ToDisplay()} ({result.AverageCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
             chartMonteCarloData.LoadData(result);
         }
     }

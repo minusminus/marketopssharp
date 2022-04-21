@@ -22,6 +22,7 @@ namespace MarketOps.SystemData.Extensions
                 Open = price,
                 OpenCommission = commission,
                 TSOpen = ts,
+                EquityValueOnTickBeforeOpen = (systemState.Equity.Count > 0) ? systemState.Equity.Last().Value : 0,
                 Volume = volume,
                 EntrySignal = entrySignal,
                 CloseMode = (entrySignal.InitialStopMode == SignalInitialStopMode.OnPrice) ? PositionCloseMode.OnStopHit : PositionCloseMode.DontClose,

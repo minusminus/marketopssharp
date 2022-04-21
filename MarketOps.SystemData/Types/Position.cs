@@ -23,6 +23,7 @@ namespace MarketOps.SystemData.Types
         public DateTime TSOpen;
         public float Open;
         public float OpenCommission;
+        public float EquityValueOnTickBeforeOpen;
         public DateTime TSClose;
         public float Close;
         public float CloseCommission;

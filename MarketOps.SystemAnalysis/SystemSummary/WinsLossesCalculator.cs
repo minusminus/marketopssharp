@@ -30,12 +30,13 @@ namespace MarketOps.SystemAnalysis.SystemSummary
                 {
                     summary.Wins++;
                     summary.SumWins += value;
-                    sumPcntWins += value / p.OpenValue();
-                } else
+                    sumPcntWins += value / p.EquityValueOnTickBeforeOpen;
+                }
+                else
                 {
                     summary.Losses++;
                     summary.SumLosses -= value;
-                    sumPcntLosses += value / p.OpenValue();
+                    sumPcntLosses += value / p.EquityValueOnTickBeforeOpen;
                 }
             });
             if (summary.Wins > 0)

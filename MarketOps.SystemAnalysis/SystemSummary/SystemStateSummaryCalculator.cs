@@ -44,8 +44,9 @@ namespace MarketOps.SystemAnalysis.SystemSummary
 
         private static void CalculateDrawDowns(SystemStateSummary summary, SystemState systemState)
         {
-            summary.DDTicks = SystemDrawDownsCalculator.Calculate(systemState.Equity);
-            summary.DDClosedPositions = SystemDrawDownsCalculator.Calculate(systemState.ClosedPositionsEquity);
+            SystemDrawDownsCalculator calculator = new SystemDrawDownsCalculator();
+            summary.DDTicks = calculator.Calculate(systemState.Equity);
+            summary.DDClosedPositions = calculator.Calculate(systemState.ClosedPositionsEquity);
         }
 
         private static void CalculateEquityDistribution(SystemStateSummary summary, SystemState systemState)

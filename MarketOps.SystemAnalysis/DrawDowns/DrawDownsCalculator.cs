@@ -7,12 +7,13 @@
     /// </summary>
     internal static class DrawDownsCalculator
     {
-        public delegate void OnDrawDown(int startIndex, int lastIndex, float topValue, float bottomValue);
+        public delegate void OnDrawDown(int startIndex, int lastIndex, int bottomIndex, float topValue, float bottomValue);
 
         private class DrawDownInfo
         {
             public int StartIndex;
             public int LastIndex;
+            public int BottomIndex;
             public float TopValue;
             public float BottomValue;
         }
@@ -42,6 +43,7 @@
         private static void StartNewDrawDown(DrawDownInfo ddInfo, int startIndex, float value)
         {
             ddInfo.StartIndex = startIndex;
+            ddInfo.BottomIndex = startIndex;
             ddInfo.LastIndex = -1;
             ddInfo.TopValue = value;
             ddInfo.BottomValue = value;
@@ -51,13 +53,16 @@
         {
             ddInfo.LastIndex = currentIndex;
             if (ddInfo.BottomValue > currentValue)
+            {
+                ddInfo.BottomIndex = currentIndex;
                 ddInfo.BottomValue = currentValue;
+            }
         }
 
         private static void CallOnFinishedDrawDown(DrawDownInfo ddInfo, OnDrawDown onDrawDown)
         {
             if (ddInfo.LastIndex == -1) return;
-            onDrawDown?.Invoke(ddInfo.StartIndex, ddInfo.LastIndex, ddInfo.TopValue, ddInfo.BottomValue);
+            onDrawDown?.Invoke(ddInfo.StartIndex, ddInfo.LastIndex, ddInfo.BottomIndex, ddInfo.TopValue, ddInfo.BottomValue);
         }
     }
 }

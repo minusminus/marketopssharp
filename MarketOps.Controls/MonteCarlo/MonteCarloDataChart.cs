@@ -21,21 +21,19 @@ namespace MarketOps.Controls.MonteCarlo
 
         public void LoadData(MonteCarloResult data)
         {
-            int rowsCount = data.Data.GetLength(0);
-            int rowLength = data.Data.GetLength(1);
             chartData.Series.Clear();
-            DrawDataSeries(data.Data, rowsCount, rowLength);
-            DrawAverageDataSerie(data.AverageData, rowLength);
+            DrawDataSeries(data.Data);
+            DrawAverageDataSerie(data.AverageData);
         }
 
-        private void DrawDataSeries(float[,] data, int rowsCount, int rowLength)
+        private void DrawDataSeries(float[][] data)
         {
-            for (int i = 0; i < rowsCount; i++)
-                AddDataRow(CreateDataSeries(i), data, i, rowLength);
+            for (int i = 0; i < data.Length; i++)
+                AddDataRow(CreateDataSeries(i), data[i]);
         }
 
-        private void DrawAverageDataSerie(float[] data, int rowLength) => 
-            AddAverageDataRow(CreateAverageDataSeries(), data, rowLength);
+        private void DrawAverageDataSerie(float[] row) => 
+            AddDataRow(CreateAverageDataSeries(), row);
 
         private Series CreateDataSeries(int rowIndex) =>
             CreateSeries($"series{rowIndex}", Color.LightSteelBlue, 1);
@@ -43,16 +41,10 @@ namespace MarketOps.Controls.MonteCarlo
         private Series CreateAverageDataSeries() => 
             CreateSeries("seriesAverageData", Color.LightCoral, 2);
 
-        private void AddDataRow(Series series, float[,] data, int rowIndex, int rowLength)
+        private void AddDataRow(Series series, float[] row)
         {
-            for (int i = 0; i < rowLength; i++)
-                series.Points.AddXY(i, data[rowIndex, i]);
-        }
-
-        private void AddAverageDataRow(Series series, float[] data, int rowLength)
-        {
-            for (int i = 0; i < rowLength; i++)
-                series.Points.AddXY(i, data[i]);
+            for (int i = 0; i < row.Length; i++)
+                series.Points.AddXY(i, row[i]);
         }
 
         private Series CreateSeries(string name, Color color, int lineWidth)

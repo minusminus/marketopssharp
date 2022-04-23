@@ -51,6 +51,8 @@
             this.tcSimulationData = new System.Windows.Forms.TabControl();
             this.tabSimDataResults = new System.Windows.Forms.TabPage();
             this.pnlSimDataResults = new System.Windows.Forms.Panel();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
             this.lblSDRTransactionsPerYear = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.lblSDRRProfitAvg = new System.Windows.Forms.Label();
@@ -140,6 +142,8 @@
             this.lblMonteCarloSimWins = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.edtMonteCarloTransactionsPerYear = new System.Windows.Forms.NumericUpDown();
+            this.label33 = new System.Windows.Forms.Label();
             this.btnMonteCarloSim = new System.Windows.Forms.Button();
             this.edtMonteCarloAvgPcntLoss = new System.Windows.Forms.NumericUpDown();
             this.edtMonteCarloAvgPcntWin = new System.Windows.Forms.NumericUpDown();
@@ -164,10 +168,10 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.edtMonteCarloTransactionsPerYear = new System.Windows.Forms.NumericUpDown();
-            this.label33 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimLongestDD = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimMaxDD = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -208,6 +212,7 @@
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).BeginInit();
@@ -216,7 +221,6 @@
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).BeginInit();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -513,6 +517,24 @@
             this.pnlSimDataResults.Name = "pnlSimDataResults";
             this.pnlSimDataResults.Size = new System.Drawing.Size(933, 271);
             this.pnlSimDataResults.TabIndex = 0;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(248, 106);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(69, 13);
+            this.label39.TabIndex = 73;
+            this.label39.Text = "Avg win pcnt";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(248, 122);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(71, 13);
+            this.label42.TabIndex = 71;
+            this.label42.Text = "Avg loss pcnt";
             // 
             // lblSDRTransactionsPerYear
             // 
@@ -1263,6 +1285,10 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.lblMonteCarloSimLongestDD);
+            this.panel3.Controls.Add(this.label43);
+            this.panel3.Controls.Add(this.lblMonteCarloSimMaxDD);
+            this.panel3.Controls.Add(this.label45);
             this.panel3.Controls.Add(this.lblMonteCarloSimAvg);
             this.panel3.Controls.Add(this.label40);
             this.panel3.Controls.Add(this.lblMonteCarloSimWorst);
@@ -1389,6 +1415,37 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(204, 271);
             this.panel1.TabIndex = 0;
+            // 
+            // edtMonteCarloTransactionsPerYear
+            // 
+            this.edtMonteCarloTransactionsPerYear.Location = new System.Drawing.Point(108, 126);
+            this.edtMonteCarloTransactionsPerYear.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.edtMonteCarloTransactionsPerYear.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.edtMonteCarloTransactionsPerYear.Name = "edtMonteCarloTransactionsPerYear";
+            this.edtMonteCarloTransactionsPerYear.Size = new System.Drawing.Size(79, 20);
+            this.edtMonteCarloTransactionsPerYear.TabIndex = 35;
+            this.edtMonteCarloTransactionsPerYear.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(12, 128);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(78, 13);
+            this.label33.TabIndex = 36;
+            this.label33.Text = "Trans. per year";
             // 
             // btnMonteCarloSim
             // 
@@ -1669,54 +1726,41 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // label39
+            // lblMonteCarloSimLongestDD
             // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(248, 106);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(69, 13);
-            this.label39.TabIndex = 73;
-            this.label39.Text = "Avg win pcnt";
+            this.lblMonteCarloSimLongestDD.AutoSize = true;
+            this.lblMonteCarloSimLongestDD.Location = new System.Drawing.Point(222, 21);
+            this.lblMonteCarloSimLongestDD.Name = "lblMonteCarloSimLongestDD";
+            this.lblMonteCarloSimLongestDD.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLongestDD.TabIndex = 39;
+            this.lblMonteCarloSimLongestDD.Text = "Wins:";
             // 
-            // label42
+            // label43
             // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(248, 122);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(71, 13);
-            this.label42.TabIndex = 71;
-            this.label42.Text = "Avg loss pcnt";
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(158, 21);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(67, 13);
+            this.label43.TabIndex = 38;
+            this.label43.Text = "Longest DD:";
             // 
-            // edtMonteCarloTransactionsPerYear
+            // lblMonteCarloSimMaxDD
             // 
-            this.edtMonteCarloTransactionsPerYear.Location = new System.Drawing.Point(108, 126);
-            this.edtMonteCarloTransactionsPerYear.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.edtMonteCarloTransactionsPerYear.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.edtMonteCarloTransactionsPerYear.Name = "edtMonteCarloTransactionsPerYear";
-            this.edtMonteCarloTransactionsPerYear.Size = new System.Drawing.Size(79, 20);
-            this.edtMonteCarloTransactionsPerYear.TabIndex = 35;
-            this.edtMonteCarloTransactionsPerYear.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.lblMonteCarloSimMaxDD.AutoSize = true;
+            this.lblMonteCarloSimMaxDD.Location = new System.Drawing.Point(222, 8);
+            this.lblMonteCarloSimMaxDD.Name = "lblMonteCarloSimMaxDD";
+            this.lblMonteCarloSimMaxDD.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimMaxDD.TabIndex = 37;
+            this.lblMonteCarloSimMaxDD.Text = "Wins:";
             // 
-            // label33
+            // label45
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(12, 128);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(78, 13);
-            this.label33.TabIndex = 36;
-            this.label33.Text = "Trans. per year";
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(158, 8);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(49, 13);
+            this.label45.TabIndex = 36;
+            this.label45.Text = "Max DD:";
             // 
             // FormMain
             // 
@@ -1776,6 +1820,7 @@
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).EndInit();
@@ -1785,7 +1830,6 @@
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1932,6 +1976,10 @@
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.NumericUpDown edtMonteCarloTransactionsPerYear;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label lblMonteCarloSimLongestDD;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label lblMonteCarloSimMaxDD;
+        private System.Windows.Forms.Label label45;
     }
 }
 

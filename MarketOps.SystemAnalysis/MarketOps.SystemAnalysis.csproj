@@ -48,6 +48,7 @@
     <Compile Include="Equity\EquityDistributionCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloConsts.cs" />
+    <Compile Include="MonteCarlo\MonteCarloMaxDrawDownCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloResult.cs" />
     <Compile Include="MonteCarlo\MonteCarloDataGenerator.cs" />
     <Compile Include="MonteCarlo\MonteCarloAnalyzer.cs" />

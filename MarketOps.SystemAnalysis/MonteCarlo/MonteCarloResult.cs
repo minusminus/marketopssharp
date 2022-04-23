@@ -17,6 +17,9 @@
         public float BestCase, WorstCase, AverageCase;
         public float BestCaseYPcnt, WorstCaseYPcnt, AverageCaseYPcnt;
 
+        public float MaxDrawDown;
+        public int LongestDrawDown;
+
         public MonteCarloResult(int count, int length)
         {
             Count = count;

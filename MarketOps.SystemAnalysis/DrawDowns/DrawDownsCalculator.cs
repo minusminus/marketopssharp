@@ -24,14 +24,19 @@
 
             DrawDownInfo ddInfo = new DrawDownInfo();
             StartNewDrawDown(ddInfo, 0, data[0]);
+            ProcessData(data, onDrawDown, ddInfo);
+            CallOnFinishedDrawDown(ddInfo, onDrawDown);
+        }
+
+        private static void ProcessData(float[] data, OnDrawDown onDrawDown, DrawDownInfo ddInfo)
+        {
             for (int i = 1; i < data.Length; i++)
                 ProcessValue(i, data[i], ddInfo, onDrawDown);
-            CallOnFinishedDrawDown(ddInfo, onDrawDown);
         }
 
         private static void ProcessValue(int currentIndex, float currentValue, DrawDownInfo ddInfo, OnDrawDown onDrawDown)
         {
-            if(ddInfo.TopValue > currentValue)
+            if (ddInfo.TopValue > currentValue)
                 UpdateCurrentDrawDown(ddInfo, currentIndex, currentValue);
             else
             {

@@ -415,6 +415,8 @@ namespace MarketOps
             lblMonteCarloSimBest.Text = $"{result.BestCase.ToDisplay()} ({result.BestCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
             lblMonteCarloSimWorst.Text = $"{result.WorstCase.ToDisplay()} ({result.WorstCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
             lblMonteCarloSimAvg.Text = $"{result.AverageCase.ToDisplay()} ({result.AverageCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimMaxDD.Text = $"{result.MaxDrawDown.ToDisplayPcnt()}";
+            lblMonteCarloSimLongestDD.Text = $"{result.LongestDrawDown} ticks";
             chartMonteCarloData.LoadData(result);
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace MarketOps.SystemAnalysis.MonteCarlo
+﻿using System.Collections.Generic;
+
+namespace MarketOps.SystemAnalysis.MonteCarlo
 {
     /// <summary>
     /// Result of MonteCarlo simulation.
@@ -19,6 +21,9 @@
 
         public float MaxDrawDown;
         public int LongestDrawDown;
+
+        public List<MonteCarloStreakData> WinningStreaks;
+        public List<MonteCarloStreakData> LosingStreaks;
 
         public MonteCarloResult(int count, int length)
         {

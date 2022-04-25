@@ -52,6 +52,8 @@
     <Compile Include="MonteCarlo\MonteCarloResult.cs" />
     <Compile Include="MonteCarlo\MonteCarloDataGenerator.cs" />
     <Compile Include="MonteCarlo\MonteCarloAnalyzer.cs" />
+    <Compile Include="MonteCarlo\MonteCarloStreakData.cs" />
+    <Compile Include="MonteCarlo\MonteCarloStreaksCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="R\RProfitCalculator.cs" />
     <Compile Include="SystemSummary\SystemStateSummaryCalculator.cs" />

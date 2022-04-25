@@ -12,6 +12,7 @@
             SelectBestWorstAverageCase(data);
             CalculateCummulativeYProfitBestWorstAverageCase(data, transactionsPerYear);
             AnalyzeDrawDowns(data);
+            CalculateStreaks(data);
         }
 
         private static void CalculateAverageData(MonteCarloResult data)
@@ -60,5 +61,8 @@
 
         private static void AnalyzeDrawDowns(MonteCarloResult data) =>
             new MonteCarloMaxDrawDownCalculator().Calculate(data, out data.MaxDrawDown, out data.LongestDrawDown);
+
+        private static void CalculateStreaks(MonteCarloResult data) =>
+            MonteCarloStreaksCalculator.Calculate(data.Data, out data.WinningStreaks, out data.LosingStreaks);
     }
 }

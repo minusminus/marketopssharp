@@ -420,6 +420,8 @@ namespace MarketOps
             lblMonteCarloSimLongestLosingStreak.Text = $"{(result.LosingStreaks.Count > 0 ? result.LosingStreaks.Last().Length : 0)}";
             lblMonteCarloSimLongestWinningStreak.Text = $"{(result.WinningStreaks.Count > 0 ? result.WinningStreaks.Last().Length : 0)}";
             chartMonteCarloData.LoadData(result);
+            chartMonteCarloStreaksLosing.LoadData(result.LosingStreaks);
+            chartMonteCarloStreaksWinning.LoadData(result.WinningStreaks);
         }
     }
 }

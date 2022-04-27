@@ -120,7 +120,13 @@
             this.edtSimDataLog = new System.Windows.Forms.TextBox();
             this.tabSimMonteCarlo = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.gbMonteCarloStreaksLosing = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lblMonteCarloSimLongestWinningStreak = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimLongestLosingStreak = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
             this.lblMonteCarloSimLongestDD = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.lblMonteCarloSimMaxDD = new System.Windows.Forms.Label();
@@ -161,10 +167,6 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.lblMonteCarloSimLongestWinningStreak = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.lblMonteCarloSimLongestLosingStreak = new System.Windows.Forms.Label();
-            this.label47 = new System.Windows.Forms.Label();
             this.chartEquity = new MarketOps.Controls.SystemEquity.SystemEquityChart();
             this.chartEquityOnPositions = new MarketOps.Controls.SystemEquity.SystemEquityChart();
             this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
@@ -175,7 +177,10 @@
             this.chartProfitValue = new MarketOps.Controls.PointChart.PointChart();
             this.chartProfitPcnt = new MarketOps.Controls.PointChart.PointChart();
             this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
+            this.chartMonteCarloStreaksLosing = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
             this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
+            this.gbMonteCarloStreaksWinning = new System.Windows.Forms.GroupBox();
+            this.chartMonteCarloStreaksWinning = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -214,6 +219,8 @@
             this.tabSimDataLog.SuspendLayout();
             this.tabSimMonteCarlo.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.gbMonteCarloStreaksLosing.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).BeginInit();
@@ -225,6 +232,7 @@
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
+            this.gbMonteCarloStreaksWinning.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -1193,13 +1201,35 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.chartMonteCarloData);
+            this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(207, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(729, 271);
             this.panel2.TabIndex = 1;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.chartMonteCarloData);
+            this.panel4.Controls.Add(this.gbMonteCarloStreaksLosing);
+            this.panel4.Controls.Add(this.gbMonteCarloStreaksWinning);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(729, 178);
+            this.panel4.TabIndex = 2;
+            // 
+            // gbMonteCarloStreaksLosing
+            // 
+            this.gbMonteCarloStreaksLosing.Controls.Add(this.chartMonteCarloStreaksLosing);
+            this.gbMonteCarloStreaksLosing.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMonteCarloStreaksLosing.Location = new System.Drawing.Point(473, 0);
+            this.gbMonteCarloStreaksLosing.Name = "gbMonteCarloStreaksLosing";
+            this.gbMonteCarloStreaksLosing.Size = new System.Drawing.Size(128, 178);
+            this.gbMonteCarloStreaksLosing.TabIndex = 2;
+            this.gbMonteCarloStreaksLosing.TabStop = false;
+            this.gbMonteCarloStreaksLosing.Text = "Losing streaks";
             // 
             // panel3
             // 
@@ -1226,6 +1256,42 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(729, 93);
             this.panel3.TabIndex = 0;
+            // 
+            // lblMonteCarloSimLongestWinningStreak
+            // 
+            this.lblMonteCarloSimLongestWinningStreak.AutoSize = true;
+            this.lblMonteCarloSimLongestWinningStreak.Location = new System.Drawing.Point(326, 56);
+            this.lblMonteCarloSimLongestWinningStreak.Name = "lblMonteCarloSimLongestWinningStreak";
+            this.lblMonteCarloSimLongestWinningStreak.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLongestWinningStreak.TabIndex = 43;
+            this.lblMonteCarloSimLongestWinningStreak.Text = "Wins:";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(210, 56);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(119, 13);
+            this.label44.TabIndex = 42;
+            this.label44.Text = "Longest winning streak:";
+            // 
+            // lblMonteCarloSimLongestLosingStreak
+            // 
+            this.lblMonteCarloSimLongestLosingStreak.AutoSize = true;
+            this.lblMonteCarloSimLongestLosingStreak.Location = new System.Drawing.Point(326, 43);
+            this.lblMonteCarloSimLongestLosingStreak.Name = "lblMonteCarloSimLongestLosingStreak";
+            this.lblMonteCarloSimLongestLosingStreak.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLongestLosingStreak.TabIndex = 41;
+            this.lblMonteCarloSimLongestLosingStreak.Text = "Wins:";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(210, 43);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(110, 13);
+            this.label47.TabIndex = 40;
+            this.label47.Text = "Longest losing streak:";
             // 
             // lblMonteCarloSimLongestDD
             // 
@@ -1676,42 +1742,6 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // lblMonteCarloSimLongestWinningStreak
-            // 
-            this.lblMonteCarloSimLongestWinningStreak.AutoSize = true;
-            this.lblMonteCarloSimLongestWinningStreak.Location = new System.Drawing.Point(326, 56);
-            this.lblMonteCarloSimLongestWinningStreak.Name = "lblMonteCarloSimLongestWinningStreak";
-            this.lblMonteCarloSimLongestWinningStreak.Size = new System.Drawing.Size(34, 13);
-            this.lblMonteCarloSimLongestWinningStreak.TabIndex = 43;
-            this.lblMonteCarloSimLongestWinningStreak.Text = "Wins:";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(210, 56);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(119, 13);
-            this.label44.TabIndex = 42;
-            this.label44.Text = "Longest winning streak:";
-            // 
-            // lblMonteCarloSimLongestLosingStreak
-            // 
-            this.lblMonteCarloSimLongestLosingStreak.AutoSize = true;
-            this.lblMonteCarloSimLongestLosingStreak.Location = new System.Drawing.Point(326, 43);
-            this.lblMonteCarloSimLongestLosingStreak.Name = "lblMonteCarloSimLongestLosingStreak";
-            this.lblMonteCarloSimLongestLosingStreak.Size = new System.Drawing.Size(34, 13);
-            this.lblMonteCarloSimLongestLosingStreak.TabIndex = 41;
-            this.lblMonteCarloSimLongestLosingStreak.Text = "Wins:";
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(210, 43);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(110, 13);
-            this.label47.TabIndex = 40;
-            this.label47.Text = "Longest losing streak:";
-            // 
             // chartEquity
             // 
             this.chartEquity.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1795,8 +1825,16 @@
             this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartMonteCarloData.Location = new System.Drawing.Point(0, 0);
             this.chartMonteCarloData.Name = "chartMonteCarloData";
-            this.chartMonteCarloData.Size = new System.Drawing.Size(729, 178);
+            this.chartMonteCarloData.Size = new System.Drawing.Size(473, 178);
             this.chartMonteCarloData.TabIndex = 1;
+            // 
+            // chartMonteCarloStreaksLosing
+            // 
+            this.chartMonteCarloStreaksLosing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloStreaksLosing.Location = new System.Drawing.Point(3, 16);
+            this.chartMonteCarloStreaksLosing.Name = "chartMonteCarloStreaksLosing";
+            this.chartMonteCarloStreaksLosing.Size = new System.Drawing.Size(122, 159);
+            this.chartMonteCarloStreaksLosing.TabIndex = 0;
             // 
             // paramsSim
             // 
@@ -1805,6 +1843,25 @@
             this.paramsSim.Name = "paramsSim";
             this.paramsSim.Size = new System.Drawing.Size(251, 414);
             this.paramsSim.TabIndex = 1;
+            // 
+            // gbMonteCarloStreaksWinning
+            // 
+            this.gbMonteCarloStreaksWinning.Controls.Add(this.chartMonteCarloStreaksWinning);
+            this.gbMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMonteCarloStreaksWinning.Location = new System.Drawing.Point(601, 0);
+            this.gbMonteCarloStreaksWinning.Name = "gbMonteCarloStreaksWinning";
+            this.gbMonteCarloStreaksWinning.Size = new System.Drawing.Size(128, 178);
+            this.gbMonteCarloStreaksWinning.TabIndex = 3;
+            this.gbMonteCarloStreaksWinning.TabStop = false;
+            this.gbMonteCarloStreaksWinning.Text = "Winning streaks";
+            // 
+            // chartMonteCarloStreaksWinning
+            // 
+            this.chartMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloStreaksWinning.Location = new System.Drawing.Point(3, 16);
+            this.chartMonteCarloStreaksWinning.Name = "chartMonteCarloStreaksWinning";
+            this.chartMonteCarloStreaksWinning.Size = new System.Drawing.Size(122, 159);
+            this.chartMonteCarloStreaksWinning.TabIndex = 0;
             // 
             // FormMain
             // 
@@ -1860,6 +1917,8 @@
             this.tabSimDataLog.PerformLayout();
             this.tabSimMonteCarlo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.gbMonteCarloStreaksLosing.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1874,6 +1933,7 @@
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
+            this.gbMonteCarloStreaksWinning.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2028,6 +2088,11 @@
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label lblMonteCarloSimLongestLosingStreak;
         private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.GroupBox gbMonteCarloStreaksLosing;
+        private Controls.MonteCarlo.MonteCarloStreaksGrid chartMonteCarloStreaksLosing;
+        private System.Windows.Forms.GroupBox gbMonteCarloStreaksWinning;
+        private Controls.MonteCarlo.MonteCarloStreaksGrid chartMonteCarloStreaksWinning;
     }
 }
 

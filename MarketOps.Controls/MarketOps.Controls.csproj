@@ -73,6 +73,13 @@
     <Compile Include="MonteCarlo\MonteCarloDataChart.Designer.cs">
       <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="MonteCarlo\MonteCarloStreakDataMapper.cs" />
+    <Compile Include="MonteCarlo\MonteCarloStreaksGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MonteCarlo\MonteCarloStreaksGrid.Designer.cs">
+      <DependentUpon>MonteCarloStreaksGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="MsgDisplay.cs" />
     <Compile Include="PointChart\PointChart.cs">
       <SubType>UserControl</SubType>
@@ -178,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MonteCarlo\MonteCarloDataChart.resx">
       <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MonteCarlo\MonteCarloStreaksGrid.resx">
+      <DependentUpon>MonteCarloStreaksGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PointChart\PointChart.resx">
       <DependentUpon>PointChart.cs</DependentUpon>

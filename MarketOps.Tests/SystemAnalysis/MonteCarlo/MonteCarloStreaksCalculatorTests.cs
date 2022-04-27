@@ -2,6 +2,7 @@
 using Shouldly;
 using MarketOps.SystemAnalysis.MonteCarlo;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
 {
@@ -20,6 +21,7 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
             winningStreaks.Count.ShouldBe(1);
             CheckStreak(winningStreaks, 0, 4, 2);
             losingStreaks.ShouldBeEmpty();
+            winningStreaks.Sum(x => x.Length * x.Count).ShouldBe(10 - 2);
         }
 
         [Test]
@@ -34,6 +36,7 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
             winningStreaks.ShouldBeEmpty(); 
             losingStreaks.Count.ShouldBe(1);
             CheckStreak(losingStreaks, 0, 4, 2);
+            losingStreaks.Sum(x => x.Length * x.Count).ShouldBe(10 - 2);
         }
 
         [Test]
@@ -52,6 +55,7 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
             losingStreaks.Count.ShouldBe(2);
             CheckStreak(losingStreaks, 0, 1, 3);
             CheckStreak(losingStreaks, 1, 2, 2);
+            (losingStreaks.Sum(x => x.Length * x.Count) + winningStreaks.Sum(x => x.Length * x.Count)).ShouldBe(15 - 3);
         }
 
         private void CheckStreak(List<MonteCarloStreakData> streaks, int index, int expectedLength, int expectedCount)

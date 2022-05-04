@@ -20,6 +20,9 @@ namespace MarketOps.Stats.Calculators
         }
 
         private static bool CanCalculate(float[] highs, float[] lows, int period) =>
-            (highs.Length == lows.Length) && (highs.Length >= period) && (lows.Length >= period) && (period > 0);
+            (highs.Length == lows.Length) 
+            && (highs.Length >= period) 
+            && (lows.Length >= period) 
+            && (period > 0);
     }
 }

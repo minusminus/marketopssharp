@@ -12,6 +12,14 @@ namespace MarketOps.Stats.Stats
     {
         public StatSMA(string chartArea) : base(chartArea) { }
 
+        public override void Calculate(StockPricesData data)
+        {
+            _data[StatSMAData.SMA] = (new SMA()).Calculate(data.C, _statParams.Get(StatSMAParams.Period).As<int>());
+        }
+
+        protected override int GetBackBufferLength() => 
+            _statParams.Get(StatSMAParams.Period).As<int>();
+
         protected override void InitializeData()
         {
             _name = "SMA";
@@ -23,16 +31,6 @@ namespace MarketOps.Stats.Stats
         protected override void InitializeStatParams()
         {
             _statParams.Set(StatSMAParams.Period, 20);
-        }
-
-        protected override int GetBackBufferLength()
-        {
-            return _statParams.Get(StatSMAParams.Period).As<int>();
-        }
-
-        public override void Calculate(StockPricesData data)
-        {
-            _data[StatSMAData.SMA] = (new SMA()).Calculate(data.C, _statParams.Get(StatSMAParams.Period).As<int>());
         }
     }
 }

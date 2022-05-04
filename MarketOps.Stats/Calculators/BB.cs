@@ -8,21 +8,10 @@ namespace MarketOps.Stats.Calculators
     /// </summary>
     public class BB
     {
-        private bool CanCalculate(float[] data, int period, float sigmaWidht)
-        {
-            return (data.Length >= period) && (period > 0) && (sigmaWidht > 0);
-        }
-
-        private float CalcStdDev(float[] data, float avg, int ixStart, int width)
-        {
-            float val = data.Skip(ixStart).Take(width).Sum(x => (x - avg)*(x - avg));
-            return (float) Math.Sqrt(val/(float) width);
-        }
-
         public BBData Calculate(float[] data, int period, float sigmaWidht)
         {
             if (!CanCalculate(data, period, sigmaWidht))
-                return new BBData() {SMA = new float[0], BBL = new float[0], BBH = new float[0]};
+                return new BBData() { SMA = new float[0], BBL = new float[0], BBH = new float[0] };
 
             BBData res = new BBData();
             res.SMA = (new SMA()).Calculate(data, period);
@@ -32,11 +21,25 @@ namespace MarketOps.Stats.Calculators
             for (int i = 0; i < res.SMA.Length; i++)
             {
                 float stddev = CalcStdDev(data, res.SMA[i], i, period);
-                res.BBL[i] = res.SMA[i] - sigmaWidht*stddev;
-                res.BBH[i] = res.SMA[i] + sigmaWidht*stddev;
+                res.BBL[i] = res.SMA[i] - sigmaWidht * stddev;
+                res.BBH[i] = res.SMA[i] + sigmaWidht * stddev;
             }
 
             return res;
+        }
+
+        private bool CanCalculate(float[] data, int period, float sigmaWidht) => 
+            (data.Length >= period) 
+            && (period > 0) 
+            && (sigmaWidht > 0);
+
+        private float CalcStdDev(float[] data, float avg, int ixStart, int width)
+        {
+            float val = data
+                .Skip(ixStart)
+                .Take(width)
+                .Sum(x => (x - avg) * (x - avg));
+            return (float) Math.Sqrt(val/(float) width);
         }
     }
 }

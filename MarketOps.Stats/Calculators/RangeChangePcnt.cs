@@ -5,16 +5,14 @@
     /// </summary>
     public class RangeChangePcnt
     {
-        private bool CanCalculate(float[] data, int range)
-        {
-            return (data.Length >= range) && (range > 0);
-        }
-
         public float[] Calculate(float[] data, int range)
         {
             if (!CanCalculate(data, range)) return new float[0];
             return CalculateChanges(data, range);
         }
+
+        private bool CanCalculate(float[] data, int range) => 
+            (data.Length >= range) && (range > 0);
 
         private float[] CalculateChanges(float[] data, int range)
         {

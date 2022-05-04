@@ -34,10 +34,7 @@ namespace MarketOps.StockData.Types
             InitializeStatParams();
         }
 
-        private void GenerateUID()
-        {
-            _uid = Guid.NewGuid().ToString("N");
-        }
+        public abstract void Calculate(StockPricesData data);
 
         protected void CreateDataStructures(int seriesCount)
         {
@@ -46,10 +43,13 @@ namespace MarketOps.StockData.Types
             _dataNames = new string[seriesCount];
         }
 
+        protected abstract int GetBackBufferLength();
         protected abstract void InitializeData();
         protected abstract void InitializeStatParams();
-        protected abstract int GetBackBufferLength();
 
-        public abstract void Calculate(StockPricesData data);
+        private void GenerateUID()
+        {
+            _uid = Guid.NewGuid().ToString("N");
+        }
     }
 }

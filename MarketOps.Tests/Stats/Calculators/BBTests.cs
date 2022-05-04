@@ -7,11 +7,9 @@ namespace MarketOps.Tests.Stats.Calculators
     [TestFixture]
     public class BBTests
     {
-        private readonly BB _testObj = new BB();
-
         private void TestBB(float[] data, BBData expected, int period, float sigmaWidth)
         {
-            BBData res = _testObj.Calculate(data, period, sigmaWidth);
+            BBData res = BB.Calculate(data, period, sigmaWidth);
 
             res.SMA.ShouldBe(expected.SMA, 0.0001f);
             res.BBL.ShouldBe(expected.BBL, 0.0001f);
@@ -20,7 +18,7 @@ namespace MarketOps.Tests.Stats.Calculators
 
         private void TestBBEmpty(float[] data, int period, float sigmaWidth)
         {
-            BBData res = _testObj.Calculate(data, period, sigmaWidth);
+            BBData res = BB.Calculate(data, period, sigmaWidth);
             res.SMA.ShouldBeEmpty();
             res.BBL.ShouldBeEmpty();
             res.BBH.ShouldBeEmpty();

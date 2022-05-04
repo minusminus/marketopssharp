@@ -14,7 +14,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            BBData res = (new BB()).Calculate(data.C, _statParams.Get(StatBBParams.Period).As<int>(), _statParams.Get(StatBBParams.SigmaWidth).As<float>());
+            BBData res = BB.Calculate(data.C, _statParams.Get(StatBBParams.Period).As<int>(), _statParams.Get(StatBBParams.SigmaWidth).As<float>());
             _data[StatBBData.BBH] = res.BBH;
             _data[StatBBData.SMA] = res.SMA;
             _data[StatBBData.BBL] = res.BBL;

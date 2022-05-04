@@ -8,7 +8,7 @@ namespace MarketOps.Stats.Calculators
     /// </summary>
     public class BB
     {
-        public BBData Calculate(float[] data, int period, float sigmaWidht)
+        public static BBData Calculate(float[] data, int period, float sigmaWidht)
         {
             if (!CanCalculate(data, period, sigmaWidht))
                 return new BBData() { SMA = new float[0], BBL = new float[0], BBH = new float[0] };
@@ -28,12 +28,12 @@ namespace MarketOps.Stats.Calculators
             return res;
         }
 
-        private bool CanCalculate(float[] data, int period, float sigmaWidht) => 
+        private static bool CanCalculate(float[] data, int period, float sigmaWidht) => 
             (data.Length >= period) 
             && (period > 0) 
             && (sigmaWidht > 0);
 
-        private float CalcStdDev(float[] data, float avg, int ixStart, int width)
+        private static float CalcStdDev(float[] data, float avg, int ixStart, int width)
         {
             float val = data
                 .Skip(ixStart)

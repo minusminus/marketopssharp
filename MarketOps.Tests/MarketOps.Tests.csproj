@@ -115,6 +115,7 @@
     <Compile Include="Stats\Calculators\ATRTests.cs" />
     <Compile Include="Stats\Calculators\BBTests.cs" />
     <Compile Include="Stats\Calculators\CumulativeDataCalculatorTests.cs" />
+    <Compile Include="Stats\Calculators\HeikinAshiOCTests.cs" />
     <Compile Include="Stats\Calculators\HLChannelTests.cs" />
     <Compile Include="Stats\Calculators\RangeChangePcntTests.cs" />
     <Compile Include="Stats\Calculators\RingBufferCalculatorTests.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Stats\Calculators\SMATests.cs" />
     <Compile Include="Stats\Stats\StatATRTests.cs" />
     <Compile Include="Stats\Stats\StatBBTests.cs" />
+    <Compile Include="Stats\Stats\StatHeikinAshiOCTests.cs" />
     <Compile Include="Stats\Stats\StatHLChannelTests.cs" />
     <Compile Include="Stats\Stats\StatRangeChangePcntTests.cs" />
     <Compile Include="Stats\Stats\StatSMATests.cs" />

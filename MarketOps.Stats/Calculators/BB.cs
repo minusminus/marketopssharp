@@ -6,13 +6,15 @@ namespace MarketOps.Stats.Calculators
     /// <summary>
     /// Calculates Bollinger Bands on provided data
     /// </summary>
-    public class BB
+    public static class BB
     {
-        public static BBData Calculate(float[] data, int period, float sigmaWidht)
-        {
-            if (!CanCalculate(data, period, sigmaWidht))
-                return new BBData() { SMA = new float[0], BBL = new float[0], BBH = new float[0] };
+        public static BBData Calculate(float[] data, int period, float sigmaWidht) => 
+            CanCalculate(data, period, sigmaWidht)
+                ? CalculateBBData(data, period, sigmaWidht)
+                : new BBData() { SMA = new float[0], BBL = new float[0], BBH = new float[0] };
 
+        private static BBData CalculateBBData(float[] data, int period, float sigmaWidht)
+        {
             BBData res = new BBData();
             res.SMA = (new SMA()).Calculate(data, period);
             res.BBL = new float[res.SMA.Length];

@@ -5,11 +5,11 @@
     /// </summary>
     public class SMA : CumulativeDataCalculator
     {
-        public float[] Calculate(float[] data, int period)
-        {
-            if (!CanCalculate(data, period)) return new float[0];
-            return CalculateCumulative(data.Length, period, i => data[i]);
-        }
+        public float[] Calculate(float[] data, int period) =>
+            CanCalculate(data, period)
+                ? CalculateCumulative(data.Length, period, i => data[i])
+                : new float[0];
+
         private bool CanCalculate(float[] data, int period) => 
             (data.Length >= period) && (period > 0);
     }

@@ -28,5 +28,11 @@
     "ClassName": "MarketOps.Stats.Stats.StatHLChannel",
     "ClassLibrary": "MarketOps.Stats.dll",
     "DisplayStatType": "PriceChart"
+  },
+  {
+    "StatName": "Heikin-Ashi OC",
+    "ClassName": "MarketOps.Stats.Stats.StatHeikinAshiOC",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "PriceChart"
   }
 ]

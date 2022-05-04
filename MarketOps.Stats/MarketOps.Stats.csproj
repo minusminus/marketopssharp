@@ -47,6 +47,8 @@
     <Compile Include="Calculators\BBData.cs" />
     <Compile Include="Calculators\BB.cs" />
     <Compile Include="Calculators\CumulativeDataCalculator.cs" />
+    <Compile Include="Calculators\HeikinAshiOC.cs" />
+    <Compile Include="Calculators\HeikinAshiOCData.cs" />
     <Compile Include="Calculators\HLChannel.cs" />
     <Compile Include="Calculators\HLChannelData.cs" />
     <Compile Include="Calculators\RangeChangePcnt.cs" />
@@ -54,6 +56,8 @@
     <Compile Include="Calculators\RingBufferCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\StatHeikinAshiOC.cs" />
+    <Compile Include="Stats\StatHeikinAshiOCParams.cs" />
     <Compile Include="Stats\StatHLChannel.cs" />
     <Compile Include="Stats\StatHLChannelParams.cs" />
     <Compile Include="Stats\StatRangeChangePcnt.cs" />

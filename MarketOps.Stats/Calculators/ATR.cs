@@ -9,11 +9,10 @@ namespace MarketOps.Stats.Calculators
     /// </summary>
     public class ATR : CumulativeDataCalculator
     {
-        public float[] Calculate(float[] dataH, float[] dataL, float[] dataC, int period)
-        {
-            if (!CanCalculate(dataH, dataL, dataC, period)) return new float[0];
-            return CalculateCumulative(dataH.Length - 1, period, i => GetValue(dataH, dataL, dataC, i));
-        }
+        public float[] Calculate(float[] dataH, float[] dataL, float[] dataC, int period) => 
+            CanCalculate(dataH, dataL, dataC, period)
+                ? CalculateCumulative(dataH.Length - 1, period, i => GetValue(dataH, dataL, dataC, i))
+                : (new float[0]);
 
         private bool CanCalculate(float[] dataH, float[] dataL, float[] dataC, int period) =>
             (dataH.Length == dataL.Length)

@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.SystemDefs.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.Tests", "MarketOps.Tests\MarketOps.Tests.csproj", "{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketOps.Maths", "MarketOps.Math\MarketOps.Maths.csproj", "{6B571F05-D6C9-489E-B432-77BC2410F460}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1E5437B-E62E-4112-9620-E1BFB5BC0A4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B571F05-D6C9-489E-B432-77BC2410F460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B571F05-D6C9-489E-B432-77BC2410F460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B571F05-D6C9-489E-B432-77BC2410F460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B571F05-D6C9-489E-B432-77BC2410F460}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using MarketOps.Maths;
 
 namespace MarketOps.Stats.Calculators
 {
@@ -22,7 +21,7 @@ namespace MarketOps.Stats.Calculators
 
             for (int i = 0; i < res.SMA.Length; i++)
             {
-                float stddev = CalcStdDev(data, res.SMA[i], i, period);
+                float stddev = StdDev.Calculate(data, res.SMA[i], i, period);
                 res.BBL[i] = res.SMA[i] - sigmaWidht * stddev;
                 res.BBH[i] = res.SMA[i] + sigmaWidht * stddev;
             }
@@ -34,14 +33,5 @@ namespace MarketOps.Stats.Calculators
             (data.Length >= period) 
             && (period > 0) 
             && (sigmaWidht > 0);
-
-        private static float CalcStdDev(float[] data, float avg, int ixStart, int width)
-        {
-            float val = data
-                .Skip(ixStart)
-                .Take(width)
-                .Sum(x => (x - avg) * (x - avg));
-            return (float) Math.Sqrt(val/(float) width);
-        }
     }
 }

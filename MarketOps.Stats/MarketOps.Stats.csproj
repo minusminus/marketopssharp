@@ -70,6 +70,10 @@
     <Compile Include="Stats\StatSMAParams.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6b571f05-d6c9-489e-b432-77bc2410f460}</Project>
+      <Name>MarketOps.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>

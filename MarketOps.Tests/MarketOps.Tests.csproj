@@ -111,6 +111,7 @@
     <Compile Include="DataPump\DBWriter\StartTSUpdaterTests.cs" />
     <Compile Include="DataPump\SystemFileUnzipperTests.cs" />
     <Compile Include="DataPump\WebClientFileDownloaderTests.cs" />
+    <Compile Include="Maths\StdDevTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\Calculators\ATRTests.cs" />
     <Compile Include="Stats\Calculators\BBTests.cs" />
@@ -205,6 +206,10 @@
     <ProjectReference Include="..\MarketOps.DataPump\MarketOps.DataPump.csproj">
       <Project>{f91f2b3e-be20-4500-ac9d-7fb3dd9464e4}</Project>
       <Name>MarketOps.DataPump</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6b571f05-d6c9-489e-b432-77bc2410f460}</Project>
+      <Name>MarketOps.Maths</Name>
     </ProjectReference>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
       <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>

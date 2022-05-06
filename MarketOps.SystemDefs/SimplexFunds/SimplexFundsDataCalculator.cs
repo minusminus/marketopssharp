@@ -13,9 +13,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
         public static void Initialize(SimplexFundsData data, string[] fundsNames, IStockDataProvider dataProvider)
         {
             for (int i = 0; i < fundsNames.Length; i++)
-            {
                 data.Stocks[i] = dataProvider.GetStockDefinition(fundsNames[i]);
-            }
         }
 
         public static void Calculate(SimplexFundsData data, DateTime ts, int profitRange, int changeRange, StockDataRange dataRange, ISystemDataLoader dataLoader)
@@ -59,7 +57,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
             for (int i = 0; i < range; i++)
             {
                 double value = Math.Abs(ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]));
-                sum += (avgValue - value) * (avgValue - value);
+                sum += (value - avgValue) * (value - avgValue);
             }
             return (double)Math.Sqrt(sum / (double)range);
         }

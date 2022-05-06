@@ -1,5 +1,5 @@
 ﻿using MarketOps.SystemData.Types;
-using System;
+using MarketOps.Maths;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +20,7 @@ namespace MarketOps.SystemAnalysis.Equity
             return new EquityDistribution()
             {
                 Average = 100f * avg,
-                StdDev = 100f * CalculateStdDev(differences, avg)
+                StdDev = 100f * StdDev.Calculate(differences, avg)
             };
         }
 
@@ -28,14 +28,8 @@ namespace MarketOps.SystemAnalysis.Equity
         {
             float[] result = new float[equity.Count - 1];
             for (int i = 1; i < equity.Count; i++)
-                result[i - 1] = equity[i - 1].Value != 0 ? (equity[i].Value - equity[i - 1].Value) / equity[i - 1].Value : 0;
+                result[i - 1] = (equity[i - 1].Value != 0) ? (equity[i].Value - equity[i - 1].Value) / equity[i - 1].Value : 0;
             return result;
-        }
-
-        private static float CalculateStdDev(float[] values, float average)
-        {
-            float total = values.Aggregate(0f, (sum, val) => sum + (average - val) * (average - val));
-            return (float)Math.Sqrt(total / (float)values.Length);
         }
     }
 }

@@ -15,7 +15,7 @@
             float sum = 0;
             for (int i = startIndex; i < startIndex + length; i++)
                 sum += (data[i] - averageValue) * (data[i] - averageValue);
-            return (float)System.Math.Sqrt(sum / length);
+            return (float)System.Math.Sqrt(sum / (float)length);
         }
     }
 }

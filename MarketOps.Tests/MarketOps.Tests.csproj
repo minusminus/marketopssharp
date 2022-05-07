@@ -111,6 +111,8 @@
     <Compile Include="DataPump\DBWriter\StartTSUpdaterTests.cs" />
     <Compile Include="DataPump\SystemFileUnzipperTests.cs" />
     <Compile Include="DataPump\WebClientFileDownloaderTests.cs" />
+    <Compile Include="Maths\ChangeInPercentTests.cs" />
+    <Compile Include="Maths\PercentChangesTests.cs" />
     <Compile Include="Maths\StdDevTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\Calculators\ATRTests.cs" />

@@ -1,4 +1,6 @@
-﻿namespace MarketOps.Stats.Calculators
+﻿using MarketOps.Maths;
+
+namespace MarketOps.Stats.Calculators
 {
     /// <summary>
     /// Calculates percent of change in specified range.
@@ -18,7 +20,7 @@
         {
             float[] result = new float[data.Length - range + 1];
             for (int i = 0; i < result.Length; i++)
-                result[i] = 100f * (data[i + range - 1] - data[i]) / data[i];
+                result[i] = 100f * ChangeInPercent.Calculate(data[i + range - 1], data[i]);
             return result;
         }
     }

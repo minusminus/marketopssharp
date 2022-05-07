@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeInPercent.cs" />
+    <Compile Include="PercentChanges.cs" />
     <Compile Include="StdDev.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

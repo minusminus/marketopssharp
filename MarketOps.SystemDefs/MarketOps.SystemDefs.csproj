@@ -89,6 +89,10 @@
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6B571F05-D6C9-489E-B432-77BC2410F460}</Project>
+      <Name>MarketOps.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
       <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>
       <Name>MarketOps.Stats</Name>

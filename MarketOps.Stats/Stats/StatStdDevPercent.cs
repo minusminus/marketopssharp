@@ -6,7 +6,7 @@ using System.Drawing;
 namespace MarketOps.Stats.Stats
 {
     /// <summary>
-    /// StdDev of stock value percent change in specified range.
+    /// StdDev of stock value percent changes in specified range.
     /// </summary>
     public class StatStdDevPercent : StockStat
     {
@@ -14,7 +14,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            _data[StatStdDevPercentData.Range] = StdDevPercent.Calculate(data.C, _statParams.Get(StatRangeChangePcntParams.Range).As<int>());
+            _data[StatStdDevPercentData.RangeStdDev] = StdDevPercent.Calculate(data.C, _statParams.Get(StatRangeChangePcntParams.Range).As<int>());
         }
 
         protected override int GetBackBufferLength() =>
@@ -24,8 +24,8 @@ namespace MarketOps.Stats.Stats
         {
             _name = "StdDevPcnt";
             CreateDataStructures(1);
-            _dataColors[StatStdDevPercentData.Range] = Color.IndianRed;
-            _dataNames[StatStdDevPercentData.Range] = "Indicator";
+            _dataColors[StatStdDevPercentData.RangeStdDev] = Color.IndianRed;
+            _dataNames[StatStdDevPercentData.RangeStdDev] = "Indicator";
         }
 
         protected override void InitializeStatParams()

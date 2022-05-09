@@ -10,6 +10,6 @@
 
     public static class StatStdDevPercentData
     {
-        public static readonly int Range = 0;
+        public static readonly int RangeStdDev = 0;
     }
 }

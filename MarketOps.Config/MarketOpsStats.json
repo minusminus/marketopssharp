@@ -30,9 +30,15 @@
     "DisplayStatType": "PriceChart"
   },
   {
-    "StatName": "Heikin-Ashi OC",
+    "StatName": ".Heikin-Ashi OC",
     "ClassName": "MarketOps.Stats.Stats.StatHeikinAshiOC",
     "ClassLibrary": "MarketOps.Stats.dll",
     "DisplayStatType": "PriceChart"
+  },
+  {
+    "StatName": "StdDevPcnt",
+    "ClassName": "MarketOps.Stats.Stats.StatStdDevPercent",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "Additional"
   }
 ]

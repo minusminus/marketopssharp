@@ -14,7 +14,7 @@ namespace MarketOps.Stats.Stats
 
         public override void Calculate(StockPricesData data)
         {
-            _data[StatRangeChangePcntData.RangeChange] = (new RangeChangePcnt()).Calculate(data.C, _statParams.Get(StatRangeChangePcntParams.Range).As<int>());
+            _data[StatRangeChangePcntData.RangeChange] = RangeChangePcnt.Calculate(data.C, _statParams.Get(StatRangeChangePcntParams.Range).As<int>());
         }
 
         protected override int GetBackBufferLength() => 

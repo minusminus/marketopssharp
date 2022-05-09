@@ -124,12 +124,14 @@
     <Compile Include="Stats\Calculators\RingBufferCalculatorTests.cs" />
     <Compile Include="Stats\Calculators\RingBufferTests.cs" />
     <Compile Include="Stats\Calculators\SMATests.cs" />
+    <Compile Include="Stats\Calculators\StdDevPercentTests.cs" />
     <Compile Include="Stats\Stats\StatATRTests.cs" />
     <Compile Include="Stats\Stats\StatBBTests.cs" />
     <Compile Include="Stats\Stats\StatHeikinAshiOCTests.cs" />
     <Compile Include="Stats\Stats\StatHLChannelTests.cs" />
     <Compile Include="Stats\Stats\StatRangeChangePcntTests.cs" />
     <Compile Include="Stats\Stats\StatSMATests.cs" />
+    <Compile Include="Stats\Stats\StatStdDevPercentTests.cs" />
     <Compile Include="StockData\DateTimeOperationsTests.cs" />
     <Compile Include="StockData\MOParamsExtensionsTests.cs" />
     <Compile Include="StockData\MOParamsTests.cs" />

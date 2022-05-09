@@ -55,6 +55,7 @@
     <Compile Include="Calculators\RingBuffer.cs" />
     <Compile Include="Calculators\RingBufferCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
+    <Compile Include="Calculators\StdDevPercent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\StatHeikinAshiOC.cs" />
     <Compile Include="Stats\StatHeikinAshiOCParams.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Stats\StatRangeChangePcntParams.cs" />
     <Compile Include="Stats\StatSMA.cs" />
     <Compile Include="Stats\StatSMAParams.cs" />
+    <Compile Include="Stats\StatStdDevPercent.cs" />
+    <Compile Include="Stats\StatStdDevPercentParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">

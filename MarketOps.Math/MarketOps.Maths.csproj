@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChangeInPercent.cs" />
+    <Compile Include="Division.cs" />
     <Compile Include="PercentChanges.cs" />
     <Compile Include="StdDev.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

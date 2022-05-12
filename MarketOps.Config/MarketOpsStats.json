@@ -40,5 +40,11 @@
     "ClassName": "MarketOps.Stats.Stats.StatStdDevPercent",
     "ClassLibrary": "MarketOps.Stats.dll",
     "DisplayStatType": "Additional"
+  },
+  {
+    "StatName": "AvgToStdDevPcnt",
+    "ClassName": "MarketOps.Stats.Stats.StatAvgToStdDevPercent",
+    "ClassLibrary": "MarketOps.Stats.dll",
+    "DisplayStatType": "Additional"
   }
 ]

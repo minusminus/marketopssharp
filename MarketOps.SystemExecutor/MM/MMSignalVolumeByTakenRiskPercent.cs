@@ -6,17 +6,17 @@ using MarketOps.SystemData.Types;
 namespace MarketOps.SystemExecutor.MM
 {
     /// <summary>
-    /// Returns volume for specified percent of system value.
+    /// Returns volume for specified percent of system value, calculated with position initial risk.
     /// </summary>
-    public class MMSignalVolumeForSystemValuePercent : MMSignalVolumeBase, IMMSignalVolume
+    public class MMSignalVolumeByTakenRiskPercent : MMSignalVolumeBase, IMMSignalVolume
     {
-        private readonly float _percentOfValue;
+        private readonly float _riskedPercent;
         private readonly ISystemDataLoader _dataLoader;
 
-        public MMSignalVolumeForSystemValuePercent(float percentOfValue, ICommission commission, ISystemDataLoader dataLoader)
+        public MMSignalVolumeByTakenRiskPercent(float riskedPercent, ICommission commission, ISystemDataLoader dataLoader)
             : base(commission)
         {
-            _percentOfValue = percentOfValue;
+            _riskedPercent = riskedPercent;
             _dataLoader = dataLoader;
         }
 
@@ -25,14 +25,14 @@ namespace MarketOps.SystemExecutor.MM
             float percentOfSystemValue = CalculatePercentOfSystemValue(systemState);
             if (NotEnoughCash(percentOfSystemValue, systemState.Cash)) return 0;
 
-            float volume = CalculateVolume(percentOfSystemValue, price);
+            float volume = CalculateVolume(percentOfSystemValue, initialRisk);
             if (volume <= 0) return 0;
 
             return CorrectVolumeForAvailableCash(volume, price, CalculateCommission(stockType, price, volume), systemState.Cash);
         }
 
         private float CalculatePercentOfSystemValue(SystemState systemState) =>
-            _percentOfValue * SystemValueCalculator.Calc(systemState, systemState.LastProcessedTS, _dataLoader);
+            _riskedPercent * SystemValueCalculator.Calc(systemState, systemState.LastProcessedTS, _dataLoader);
 
         private bool NotEnoughCash(float value, float availableCash) =>
             value > availableCash;

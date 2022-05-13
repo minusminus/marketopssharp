@@ -90,7 +90,7 @@ namespace MarketOps.SystemDefs.BBTrend
                 Type = SignalType.EnterOnOpen,
                 Direction = dir,
                 ReversePosition = false,
-                Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
+                Volume = _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice, 0)
             };
     }
 }

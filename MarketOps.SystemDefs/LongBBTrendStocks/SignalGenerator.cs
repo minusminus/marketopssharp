@@ -52,7 +52,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr)
         {
-            float volume = _signalVolumeCalculator.Calculate(systemState, stock.Type, currentClosePrice);
+            float volume = _signalVolumeCalculator.Calculate(systemState, stock.Type, currentClosePrice, currentClosePrice - currentAtr);
             return (volume > 0)
                 ? new Signal()
                     {

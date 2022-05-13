@@ -24,7 +24,7 @@ namespace MarketOps.Tests.SystemExecutor.MM
             ISystemDataLoader dataLoader = Substitute.For<ISystemDataLoader>();
             MMSignalVolumeForSystemValuePercent testObj = new MMSignalVolumeForSystemValuePercent(percentOfValue, commissionCalc, dataLoader);
 
-            testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price).ShouldBe(expectedVolume);
+            testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price, 0).ShouldBe(expectedVolume);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace MarketOps.Tests.SystemExecutor.MM
             commissionCalc.Calculate(default, default, default).ReturnsForAnyArgs(commission);
             MMSignalVolumeForAllCash testObj = new MMSignalVolumeForAllCash(commissionCalc);
 
-            testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price).ShouldBe(expectedVolume);
+            testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price, 0).ShouldBe(expectedVolume);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MarketOps.StockData.Types;
+﻿using MarketOps.Maths;
+using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
 using System;
 
@@ -9,6 +10,8 @@ namespace MarketOps.SystemExecutor.MM
     /// </summary>
     public abstract class MMSignalVolumeBase
     {
+        private const float Accuracy = 0.0001f;
+
         protected readonly ICommission _commission;
 
         protected MMSignalVolumeBase(ICommission commission)
@@ -16,8 +19,8 @@ namespace MarketOps.SystemExecutor.MM
             _commission = commission;
         }
 
-        protected static float CalculateVolume(float cash, float price) =>
-            (float)Math.Floor(cash / price);
+        protected static float CalculateVolume(float cash, float price) => 
+            cash.FloorDivideWithAccuracy(price, Accuracy);
 
         protected float CalculateCommission(StockType stockType, float price, float volume) =>
             (_commission != null) ? _commission.Calculate(stockType, volume, price) : 0;
@@ -25,6 +28,6 @@ namespace MarketOps.SystemExecutor.MM
         protected static float CorrectVolumeForAvailableCash(float volume, float price, float commission, float availableCash) =>
             (volume * price + commission <= availableCash)
                 ? volume
-                : volume - (float)Math.Ceiling(commission / price);
+                : volume - commission.CeilingDivideWithAccuracy(price, Accuracy);
     }
 }

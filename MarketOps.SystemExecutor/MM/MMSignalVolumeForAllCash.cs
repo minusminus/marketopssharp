@@ -13,7 +13,7 @@ namespace MarketOps.SystemExecutor.MM
             : base(commission)
         { }
 
-        public float Calculate(SystemState systemState, StockType stockType, float price)
+        public float Calculate(SystemState systemState, StockType stockType, float price, float initialRisk)
         {
             float volume = CalculateVolume(systemState.Cash, price);
             if (volume <= 0) return 0;

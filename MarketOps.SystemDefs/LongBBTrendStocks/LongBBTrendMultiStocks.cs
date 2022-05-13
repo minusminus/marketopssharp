@@ -43,7 +43,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                 SystemParams.Get(LongBBTrendStocksParams.BBSigmaWidth).As<float>(),
                 SystemParams.Get(LongBBTrendStocksParams.ATRWidth).As<int>(),
                 _dataLoader, _dataProvider, _systemExecutionLogger,
-                new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),// new MMSignalVolumeOneItem(),
+                new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),
+                //new MMSignalVolumeByTakenRiskPercent(0.01f, _commission, _dataLoader),
                 _gpwTickOps
                 );
             MMTrailingStopMinMaxOfN trailingStopCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);

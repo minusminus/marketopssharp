@@ -20,7 +20,7 @@ namespace MarketOps.Tests.SystemExecutor.MM
         [TestCase(12345678, 12345678)]
         public void Calculate__ReturnsOne(int cash, float price)
         {
-            _testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price).ShouldBe(1);
+            _testObj.Calculate(new SystemState() { Cash = cash }, StockType.Stock, price, 0).ShouldBe(1);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace MarketOps.Tests.SystemExecutor.MM
                 {
                     int v = r.Next(1000);
                     float p = r.Next(1000);
-                    _testObj.Calculate(new SystemState() { Cash = v }, StockType.Stock, p).ShouldBe(1, $"{v}, {p}");
+                    _testObj.Calculate(new SystemState() { Cash = v }, StockType.Stock, p, 0).ShouldBe(1, $"{v}, {p}");
                 });
         }
     }

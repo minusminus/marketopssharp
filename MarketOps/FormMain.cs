@@ -299,6 +299,8 @@ namespace MarketOps
             lblSDRExpectedUnitReturn.Text = summary.AvgLoss != 0 ? summary.ExpectedUnitReturn.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.AvgLoss != 0 ? summary.ExpectedPositionValue.ToDisplay() : "---";
             lblSDRRProfitAvg.Text = summary.AvgRProfit.ToDisplay();
+            lblSDRRProfitStdDev.Text = summary.StdDevRProfit.ToDisplay();
+            lblSDRRProfitAvgToStdDev.Text = summary.RProfitAvgToStdDev.ToDisplay();
 
             lblSDRMaxDDOnTicks.Text = summary.DDTicks.MaxDD().ToDisplayPcnt();
             lblSDRMaxDDOnPositions.Text = summary.DDClosedPositions.MaxDD().ToDisplayPcnt();
@@ -309,7 +311,7 @@ namespace MarketOps
             edtMonteCarloWinProb.Value = (decimal)summary.WinProbability;
             edtMonteCarloAvgPcntWin.Value = (decimal)(100f * summary.AvgPcntWin);
             edtMonteCarloAvgPcntLoss.Value = (decimal)(100f * summary.AvgPcntLoss);
-            edtMonteCarloTransactionsPerYear.Value = (decimal)summary.TransactionsPerYear;
+            edtMonteCarloTransactionsPerYear.Value = (decimal)(summary.TransactionsPerYear >= 1 ? summary.TransactionsPerYear : 1);
         }
 
         private void ShowPositions(SystemState systemState)

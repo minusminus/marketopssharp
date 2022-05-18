@@ -45,7 +45,9 @@
             this.pnlSimResult = new System.Windows.Forms.Panel();
             this.tcSimulationCharts = new System.Windows.Forms.TabControl();
             this.tabSimChartsEqTicks = new System.Windows.Forms.TabPage();
+            this.chartEquity = new MarketOps.Controls.SystemEquity.SystemEquityChart();
             this.tabSimChartsEqOnPositions = new System.Windows.Forms.TabPage();
+            this.chartEquityOnPositions = new MarketOps.Controls.SystemEquity.SystemEquityChart();
             this.tcSimulationData = new System.Windows.Forms.TabControl();
             this.tabSimDataResults = new System.Windows.Forms.TabPage();
             this.pnlSimDataResults = new System.Windows.Forms.Panel();
@@ -104,24 +106,35 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tabSimDataPositions = new System.Windows.Forms.TabPage();
+            this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
             this.tabSimDataDrawdowns = new System.Windows.Forms.TabPage();
             this.splitDrawDowns = new System.Windows.Forms.SplitContainer();
             this.gbDDTicks = new System.Windows.Forms.GroupBox();
+            this.chartDDTicks = new MarketOps.Controls.PointChart.PointChart();
             this.gbDDPositions = new System.Windows.Forms.GroupBox();
+            this.chartDDPositions = new MarketOps.Controls.PointChart.PointChart();
             this.tabSimR = new System.Windows.Forms.TabPage();
             this.splitR = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chartRValue = new MarketOps.Controls.PointChart.PointChart();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chartRDistribution = new MarketOps.Controls.ColumnChart.ColumnChart();
             this.tabSimDataProfits = new System.Windows.Forms.TabPage();
             this.splitProfits = new System.Windows.Forms.SplitContainer();
             this.gbProfitsValue = new System.Windows.Forms.GroupBox();
+            this.chartProfitValue = new MarketOps.Controls.PointChart.PointChart();
             this.gbProfitPcnt = new System.Windows.Forms.GroupBox();
+            this.chartProfitPcnt = new MarketOps.Controls.PointChart.PointChart();
             this.tabSimDataLog = new System.Windows.Forms.TabPage();
             this.edtSimDataLog = new System.Windows.Forms.TextBox();
             this.tabSimMonteCarlo = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
             this.gbMonteCarloStreaksLosing = new System.Windows.Forms.GroupBox();
+            this.chartMonteCarloStreaksLosing = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
+            this.gbMonteCarloStreaksWinning = new System.Windows.Forms.GroupBox();
+            this.chartMonteCarloStreaksWinning = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lblMonteCarloSimLongestWinningStreak = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
@@ -156,6 +169,7 @@
             this.label26 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
             this.pnlSimulationStart = new System.Windows.Forms.Panel();
             this.lblSimSystemName = new System.Windows.Forms.Label();
             this.cbSystemChoice = new System.Windows.Forms.ComboBox();
@@ -167,20 +181,10 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.chartEquity = new MarketOps.Controls.SystemEquity.SystemEquityChart();
-            this.chartEquityOnPositions = new MarketOps.Controls.SystemEquity.SystemEquityChart();
-            this.dbgPositions = new MarketOps.Controls.SystemPositionsGrid.SystemPositionsGrid();
-            this.chartDDTicks = new MarketOps.Controls.PointChart.PointChart();
-            this.chartDDPositions = new MarketOps.Controls.PointChart.PointChart();
-            this.chartRValue = new MarketOps.Controls.PointChart.PointChart();
-            this.chartRDistribution = new MarketOps.Controls.ColumnChart.ColumnChart();
-            this.chartProfitValue = new MarketOps.Controls.PointChart.PointChart();
-            this.chartProfitPcnt = new MarketOps.Controls.PointChart.PointChart();
-            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
-            this.chartMonteCarloStreaksLosing = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
-            this.paramsSim = new MarketOps.Controls.StockData.MOParamsEditor();
-            this.gbMonteCarloStreaksWinning = new System.Windows.Forms.GroupBox();
-            this.chartMonteCarloStreaksWinning = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
+            this.lblSDRRProfitStdDev = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.lblSDRRProfitAvgToStdDev = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -221,6 +225,7 @@
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.gbMonteCarloStreaksLosing.SuspendLayout();
+            this.gbMonteCarloStreaksWinning.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).BeginInit();
@@ -232,7 +237,6 @@
             this.pnlTop.SuspendLayout();
             this.pnlSimulationStart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).BeginInit();
-            this.gbMonteCarloStreaksWinning.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLoad
@@ -414,6 +418,14 @@
             this.tabSimChartsEqTicks.Text = "Equity";
             this.tabSimChartsEqTicks.UseVisualStyleBackColor = true;
             // 
+            // chartEquity
+            // 
+            this.chartEquity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartEquity.Location = new System.Drawing.Point(3, 3);
+            this.chartEquity.Name = "chartEquity";
+            this.chartEquity.Size = new System.Drawing.Size(933, 332);
+            this.chartEquity.TabIndex = 0;
+            // 
             // tabSimChartsEqOnPositions
             // 
             this.tabSimChartsEqOnPositions.Controls.Add(this.chartEquityOnPositions);
@@ -424,6 +436,14 @@
             this.tabSimChartsEqOnPositions.TabIndex = 1;
             this.tabSimChartsEqOnPositions.Text = "Equity on positions";
             this.tabSimChartsEqOnPositions.UseVisualStyleBackColor = true;
+            // 
+            // chartEquityOnPositions
+            // 
+            this.chartEquityOnPositions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartEquityOnPositions.Location = new System.Drawing.Point(3, 3);
+            this.chartEquityOnPositions.Name = "chartEquityOnPositions";
+            this.chartEquityOnPositions.Size = new System.Drawing.Size(933, 332);
+            this.chartEquityOnPositions.TabIndex = 0;
             // 
             // tcSimulationData
             // 
@@ -454,6 +474,10 @@
             // 
             // pnlSimDataResults
             // 
+            this.pnlSimDataResults.Controls.Add(this.lblSDRRProfitAvgToStdDev);
+            this.pnlSimDataResults.Controls.Add(this.label49);
+            this.pnlSimDataResults.Controls.Add(this.lblSDRRProfitStdDev);
+            this.pnlSimDataResults.Controls.Add(this.label46);
             this.pnlSimDataResults.Controls.Add(this.label39);
             this.pnlSimDataResults.Controls.Add(this.label42);
             this.pnlSimDataResults.Controls.Add(this.lblSDRTransactionsPerYear);
@@ -661,7 +685,7 @@
             // lblSDRMaxDDOnPositions
             // 
             this.lblSDRMaxDDOnPositions.AutoSize = true;
-            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(401, 212);
+            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(644, 26);
             this.lblSDRMaxDDOnPositions.Name = "lblSDRMaxDDOnPositions";
             this.lblSDRMaxDDOnPositions.Size = new System.Drawing.Size(26, 13);
             this.lblSDRMaxDDOnPositions.TabIndex = 56;
@@ -670,7 +694,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(248, 212);
+            this.label23.Location = new System.Drawing.Point(513, 26);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(105, 13);
             this.label23.TabIndex = 55;
@@ -679,7 +703,7 @@
             // lblSDRMaxDDOnTicks
             // 
             this.lblSDRMaxDDOnTicks.AutoSize = true;
-            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(401, 196);
+            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(644, 10);
             this.lblSDRMaxDDOnTicks.Name = "lblSDRMaxDDOnTicks";
             this.lblSDRMaxDDOnTicks.Size = new System.Drawing.Size(26, 13);
             this.lblSDRMaxDDOnTicks.TabIndex = 54;
@@ -688,7 +712,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(248, 196);
+            this.label21.Location = new System.Drawing.Point(513, 10);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(86, 13);
             this.label21.TabIndex = 53;
@@ -1011,6 +1035,14 @@
             this.tabSimDataPositions.Text = "Positions";
             this.tabSimDataPositions.UseVisualStyleBackColor = true;
             // 
+            // dbgPositions
+            // 
+            this.dbgPositions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dbgPositions.Location = new System.Drawing.Point(3, 3);
+            this.dbgPositions.Name = "dbgPositions";
+            this.dbgPositions.Size = new System.Drawing.Size(933, 271);
+            this.dbgPositions.TabIndex = 0;
+            // 
             // tabSimDataDrawdowns
             // 
             this.tabSimDataDrawdowns.Controls.Add(this.splitDrawDowns);
@@ -1052,6 +1084,15 @@
             this.gbDDTicks.TabStop = false;
             this.gbDDTicks.Text = "On ticks (length / percentage)";
             // 
+            // chartDDTicks
+            // 
+            this.chartDDTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDDTicks.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartDDTicks.Location = new System.Drawing.Point(3, 16);
+            this.chartDDTicks.Name = "chartDDTicks";
+            this.chartDDTicks.Size = new System.Drawing.Size(462, 181);
+            this.chartDDTicks.TabIndex = 0;
+            // 
             // gbDDPositions
             // 
             this.gbDDPositions.Controls.Add(this.chartDDPositions);
@@ -1062,6 +1103,15 @@
             this.gbDDPositions.TabIndex = 3;
             this.gbDDPositions.TabStop = false;
             this.gbDDPositions.Text = "On positions (length / percentage)";
+            // 
+            // chartDDPositions
+            // 
+            this.chartDDPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartDDPositions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartDDPositions.Location = new System.Drawing.Point(3, 16);
+            this.chartDDPositions.Name = "chartDDPositions";
+            this.chartDDPositions.Size = new System.Drawing.Size(457, 181);
+            this.chartDDPositions.TabIndex = 1;
             // 
             // tabSimR
             // 
@@ -1103,6 +1153,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Ticks length / R profit";
             // 
+            // chartRValue
+            // 
+            this.chartRValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartRValue.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartRValue.Location = new System.Drawing.Point(3, 16);
+            this.chartRValue.Name = "chartRValue";
+            this.chartRValue.Size = new System.Drawing.Size(463, 181);
+            this.chartRValue.TabIndex = 0;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.chartRDistribution);
@@ -1113,6 +1172,15 @@
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "R profit distribution";
+            // 
+            // chartRDistribution
+            // 
+            this.chartRDistribution.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartRDistribution.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartRDistribution.Location = new System.Drawing.Point(3, 16);
+            this.chartRDistribution.Name = "chartRDistribution";
+            this.chartRDistribution.Size = new System.Drawing.Size(454, 181);
+            this.chartRDistribution.TabIndex = 0;
             // 
             // tabSimDataProfits
             // 
@@ -1153,6 +1221,15 @@
             this.gbProfitsValue.TabStop = false;
             this.gbProfitsValue.Text = "Ticks length / Value";
             // 
+            // chartProfitValue
+            // 
+            this.chartProfitValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartProfitValue.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartProfitValue.Location = new System.Drawing.Point(3, 16);
+            this.chartProfitValue.Name = "chartProfitValue";
+            this.chartProfitValue.Size = new System.Drawing.Size(467, 181);
+            this.chartProfitValue.TabIndex = 0;
+            // 
             // gbProfitPcnt
             // 
             this.gbProfitPcnt.Controls.Add(this.chartProfitPcnt);
@@ -1163,6 +1240,15 @@
             this.gbProfitPcnt.TabIndex = 3;
             this.gbProfitPcnt.TabStop = false;
             this.gbProfitPcnt.Text = "Ticks length / Percentage";
+            // 
+            // chartProfitPcnt
+            // 
+            this.chartProfitPcnt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartProfitPcnt.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartProfitPcnt.Location = new System.Drawing.Point(3, 16);
+            this.chartProfitPcnt.Name = "chartProfitPcnt";
+            this.chartProfitPcnt.Size = new System.Drawing.Size(456, 181);
+            this.chartProfitPcnt.TabIndex = 0;
             // 
             // tabSimDataLog
             // 
@@ -1220,6 +1306,14 @@
             this.panel4.Size = new System.Drawing.Size(729, 178);
             this.panel4.TabIndex = 2;
             // 
+            // chartMonteCarloData
+            // 
+            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 0);
+            this.chartMonteCarloData.Name = "chartMonteCarloData";
+            this.chartMonteCarloData.Size = new System.Drawing.Size(473, 178);
+            this.chartMonteCarloData.TabIndex = 1;
+            // 
             // gbMonteCarloStreaksLosing
             // 
             this.gbMonteCarloStreaksLosing.Controls.Add(this.chartMonteCarloStreaksLosing);
@@ -1230,6 +1324,33 @@
             this.gbMonteCarloStreaksLosing.TabIndex = 2;
             this.gbMonteCarloStreaksLosing.TabStop = false;
             this.gbMonteCarloStreaksLosing.Text = "Losing streaks";
+            // 
+            // chartMonteCarloStreaksLosing
+            // 
+            this.chartMonteCarloStreaksLosing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloStreaksLosing.Location = new System.Drawing.Point(3, 16);
+            this.chartMonteCarloStreaksLosing.Name = "chartMonteCarloStreaksLosing";
+            this.chartMonteCarloStreaksLosing.Size = new System.Drawing.Size(122, 159);
+            this.chartMonteCarloStreaksLosing.TabIndex = 0;
+            // 
+            // gbMonteCarloStreaksWinning
+            // 
+            this.gbMonteCarloStreaksWinning.Controls.Add(this.chartMonteCarloStreaksWinning);
+            this.gbMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMonteCarloStreaksWinning.Location = new System.Drawing.Point(601, 0);
+            this.gbMonteCarloStreaksWinning.Name = "gbMonteCarloStreaksWinning";
+            this.gbMonteCarloStreaksWinning.Size = new System.Drawing.Size(128, 178);
+            this.gbMonteCarloStreaksWinning.TabIndex = 3;
+            this.gbMonteCarloStreaksWinning.TabStop = false;
+            this.gbMonteCarloStreaksWinning.Text = "Winning streaks";
+            // 
+            // chartMonteCarloStreaksWinning
+            // 
+            this.chartMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloStreaksWinning.Location = new System.Drawing.Point(3, 16);
+            this.chartMonteCarloStreaksWinning.Name = "chartMonteCarloStreaksWinning";
+            this.chartMonteCarloStreaksWinning.Size = new System.Drawing.Size(122, 159);
+            this.chartMonteCarloStreaksWinning.TabIndex = 0;
             // 
             // panel3
             // 
@@ -1625,6 +1746,14 @@
             this.pnlTop.Size = new System.Drawing.Size(253, 667);
             this.pnlTop.TabIndex = 0;
             // 
+            // paramsSim
+            // 
+            this.paramsSim.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paramsSim.Location = new System.Drawing.Point(0, 251);
+            this.paramsSim.Name = "paramsSim";
+            this.paramsSim.Size = new System.Drawing.Size(251, 414);
+            this.paramsSim.TabIndex = 1;
+            // 
             // pnlSimulationStart
             // 
             this.pnlSimulationStart.Controls.Add(this.lblSimSystemName);
@@ -1742,126 +1871,41 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // chartEquity
+            // lblSDRRProfitStdDev
             // 
-            this.chartEquity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartEquity.Location = new System.Drawing.Point(3, 3);
-            this.chartEquity.Name = "chartEquity";
-            this.chartEquity.Size = new System.Drawing.Size(933, 332);
-            this.chartEquity.TabIndex = 0;
+            this.lblSDRRProfitStdDev.AutoSize = true;
+            this.lblSDRRProfitStdDev.Location = new System.Drawing.Point(401, 186);
+            this.lblSDRRProfitStdDev.Name = "lblSDRRProfitStdDev";
+            this.lblSDRRProfitStdDev.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitStdDev.TabIndex = 75;
+            this.lblSDRRProfitStdDev.Text = "Avg";
             // 
-            // chartEquityOnPositions
+            // label46
             // 
-            this.chartEquityOnPositions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartEquityOnPositions.Location = new System.Drawing.Point(3, 3);
-            this.chartEquityOnPositions.Name = "chartEquityOnPositions";
-            this.chartEquityOnPositions.Size = new System.Drawing.Size(933, 332);
-            this.chartEquityOnPositions.TabIndex = 0;
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(248, 186);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(76, 13);
+            this.label46.TabIndex = 74;
+            this.label46.Text = "R profit stddev";
             // 
-            // dbgPositions
+            // lblSDRRProfitAvgToStdDev
             // 
-            this.dbgPositions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dbgPositions.Location = new System.Drawing.Point(3, 3);
-            this.dbgPositions.Name = "dbgPositions";
-            this.dbgPositions.Size = new System.Drawing.Size(933, 271);
-            this.dbgPositions.TabIndex = 0;
+            this.lblSDRRProfitAvgToStdDev.AutoSize = true;
+            this.lblSDRRProfitAvgToStdDev.Location = new System.Drawing.Point(401, 202);
+            this.lblSDRRProfitAvgToStdDev.Name = "lblSDRRProfitAvgToStdDev";
+            this.lblSDRRProfitAvgToStdDev.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitAvgToStdDev.TabIndex = 77;
+            this.lblSDRRProfitAvgToStdDev.Text = "Avg";
             // 
-            // chartDDTicks
+            // label49
             // 
-            this.chartDDTicks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartDDTicks.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartDDTicks.Location = new System.Drawing.Point(3, 16);
-            this.chartDDTicks.Name = "chartDDTicks";
-            this.chartDDTicks.Size = new System.Drawing.Size(462, 181);
-            this.chartDDTicks.TabIndex = 0;
-            // 
-            // chartDDPositions
-            // 
-            this.chartDDPositions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartDDPositions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartDDPositions.Location = new System.Drawing.Point(3, 16);
-            this.chartDDPositions.Name = "chartDDPositions";
-            this.chartDDPositions.Size = new System.Drawing.Size(457, 181);
-            this.chartDDPositions.TabIndex = 1;
-            // 
-            // chartRValue
-            // 
-            this.chartRValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartRValue.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartRValue.Location = new System.Drawing.Point(3, 16);
-            this.chartRValue.Name = "chartRValue";
-            this.chartRValue.Size = new System.Drawing.Size(463, 181);
-            this.chartRValue.TabIndex = 0;
-            // 
-            // chartRDistribution
-            // 
-            this.chartRDistribution.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartRDistribution.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartRDistribution.Location = new System.Drawing.Point(3, 16);
-            this.chartRDistribution.Name = "chartRDistribution";
-            this.chartRDistribution.Size = new System.Drawing.Size(454, 181);
-            this.chartRDistribution.TabIndex = 0;
-            // 
-            // chartProfitValue
-            // 
-            this.chartProfitValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartProfitValue.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartProfitValue.Location = new System.Drawing.Point(3, 16);
-            this.chartProfitValue.Name = "chartProfitValue";
-            this.chartProfitValue.Size = new System.Drawing.Size(467, 181);
-            this.chartProfitValue.TabIndex = 0;
-            // 
-            // chartProfitPcnt
-            // 
-            this.chartProfitPcnt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chartProfitPcnt.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chartProfitPcnt.Location = new System.Drawing.Point(3, 16);
-            this.chartProfitPcnt.Name = "chartProfitPcnt";
-            this.chartProfitPcnt.Size = new System.Drawing.Size(456, 181);
-            this.chartProfitPcnt.TabIndex = 0;
-            // 
-            // chartMonteCarloData
-            // 
-            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 0);
-            this.chartMonteCarloData.Name = "chartMonteCarloData";
-            this.chartMonteCarloData.Size = new System.Drawing.Size(473, 178);
-            this.chartMonteCarloData.TabIndex = 1;
-            // 
-            // chartMonteCarloStreaksLosing
-            // 
-            this.chartMonteCarloStreaksLosing.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartMonteCarloStreaksLosing.Location = new System.Drawing.Point(3, 16);
-            this.chartMonteCarloStreaksLosing.Name = "chartMonteCarloStreaksLosing";
-            this.chartMonteCarloStreaksLosing.Size = new System.Drawing.Size(122, 159);
-            this.chartMonteCarloStreaksLosing.TabIndex = 0;
-            // 
-            // paramsSim
-            // 
-            this.paramsSim.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paramsSim.Location = new System.Drawing.Point(0, 251);
-            this.paramsSim.Name = "paramsSim";
-            this.paramsSim.Size = new System.Drawing.Size(251, 414);
-            this.paramsSim.TabIndex = 1;
-            // 
-            // gbMonteCarloStreaksWinning
-            // 
-            this.gbMonteCarloStreaksWinning.Controls.Add(this.chartMonteCarloStreaksWinning);
-            this.gbMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gbMonteCarloStreaksWinning.Location = new System.Drawing.Point(601, 0);
-            this.gbMonteCarloStreaksWinning.Name = "gbMonteCarloStreaksWinning";
-            this.gbMonteCarloStreaksWinning.Size = new System.Drawing.Size(128, 178);
-            this.gbMonteCarloStreaksWinning.TabIndex = 3;
-            this.gbMonteCarloStreaksWinning.TabStop = false;
-            this.gbMonteCarloStreaksWinning.Text = "Winning streaks";
-            // 
-            // chartMonteCarloStreaksWinning
-            // 
-            this.chartMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartMonteCarloStreaksWinning.Location = new System.Drawing.Point(3, 16);
-            this.chartMonteCarloStreaksWinning.Name = "chartMonteCarloStreaksWinning";
-            this.chartMonteCarloStreaksWinning.Size = new System.Drawing.Size(122, 159);
-            this.chartMonteCarloStreaksWinning.TabIndex = 0;
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(248, 202);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(105, 13);
+            this.label49.TabIndex = 76;
+            this.label49.Text = "R profit avg / stddev";
             // 
             // FormMain
             // 
@@ -1919,6 +1963,7 @@
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.gbMonteCarloStreaksLosing.ResumeLayout(false);
+            this.gbMonteCarloStreaksWinning.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1933,7 +1978,6 @@
             this.pnlSimulationStart.ResumeLayout(false);
             this.pnlSimulationStart.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.edtInitialCash)).EndInit();
-            this.gbMonteCarloStreaksWinning.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2093,6 +2137,10 @@
         private Controls.MonteCarlo.MonteCarloStreaksGrid chartMonteCarloStreaksLosing;
         private System.Windows.Forms.GroupBox gbMonteCarloStreaksWinning;
         private Controls.MonteCarlo.MonteCarloStreaksGrid chartMonteCarloStreaksWinning;
+        private System.Windows.Forms.Label lblSDRRProfitAvgToStdDev;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label lblSDRRProfitStdDev;
+        private System.Windows.Forms.Label label46;
     }
 }
 

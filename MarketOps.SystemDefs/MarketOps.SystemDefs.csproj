@@ -86,6 +86,9 @@
     <Compile Include="SimplexStocks\SimplexStocksData.cs" />
     <Compile Include="SimplexStocks\SimplexStocksDataCalculator.cs" />
     <Compile Include="SimplexTools\TermBuilder.cs" />
+    <Compile Include="StrongBBtrendStocks\SignalsStrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBtrendStocks\StrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBtrendStocks\StrongBBTrendStocksParams.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

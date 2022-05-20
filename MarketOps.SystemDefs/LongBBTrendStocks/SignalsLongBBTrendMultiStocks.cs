@@ -67,7 +67,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         {
             ManageCurrentPositions(ts, systemState);
             var signals = GenerateSignals(ts, systemState);
-            LogData(ts, systemState, signals);
+            //LogData(ts, systemState, signals);
             return signals;
         }
 

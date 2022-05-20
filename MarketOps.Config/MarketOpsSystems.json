@@ -160,5 +160,28 @@
         "Value": "10"
       }
     ]
+  },
+  {
+    "Description": "StrongBBTrend Stocks",
+    "ClassName": "MarketOps.SystemDefs.StrongBBTrendStocks.StrongBBTrendStocks",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
   }
 ]

@@ -148,6 +148,7 @@
     <Compile Include="SystemAnalysis\MonteCarlo\MonteCarloCalculatorTests.cs" />
     <Compile Include="SystemAnalysis\MonteCarlo\MonteCarloStreaksCalculatorTests.cs" />
     <Compile Include="SystemAnalysis\SystemSummary\WinsLossesCalculatorTests.cs" />
+    <Compile Include="SystemData\Extensions\DateTimeExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\FloatExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionDirExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionExtensionsTests.cs" />

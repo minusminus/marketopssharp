@@ -5,10 +5,11 @@ using MarketOps.SystemData.Types;
 using MarketOps.SystemExecutor.GPW;
 using MarketOps.SystemExecutor.MM;
 
-namespace MarketOps.SystemDefs.StrongBBtrendStocks
+namespace MarketOps.SystemDefs.StrongBBTrendStocks
 {
     /// <summary>
-    /// Strong trends on stocks by BB breakout on monthly data, running on weekly data.
+    /// Strong trends on stocks by BB breakout on monthly data, running trailing stop on weekly data.
+    /// (next step after LongBBTrendMultiStocks)
     /// </summary>
     public class StrongBBTrendStocksMW : SystemDefinition
     {
@@ -38,14 +39,13 @@ namespace MarketOps.SystemDefs.StrongBBtrendStocks
         {
             SignalsStrongBBTrendStocksMW signals = new SignalsStrongBBTrendStocksMW(
                 SystemParams.Get(StrongBBTrendStocksParams.StockName).As<string>(),
-                StockData.Types.StockDataRange.Monthly,
                 SystemParams.Get(StrongBBTrendStocksParams.BBPeriod).As<int>(),
                 SystemParams.Get(StrongBBTrendStocksParams.BBSigmaWidth).As<float>(),
                 SystemParams.Get(StrongBBTrendStocksParams.ATRWidth).As<int>(),
-                _dataLoader, _dataProvider,
+                _dataLoader, _dataProvider, _systemExecutionLogger,
                 new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),
-                _gpwTickOps,
-                _systemExecutionLogger
+                //new MMSignalVolumeByTakenRiskPercent(0.01f, _commission, _dataLoader),
+                _gpwTickOps
                 );
             MMTrailingStopMinMaxOfN trailingStopCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);
 
@@ -57,3 +57,4 @@ namespace MarketOps.SystemDefs.StrongBBtrendStocks
             _mmPositionCloseCalculator = trailingStopCalculator;// null;
         }
     }
+}

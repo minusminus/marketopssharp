@@ -1,23 +1,140 @@
-﻿using System;
-using System.Collections.Generic;
-using MarketOps.SystemData.Interfaces;
-using MarketOps.StockData.Types;
+﻿using MarketOps.Stats.Stats;
 using MarketOps.StockData.Extensions;
-using MarketOps.Stats.Stats;
 using MarketOps.StockData.Interfaces;
+using MarketOps.StockData.Types;
+using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
-namespace MarketOps.SystemDefs.StrongBBtrendStocks
+namespace MarketOps.SystemDefs.StrongBBTrendStocks
 {
     /// <summary>
     /// Signals for strong trends stocks.
     /// Long positions only.
+    /// 
+    /// Opens position on weekly data after breakout on monthly BB. Position opened on next week open after breakout.
+    /// Initial stop ATR taken for weekly data.
     /// </summary>
     internal class SignalsStrongBBTrendStocksMW : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private const StockDataRange EntrySignalDataRange = StockDataRange.Monthly;
         private const StockDataRange PositionDataRange = StockDataRange.Weekly;
 
+        private readonly ISystemDataLoader _dataLoader;
+        private readonly IStockDataProvider _dataProvider;
+        private readonly ISystemExecutionLogger _systemExecutionLogger;
+        private readonly SignalGenerator _signalGenerator;
+        private readonly PositionManager _positionManager;
 
+        private readonly MultiStocksData _stocks;
+        private readonly int _maxRequiredBackBufferLength;
+
+        private readonly string[] _stocksNames;
+
+        public SignalsStrongBBTrendStocksMW(string stockName, int bbPeriod, float bbSigmaWidth, int atrPeriod,
+            ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger,
+            IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
+        {
+            _stocksNames = new string[] { stockName };
+            _dataLoader = dataLoader;
+            _dataProvider = dataProvider;
+            _systemExecutionLogger = systemExecutionLogger;
+            _signalGenerator = new SignalGenerator(EntrySignalDataRange, signalVolumeCalculator, tickAligner);
+            _positionManager = new PositionManager();
+
+            _maxRequiredBackBufferLength = Math.Max(bbPeriod, atrPeriod);
+            _stocks = new MultiStocksData(_stocksNames.Length);
+            InitializeStocksData(bbPeriod, bbSigmaWidth, atrPeriod);
+        }
+
+        public SystemDataDefinition GetDataDefinition() =>
+            new SystemDataDefinition()
+            {
+                stocks = _stocks.Stocks
+                    .Select((def, i) =>
+                    {
+                        return new SystemStockDataDefinition()
+                        {
+                            stock = def,
+                            dataRange = PositionDataRange,
+                            stats = new List<StockStat>() { _stocks.StatsATR[i] }
+                        };
+                    })
+                    .Union(_stocks.Stocks
+                        .Select((def, i) =>
+                        {
+                            return new SystemStockDataDefinition()
+                            {
+                                stock = def,
+                                dataRange = EntrySignalDataRange,
+                                stats = new List<StockStat>() { _stocks.StatsBB[i] }
+                            };
+                        }))
+                    .ToList()
+            };
+
+        public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
+        {
+            ManageCurrentPositions(ts, systemState);
+
+            if (!ts.MonthEndsInCurrentWeek()) return new List<Signal>();
+            var signals = GenerateSignals(ts, systemState);
+            //LogData(ts, systemState, signals);
+            return signals;
+        }
+
+        private void InitializeStocksData(int bbPeriod, float bbSigmaWidth, int atrPeriod)
+        {
+            for (int i = 0; i < _stocksNames.Length; i++)
+            {
+                _stocks.Stocks[i] = _dataProvider.GetStockDefinition(_stocksNames[i]);
+                StockStat statBB = new StatBB("")
+                    .SetParam(StatBBParams.Period, new MOParamInt() { Value = bbPeriod })
+                    .SetParam(StatBBParams.SigmaWidth, new MOParamFloat() { Value = bbSigmaWidth });
+                _stocks.StatsBB[i] = (StatBB)statBB;
+                StockStat statATR = new StatATR("")
+                    .SetParam(StatATRParams.Period, new MOParamInt() { Value = atrPeriod });
+                _stocks.StatsATR[i] = (StatATR)statATR;
+            }
+        }
+
+        private void ManageCurrentPositions(DateTime ts, SystemState systemState)
+        {
+            if (systemState.PositionsActive.Count <= 0) return;
+
+            for (int i = 0; i < systemState.PositionsActive.Count; i++)
+            {
+                if (!_dataLoader.GetWithIndex(systemState.PositionsActive[i].Stock.FullName, PositionDataRange, ts, out StockPricesData data, out int index))
+                    throw new Exception("ManageCurrentPositions can't get stock prices data");
+                _positionManager.Manage(systemState.PositionsActive[i], data, index);
+            }
+        }
+
+        private List<Signal> GenerateSignals(DateTime ts, SystemState systemState) =>
+            _stocks.Stocks
+                .Select((def, i) => GenerateSignalForStock(i, ts, systemState))
+                .Where(signal => signal != null)
+                .ToList();
+
+        private Signal GenerateSignalForStock(int stockIndex, DateTime ts, SystemState systemState)
+        {
+            if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, EntrySignalDataRange, ts, _maxRequiredBackBufferLength, out StockPricesData data, out int index)) return null;
+            if (PositionExists(stockIndex, systemState)) return null;
+            return _signalGenerator.Generate(_stocks.Stocks[stockIndex], ts, index, systemState, _stocks.TrendInfo[stockIndex], data, _stocks.StatsBB[stockIndex], _stocks.StatsATR[stockIndex]);
+        }
+
+        private bool PositionExists(int stockIndex, SystemState systemState) =>
+            systemState.FindActivePositionIndex(_stocks.Stocks[stockIndex].FullName) > -1;
+
+        private void LogData(DateTime ts, SystemState systemState, List<Signal> signals)
+        {
+            _systemExecutionLogger.Add(
+                $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
+                + $"active pos: {systemState.PositionsActive.Count}, signals: {signals.Count}"
+                );
+        }
     }
 }

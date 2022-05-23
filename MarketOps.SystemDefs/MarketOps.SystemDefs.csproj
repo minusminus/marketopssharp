@@ -86,9 +86,13 @@
     <Compile Include="SimplexStocks\SimplexStocksData.cs" />
     <Compile Include="SimplexStocks\SimplexStocksDataCalculator.cs" />
     <Compile Include="SimplexTools\TermBuilder.cs" />
-    <Compile Include="StrongBBtrendStocks\SignalsStrongBBTrendStocksMW.cs" />
-    <Compile Include="StrongBBtrendStocks\StrongBBTrendStocksMW.cs" />
-    <Compile Include="StrongBBtrendStocks\StrongBBTrendStocksParams.cs" />
+    <Compile Include="StrongBBTrendStocks\LongBBTrendInfo.cs" />
+    <Compile Include="StrongBBTrendStocks\MultiStocksData.cs" />
+    <Compile Include="StrongBBTrendStocks\PositionManager.cs" />
+    <Compile Include="StrongBBTrendStocks\SignalGenerator.cs" />
+    <Compile Include="StrongBBTrendStocks\SignalsStrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksParams.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

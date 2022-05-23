@@ -162,8 +162,8 @@
     ]
   },
   {
-    "Description": "StrongBBTrend Stocks",
-    "ClassName": "MarketOps.SystemDefs.StrongBBTrendStocks.StrongBBTrendStocks",
+    "Description": "StrongBBTrend Stocks MW",
+    "ClassName": "MarketOps.SystemDefs.StrongBBTrendStocks.StrongBBTrendStocksMW",
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
       {

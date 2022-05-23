@@ -1,4 +1,4 @@
-﻿namespace MarketOps.SystemDefs.StrongBBtrendStocks
+﻿namespace MarketOps.SystemDefs.StrongBBTrendStocks
 {
     public static class StrongBBTrendStocksParams
     {

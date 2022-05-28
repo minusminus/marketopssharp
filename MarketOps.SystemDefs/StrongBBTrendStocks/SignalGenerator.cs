@@ -8,47 +8,48 @@ using System;
 namespace MarketOps.SystemDefs.StrongBBTrendStocks
 {
     /// <summary>
-    /// Signal generator for StrongBBTrend
+    /// Signal generator for StrongBBTrend.
+    /// Checks trend on long data range, generates signal for short data range.
     /// </summary>
     internal class SignalGenerator
     {
-        private readonly StockDataRange _dataRange;
+        private readonly StockDataRange _signalDataRange;
         private readonly IMMSignalVolume _signalVolumeCalculator;
         private readonly ITickAligner _tickAligner;
 
-        public SignalGenerator(StockDataRange dataRange, IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
+        public SignalGenerator(StockDataRange signalDataRange, IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
         {
-            _dataRange = dataRange;
+            _signalDataRange = signalDataRange;
             _signalVolumeCalculator = signalVolumeCalculator;
             _tickAligner = tickAligner;
         }
 
-        public Signal Generate(StockDefinition stock, DateTime ts, int currentIndex, SystemState systemState, LongBBTrendInfo trendInfo,
-            StockPricesData data, StatBB statBB, StatATR statATR)
+        public Signal Generate(StockDefinition stock, DateTime ts, int longIndex, int shortIndex, SystemState systemState, LongBBTrendInfo trendInfo,
+            StockPricesData data, StatBB statBBLong, StatATR statATRShort)
         {
-            trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, statBB, currentIndex, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
-            BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, statBB, currentIndex, trendInfo.CurrentTrend);
+            trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, statBBLong, longIndex, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
+            BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, statBBLong, longIndex, trendInfo.CurrentTrend);
 
             if (expectation != BBTrendExpectation.UpAndRaising) return null;
 
-            if (TrendStartedNotLaterThanNTicksAgo(trendInfo, currentIndex, 1))
-                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[currentIndex], statATR.Data(StatATRData.ATR)[currentIndex - statATR.BackBufferLength]);
-            else if (PriceAboveMaxOfPreviousH(data, currentIndex, 10, data.H[currentIndex]))
-                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[currentIndex], statATR.Data(StatATRData.ATR)[currentIndex - statATR.BackBufferLength]);
+            if (TrendStartedNotLaterThanNTicksAgo(trendInfo, longIndex, 1))
+                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[shortIndex], statATRShort.Data(StatATRData.ATR)[shortIndex - statATRShort.BackBufferLength]);
+            else if (PriceAboveMaxOfPreviousH(data, longIndex, 10, data.H[longIndex]))
+                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[shortIndex], statATRShort.Data(StatATRData.ATR)[shortIndex - statATRShort.BackBufferLength]);
 
             return null;
         }
 
-        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int currentIndex, int length, float price)
+        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int longIndex, int length, float price)
         {
             for (int i = 1; i <= length; i++)
-                if (data.H[currentIndex - i] > price)
+                if (data.H[longIndex - i] > price)
                     return false;
             return true;
         }
 
-        private bool TrendStartedNotLaterThanNTicksAgo(LongBBTrendInfo trendInfo, int currentIndex, int n) =>
-            (currentIndex - trendInfo.CurrentTrendStartIndex) <= n;
+        private bool TrendStartedNotLaterThanNTicksAgo(LongBBTrendInfo trendInfo, int longIndex, int n) =>
+            (longIndex - trendInfo.CurrentTrendStartIndex) <= n;
 
         private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr)
         {
@@ -57,7 +58,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
                 ? new Signal()
                 {
                     Stock = stock,
-                    DataRange = _dataRange,
+                    DataRange = _signalDataRange,
                     IntradayInterval = 0,
                     Type = SignalType.EnterOnOpen,
                     Direction = dir,

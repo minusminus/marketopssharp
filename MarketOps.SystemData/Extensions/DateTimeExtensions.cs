@@ -15,5 +15,11 @@ namespace MarketOps.SystemData.Extensions
             DateTime endOfWeek = dt.AddDays(7);
             return endOfWeek.IsLastDayOfMonth() || (dt.Month != endOfWeek.Month);
         }
+
+        public static DateTime FirstDayOfCurrentMonth(this DateTime ts) =>
+            new DateTime(ts.Year, ts.Month, 1);
+
+        public static DateTime FirstDayOfNextMonth(this DateTime ts) =>
+            ts.FirstDayOfCurrentMonth().AddMonths(1);
     }
 }

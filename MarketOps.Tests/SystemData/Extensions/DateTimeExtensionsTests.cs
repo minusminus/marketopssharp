@@ -26,5 +26,21 @@ namespace MarketOps.Tests.SystemData.Extensions
         {
             new DateTime(year, month, day).MonthEndsInCurrentWeek().ShouldBe(expected);
         }
+
+        [TestCase(2022, 05, 23)]
+        [TestCase(2022, 05, 01)]
+        [TestCase(2022, 12, 23)]
+        public void FirstDayOfCurrentMonth__ReturnsCorrectly(int year, int month, int day)
+        {
+            new DateTime(year, month, day).FirstDayOfCurrentMonth().ShouldBe(new DateTime(year, month, 1));
+        }
+
+        [TestCase(2022, 05, 23, 2022, 06)]
+        [TestCase(2022, 05, 01, 2022, 06)]
+        [TestCase(2022, 12, 23, 2023, 01)]
+        public void FirstDayOfNextMonth__ReturnsCorrectly(int year, int month, int day, int expectedYear, int expectedMonth)
+        {
+            new DateTime(year, month, day).FirstDayOfNextMonth().ShouldBe(new DateTime(expectedYear, expectedMonth, 1));
+        }
     }
 }

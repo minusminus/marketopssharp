@@ -24,32 +24,31 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             _tickAligner = tickAligner;
         }
 
-        public Signal Generate(StockDefinition stock, DateTime ts, int longIndex, int shortIndex, SystemState systemState, LongBBTrendInfo trendInfo,
-            StockPricesData data, StatBB statBBLong, StatATR statATRShort)
+        public Signal Generate(StockDefinition stock, DateTime ts, int indexLong, int indexShort, SystemState systemState, LongBBTrendInfo trendInfo,
+            StockPricesData dataLong, StockPricesData dataShort, StatBB statBBLong, StatATR statATRShort)
         {
-            trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(data, statBBLong, longIndex, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
-            BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(data, statBBLong, longIndex, trendInfo.CurrentTrend);
+            trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(dataLong, statBBLong, indexLong, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
+            BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(dataLong, statBBLong, indexLong, trendInfo.CurrentTrend);
 
             if (expectation != BBTrendExpectation.UpAndRaising) return null;
 
-            if (TrendStartedNotLaterThanNTicksAgo(trendInfo, longIndex, 1))
-                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[shortIndex], statATRShort.Data(StatATRData.ATR)[shortIndex - statATRShort.BackBufferLength]);
-            else if (PriceAboveMaxOfPreviousH(data, longIndex, 10, data.H[longIndex]))
-                return CreateSignal(stock, ts, PositionDir.Long, systemState, data.C[shortIndex], statATRShort.Data(StatATRData.ATR)[shortIndex - statATRShort.BackBufferLength]);
+            if (TrendStartedNotLaterThanNTicksAgo(trendInfo, indexLong, 1)
+                || PriceAboveMaxOfPreviousH(dataLong, indexLong, 10, dataLong.H[indexLong]))
+                return CreateSignal(stock, ts, PositionDir.Long, systemState, dataShort.C[indexShort], statATRShort.Data(StatATRData.ATR)[indexShort - statATRShort.BackBufferLength]);
 
             return null;
         }
 
-        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int longIndex, int length, float price)
+        private bool PriceAboveMaxOfPreviousH(StockPricesData data, int index, int length, float price)
         {
             for (int i = 1; i <= length; i++)
-                if (data.H[longIndex - i] > price)
+                if (data.H[index - i] > price)
                     return false;
             return true;
         }
 
-        private bool TrendStartedNotLaterThanNTicksAgo(LongBBTrendInfo trendInfo, int longIndex, int n) =>
-            (longIndex - trendInfo.CurrentTrendStartIndex) <= n;
+        private bool TrendStartedNotLaterThanNTicksAgo(LongBBTrendInfo trendInfo, int index, int n) =>
+            (index - trendInfo.CurrentTrendStartIndex) <= n;
 
         private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float currentClosePrice, float currentAtr)
         {

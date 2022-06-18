@@ -91,6 +91,8 @@
     <Compile Include="StrongBBTrendStocks\PositionManager.cs" />
     <Compile Include="StrongBBTrendStocks\SignalGenerator.cs" />
     <Compile Include="StrongBBTrendStocks\SignalsStrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBTrendStocks\StatBBTrendPositionLong.cs" />
+    <Compile Include="StrongBBTrendStocks\StatBBTrendPositionLongCalculator.cs" />
     <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksMW.cs" />
     <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksParams.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />

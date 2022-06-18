@@ -8,7 +8,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     /// Trend starts tick after BB breakout.
     /// Trend ends tick after trailing stop breakout.
     /// </summary>
-    public class StatBBTrendPositionLong : StockStat
+    internal class StatBBTrendPositionLong : StockStat
     {
         private readonly int _bbPeriod;
         private readonly float _bbSigmaWidth;
@@ -23,7 +23,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         public override void Calculate(StockPricesData data)
         {
-            _data[0] = new StatBBTrendPositionLongCalculator().Calculate(data.C, data.L, _bbPeriod, _bbSigmaWidth, _trailingStopMinOfN);
+            _data[0] = StatBBTrendPositionLongCalculator.Calculate(data.C, data.L, _bbPeriod, _bbSigmaWidth, _trailingStopMinOfN);
         }
 
         protected override int GetBackBufferLength() =>

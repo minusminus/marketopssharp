@@ -33,15 +33,15 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             float[] result = new float[dataC.Length - startIndex];
             for (int i = startIndex; i < dataC.Length; i++)
             {
-                trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(dataC, bbData.BBL, bbData.BBH, bbPeriod, i - 1, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
+                trendInfo.CurrentTrend = BBTrendRecognizer.BBTrendRecognizer.RecognizeTrendOnC(dataC, bbData.BBL, bbData.BBH, bbPeriod, i, trendInfo.CurrentTrend, out _, ref trendInfo.CurrentTrendStartIndex);
 
                 if ((i == startIndex) || (result[i - startIndex - 1] == NoTrend))
                 {
-                    BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(dataC, bbData.SMA, bbPeriod, i - 1, trendInfo.CurrentTrend);
+                    BBTrendExpectation expectation = BBTrendRecognizer.BBTrendRecognizer.GetExpectation(dataC, bbData.SMA, bbPeriod, i, trendInfo.CurrentTrend);
                     result[i - startIndex] = (expectation == BBTrendExpectation.UpAndRaising) ? InTrend : NoTrend;
                 }
                 else
-                    result[i - startIndex] = (hlData.L[i - 1 - trailingStopMinOfN] <= dataL[i - 1]) ? NoTrend : InTrend;
+                    result[i - startIndex] = (hlData.L[i - 1 - trailingStopMinOfN] > dataL[i - 1]) ? NoTrend : InTrend;
             }
             return result;
         }

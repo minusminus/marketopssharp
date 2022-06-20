@@ -81,6 +81,7 @@
     <Compile Include="BBTrendRecognizer\StatBBMock.cs" />
     <Compile Include="ModNCounterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StrongBBTrendStocks\StatBBTrendPositionLongCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">

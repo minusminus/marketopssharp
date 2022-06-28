@@ -27,7 +27,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
         private readonly ISystemDataLoader _dataLoader;
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
-        private readonly SignalGenerator _signalGenerator;
+        private readonly SignalGeneratorMD _signalGenerator;
         private readonly PositionManager _positionManager;
 
         private readonly MultiStocksData _stocks;
@@ -38,13 +38,13 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         public SignalsStrongBBTrendStocksMD(string stockName, int bbPeriod, float bbSigmaWidth, int atrPeriod,
             ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger,
-            IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
+            IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner, ITickAdder tickAdder)
         {
             _stocksNames = new string[] { stockName };
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
             _systemExecutionLogger = systemExecutionLogger;
-            _signalGenerator = new SignalGenerator(DataRangeShort, signalVolumeCalculator, tickAligner);
+            _signalGenerator = new SignalGeneratorMD(DataRangeShort, signalVolumeCalculator, tickAligner, tickAdder);
             _positionManager = new PositionManager();
 
             _maxRequiredLongBackBufferLength = bbPeriod; //Math.Max(bbPeriod, atrPeriod);
@@ -81,13 +81,12 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
-            return new List<Signal>();
             //ManageCurrentPositions(ts, systemState);
 
             //if (!ts.MonthEndsInCurrentWeek()) return new List<Signal>();
-            //var signals = GenerateSignals(ts, systemState);
-            ////LogData(ts, systemState, signals);
-            //return signals;
+            var signals = GenerateSignals(ts, systemState);
+            //LogData(ts, systemState, signals);
+            return signals;
         }
 
         private void InitializeStocksData(int bbPeriod, float bbSigmaWidth, int monthlyTrendStopMinOfN, int atrPeriod)
@@ -129,8 +128,8 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             if (PositionExists(stockIndex, systemState)) return null;
             if (!StockInMonthlyLongPosition(stockIndex, ts)) return null;
             if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeShort, ts, _maxRequiredShortBackBufferLength, out StockPricesData dataShort, out int indexShort)) return null;
-            if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _maxRequiredLongBackBufferLength, out StockPricesData dataLong, out int indexLong)) return null;
-            return _signalGenerator.Generate(_stocks.Stocks[stockIndex], ts, indexLong, indexShort, systemState, _stocks.TrendInfo[stockIndex], dataLong, dataShort, _stocks.StatsBB[stockIndex], _stocks.StatsATR[stockIndex]);
+            //if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _maxRequiredLongBackBufferLength, out StockPricesData dataLong, out int indexLong)) return null;
+            return _signalGenerator.Generate(_stocks.Stocks[stockIndex], ts, systemState, dataShort, indexShort);
         }
 
         private bool PositionExists(int stockIndex, SystemState systemState) =>

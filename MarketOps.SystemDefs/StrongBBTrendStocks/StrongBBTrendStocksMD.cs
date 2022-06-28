@@ -37,14 +37,15 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         public override void Prepare()
         {
-            SignalsStrongBBTrendStocksMW signals = new SignalsStrongBBTrendStocksMW(
+            SignalsStrongBBTrendStocksMD signals = new SignalsStrongBBTrendStocksMD(
                 SystemParams.Get(StrongBBTrendStocksParams.StockName).As<string>(),
                 SystemParams.Get(StrongBBTrendStocksParams.BBPeriod).As<int>(),
                 SystemParams.Get(StrongBBTrendStocksParams.BBSigmaWidth).As<float>(),
                 SystemParams.Get(StrongBBTrendStocksParams.ATRWidth).As<int>(),
                 _dataLoader, _dataProvider, _systemExecutionLogger,
-                new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),
-                //new MMSignalVolumeByTakenRiskPercent(0.01f, _commission, _dataLoader),
+                //new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),
+                new MMSignalVolumeByTakenRiskPercent(0.01f, _commission, _dataLoader),
+                _gpwTickOps,
                 _gpwTickOps
                 );
             MMTrailingStopMinMaxOfN trailingStopCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);
@@ -54,7 +55,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = null;// trailingStopCalculator;// null;
+            _mmPositionCloseCalculator = trailingStopCalculator;// null;
         }
     }
 }

@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dbgPositions = new System.Windows.Forms.DataGridView();
-            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             this.LP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dir = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,7 +47,6 @@
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).BeginInit();
             this.SuspendLayout();
             // 
             // dbgPositions
@@ -57,7 +54,6 @@
             this.dbgPositions.AllowUserToAddRows = false;
             this.dbgPositions.AllowUserToDeleteRows = false;
             this.dbgPositions.AllowUserToResizeRows = false;
-            this.dbgPositions.AutoGenerateColumns = false;
             this.dbgPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dbgPositions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.LP,
@@ -74,7 +70,6 @@
             this.CloseCommission,
             this.Volume,
             this.Ticks});
-            this.dbgPositions.DataSource = this.srcPositions;
             this.dbgPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dbgPositions.Location = new System.Drawing.Point(0, 0);
             this.dbgPositions.Name = "dbgPositions";
@@ -216,7 +211,6 @@
             this.Name = "SystemPositionsGrid";
             this.Size = new System.Drawing.Size(1085, 274);
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -224,7 +218,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dbgPositions;
-        private System.Windows.Forms.BindingSource srcPositions;
         private System.Windows.Forms.DataGridViewTextBoxColumn LP;
         private System.Windows.Forms.DataGridViewTextBoxColumn StockName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dir;

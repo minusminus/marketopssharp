@@ -56,6 +56,7 @@
     <Compile Include="Extensions\PriceVolumeChartPositionAnnotationsExtensions.cs" />
     <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
+    <Compile Include="Extensions\SortableBindingListExtensions.cs" />
     <Compile Include="FormLongLastingWork.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +139,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SortableBindingList.cs" />
     <Compile Include="StockData\MOParamsEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>

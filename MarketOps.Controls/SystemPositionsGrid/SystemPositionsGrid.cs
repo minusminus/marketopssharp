@@ -1,6 +1,8 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
+﻿using MarketOps.Controls.Extensions;
 using MarketOps.SystemData.Types;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace MarketOps.Controls.SystemPositionsGrid
 {
@@ -20,9 +22,9 @@ namespace MarketOps.Controls.SystemPositionsGrid
 
         public void LoadData(SystemState systemState)
         {
-            srcPositions.Clear();
-            for (int i = 0; i < systemState.PositionsClosed.Count; i++)
-                srcPositions.Add(new SystemPositionGridRecord(i, systemState.PositionsClosed[i]));
+            dbgPositions.DataSource = systemState.PositionsClosed
+                .Select((p, i) => new SystemPositionGridRecord(i, p))
+                .ToSortableBindingList();
         }
 
         private void dbgPositions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

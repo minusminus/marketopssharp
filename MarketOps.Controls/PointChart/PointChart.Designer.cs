@@ -32,9 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartPoints = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.srcPoints = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chartPoints)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcPoints)).BeginInit();
             this.SuspendLayout();
             // 
             // chartPoints
@@ -54,7 +52,6 @@
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.Name = "areaPoints";
             this.chartPoints.ChartAreas.Add(chartArea1);
-            this.chartPoints.DataSource = this.srcPoints;
             this.chartPoints.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartPoints.Location = new System.Drawing.Point(0, 0);
             this.chartPoints.Name = "chartPoints";
@@ -76,7 +73,6 @@
             this.Name = "PointChart";
             this.Size = new System.Drawing.Size(408, 275);
             ((System.ComponentModel.ISupportInitialize)(this.chartPoints)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcPoints)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -84,6 +80,5 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chartPoints;
-        private System.Windows.Forms.BindingSource srcPoints;
     }
 }

@@ -33,9 +33,7 @@ namespace MarketOps.Controls.ColumnChart
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartColumns = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.srcColumns = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chartColumns)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcColumns)).BeginInit();
             this.SuspendLayout();
             // 
             // chartColumns
@@ -55,7 +53,6 @@ namespace MarketOps.Controls.ColumnChart
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.Name = "areaColumns";
             this.chartColumns.ChartAreas.Add(chartArea1);
-            this.chartColumns.DataSource = this.srcColumns;
             this.chartColumns.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartColumns.Location = new System.Drawing.Point(0, 0);
             this.chartColumns.Name = "chartColumns";
@@ -76,7 +73,6 @@ namespace MarketOps.Controls.ColumnChart
             this.Name = "ColumnChart";
             this.Size = new System.Drawing.Size(442, 287);
             ((System.ComponentModel.ISupportInitialize)(this.chartColumns)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcColumns)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -84,6 +80,5 @@ namespace MarketOps.Controls.ColumnChart
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chartColumns;
-        private System.Windows.Forms.BindingSource srcColumns;
     }
 }

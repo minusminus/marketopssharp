@@ -12,20 +12,8 @@ namespace MarketOps.Controls.PointChart
 
         public void LoadData(List<PointChartData> data, string seriesTooltip)
         {
-            FillBindingSource(data);
-            BindChartData();
+            chartPoints.DataSource = data;
             chartPoints.Series["seriesPoints"].ToolTip = seriesTooltip;
-        }
-
-        private void FillBindingSource(List<PointChartData> data)
-        {
-            srcPoints.Clear();
-            data.ForEach(v => srcPoints.Add(v));
-        }
-
-        private void BindChartData()
-        {
-            chartPoints.DataBind();
         }
     }
 }

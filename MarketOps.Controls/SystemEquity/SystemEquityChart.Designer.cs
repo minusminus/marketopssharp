@@ -35,10 +35,8 @@
             this.dbgEquity = new System.Windows.Forms.DataGridView();
             this.TS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcEquity = new System.Windows.Forms.BindingSource(this.components);
             this.chartEquity = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.dbgEquity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcEquity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartEquity)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,12 +45,10 @@
             this.dbgEquity.AllowUserToAddRows = false;
             this.dbgEquity.AllowUserToDeleteRows = false;
             this.dbgEquity.AllowUserToResizeRows = false;
-            this.dbgEquity.AutoGenerateColumns = false;
             this.dbgEquity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dbgEquity.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TS,
             this.Value});
-            this.dbgEquity.DataSource = this.srcEquity;
             this.dbgEquity.Dock = System.Windows.Forms.DockStyle.Left;
             this.dbgEquity.Location = new System.Drawing.Point(0, 0);
             this.dbgEquity.Name = "dbgEquity";
@@ -97,7 +93,6 @@
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.Name = "areaEquity";
             this.chartEquity.ChartAreas.Add(chartArea1);
-            this.chartEquity.DataSource = this.srcEquity;
             this.chartEquity.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartEquity.Location = new System.Drawing.Point(201, 0);
             this.chartEquity.Name = "chartEquity";
@@ -121,7 +116,6 @@
             this.Name = "SystemEquityChart";
             this.Size = new System.Drawing.Size(1078, 472);
             ((System.ComponentModel.ISupportInitialize)(this.dbgEquity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcEquity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartEquity)).EndInit();
             this.ResumeLayout(false);
 
@@ -130,7 +124,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dbgEquity;
-        private System.Windows.Forms.BindingSource srcEquity;
         private System.Windows.Forms.DataGridViewTextBoxColumn TS;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartEquity;

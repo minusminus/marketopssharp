@@ -13,15 +13,10 @@ namespace MarketOps.Controls.MonteCarlo
         }
         public void LoadData(List<MonteCarloStreakData> equity)
         {
-            FillBindingSource(equity);
-        }
-
-        private void FillBindingSource(List<MonteCarloStreakData> streaks)
-        {
-            srcStreaks.Clear();
-            if (streaks.Count == 0) return;
-            int totalCount = streaks.Sum(x => x.Count);
-            streaks.ForEach(v => srcStreaks.Add(new MonteCarloStreakDataMapper(v, totalCount)));
+            int totalCount = equity.Sum(x => x.Count);
+            dbgStreaks.DataSource = equity
+                .Select(x => new MonteCarloStreakDataMapper(x, totalCount))
+                .ToList();
         }
     }
 }

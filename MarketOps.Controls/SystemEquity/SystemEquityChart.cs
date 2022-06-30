@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using MarketOps.SystemData.Types;
 
@@ -13,18 +14,11 @@ namespace MarketOps.Controls.SystemEquity
 
         public void LoadData(List<SystemValue> equity)
         {
-            FillBindingSource(equity);
-            BindChartData();
-        }
-
-        private void FillBindingSource(List<SystemValue> equity)
-        {
-            srcEquity.Clear();
-            equity.ForEach(v => srcEquity.Add(new SystemValueMapper(v)));
-        }
-
-        private void BindChartData()
-        {
+            var data = equity
+                .Select(x => new SystemValueMapper(x))
+                .ToList();
+            chartEquity.DataSource = data;
+            dbgEquity.DataSource = data;
             chartEquity.DataBind();
         }
     }

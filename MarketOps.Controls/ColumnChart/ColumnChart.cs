@@ -12,20 +12,8 @@ namespace MarketOps.Controls.ColumnChart
 
         public void LoadData(List<ColumnChartData> data, string seriesTooltip)
         {
-            FillBindingSource(data);
-            BindChartData();
+            chartColumns.DataSource = data;
             chartColumns.Series["seriesColumns"].ToolTip = seriesTooltip;
-        }
-
-        private void FillBindingSource(List<ColumnChartData> data)
-        {
-            srcColumns.Clear();
-            data.ForEach(v => srcColumns.Add(v));
-        }
-
-        private void BindChartData()
-        {
-            chartColumns.DataBind();
         }
     }
 }

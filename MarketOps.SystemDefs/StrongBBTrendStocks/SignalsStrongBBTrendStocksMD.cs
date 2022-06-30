@@ -28,7 +28,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
         private readonly SignalGeneratorMD _signalGenerator;
-        private readonly PositionManager _positionManager;
+        private readonly PositionManagerMD _positionManager;
 
         private readonly MultiStocksData _stocks;
         private readonly int _maxRequiredLongBackBufferLength;
@@ -45,7 +45,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             _dataProvider = dataProvider;
             _systemExecutionLogger = systemExecutionLogger;
             _signalGenerator = new SignalGeneratorMD(DataRangeShort, signalVolumeCalculator, tickAligner, tickAdder);
-            _positionManager = new PositionManager();
+            _positionManager = new PositionManagerMD();
 
             _maxRequiredLongBackBufferLength = bbPeriod; //Math.Max(bbPeriod, atrPeriod);
             _maxRequiredShortBackBufferLength = atrPeriod;
@@ -83,7 +83,6 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
         {
             //ManageCurrentPositions(ts, systemState);
 
-            //if (!ts.MonthEndsInCurrentWeek()) return new List<Signal>();
             var signals = GenerateSignals(ts, systemState);
             //LogData(ts, systemState, signals);
             return signals;

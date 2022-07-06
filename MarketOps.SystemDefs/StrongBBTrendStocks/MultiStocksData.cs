@@ -13,6 +13,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
         public readonly StatBB[] StatsBB;
         public readonly StatBBTrendPositionLong[] StatsBBTrend;
         public readonly StatATR[] StatsATR;
+        public readonly StatHLChannel[] StatsHL;
         public readonly LongBBTrendInfo[] TrendInfo;
 
         public MultiStocksData(int length)
@@ -21,6 +22,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             StatsBB = new StatBB[length];
             StatsBBTrend = new StatBBTrendPositionLong[length];
             StatsATR = new StatATR[length];
+            StatsHL = new StatHLChannel[length];
             TrendInfo = Enumerable.Range(1, length).Select(i => new LongBBTrendInfo()).ToArray();
         }
     }

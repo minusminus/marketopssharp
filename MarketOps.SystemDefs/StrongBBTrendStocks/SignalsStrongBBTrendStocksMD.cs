@@ -20,6 +20,8 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     /// </summary>
     internal class SignalsStrongBBTrendStocksMD : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
+        private const int HLChannelPeriod = 50;
+
         private const int MonthlyTrendStopMinOfN = 5;
         private const StockDataRange DataRangeLong = StockDataRange.Monthly;
         private const StockDataRange DataRangeShort = StockDataRange.Daily;
@@ -48,7 +50,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             _positionManager = new PositionManagerMD();
 
             _maxRequiredLongBackBufferLength = bbPeriod; //Math.Max(bbPeriod, atrPeriod);
-            _maxRequiredShortBackBufferLength = atrPeriod;
+            _maxRequiredShortBackBufferLength = Math.Max(atrPeriod, HLChannelPeriod);
             _stocks = new MultiStocksData(_stocksNames.Length);
             InitializeStocksData(bbPeriod, bbSigmaWidth, MonthlyTrendStopMinOfN, atrPeriod);
         }
@@ -101,6 +103,9 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
                 StockStat statATR = new StatATR("")
                     .SetParam(StatATRParams.Period, new MOParamInt() { Value = atrPeriod });
                 _stocks.StatsATR[i] = (StatATR)statATR;
+                StockStat statHL = new StatHLChannel("")
+                    .SetParam(StatHLChannelParams.Period, new MOParamInt() { Value = HLChannelPeriod });
+                _stocks.StatsHL[i] = (StatHLChannel)statHL;
             }
         }
 

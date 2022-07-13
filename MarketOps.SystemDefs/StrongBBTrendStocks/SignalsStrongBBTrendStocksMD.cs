@@ -21,6 +21,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     internal class SignalsStrongBBTrendStocksMD : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private const int HLChannelPeriod = 50;
+        private const int LastNTicksHMax = 6;
 
         private const int MonthlyTrendStopMinOfN = 5;
         private const StockDataRange DataRangeLong = StockDataRange.Monthly;
@@ -65,7 +66,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
                         {
                             stock = def,
                             dataRange = DataRangeShort,
-                            stats = new List<StockStat>() { _stocks.StatsATR[i] }
+                            stats = new List<StockStat>() { _stocks.StatsATR[i], _stocks.StatsHL[i] }
                         };
                     })
                     .Concat(_stocks.Stocks
@@ -133,6 +134,10 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             if (!StockInMonthlyLongPosition(stockIndex, ts)) return null;
             if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeShort, ts, _maxRequiredShortBackBufferLength, out StockPricesData dataShort, out int indexShort)) return null;
             //if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _maxRequiredLongBackBufferLength, out StockPricesData dataLong, out int indexLong)) return null;
+
+            if (!HFallsInLastTicks(dataShort, indexShort)) return null;
+            if (!ChannelMaxInLastNTicks(dataShort, indexShort, _stocks.StatsHL[stockIndex], LastNTicksHMax)) return null;
+
             return _signalGenerator.Generate(_stocks.Stocks[stockIndex], ts, systemState, dataShort, indexShort);
         }
 
@@ -143,6 +148,22 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             _dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _stocks.StatsBBTrend[stockIndex].BackBufferLength, out _, out int indexLong)
                 ? (_stocks.StatsBBTrend[stockIndex].Data(0)[indexLong - _stocks.StatsBBTrend[stockIndex].BackBufferLength] == 1.0f)
                 : false;
+
+        private bool HFallsInLastTicks(StockPricesData data, int index)
+        {
+            if ((data.H[index] <= data.H[index - 1]) && (data.H[index - 1] <= data.H[index - 2])) return true;
+            if ((data.H[index] <= data.H[index - 1]) && (data.H[index - 1] <= data.H[index - 3]) && (data.H[index - 2] <= data.H[index - 3])) return true;
+            if ((data.H[index] <= data.H[index - 2]) && (data.H[index - 2] <= data.H[index - 3]) && (data.H[index - 1] <= data.H[index - 3])) return true;
+            return false;
+        }
+
+        private bool ChannelMaxInLastNTicks(StockPricesData data, int index, StatHLChannel hlChannel, int n)
+        {
+            float currentHMaxValue = hlChannel.Data(StatHLChannelData.H)[index - hlChannel.BackBufferLength];
+            for (int i = 1; i <= n; i++)
+                if (data.H[index - i] >= currentHMaxValue) return true;
+            return false;
+        }
 
         private void LogData(DateTime ts, SystemState systemState, List<Signal> signals)
         {

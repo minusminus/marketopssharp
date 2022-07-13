@@ -27,21 +27,8 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
             _tickAdder = tickAdder;
         }
 
-        public Signal Generate(StockDefinition stock, DateTime ts, SystemState systemState, StockPricesData data, int index)
-        {
-            if (HFallsInLastTicks(data, index))
-                return CreateSignal(stock, ts, PositionDir.Long, systemState, GetEntryPrice(stock.Type, ts, data, index), GetInitialStop(stock.Type, ts, data, index));
-
-            return null;
-        }
-
-        private bool HFallsInLastTicks(StockPricesData data, int index)
-        {
-            if ((data.H[index] <= data.H[index - 1]) && (data.H[index - 1] <= data.H[index - 2])) return true;
-            if ((data.H[index] <= data.H[index - 1]) && (data.H[index - 1] <= data.H[index - 3]) && (data.H[index - 2] <= data.H[index - 3])) return true;
-            if ((data.H[index] <= data.H[index - 2]) && (data.H[index - 2] <= data.H[index - 3]) && (data.H[index - 1] <= data.H[index - 3])) return true;
-            return false;
-        }
+        public Signal Generate(StockDefinition stock, DateTime ts, SystemState systemState, StockPricesData data, int index) => 
+            CreateSignal(stock, ts, PositionDir.Long, systemState, GetEntryPrice(stock.Type, ts, data, index), GetInitialStop(stock.Type, ts, data, index));
 
         private Signal CreateSignal(StockDefinition stock, DateTime ts, PositionDir dir, SystemState systemState, float entryPrice, float initialStopPrice)
         {

@@ -14,7 +14,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     public class StrongBBTrendStocksMD : SystemDefinition
     {
         private const int TrailingStopTicksBelow = 2;
-        private const int TrailingStopMinOfL = 5;
+        private const int TrailingStopMinOfL = 10;
 
         private readonly IStockDataProvider _dataProvider;
         private readonly ISystemDataLoader _dataLoader;

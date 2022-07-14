@@ -107,6 +107,15 @@ namespace MarketOps.SystemData.Extensions
             });
         }
 
+        public static void CalcCurrentCapitalUsage(this SystemState systemState, DateTime ts)
+        {
+            systemState.EquityCapitalUsage.Add(new SystemValue()
+            {
+                Value = SystemCapitalUsageCalculator.Calc(systemState),
+                TS = ts
+            });
+        }
+
         public static float CalculateCommission(this SystemState systemState, ICommission commission, StockType stockType, float volume, float price)
         {
             return commission.Calculate(stockType, volume, price);

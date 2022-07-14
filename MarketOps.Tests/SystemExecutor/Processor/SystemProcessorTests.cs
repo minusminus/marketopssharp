@@ -78,6 +78,8 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.EquityCapitalUsage.Count.ShouldBe(PricesCount);
+            _systemState.EquityCapitalUsage.All(x => x.Value == 0).ShouldBeTrue();
             _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.DidNotReceiveWithAnyArgs().CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
@@ -94,6 +96,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.EquityCapitalUsage.Count.ShouldBe(PricesCount);
             _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
@@ -113,6 +116,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1 + 1);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.EquityCapitalUsage.Count.ShouldBe(PricesCount);
             _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks + expectedClosedPositionTicks - 2).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
@@ -128,6 +132,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.PositionsClosed.Count.ShouldBe(0);
             _systemState.Equity.Count.ShouldBe(PricesCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.EquityCapitalUsage.Count.ShouldBe(PricesCount);
             _systemState.LastProcessedTS.Equals(LastDate);
             _mmPositionCloseCalculator.ReceivedWithAnyArgs(expectedPositionTicks - 1).CalculateCloseMode(default, default);
             _stockStatMock.CalculateCallCount.ShouldBe(1);
@@ -146,6 +151,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.Equity.Count.ShouldBe(expectedEquityCount);
             _systemState.Equity.First().Value.ShouldBe(equityFirstValue);
             _systemState.Equity.Skip(1).All(x => x.Value == finalCashValue).ShouldBeTrue();
+            _systemState.EquityCapitalUsage.Count.ShouldBe(expectedEquityCount);
             _systemState.LastProcessedTS.Equals(LastDate);
         }
 
@@ -160,6 +166,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _systemState.ClosedPositionsEquity.Count.ShouldBe(1);
             _systemState.Equity.Count.ShouldBe(expectedEquityCount);
             _systemState.Equity.All(x => x.Value == InitialCash).ShouldBeTrue();
+            _systemState.EquityCapitalUsage.Count.ShouldBe(expectedEquityCount);
             _systemState.LastProcessedTS.Equals(LastDate);
         }
 

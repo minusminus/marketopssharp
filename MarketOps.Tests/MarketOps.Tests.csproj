@@ -152,6 +152,7 @@
     <Compile Include="SystemData\Extensions\FloatExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionDirExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\PositionExtensionsTests.cs" />
+    <Compile Include="SystemData\Extensions\SystemCapitalUsageCalculatorTests.cs" />
     <Compile Include="SystemData\Extensions\SystemStateExtensionsTests.cs" />
     <Compile Include="SystemData\Extensions\SystemValueCalculatorTests.cs" />
     <Compile Include="SystemExecutor\Commission\CommissionNoneTests.cs" />

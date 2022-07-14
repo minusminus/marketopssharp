@@ -113,6 +113,7 @@ namespace MarketOps.SystemExecutor.Processor
             RecalculateStops(leadingPricesData.TS[leadingIndex], systemState);
             UpdateActivePositionsTrailingStopData(leadingPricesData.TS[leadingIndex], systemState);
             CalculateCurrentSystemValue(leadingPricesData.TS[leadingIndex], systemState);
+            CalculateCurrentCapitalUsage(leadingPricesData.TS[leadingIndex], systemState);
             UpdateLastProcessedTS(leadingPricesData.TS[leadingIndex], systemState);
         }
 
@@ -208,6 +209,11 @@ namespace MarketOps.SystemExecutor.Processor
         private void CalculateCurrentSystemValue(DateTime ts, SystemState systemState)
         {
             systemState.CalcCurrentValue(ts, _dataLoader);
+        }
+
+        private void CalculateCurrentCapitalUsage(DateTime ts, SystemState systemState)
+        {
+            systemState.CalcCurrentCapitalUsage(ts);
         }
 
         private void UpdateLastProcessedTS(DateTime ts, SystemState systemState)

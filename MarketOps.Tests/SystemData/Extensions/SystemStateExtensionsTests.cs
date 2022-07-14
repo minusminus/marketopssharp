@@ -312,6 +312,29 @@ namespace MarketOps.Tests.SystemData.Extensions
             _testObj.Equity[2].TS.ShouldBe(CurrentTS2);
         }
 
+        [Test]
+        public void CalcCurrentCapitalUsage_NoActivePositions__Calculates0()
+        {
+            _testObj.CalcCurrentCapitalUsage(CurrentTS);
+
+            _testObj.EquityCapitalUsage.Count.ShouldBe(1);
+            _testObj.EquityCapitalUsage[0].Value.ShouldBe(0);
+            _testObj.EquityCapitalUsage[0].TS.ShouldBe(CurrentTS);
+        }
+
+        [Test]
+        public void CalcCurrentCapitalUsage_WithActivePositions__Calculates0()
+        {
+            _testObj.PositionsActive.Add(CreatePosition(PositionDir.Long, Price1, Vol1));
+            _testObj.Cash -= Price1 * Vol1;
+
+            _testObj.CalcCurrentCapitalUsage(CurrentTS);
+
+            _testObj.EquityCapitalUsage.Count.ShouldBe(1);
+            _testObj.EquityCapitalUsage[0].Value.ShouldBe((Price1 * Vol1) / CashValue);
+            _testObj.EquityCapitalUsage[0].TS.ShouldBe(CurrentTS);
+        }
+
         [TestCase(StockName1, 0)]
         [TestCase(StockName2, -1)]
         public void FindActivePositionIndex__ReturnsCorrectly(string stockName, int expectedIndex)

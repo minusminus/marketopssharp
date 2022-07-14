@@ -49,6 +49,7 @@
     <Compile Include="Extensions\MoneyValueExtensions.cs" />
     <Compile Include="Extensions\PositionDirExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
+    <Compile Include="Extensions\SystemCapitalUsageCalculator.cs" />
     <Compile Include="Extensions\SystemStateExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />
     <Compile Include="Interfaces\ICommission.cs" />

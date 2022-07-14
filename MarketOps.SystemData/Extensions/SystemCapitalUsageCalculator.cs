@@ -17,6 +17,6 @@ namespace MarketOps.SystemData.Extensions
 
         public static float SumActivePositonsOpeningValues(SystemState system) =>
             system.PositionsActive
-                .Sum(p => p.OpenValue());
+                .Sum(p => p.OpenValue() + p.OpenCommission);
     }
 }

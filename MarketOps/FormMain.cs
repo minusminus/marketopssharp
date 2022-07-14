@@ -321,8 +321,8 @@ namespace MarketOps
 
         private void ShowEquityCharts(SystemState systemState)
         {
-            chartEquity.LoadData(systemState.Equity);
-            chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity);
+            chartEquity.LoadData(systemState.Equity, systemState.EquityCapitalUsage);
+            chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity, null);
         }
 
         private void ShowRCharts(SystemState systemState, SystemStateSummary summary)

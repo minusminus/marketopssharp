@@ -77,6 +77,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="BBTrendRecognizer\BBTrendRecognizerTests.cs" />
     <Compile Include="BBTrendRecognizer\StatBBMock.cs" />
     <Compile Include="ModNCounterTests.cs" />

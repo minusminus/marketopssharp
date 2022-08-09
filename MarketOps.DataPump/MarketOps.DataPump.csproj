@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Bossa\DailyDataFileIterator.cs" />
     <Compile Include="Bossa\DailyDataFileLineToStockData.cs" />
     <Compile Include="Bossa\DataFileDownloader.cs" />

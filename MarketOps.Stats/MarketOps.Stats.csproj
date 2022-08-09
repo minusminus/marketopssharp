@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Calculators\ATR.cs" />
     <Compile Include="Calculators\AvgToStdDevPercent.cs" />
     <Compile Include="Calculators\BBData.cs" />

@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="DataTableSelector.cs" />
     <Compile Include="PgBaseProvider.cs" />
     <Compile Include="PgDataExtensions.cs" />

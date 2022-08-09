@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>Properties\VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="BBTrendFunds\BBTrendFunds.cs" />
     <Compile Include="BBTrendFunds\BBTrendFundsData.cs" />
     <Compile Include="BBTrendFunds\BBTrendFundsDataCalculator.cs" />

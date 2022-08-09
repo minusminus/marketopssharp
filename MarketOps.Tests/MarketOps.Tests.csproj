@@ -90,6 +90,9 @@
     <Compile Include="..\MarketOps\DirectoryUtils.cs">
       <Link>DataPump\DirectoryUtils.cs</Link>
     </Compile>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Controls\PositionChangeCheckerTests.cs" />
     <Compile Include="DataGen\DataGenerators\DataAggregatorTests.cs" />
     <Compile Include="DataProvider.Pg\Bossa\PgDataPumpProviderTests.cs" />

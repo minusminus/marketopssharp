@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Commission\CommissionNone.cs" />
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
     <Compile Include="Extensions\VolumeExtensions.cs" />

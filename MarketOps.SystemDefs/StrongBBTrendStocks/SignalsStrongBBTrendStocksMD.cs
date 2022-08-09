@@ -21,7 +21,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     internal class SignalsStrongBBTrendStocksMD : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private const int HLChannelPeriod = 50;
-        private const int LastNTicksHMax = 6;
+        private const int LastNTicksHMax = 10;
 
         private const int MonthlyTrendStopMinOfN = 5;
         private const StockDataRange DataRangeLong = StockDataRange.Monthly;

@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="CummulativeProfit.cs" />
     <Compile Include="DrawDowns\DrawDownsCalculator.cs" />
     <Compile Include="DrawDowns\SystemDrawDownsCalculator.cs" />

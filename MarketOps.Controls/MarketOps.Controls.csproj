@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="ChartAreaFactory.cs" />
     <Compile Include="ColumnChart\ColumnChartData.cs" />
     <Compile Include="ColumnChart\ColumnChart.cs">

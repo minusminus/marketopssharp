@@ -35,7 +35,6 @@ namespace MarketOps.SystemDefs.BBTrendFunds
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = null;
         }
     }
 }

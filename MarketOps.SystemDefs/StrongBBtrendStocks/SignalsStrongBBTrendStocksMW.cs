@@ -37,13 +37,13 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         public SignalsStrongBBTrendStocksMW(string stockName, int bbPeriod, float bbSigmaWidth, int atrPeriod,
             ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger,
-            IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
+            IMMSignalVolume signalVolumeCalculator, IMMPositionCloseCalculator positionCloseCalculator, ITickAligner tickAligner)
         {
             _stocksNames = new string[] { stockName };
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
             _systemExecutionLogger = systemExecutionLogger;
-            _signalGenerator = new SignalGenerator(DataRangeShort, signalVolumeCalculator, tickAligner);
+            _signalGenerator = new SignalGenerator(DataRangeShort, signalVolumeCalculator, positionCloseCalculator, tickAligner);
             _positionManager = new PositionManager();
 
             _maxRequiredLongBackBufferLength = bbPeriod; //Math.Max(bbPeriod, atrPeriod);

@@ -45,16 +45,15 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
                 _dataLoader, _dataProvider, _systemExecutionLogger,
                 new MMSignalVolumeForSystemValuePercent(0.05f, _commission, _dataLoader),
                 //new MMSignalVolumeByTakenRiskPercent(0.01f, _commission, _dataLoader),
+                new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps),
                 _gpwTickOps
                 );
-            MMTrailingStopMinMaxOfN trailingStopCalculator = new MMTrailingStopMinMaxOfN(TrailingStopMinOfL, 0, TrailingStopTicksBelow, _dataLoader, _gpwTickOps);
 
             _dataDefinitionProvider = signals;
             _signalGeneratorOnOpen = null;
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = trailingStopCalculator;// null;
         }
     }
 }

@@ -41,7 +41,6 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = null;
         }
     }
 }

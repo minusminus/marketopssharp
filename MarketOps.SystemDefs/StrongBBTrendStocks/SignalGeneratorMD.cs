@@ -16,13 +16,16 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         private readonly StockDataRange _signalDataRange;
         private readonly IMMSignalVolume _signalVolumeCalculator;
+        private readonly IMMPositionCloseCalculator _positionCloseCalculator;
         private readonly ITickAligner _tickAligner;
         private readonly ITickAdder _tickAdder;
 
-        public SignalGeneratorMD(StockDataRange signalDataRange, IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner, ITickAdder tickAdder)
+        public SignalGeneratorMD(StockDataRange signalDataRange, IMMSignalVolume signalVolumeCalculator, IMMPositionCloseCalculator positionCloseCalculator,
+            ITickAligner tickAligner, ITickAdder tickAdder)
         {
             _signalDataRange = signalDataRange;
             _signalVolumeCalculator = signalVolumeCalculator;
+            _positionCloseCalculator = positionCloseCalculator;
             _tickAligner = tickAligner;
             _tickAdder = tickAdder;
         }
@@ -45,7 +48,8 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
                     InitialStopMode = SignalInitialStopMode.OnPrice,
                     InitialStopValue = initialStopPrice,
                     ReversePosition = false,
-                    Volume = volume
+                    Volume = volume,
+                    PositionCloseCalculator = _positionCloseCalculator
                 }
                 : null;
         }

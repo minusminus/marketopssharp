@@ -33,7 +33,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
         private readonly StockStat _statBB, _statATR;
 
         public SignalsLongBBTrendStocks(string stockName, StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod, 
-            ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator,
+            ISystemDataLoader dataLoader, IStockDataProvider dataProvider, IMMSignalVolume signalVolumeCalculator, IMMPositionCloseCalculator positionCloseCalculator,
             ITickAligner tickAligner, ISystemExecutionLogger systemExecutionLogger)
         {
             _dataRange = dataRange;
@@ -42,7 +42,7 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
             _systemExecutionLogger = systemExecutionLogger;
-            _signalGenerator = new SignalGenerator(dataRange, signalVolumeCalculator, tickAligner);
+            _signalGenerator = new SignalGenerator(dataRange, signalVolumeCalculator, positionCloseCalculator, tickAligner);
             _positionManager = new PositionManager();
 
             _stock = _dataProvider.GetStockDefinition(stockName);

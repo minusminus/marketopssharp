@@ -3,8 +3,8 @@ using MarketOps.StockData.Types;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using System;
 using System.Collections.Generic;
+using System;
 
 namespace MarketOps.SystemExecutor.Processor
 {
@@ -20,7 +20,6 @@ namespace MarketOps.SystemExecutor.Processor
         private readonly ISignalGeneratorOnClose _signalGeneratorOnClose;
         private readonly ICommission _commission;
         private readonly ISlippage _slippage;
-        private readonly IMMPositionCloseCalculator _mmPositionCloseCalculator;
         private readonly SignalsProcessor _signalsProcessor;
         private readonly PositionsCloser _positionCloser;
 
@@ -31,8 +30,7 @@ namespace MarketOps.SystemExecutor.Processor
             ISignalGeneratorOnOpen signalGeneratorOnOpen,
             ISignalGeneratorOnClose signalGeneratorOnClose,
             ICommission commission,
-            ISlippage slippage,
-            IMMPositionCloseCalculator mmPositionCloseCalculator)
+            ISlippage slippage)
         {
             _dataProvider = dataProvider;
             _dataLoader = dataLoader;
@@ -41,7 +39,6 @@ namespace MarketOps.SystemExecutor.Processor
             _signalGeneratorOnClose = signalGeneratorOnClose;
             _commission = commission;
             _slippage = slippage;
-            _mmPositionCloseCalculator = mmPositionCloseCalculator;
             _signalsProcessor = new SignalsProcessor(_dataLoader, _commission, _slippage);
             _positionCloser = new PositionsCloser(_dataLoader, _commission, _slippage);
         }
@@ -60,24 +57,20 @@ namespace MarketOps.SystemExecutor.Processor
             if (systemConfiguration.dataDefinition.stocks.Count == 0) throw new Exception("No stocks defined.");
         }
 
-        private SystemConfiguration GetSystemConfiguration(DateTime tsFrom, DateTime tsTo)
-        {
-            return new SystemConfiguration()
+        private SystemConfiguration GetSystemConfiguration(DateTime tsFrom, DateTime tsTo) => 
+            new SystemConfiguration()
             {
                 tsFrom = tsFrom,
                 tsTo = tsTo,
                 dataDefinition = _dataDefinitionProvider.GetDataDefinition()
             };
-        }
 
-        private void PreloadAndCalcStockData(SystemConfiguration systemConfiguration)
-        {
-            new StocksDataPreloader(_dataProvider, _dataLoader).PreloadDataAndPrecalcStats(
-                systemConfiguration.tsFrom,
-                systemConfiguration.tsTo,
-                StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.stocks)
-                );
-        }
+        private void PreloadAndCalcStockData(SystemConfiguration systemConfiguration) =>
+            new StocksDataPreloader(_dataProvider, _dataLoader)
+                .PreloadDataAndPrecalcStats(
+                    systemConfiguration.tsFrom,
+                    systemConfiguration.tsTo,
+                    StocksBackBufferAggregator.Calculate(systemConfiguration.dataDefinition.stocks));
 
         private void ProcessConfiguredSystem(SystemConfiguration systemConfiguration, SystemState systemState)
         {
@@ -141,80 +134,64 @@ namespace MarketOps.SystemExecutor.Processor
             RemoveSignalsOfType(systemState.Signals, SignalType.EnterOnPrice);
         }
 
-        private void RemoveSignalsOfType(List<Signal> signals, SignalType toRemove)
-        {
+        private void RemoveSignalsOfType(List<Signal> signals, SignalType toRemove) => 
             signals.RemoveAll(s => s.Type == toRemove);
-        }
 
         private void GenerateSignalsOnOpen(DateTime ts, int leadingIndex, SystemState systemState)
         {
             if (_signalGeneratorOnOpen == null) return;
-            systemState.Signals.AddRange(_signalGeneratorOnOpen.GenerateOnOpen(ts, leadingIndex, systemState));
+            systemState.Signals
+                .AddRange(_signalGeneratorOnOpen.GenerateOnOpen(ts, leadingIndex, systemState));
         }
 
         private void GenerateSignalsOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             if (_signalGeneratorOnClose == null) return;
-            systemState.Signals.AddRange(_signalGeneratorOnClose.GenerateOnClose(ts, leadingIndex, systemState));
+            systemState.Signals
+                .AddRange(_signalGeneratorOnClose.GenerateOnClose(ts, leadingIndex, systemState));
         }
 
-        private void ProcessStopsOnOpen(DateTime ts, SystemState systemState)
-        {
+        private void ProcessStopsOnOpen(DateTime ts, SystemState systemState) => 
             _positionCloser.Process(ts, systemState,
                 ClosingPositionSelector.OnOpen,
                 ClosePriceSelector.OnOpen);
-        }
 
-        private void ProcessStopsOnClose(DateTime ts, SystemState systemState)
-        {
+        private void ProcessStopsOnClose(DateTime ts, SystemState systemState) => 
             _positionCloser.Process(ts, systemState,
                 ClosingPositionSelector.OnClose,
                 ClosePriceSelector.OnClose);
-        }
 
-        private void ProcessStopsOnPrice(DateTime ts, SystemState systemState)
-        {
+        private void ProcessStopsOnPrice(DateTime ts, SystemState systemState) => 
             _positionCloser.Process(ts, systemState,
                 ClosingPositionSelector.OnStopHit,
                 ClosePriceSelector.OnStopHit);
-        }
 
-        private void ProcessStopsOnPriceInFirstTick(DateTime ts, SystemState systemState)
-        {
+        private void ProcessStopsOnPriceInFirstTick(DateTime ts, SystemState systemState) => 
             _positionCloser.Process(ts, systemState,
                 ClosingPositionSelector.OnStopHitInFirstTick,
                 ClosePriceSelector.OnStopHit);
-        }
 
-        private void UpdateActivePositionsTicksCount(SystemState systemState)
-        {
-            systemState.PositionsActive.ForEach(pos => pos.TicksActive++);
-        }
+        private void UpdateActivePositionsTicksCount(SystemState systemState) =>
+            systemState.PositionsActive
+                .ForEach(pos => pos.TicksActive++);
 
-        private void UpdateActivePositionsTrailingStopData(DateTime ts, SystemState systemState)
-        {
-            systemState.PositionsActive.ForEach(pos =>
-            {
-                if (pos.CloseMode == PositionCloseMode.OnStopHit)
-                    pos.TrailingStop.Add(new PositionTrailingStopData() { TS = ts, Value = pos.CloseModePrice });
-            });
-        }
+        private void UpdateActivePositionsTrailingStopData(DateTime ts, SystemState systemState) =>
+            systemState.PositionsActive
+                .ForEach(pos =>
+                {
+                    if (pos.CloseMode == PositionCloseMode.OnStopHit)
+                        pos.TrailingStop.Add(new PositionTrailingStopData() { TS = ts, Value = pos.CloseModePrice });
+                });
 
-        private void RecalculateStops(DateTime ts, SystemState systemState)
-        {
-            if (_mmPositionCloseCalculator == null) return;
-            systemState.PositionsActive.ForEach(pos => _mmPositionCloseCalculator.CalculateCloseMode(pos, ts));
-        }
+        private void RecalculateStops(DateTime ts, SystemState systemState) => 
+            systemState.PositionsActive
+                .ForEach(pos => pos.EntrySignal.PositionCloseCalculator?.CalculateCloseMode(pos, ts));
 
-        private void CalculateCurrentSystemValue(DateTime ts, SystemState systemState)
-        {
+        private void CalculateCurrentSystemValue(DateTime ts, SystemState systemState) => 
             systemState.CalcCurrentValue(ts, _dataLoader);
-        }
 
-        private void CalculateCurrentCapitalUsage(DateTime ts, SystemState systemState)
-        {
+        private void CalculateCurrentCapitalUsage(DateTime ts, SystemState systemState) => 
             systemState.CalcCurrentCapitalUsage(ts);
-        }
 
         private void UpdateLastProcessedTS(DateTime ts, SystemState systemState)
         {

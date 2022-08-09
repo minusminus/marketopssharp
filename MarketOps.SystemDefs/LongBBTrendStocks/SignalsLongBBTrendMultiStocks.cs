@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using MarketOps.SystemData.Interfaces;
-using MarketOps.StockData.Types;
+﻿using MarketOps.Stats.Stats;
 using MarketOps.StockData.Extensions;
-using MarketOps.Stats.Stats;
 using MarketOps.StockData.Interfaces;
-using MarketOps.SystemData.Types;
-using System.Linq;
+using MarketOps.StockData.Types;
 using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace MarketOps.SystemDefs.LongBBTrendStocks
 {
@@ -34,13 +34,13 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
 
         public SignalsLongBBTrendMultiStocks(StockDataRange dataRange, int bbPeriod, float bbSigmaWidth, int atrPeriod,
             ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger,
-            IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
+            IMMSignalVolume signalVolumeCalculator, IMMPositionCloseCalculator positionCloseCalculator, ITickAligner tickAligner)
         {
             _dataRange = dataRange;
             _dataLoader = dataLoader;
             _dataProvider = dataProvider;
             _systemExecutionLogger = systemExecutionLogger;
-            _signalGenerator = new SignalGenerator(dataRange, signalVolumeCalculator, tickAligner);
+            _signalGenerator = new SignalGenerator(dataRange, signalVolumeCalculator, positionCloseCalculator, tickAligner);
             _positionManager = new PositionManager();
 
             _maxRequiredBackBufferLength = Math.Max(bbPeriod, atrPeriod);

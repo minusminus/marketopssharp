@@ -1,16 +1,16 @@
-﻿using MarketOps.SystemExecutor.Processor;
+﻿using MarketOps.StockData.Interfaces;
+using MarketOps.StockData.Types;
+using MarketOps.SystemData.Extensions;
+using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemData.Types;
+using MarketOps.SystemExecutor.Processor;
+using MarketOps.Tests.SystemExecutor.Mocks;
+using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
-using NSubstitute;
-using MarketOps.StockData.Interfaces;
-using MarketOps.SystemData.Interfaces;
-using System;
-using MarketOps.StockData.Types;
 using System.Collections.Generic;
 using System.Linq;
-using MarketOps.SystemData.Extensions;
-using MarketOps.SystemData.Types;
-using MarketOps.Tests.SystemExecutor.Mocks;
+using System;
 
 namespace MarketOps.Tests.SystemExecutor.Processor
 {
@@ -176,7 +176,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
             _signalGeneratorOnOpen.GenerateOnOpen(default, default, default).ReturnsForAnyArgs(new List<Signal>());
             _signalGeneratorOnClose.GenerateOnClose(default, default, default).ReturnsForAnyArgs(new List<Signal>());
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, withGeneratorOnOpen ? _signalGeneratorOnOpen : null, withGeneratorOnClose ? _signalGeneratorOnClose : null, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, withGeneratorOnOpen ? _signalGeneratorOnOpen : null, withGeneratorOnClose ? _signalGeneratorOnClose : null, _commission, _slippage);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             CheckEmptySystemState();
         }
@@ -207,13 +207,14 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                         Direction = positionDir,
                         ReversePosition = false,
                         Price = price,
-                        Volume = 1
+                        Volume = 1,
+                        PositionCloseCalculator = _mmPositionCloseCalculator
                     }
                 };
                 return new List<Signal>();
             });
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, _signalGeneratorOnOpen, null, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, _signalGeneratorOnOpen, null, _commission, _slippage);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
                 CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
@@ -247,13 +248,14 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                         Direction = positionDir,
                         ReversePosition = false,
                         Price = price,
-                        Volume = 1
+                        Volume = 1,
+                        PositionCloseCalculator = _mmPositionCloseCalculator
                     }
                 };
                 return new List<Signal>();
             });
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
                 CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
@@ -287,13 +289,14 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                         Direction = positionDir,
                         ReversePosition = true,
                         Price = price,
-                        Volume = 1
+                        Volume = 1,
+                        PositionCloseCalculator = _mmPositionCloseCalculator
                     }
                 };
                 return new List<Signal>();
             });
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
                 CheckPositionOpenedSystemState(positionDir, expectedPrice, expectedPositionTicks);
@@ -323,7 +326,8 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                 Direction = positionDir,
                 ReversePosition = true,
                 Price = price,
-                Volume = 1
+                Volume = 1,
+                PositionCloseCalculator = _mmPositionCloseCalculator
             };
 
             _signalGeneratorOnClose.GenerateOnClose(default, default, default).ReturnsForAnyArgs(args =>
@@ -335,7 +339,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
 
             _systemState.Open(LastDate.AddDays(-PricesCount - 1), positionDir, StartingPrice, sig, _slippage, _commission);
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, _signalGeneratorOnClose, _commission, _slippage);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
                 CheckPositionReversedSystemState(expectedPositionDir, positionDir, expectedPrice, expectedPositionTicks, 3);
@@ -355,7 +359,6 @@ namespace MarketOps.Tests.SystemExecutor.Processor
         [TestCase(PositionDir.Short, StartingPrice - PriceRange - 1, true, StartingPrice, 3)]
         public void Process_StopHit(PositionDir positionDir, float stopPrice, bool expectedHit, float expectedStopPrice, int expectedPositionTicks)
         {
-            _systemState.Open(LastDate.AddDays(-PricesCount - 1), positionDir, StartingPrice, new Signal() { Stock = _stock, Volume = 1 }, _slippage, _commission);
             _mmPositionCloseCalculator
                 .WhenForAnyArgs(x => x.CalculateCloseMode(default, default))
                 .Do(args =>
@@ -365,8 +368,9 @@ namespace MarketOps.Tests.SystemExecutor.Processor
                     pos.CloseMode = PositionCloseMode.OnStopHit;
                     pos.CloseModePrice = stopPrice;
                 });
+            _systemState.Open(LastDate.AddDays(-PricesCount - 1), positionDir, StartingPrice, new Signal() { Stock = _stock, Volume = 1, PositionCloseCalculator = _mmPositionCloseCalculator }, _slippage, _commission);
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, null, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, null, _commission, _slippage);
             TestObj.Process(_systemState, LastDate.AddDays(-PricesCount), LastDate);
             if (expectedHit)
                 CheckPositionStopped(positionDir, StartingPrice, expectedStopPrice, expectedPositionTicks);
@@ -386,9 +390,9 @@ namespace MarketOps.Tests.SystemExecutor.Processor
         [TestCase(PositionDir.Short, StartingPrice - PriceRange - 1, true, StartingPrice)]
         public void Process_StopHitInFirstTick(PositionDir positionDir, float stopPrice, bool expectedHit, float expectedStopPrice)
         {
-            _systemState.Signals.Add(new Signal() { Type = SignalType.EnterOnOpen, Direction = positionDir, Stock = _stock, Volume = 1, InitialStopMode = SignalInitialStopMode.OnPrice, InitialStopValue = stopPrice });
+            _systemState.Signals.Add(new Signal() { Type = SignalType.EnterOnOpen, Direction = positionDir, Stock = _stock, Volume = 1, InitialStopMode = SignalInitialStopMode.OnPrice, InitialStopValue = stopPrice, PositionCloseCalculator = _mmPositionCloseCalculator });
 
-            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, null, _commission, _slippage, _mmPositionCloseCalculator);
+            TestObj = new SystemProcessor(_dataProvider, _dataLoader, _dataDefinitionProvider, null, null, _commission, _slippage);
             TestObj.Process(_systemState, LastDate, LastDate);
             if (expectedHit)
                 CheckPositionStopped(positionDir, StartingPrice, expectedStopPrice, 1, 1, InitialCash - positionDir.DirectionMultiplier() * (StartingPrice - expectedStopPrice));

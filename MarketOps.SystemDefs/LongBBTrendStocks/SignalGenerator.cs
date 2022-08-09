@@ -14,12 +14,14 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
     {
         private readonly StockDataRange _dataRange;
         private readonly IMMSignalVolume _signalVolumeCalculator;
+        private readonly IMMPositionCloseCalculator _positionCloseCalculator;
         private readonly ITickAligner _tickAligner;
 
-        public SignalGenerator(StockDataRange dataRange, IMMSignalVolume signalVolumeCalculator, ITickAligner tickAligner)
+        public SignalGenerator(StockDataRange dataRange, IMMSignalVolume signalVolumeCalculator, IMMPositionCloseCalculator positionCloseCalculator, ITickAligner tickAligner)
         {
             _dataRange = dataRange;
             _signalVolumeCalculator = signalVolumeCalculator;
+            _positionCloseCalculator = positionCloseCalculator;
             _tickAligner = tickAligner;
         }
 
@@ -64,7 +66,8 @@ namespace MarketOps.SystemDefs.LongBBTrendStocks
                         InitialStopMode = SignalInitialStopMode.OnPrice,
                         InitialStopValue = AlignDown(stock.Type, ts, currentClosePrice - currentAtr),
                         ReversePosition = false,
-                        Volume = volume
+                        Volume = volume,
+                        PositionCloseCalculator = _positionCloseCalculator
                     }
                 : null;
         }

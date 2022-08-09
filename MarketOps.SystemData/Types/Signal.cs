@@ -1,4 +1,5 @@
 ﻿using MarketOps.StockData.Types;
+using MarketOps.SystemData.Interfaces;
 using System.Collections.Generic;
 
 namespace MarketOps.SystemData.Types
@@ -18,6 +19,7 @@ namespace MarketOps.SystemData.Types
         public float Volume;
         public SignalInitialStopMode InitialStopMode;
         public float InitialStopValue;
+        public IMMPositionCloseCalculator PositionCloseCalculator;
         public bool Rebalance;
         public List<(StockDefinition stockDef, float balance)> NewBalance;
     }

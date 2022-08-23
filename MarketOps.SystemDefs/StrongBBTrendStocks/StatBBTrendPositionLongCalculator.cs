@@ -11,8 +11,8 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     /// </summary>
     internal static class StatBBTrendPositionLongCalculator
     {
-        private const float NoTrend = 0;
-        private const float InTrend = 1;
+        public const float NoTrend = 0;
+        public const float InTrend = 1;
 
         public static float[] Calculate(float[] dataC, float[] dataL, int bbPeriod, float bbSigmaWidth, int trailingStopMinOfN)
         {

@@ -22,6 +22,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
     {
         private const int HLChannelPeriod = 50;
         private const int LastNTicksHMax = 10;
+        private const int MonthlyTrendLengthEntryLimit = 6;
 
         private const int MonthlyTrendStopMinOfN = 5;
         private const StockDataRange DataRangeLong = StockDataRange.Monthly;
@@ -133,6 +134,7 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
         {
             if (PositionExists(stockIndex, systemState)) return null;
             if (!StockInMonthlyLongPosition(stockIndex, ts)) return null;
+            if (CurrentMonthlyTrendLength(stockIndex, ts) >= MonthlyTrendLengthEntryLimit) return null;
             if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeShort, ts, _maxRequiredShortBackBufferLength, out StockPricesData dataShort, out int indexShort)) return null;
             //if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _maxRequiredLongBackBufferLength, out StockPricesData dataLong, out int indexLong)) return null;
 
@@ -147,8 +149,21 @@ namespace MarketOps.SystemDefs.StrongBBTrendStocks
 
         private bool StockInMonthlyLongPosition(int stockIndex, DateTime ts) => 
             _dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _stocks.StatsBBTrend[stockIndex].BackBufferLength, out _, out int indexLong)
-                ? (_stocks.StatsBBTrend[stockIndex].Data(0)[indexLong - _stocks.StatsBBTrend[stockIndex].BackBufferLength] == 1.0f)
+                ? (_stocks.StatsBBTrend[stockIndex].Data(0)[indexLong - _stocks.StatsBBTrend[stockIndex].BackBufferLength] == StatBBTrendPositionLongCalculator.InTrend)
                 : false;
+
+        private int CurrentMonthlyTrendLength(int stockIndex, DateTime ts)
+        {
+            if (!_dataLoader.GetWithIndex(_stocks.Stocks[stockIndex].FullName, DataRangeLong, ts.FirstDayOfCurrentMonth(), _stocks.StatsBBTrend[stockIndex].BackBufferLength, out _, out int indexLong))
+                return 0;
+            int trendLength = 0;
+            for (int i = indexLong - _stocks.StatsBBTrend[stockIndex].BackBufferLength; i >= 0; i--)
+            {
+                if (_stocks.StatsBBTrend[stockIndex].Data(0)[i] == StatBBTrendPositionLongCalculator.NoTrend) break;
+                trendLength++;
+            }
+            return trendLength;
+        }
 
         private bool HFallsInLastTicks(StockPricesData data, int index)
         {

@@ -42,7 +42,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
         private int _truncateBalanceToNthPlace;// = 3;    //balance in range <0..1> - truncate to first place after comma
 
         private readonly string[] _fundsNames = { "PKO014",
-            "PKO008", "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO021",
+            "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO021",
             "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057",
             "PKO072", "PKO073", "PKO074", "PKO097", "PKO098", "PKO909",
             "PKO910", "PKO913", "PKO918", "PKO919", "PKO925"};

@@ -1,8 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using MarketOps.StockData.Types;
 
 namespace MarketOps.SystemData.Types
 {
+    public class PositionTrailingStopData
+    {
+        public DateTime TS;
+        public float Value;
+    }
+
     /// <summary>
     /// Position data.
     /// </summary>
@@ -16,6 +23,7 @@ namespace MarketOps.SystemData.Types
         public DateTime TSOpen;
         public float Open;
         public float OpenCommission;
+        public float EquityValueOnTickBeforeOpen;
         public DateTime TSClose;
         public float Close;
         public float CloseCommission;
@@ -23,5 +31,8 @@ namespace MarketOps.SystemData.Types
         public int TicksActive;
         public PositionCloseMode CloseMode;
         public float CloseModePrice;
+        public readonly List<PositionTrailingStopData> TrailingStop = new List<PositionTrailingStopData>();
+        public float R;
+        public float RProfit;
     }
 }

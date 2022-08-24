@@ -14,7 +14,8 @@ namespace MarketOps.StockData.Extensions
         /// <param name="original"></param>
         /// <param name="toMerge"></param>
         /// <returns></returns>
-        public static StockPricesData Merge(this StockPricesData original, StockPricesData toMerge) => new StockPricesDataMerger().Merge(original, toMerge);
+        public static StockPricesData Merge(this StockPricesData original, StockPricesData toMerge) => 
+            StockPricesDataMerger.Merge(original, toMerge);
 
         /// <summary>
         /// finds index of data by specified timestamp
@@ -23,7 +24,8 @@ namespace MarketOps.StockData.Extensions
         /// <param name="data"></param>
         /// <param name="ts"></param>
         /// <returns></returns>
-        public static int FindByTS(this StockPricesData data, DateTime ts) => Array.BinarySearch<DateTime>(data.TS, ts);
+        public static int FindByTS(this StockPricesData data, DateTime ts) => 
+            Array.BinarySearch<DateTime>(data.TS, ts);
 
         /// <summary>
         /// finds index of first data greater or equal to specified timestamp
@@ -88,6 +90,38 @@ namespace MarketOps.StockData.Extensions
                     return "ticks";
             }
             return "undefined";
+        }
+
+        /// <summary>
+        /// returns minimum L value in specified range (length elements from startIndex)
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static float MinOfL(this StockPricesData data, int startIndex, int length)
+        {
+            float min = data.L[startIndex];
+            for (int i = 1; i < length; i++)
+                if (data.L[startIndex - i] < min)
+                    min = data.L[startIndex - i];
+            return min;
+        }
+
+        /// <summary>
+        /// returns maximum H value in specified range (length elements from startIndex)
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static float MaxOfH(this StockPricesData data, int startIndex, int length)
+        {
+            float max = data.H[startIndex];
+            for (int i = 1; i < length; i++)
+                if (data.H[startIndex - i] > max)
+                    max = data.H[startIndex - i];
+            return max;
         }
     }
 }

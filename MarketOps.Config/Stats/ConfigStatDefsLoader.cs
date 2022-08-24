@@ -26,6 +26,8 @@ namespace MarketOps.Config.Stats
             };
             return JsonSerializer
                 .Deserialize<IEnumerable<ConfigStatDefinition>>(jsonConfig, serializerOptions)
+                .Where(x => !x.StatName.StartsWith("."))
+                .OrderBy(x => x.StatName)
                 .ToList();
         }
     }

@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>Properties\VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="BBTrendFunds\BBTrendFunds.cs" />
     <Compile Include="BBTrendFunds\BBTrendFundsData.cs" />
     <Compile Include="BBTrendFunds\BBTrendFundsDataCalculator.cs" />
@@ -58,6 +61,16 @@
     <Compile Include="BBTrendRecognizer\BBTrendRecognizer.cs" />
     <Compile Include="BBTrendRecognizer\BBTrendTypes.cs" />
     <Compile Include="BBTrend\SignalsBBTrend.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendFW20.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendInfo.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendMultiStocks.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendStocks.cs" />
+    <Compile Include="LongBBTrendStocks\LongBBTrendStocksParams.cs" />
+    <Compile Include="LongBBTrendStocks\MultiStocksData.cs" />
+    <Compile Include="LongBBTrendStocks\PositionManager.cs" />
+    <Compile Include="LongBBTrendStocks\SignalGenerator.cs" />
+    <Compile Include="LongBBTrendStocks\SignalsLongBBTrendMultiStocks.cs" />
+    <Compile Include="LongBBTrendStocks\SignalsLongBBTrendStocks.cs" />
     <Compile Include="ModNCounter.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMAParams.cs" />
@@ -76,9 +89,26 @@
     <Compile Include="SimplexStocks\SimplexStocksData.cs" />
     <Compile Include="SimplexStocks\SimplexStocksDataCalculator.cs" />
     <Compile Include="SimplexTools\TermBuilder.cs" />
+    <Compile Include="StrongBBTrendStocks\LongBBTrendInfo.cs" />
+    <Compile Include="StrongBBTrendStocks\MultiStocksData.cs" />
+    <Compile Include="StrongBBTrendStocks\PositionManager.cs" />
+    <Compile Include="StrongBBTrendStocks\PositionManagerMD.cs" />
+    <Compile Include="StrongBBTrendStocks\SignalGenerator.cs" />
+    <Compile Include="StrongBBTrendStocks\SignalGeneratorMD.cs" />
+    <Compile Include="StrongBBTrendStocks\SignalsStrongBBTrendStocksMD.cs" />
+    <Compile Include="StrongBBTrendStocks\SignalsStrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBTrendStocks\StatBBTrendPositionLong.cs" />
+    <Compile Include="StrongBBTrendStocks\StatBBTrendPositionLongCalculator.cs" />
+    <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksMD.cs" />
+    <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksMW.cs" />
+    <Compile Include="StrongBBTrendStocks\StrongBBTrendStocksParams.cs" />
     <Compile Include="SystemDataLoaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6B571F05-D6C9-489E-B432-77BC2410F460}</Project>
+      <Name>MarketOps.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
       <Project>{34199084-be88-45c5-84da-8a2d00ac9bd2}</Project>
       <Name>MarketOps.Stats</Name>

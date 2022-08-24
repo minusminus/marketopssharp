@@ -16,6 +16,7 @@ namespace MarketOps
             _logControl = logControl;
         }
 
-        public void Add(string message) => _logControl.AppendText(message + Environment.NewLine);
+        public void Add(string message) => 
+            _logControl.AppendText(message + Environment.NewLine);
     }
 }

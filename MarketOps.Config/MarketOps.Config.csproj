@@ -70,6 +70,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="App\AppConfig.cs" />
     <Compile Include="App\AppConfigCharts.cs" />
     <Compile Include="App\AppConfigOps.cs" />

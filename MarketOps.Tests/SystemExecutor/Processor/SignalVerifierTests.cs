@@ -57,7 +57,7 @@ namespace MarketOps.Tests.SystemExecutor.Processor
         }
 
         [Test]
-        public void Verify_Rebalance_NewBAlanceGreaterThan1__Throws()
+        public void Verify_Rebalance_NewBalanceGreaterThan1__Throws()
         {
             Signal signal = new Signal()
             {

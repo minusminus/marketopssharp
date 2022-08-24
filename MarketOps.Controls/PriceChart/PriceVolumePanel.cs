@@ -7,6 +7,7 @@ using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 using MarketOps.Config.Stats;
 using MarketOps.SystemData.Types;
+using MarketOps.StockData;
 
 namespace MarketOps.Controls.PriceChart
 {
@@ -107,18 +108,22 @@ namespace MarketOps.Controls.PriceChart
 
         private void OnChartValueSelected(int selectedIndex)
         {
-            if (_currentData == null) return;
-            if ((selectedIndex >= 0) && (selectedIndex < _currentData.Prices.Length))
-            {
-                lblSelectedInfo.Text = _currentInfoGenerator.GetStockSelectedInfo(_currentData, selectedIndex);
-                lblStatSelectedInfo.Text = _currentStatsInfoGenerator.GetStatsSelectedInfo(_currentData, selectedIndex);
-            }
+            if ((_currentData == null) || (selectedIndex < 0) || (selectedIndex >= _currentData.Prices.Length)) return;
+            lblSelectedInfo.Text = _currentInfoGenerator.GetStockSelectedInfo(_currentData, selectedIndex);
+            lblStatSelectedInfo.Text = string.Join(", ", DataFormatting.SkipEmptyStrings(
+                _currentStatsInfoGenerator.GetStatsSelectedInfo(_currentData, selectedIndex),
+                GetTrailingStopInfo(selectedIndex)));
+        }
+
+        private string GetTrailingStopInfo(int selectedIndex)
+        {
+            if ((!chartPV.TrailingStopL.Enabled) || chartPV.TrailingStopL.Points[selectedIndex].IsEmpty) return string.Empty;
+            return $"Trailing Stop: {DataFormatting.FormatPrice(_currentData.Stock.Type, chartPV.TrailingStopL.Points[selectedIndex].YValues[0])}";
         }
 
         private string OnGetAxisXToolTip(int selectedIndex)
         {
-            if (_currentData == null) return "";
-            if ((selectedIndex < 0) || (selectedIndex >= _currentData.Prices.Length)) return "";
+            if ((_currentData == null) || (selectedIndex < 0) || (selectedIndex >= _currentData.Prices.Length)) return "";
             return _currentInfoGenerator.GetAxisXToolTip(_currentData, selectedIndex);
         }
 
@@ -142,6 +147,7 @@ namespace MarketOps.Controls.PriceChart
                     chartPV.AppendStockStatData(_currentData.Prices, stat);
                 chartPV.SetYViewRange();
                 RecreatePositionsAnnotations();
+                RecreatePositionsTrailingStops();
             }
         }
 
@@ -180,11 +186,17 @@ namespace MarketOps.Controls.PriceChart
         {
             _currentData.Positions.AddRange(positions);
             RecreatePositionsAnnotations();
+            RecreatePositionsTrailingStops();
         }
 
         private void RecreatePositionsAnnotations()
         {
             chartPV.AddPositionsAnnotations(_currentData.Positions);
+        }
+
+        private void RecreatePositionsTrailingStops()
+        {
+            chartPV.AddPositionsTrailingStops(_currentData.Positions);
         }
         #endregion
 

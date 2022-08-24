@@ -43,17 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Calculators\ATR.cs" />
+    <Compile Include="Calculators\AvgToStdDevPercent.cs" />
     <Compile Include="Calculators\BBData.cs" />
     <Compile Include="Calculators\BB.cs" />
     <Compile Include="Calculators\CumulativeDataCalculator.cs" />
+    <Compile Include="Calculators\HeikinAshiOC.cs" />
+    <Compile Include="Calculators\HeikinAshiOCData.cs" />
     <Compile Include="Calculators\HLChannel.cs" />
     <Compile Include="Calculators\HLChannelData.cs" />
     <Compile Include="Calculators\RangeChangePcnt.cs" />
     <Compile Include="Calculators\RingBuffer.cs" />
     <Compile Include="Calculators\RingBufferCalculator.cs" />
     <Compile Include="Calculators\SMA.cs" />
+    <Compile Include="Calculators\StdDevPercent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\StatAvgToStdDevPercent.cs" />
+    <Compile Include="Stats\StatAvgToStdDevPercentParams.cs" />
+    <Compile Include="Stats\StatHeikinAshiOC.cs" />
+    <Compile Include="Stats\StatHeikinAshiOCParams.cs" />
     <Compile Include="Stats\StatHLChannel.cs" />
     <Compile Include="Stats\StatHLChannelParams.cs" />
     <Compile Include="Stats\StatRangeChangePcnt.cs" />
@@ -64,8 +75,14 @@
     <Compile Include="Stats\StatRangeChangePcntParams.cs" />
     <Compile Include="Stats\StatSMA.cs" />
     <Compile Include="Stats\StatSMAParams.cs" />
+    <Compile Include="Stats\StatStdDevPercent.cs" />
+    <Compile Include="Stats\StatStdDevPercentParams.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6b571f05-d6c9-489e-b432-77bc2410f460}</Project>
+      <Name>MarketOps.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>

@@ -22,8 +22,11 @@ namespace MarketOps.SystemData.Extensions
                 Open = price,
                 OpenCommission = commission,
                 TSOpen = ts,
+                EquityValueOnTickBeforeOpen = (systemState.Equity.Count > 0) ? systemState.Equity.Last().Value : 0,
                 Volume = volume,
                 EntrySignal = entrySignal,
+                CloseMode = (entrySignal.InitialStopMode == SignalInitialStopMode.OnPrice) ? PositionCloseMode.OnStopHit : PositionCloseMode.DontClose,
+                CloseModePrice = (entrySignal.InitialStopMode == SignalInitialStopMode.OnPrice) ? entrySignal.InitialStopValue : 0,
                 TicksActive = 1
             };
             systemState.PositionsActive.Add(pos);
@@ -54,6 +57,8 @@ namespace MarketOps.SystemData.Extensions
             pos.Close = price;
             pos.CloseCommission = commission;
             pos.TSClose = ts;
+            pos.R = pos.RValue();
+            pos.RProfit = pos.CalculateRProfit();
             systemState.PositionsActive.RemoveAt(positionIndex);
             systemState.PositionsClosed.Add(pos);
             systemState.Cash += pos.DirectionMultiplier() * pos.CloseValue();
@@ -97,7 +102,16 @@ namespace MarketOps.SystemData.Extensions
         {
             systemState.Equity.Add(new SystemValue()
             {
-                Value = new SystemValueCalculator().Calc(systemState, ts, dataLoader),
+                Value = SystemValueCalculator.Calc(systemState, ts, dataLoader),
+                TS = ts
+            });
+        }
+
+        public static void CalcCurrentCapitalUsage(this SystemState systemState, DateTime ts)
+        {
+            systemState.EquityCapitalUsage.Add(new SystemValue()
+            {
+                Value = SystemCapitalUsageCalculator.Calc(systemState),
                 TS = ts
             });
         }
@@ -136,5 +150,8 @@ namespace MarketOps.SystemData.Extensions
         {
             return systemState.CalculateSlippageClose(slippage, systemState.PositionsActive[positionIndex].Stock.Type, ts, systemState.PositionsActive[positionIndex].Direction, price);
         }
+
+        public static int FindActivePositionIndex(this SystemState systemState, string stockFullName) => 
+            systemState.PositionsActive.FindIndex(p => p.Stock.FullName == stockFullName);
     }
 }

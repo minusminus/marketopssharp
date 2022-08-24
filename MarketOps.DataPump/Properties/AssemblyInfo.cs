@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using MarketOps;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -9,12 +10,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MarketOps.DataPump")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyProduct(VersionInfo.AssemblyProduct)]
+[assembly: AssemblyCopyright(VersionInfo.AssemblyCopyright)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("MarketOps.Tests")]
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 // Ustawienie elementu ComVisible na wartość false sprawia, że typy w tym zestawie są niewidoczne
 // dla składników COM. Jeśli potrzebny jest dostęp do typu w tym zestawie z
@@ -34,5 +33,9 @@ using System.Runtime.InteropServices;
 // Możesz określić wszystkie wartości lub użyć domyślnych numerów kompilacji i poprawki
 // przy użyciu symbolu „*”, tak jak pokazano poniżej:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion(VersionInfo.AssemblyVersion)]
+[assembly: AssemblyFileVersion(VersionInfo.AssemblyFileVersion)]
+[assembly: AssemblyInformationalVersion(VersionInfo.AssemblyFileVersion)]
+
+[assembly: InternalsVisibleTo("MarketOps.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

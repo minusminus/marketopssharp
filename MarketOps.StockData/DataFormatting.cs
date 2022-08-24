@@ -1,5 +1,6 @@
 ﻿using MarketOps.StockData.Types;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarketOps.StockData
 {
@@ -52,5 +53,8 @@ namespace MarketOps.StockData
         /// <returns></returns>
         public static string DataRangeDateTimeInputFormat(StockDataRange dataRange) =>
             (dataRange == StockDataRange.Intraday) || (dataRange == StockDataRange.Tick) ? "yyyy-MM-dd hh:mm" : "yyyy-MM-dd";
+
+        public static IEnumerable<string> SkipEmptyStrings(params string[] values) => 
+            values.Where(s => !string.IsNullOrEmpty(s));
     }
 }

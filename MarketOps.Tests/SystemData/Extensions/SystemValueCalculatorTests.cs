@@ -12,7 +12,6 @@ namespace MarketOps.Tests.SystemData.Extensions
     [TestFixture]
     public class SystemValueCalculatorTests
     {
-        private SystemValueCalculator _testObj;
         private ISystemDataLoader _dataLoader;
         private SystemState _testSys;
         private StockPricesData _stockPrices;
@@ -29,7 +28,6 @@ namespace MarketOps.Tests.SystemData.Extensions
             _dataLoader = Substitute.For<ISystemDataLoader>();
             _testSys = new SystemState() { Cash = CashValue };
             _stockPrices = new StockPricesData(1);
-            _testObj = new SystemValueCalculator();
 
             _stockPrices.TS[0] = CurrentTS;
             _stockPrices.C[0] = PriceL;
@@ -41,13 +39,13 @@ namespace MarketOps.Tests.SystemData.Extensions
         [Test]
         public void Calc_Empty__Returns0()
         {
-            _testObj.Calc(new SystemState(), DateTime.Now, _dataLoader).ShouldBe(0);
+            SystemValueCalculator.Calc(new SystemState(), DateTime.Now, _dataLoader).ShouldBe(0);
         }
 
         [Test]
         public void Calc_CashOnly__ReturnsCash()
         {
-            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
+            SystemValueCalculator.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
         }
 
         [Test]
@@ -62,7 +60,8 @@ namespace MarketOps.Tests.SystemData.Extensions
                 Close = PriceH,
                 Volume = Vol
             });
-            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
+
+            SystemValueCalculator.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue);
         }
 
         [TestCase(PositionDir.Long)]
@@ -75,7 +74,8 @@ namespace MarketOps.Tests.SystemData.Extensions
                 Direction = dir,
                 Volume = Vol
             });
-            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + dir.DirectionMultiplier() * PriceL * Vol);
+
+            SystemValueCalculator.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + dir.DirectionMultiplier() * PriceL * Vol);
         }
 
         [TestCase(PositionDir.Long)]
@@ -90,7 +90,8 @@ namespace MarketOps.Tests.SystemData.Extensions
                     Direction = dir,
                     Volume = Vol
                 });
-            _testObj.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + dir.DirectionMultiplier() * PriceL * Vol * posCount);
+
+            SystemValueCalculator.Calc(_testSys, CurrentTS, _dataLoader).ShouldBe(CashValue + dir.DirectionMultiplier() * PriceL * Vol * posCount);
         }
     }
 }

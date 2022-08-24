@@ -9,10 +9,8 @@ namespace MarketOps.Tests.StockData
     [TestFixture]
     public class StockPricesDataMergerTests
     {
-        private readonly StockPricesDataMerger TestObj = new StockPricesDataMerger();
-
         private readonly DateTime TestStartTS = DateTime.Now;
-        const int TESTDATALEN = 3;
+        private const int TestDataLength = 3;
 
         private void CheckMergedObject(StockPricesData merged, StockPricesData expected)
         {
@@ -33,48 +31,48 @@ namespace MarketOps.Tests.StockData
 
         private StockPricesData CreateTestPricesObj(double dateMove = 0)
         {
-            StockPricesData res = new StockPricesData(TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 10, 20, 30 }, res.O, TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 100, 200, 300 }, res.H, TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 1, 2, 3 }, res.L, TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 10, 20, 30 }, res.C, TESTDATALEN);
-            Array.Copy(new long[TESTDATALEN] { 1, 2, 3 }, res.V, TESTDATALEN);
-            Array.Copy(new DateTime[TESTDATALEN] { TestStartTS.AddDays(dateMove - 2), TestStartTS.AddDays(dateMove - 1), TestStartTS.AddDays(dateMove) }, res.TS, TESTDATALEN);
+            StockPricesData res = new StockPricesData(TestDataLength);
+            Array.Copy(new float[TestDataLength] { 10, 20, 30 }, res.O, TestDataLength);
+            Array.Copy(new float[TestDataLength] { 100, 200, 300 }, res.H, TestDataLength);
+            Array.Copy(new float[TestDataLength] { 1, 2, 3 }, res.L, TestDataLength);
+            Array.Copy(new float[TestDataLength] { 10, 20, 30 }, res.C, TestDataLength);
+            Array.Copy(new long[TestDataLength] { 1, 2, 3 }, res.V, TestDataLength);
+            Array.Copy(new DateTime[TestDataLength] { TestStartTS.AddDays(dateMove - 2), TestStartTS.AddDays(dateMove - 1), TestStartTS.AddDays(dateMove) }, res.TS, TestDataLength);
             return res;
         }
 
         private void CopyDataToExpected(StockPricesData d1, StockPricesData d2, StockPricesData expected)
         {
-            Array.Copy(d1.O, 0, expected.O, 0, TESTDATALEN);
-            Array.Copy(d2.O, 0, expected.O, TESTDATALEN, TESTDATALEN);
-            Array.Copy(d1.H, 0, expected.H, 0, TESTDATALEN);
-            Array.Copy(d2.H, 0, expected.H, TESTDATALEN, TESTDATALEN);
-            Array.Copy(d1.L, 0, expected.L, 0, TESTDATALEN);
-            Array.Copy(d2.L, 0, expected.L, TESTDATALEN, TESTDATALEN);
-            Array.Copy(d1.C, 0, expected.C, 0, TESTDATALEN);
-            Array.Copy(d2.C, 0, expected.C, TESTDATALEN, TESTDATALEN);
-            Array.Copy(d1.V, 0, expected.V, 0, TESTDATALEN);
-            Array.Copy(d2.V, 0, expected.V, TESTDATALEN, TESTDATALEN);
-            Array.Copy(d1.TS, 0, expected.TS, 0, TESTDATALEN);
-            Array.Copy(d2.TS, 0, expected.TS, TESTDATALEN, TESTDATALEN);
+            Array.Copy(d1.O, 0, expected.O, 0, TestDataLength);
+            Array.Copy(d2.O, 0, expected.O, TestDataLength, TestDataLength);
+            Array.Copy(d1.H, 0, expected.H, 0, TestDataLength);
+            Array.Copy(d2.H, 0, expected.H, TestDataLength, TestDataLength);
+            Array.Copy(d1.L, 0, expected.L, 0, TestDataLength);
+            Array.Copy(d2.L, 0, expected.L, TestDataLength, TestDataLength);
+            Array.Copy(d1.C, 0, expected.C, 0, TestDataLength);
+            Array.Copy(d2.C, 0, expected.C, TestDataLength, TestDataLength);
+            Array.Copy(d1.V, 0, expected.V, 0, TestDataLength);
+            Array.Copy(d2.V, 0, expected.V, TestDataLength, TestDataLength);
+            Array.Copy(d1.TS, 0, expected.TS, 0, TestDataLength);
+            Array.Copy(d2.TS, 0, expected.TS, TestDataLength, TestDataLength);
         }
 
         [Test]
         public void MergeBothEmpty_ReturnsEmpty()
         {
-            CheckMergedObject(TestObj.Merge(new StockPricesData(0), new StockPricesData(0)), new StockPricesData(0));
+            CheckMergedObject(StockPricesDataMerger.Merge(new StockPricesData(0), new StockPricesData(0)), new StockPricesData(0));
         }
 
         [Test]
         public void MergeLeftEmpty_ReturnsRight()
         {
-            CheckMergedObject(TestObj.Merge(new StockPricesData(0), CreateTestPricesObj()), CreateTestPricesObj());
+            CheckMergedObject(StockPricesDataMerger.Merge(new StockPricesData(0), CreateTestPricesObj()), CreateTestPricesObj());
         }
 
         [Test]
         public void MergeRightEmpty_ReturnsLeft()
         {
-            CheckMergedObject(TestObj.Merge(CreateTestPricesObj(), new StockPricesData(0)), CreateTestPricesObj());
+            CheckMergedObject(StockPricesDataMerger.Merge(CreateTestPricesObj(), new StockPricesData(0)), CreateTestPricesObj());
         }
 
         [Test]
@@ -82,9 +80,9 @@ namespace MarketOps.Tests.StockData
         {
             StockPricesData d1 = CreateTestPricesObj(-100);
             StockPricesData d2 = CreateTestPricesObj();
-            StockPricesData expected = new StockPricesData(2 * TESTDATALEN);
+            StockPricesData expected = new StockPricesData(2 * TestDataLength);
             CopyDataToExpected(d1, d2, expected);
-            CheckMergedObject(TestObj.Merge(d1, d2), expected);
+            CheckMergedObject(StockPricesDataMerger.Merge(d1, d2), expected);
         }
 
         [Test]
@@ -92,17 +90,17 @@ namespace MarketOps.Tests.StockData
         {
             StockPricesData d1 = CreateTestPricesObj();
             StockPricesData d2 = CreateTestPricesObj(-100);
-            StockPricesData expected = new StockPricesData(2 * TESTDATALEN);
+            StockPricesData expected = new StockPricesData(2 * TestDataLength);
             CopyDataToExpected(d2, d1, expected);
-            CheckMergedObject(TestObj.Merge(d1, d2), expected);
+            CheckMergedObject(StockPricesDataMerger.Merge(d1, d2), expected);
         }
 
         [Test]
         public void OverlappingDataThrows()
         {
-            Should.Throw<Exception>(() => { TestObj.Merge(CreateTestPricesObj(), CreateTestPricesObj()); }, "same objects");
-            Should.Throw<Exception>(() => { TestObj.Merge(CreateTestPricesObj(), CreateTestPricesObj(-1)); }, "right -1");
-            Should.Throw<Exception>(() => { TestObj.Merge(CreateTestPricesObj(), CreateTestPricesObj(-2)); }, "right -2");
+            Should.Throw<Exception>(() => { StockPricesDataMerger.Merge(CreateTestPricesObj(), CreateTestPricesObj()); }, "same objects");
+            Should.Throw<Exception>(() => { StockPricesDataMerger.Merge(CreateTestPricesObj(), CreateTestPricesObj(-1)); }, "right -1");
+            Should.Throw<Exception>(() => { StockPricesDataMerger.Merge(CreateTestPricesObj(), CreateTestPricesObj(-2)); }, "right -2");
         }
     }
 }

@@ -59,6 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="DataGen\DataGenerator.cs" />
     <Compile Include="DataGen\Forms\FormDataGen.cs">
       <SubType>Form</SubType>
@@ -70,6 +73,10 @@
     <Compile Include="DataMappers\ProfitPcnt2PointChartMapper.cs" />
     <Compile Include="DataMappers\ProfitPcntPointChartData.cs" />
     <Compile Include="DataMappers\ProfitPointChartData.cs" />
+    <Compile Include="DataMappers\RProfitDistribution2ColumnChartMapper.cs" />
+    <Compile Include="DataMappers\RProfitDistributionColumnChartData.cs" />
+    <Compile Include="DataMappers\RProfit2PointChartMapper.cs" />
+    <Compile Include="DataMappers\RProfitPointChartData.cs" />
     <Compile Include="DataMappers\SystemDrawDownPointChartData.cs" />
     <Compile Include="DataMappers\SystemDrawDown2PointChartMapper.cs" />
     <Compile Include="DataOp.cs" />

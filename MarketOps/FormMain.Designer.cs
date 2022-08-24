@@ -51,6 +51,12 @@
             this.tcSimulationData = new System.Windows.Forms.TabControl();
             this.tabSimDataResults = new System.Windows.Forms.TabPage();
             this.pnlSimDataResults = new System.Windows.Forms.Panel();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.lblSDRTransactionsPerYear = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.lblSDRRProfitAvg = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
             this.lblSDRAvgPcntLoss = new System.Windows.Forms.Label();
             this.lblSDRAvgPcntWin = new System.Windows.Forms.Label();
             this.lblSDREqDistrStdDev = new System.Windows.Forms.Label();
@@ -107,6 +113,12 @@
             this.chartDDTicks = new MarketOps.Controls.PointChart.PointChart();
             this.gbDDPositions = new System.Windows.Forms.GroupBox();
             this.chartDDPositions = new MarketOps.Controls.PointChart.PointChart();
+            this.tabSimR = new System.Windows.Forms.TabPage();
+            this.splitR = new System.Windows.Forms.SplitContainer();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.chartRValue = new MarketOps.Controls.PointChart.PointChart();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chartRDistribution = new MarketOps.Controls.ColumnChart.ColumnChart();
             this.tabSimDataProfits = new System.Windows.Forms.TabPage();
             this.splitProfits = new System.Windows.Forms.SplitContainer();
             this.gbProfitsValue = new System.Windows.Forms.GroupBox();
@@ -117,12 +129,34 @@
             this.edtSimDataLog = new System.Windows.Forms.TextBox();
             this.tabSimMonteCarlo = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
+            this.gbMonteCarloStreaksLosing = new System.Windows.Forms.GroupBox();
+            this.chartMonteCarloStreaksLosing = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
+            this.gbMonteCarloStreaksWinning = new System.Windows.Forms.GroupBox();
+            this.chartMonteCarloStreaksWinning = new MarketOps.Controls.MonteCarlo.MonteCarloStreaksGrid();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lblMonteCarloSimLongestWinningStreak = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimLongestLosingStreak = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimLongestDD = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimMaxDD = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimAvg = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimWorst = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.lblMonteCarloSimBest = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
             this.lblMonteCarloSimLosses = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.lblMonteCarloSimWins = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.edtMonteCarloTransactionsPerYear = new System.Windows.Forms.NumericUpDown();
+            this.label33 = new System.Windows.Forms.Label();
             this.btnMonteCarloSim = new System.Windows.Forms.Button();
             this.edtMonteCarloAvgPcntLoss = new System.Windows.Forms.NumericUpDown();
             this.edtMonteCarloAvgPcntWin = new System.Windows.Forms.NumericUpDown();
@@ -147,7 +181,10 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.chartMonteCarloData = new MarketOps.Controls.MonteCarlo.MonteCarloDataChart();
+            this.lblSDRRProfitStdDev = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.lblSDRRProfitAvgToStdDev = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -169,6 +206,13 @@
             this.splitDrawDowns.SuspendLayout();
             this.gbDDTicks.SuspendLayout();
             this.gbDDPositions.SuspendLayout();
+            this.tabSimR.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitR)).BeginInit();
+            this.splitR.Panel1.SuspendLayout();
+            this.splitR.Panel2.SuspendLayout();
+            this.splitR.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabSimDataProfits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitProfits)).BeginInit();
             this.splitProfits.Panel1.SuspendLayout();
@@ -179,8 +223,12 @@
             this.tabSimDataLog.SuspendLayout();
             this.tabSimMonteCarlo.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.gbMonteCarloStreaksLosing.SuspendLayout();
+            this.gbMonteCarloStreaksWinning.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).BeginInit();
@@ -402,6 +450,7 @@
             this.tcSimulationData.Controls.Add(this.tabSimDataResults);
             this.tcSimulationData.Controls.Add(this.tabSimDataPositions);
             this.tcSimulationData.Controls.Add(this.tabSimDataDrawdowns);
+            this.tcSimulationData.Controls.Add(this.tabSimR);
             this.tcSimulationData.Controls.Add(this.tabSimDataProfits);
             this.tcSimulationData.Controls.Add(this.tabSimDataLog);
             this.tcSimulationData.Controls.Add(this.tabSimMonteCarlo);
@@ -425,6 +474,16 @@
             // 
             // pnlSimDataResults
             // 
+            this.pnlSimDataResults.Controls.Add(this.lblSDRRProfitAvgToStdDev);
+            this.pnlSimDataResults.Controls.Add(this.label49);
+            this.pnlSimDataResults.Controls.Add(this.lblSDRRProfitStdDev);
+            this.pnlSimDataResults.Controls.Add(this.label46);
+            this.pnlSimDataResults.Controls.Add(this.label39);
+            this.pnlSimDataResults.Controls.Add(this.label42);
+            this.pnlSimDataResults.Controls.Add(this.lblSDRTransactionsPerYear);
+            this.pnlSimDataResults.Controls.Add(this.label37);
+            this.pnlSimDataResults.Controls.Add(this.lblSDRRProfitAvg);
+            this.pnlSimDataResults.Controls.Add(this.label35);
             this.pnlSimDataResults.Controls.Add(this.lblSDRAvgPcntLoss);
             this.pnlSimDataResults.Controls.Add(this.lblSDRAvgPcntWin);
             this.pnlSimDataResults.Controls.Add(this.lblSDREqDistrStdDev);
@@ -479,10 +538,64 @@
             this.pnlSimDataResults.Size = new System.Drawing.Size(933, 271);
             this.pnlSimDataResults.TabIndex = 0;
             // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(248, 106);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(69, 13);
+            this.label39.TabIndex = 73;
+            this.label39.Text = "Avg win pcnt";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(248, 122);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(71, 13);
+            this.label42.TabIndex = 71;
+            this.label42.Text = "Avg loss pcnt";
+            // 
+            // lblSDRTransactionsPerYear
+            // 
+            this.lblSDRTransactionsPerYear.AutoSize = true;
+            this.lblSDRTransactionsPerYear.Location = new System.Drawing.Point(146, 138);
+            this.lblSDRTransactionsPerYear.Name = "lblSDRTransactionsPerYear";
+            this.lblSDRTransactionsPerYear.Size = new System.Drawing.Size(41, 13);
+            this.lblSDRTransactionsPerYear.TabIndex = 70;
+            this.lblSDRTransactionsPerYear.Text = "label12";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(12, 138);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(109, 13);
+            this.label37.TabIndex = 69;
+            this.label37.Text = "Transactions per year";
+            // 
+            // lblSDRRProfitAvg
+            // 
+            this.lblSDRRProfitAvg.AutoSize = true;
+            this.lblSDRRProfitAvg.Location = new System.Drawing.Point(401, 170);
+            this.lblSDRRProfitAvg.Name = "lblSDRRProfitAvg";
+            this.lblSDRRProfitAvg.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitAvg.TabIndex = 68;
+            this.lblSDRRProfitAvg.Text = "Avg";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(248, 170);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(65, 13);
+            this.label35.TabIndex = 67;
+            this.label35.Text = "R profit avg.";
+            // 
             // lblSDRAvgPcntLoss
             // 
             this.lblSDRAvgPcntLoss.AutoSize = true;
-            this.lblSDRAvgPcntLoss.Location = new System.Drawing.Point(423, 74);
+            this.lblSDRAvgPcntLoss.Location = new System.Drawing.Point(401, 122);
             this.lblSDRAvgPcntLoss.Name = "lblSDRAvgPcntLoss";
             this.lblSDRAvgPcntLoss.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgPcntLoss.TabIndex = 66;
@@ -491,7 +604,7 @@
             // lblSDRAvgPcntWin
             // 
             this.lblSDRAvgPcntWin.AutoSize = true;
-            this.lblSDRAvgPcntWin.Location = new System.Drawing.Point(423, 58);
+            this.lblSDRAvgPcntWin.Location = new System.Drawing.Point(401, 106);
             this.lblSDRAvgPcntWin.Name = "lblSDRAvgPcntWin";
             this.lblSDRAvgPcntWin.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgPcntWin.TabIndex = 65;
@@ -500,7 +613,7 @@
             // lblSDREqDistrStdDev
             // 
             this.lblSDREqDistrStdDev.AutoSize = true;
-            this.lblSDREqDistrStdDev.Location = new System.Drawing.Point(146, 170);
+            this.lblSDREqDistrStdDev.Location = new System.Drawing.Point(146, 180);
             this.lblSDREqDistrStdDev.Name = "lblSDREqDistrStdDev";
             this.lblSDREqDistrStdDev.Size = new System.Drawing.Size(26, 13);
             this.lblSDREqDistrStdDev.TabIndex = 64;
@@ -509,7 +622,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(12, 170);
+            this.label25.Location = new System.Drawing.Point(12, 180);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(134, 13);
             this.label25.TabIndex = 63;
@@ -518,7 +631,7 @@
             // lblSDREqDistrAvg
             // 
             this.lblSDREqDistrAvg.AutoSize = true;
-            this.lblSDREqDistrAvg.Location = new System.Drawing.Point(146, 154);
+            this.lblSDREqDistrAvg.Location = new System.Drawing.Point(146, 164);
             this.lblSDREqDistrAvg.Name = "lblSDREqDistrAvg";
             this.lblSDREqDistrAvg.Size = new System.Drawing.Size(26, 13);
             this.lblSDREqDistrAvg.TabIndex = 62;
@@ -527,7 +640,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(12, 154);
+            this.label27.Location = new System.Drawing.Point(12, 164);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(120, 13);
             this.label27.TabIndex = 61;
@@ -554,7 +667,7 @@
             // lblSDRExpectedUnitReturn
             // 
             this.lblSDRExpectedUnitReturn.AutoSize = true;
-            this.lblSDRExpectedUnitReturn.Location = new System.Drawing.Point(382, 106);
+            this.lblSDRExpectedUnitReturn.Location = new System.Drawing.Point(401, 138);
             this.lblSDRExpectedUnitReturn.Name = "lblSDRExpectedUnitReturn";
             this.lblSDRExpectedUnitReturn.Size = new System.Drawing.Size(26, 13);
             this.lblSDRExpectedUnitReturn.TabIndex = 58;
@@ -563,7 +676,7 @@
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(248, 106);
+            this.label22.Location = new System.Drawing.Point(248, 138);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(102, 13);
             this.label22.TabIndex = 57;
@@ -572,7 +685,7 @@
             // lblSDRMaxDDOnPositions
             // 
             this.lblSDRMaxDDOnPositions.AutoSize = true;
-            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(382, 170);
+            this.lblSDRMaxDDOnPositions.Location = new System.Drawing.Point(644, 26);
             this.lblSDRMaxDDOnPositions.Name = "lblSDRMaxDDOnPositions";
             this.lblSDRMaxDDOnPositions.Size = new System.Drawing.Size(26, 13);
             this.lblSDRMaxDDOnPositions.TabIndex = 56;
@@ -581,7 +694,7 @@
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(248, 170);
+            this.label23.Location = new System.Drawing.Point(513, 26);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(105, 13);
             this.label23.TabIndex = 55;
@@ -590,7 +703,7 @@
             // lblSDRMaxDDOnTicks
             // 
             this.lblSDRMaxDDOnTicks.AutoSize = true;
-            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(382, 154);
+            this.lblSDRMaxDDOnTicks.Location = new System.Drawing.Point(644, 10);
             this.lblSDRMaxDDOnTicks.Name = "lblSDRMaxDDOnTicks";
             this.lblSDRMaxDDOnTicks.Size = new System.Drawing.Size(26, 13);
             this.lblSDRMaxDDOnTicks.TabIndex = 54;
@@ -599,7 +712,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(248, 154);
+            this.label21.Location = new System.Drawing.Point(513, 10);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(86, 13);
             this.label21.TabIndex = 53;
@@ -626,7 +739,7 @@
             // lblSDRExpectedPositionValue
             // 
             this.lblSDRExpectedPositionValue.AutoSize = true;
-            this.lblSDRExpectedPositionValue.Location = new System.Drawing.Point(382, 122);
+            this.lblSDRExpectedPositionValue.Location = new System.Drawing.Point(401, 154);
             this.lblSDRExpectedPositionValue.Name = "lblSDRExpectedPositionValue";
             this.lblSDRExpectedPositionValue.Size = new System.Drawing.Size(26, 13);
             this.lblSDRExpectedPositionValue.TabIndex = 50;
@@ -635,7 +748,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(248, 122);
+            this.label19.Location = new System.Drawing.Point(248, 154);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(120, 13);
             this.label19.TabIndex = 49;
@@ -644,7 +757,7 @@
             // lblSDRAvgWinLossRatio
             // 
             this.lblSDRAvgWinLossRatio.AutoSize = true;
-            this.lblSDRAvgWinLossRatio.Location = new System.Drawing.Point(382, 90);
+            this.lblSDRAvgWinLossRatio.Location = new System.Drawing.Point(401, 90);
             this.lblSDRAvgWinLossRatio.Name = "lblSDRAvgWinLossRatio";
             this.lblSDRAvgWinLossRatio.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgWinLossRatio.TabIndex = 48;
@@ -655,14 +768,14 @@
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(248, 90);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(52, 13);
+            this.label14.Size = new System.Drawing.Size(74, 13);
             this.label14.TabIndex = 47;
-            this.label14.Text = "W/L ratio";
+            this.label14.Text = "Avg W/L ratio";
             // 
             // lblSDRLossProbability
             // 
             this.lblSDRLossProbability.AutoSize = true;
-            this.lblSDRLossProbability.Location = new System.Drawing.Point(382, 42);
+            this.lblSDRLossProbability.Location = new System.Drawing.Point(401, 42);
             this.lblSDRLossProbability.Name = "lblSDRLossProbability";
             this.lblSDRLossProbability.Size = new System.Drawing.Size(26, 13);
             this.lblSDRLossProbability.TabIndex = 46;
@@ -671,7 +784,7 @@
             // lblSDRWinProbability
             // 
             this.lblSDRWinProbability.AutoSize = true;
-            this.lblSDRWinProbability.Location = new System.Drawing.Point(382, 26);
+            this.lblSDRWinProbability.Location = new System.Drawing.Point(401, 26);
             this.lblSDRWinProbability.Name = "lblSDRWinProbability";
             this.lblSDRWinProbability.Size = new System.Drawing.Size(26, 13);
             this.lblSDRWinProbability.TabIndex = 45;
@@ -680,7 +793,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(350, 42);
+            this.label17.Location = new System.Drawing.Point(369, 42);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(32, 13);
             this.label17.TabIndex = 44;
@@ -689,7 +802,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(350, 26);
+            this.label18.Location = new System.Drawing.Point(369, 26);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(32, 13);
             this.label18.TabIndex = 43;
@@ -734,7 +847,7 @@
             // lblSDRAvgLoss
             // 
             this.lblSDRAvgLoss.AutoSize = true;
-            this.lblSDRAvgLoss.Location = new System.Drawing.Point(382, 74);
+            this.lblSDRAvgLoss.Location = new System.Drawing.Point(401, 74);
             this.lblSDRAvgLoss.Name = "lblSDRAvgLoss";
             this.lblSDRAvgLoss.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgLoss.TabIndex = 38;
@@ -743,7 +856,7 @@
             // lblSDRAvgWin
             // 
             this.lblSDRAvgWin.AutoSize = true;
-            this.lblSDRAvgWin.Location = new System.Drawing.Point(382, 58);
+            this.lblSDRAvgWin.Location = new System.Drawing.Point(401, 58);
             this.lblSDRAvgWin.Name = "lblSDRAvgWin";
             this.lblSDRAvgWin.Size = new System.Drawing.Size(26, 13);
             this.lblSDRAvgWin.TabIndex = 37;
@@ -770,7 +883,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(350, 74);
+            this.label7.Location = new System.Drawing.Point(369, 74);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 13);
             this.label7.TabIndex = 34;
@@ -779,7 +892,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(350, 58);
+            this.label11.Location = new System.Drawing.Point(369, 58);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(29, 13);
             this.label11.TabIndex = 33;
@@ -806,7 +919,7 @@
             // lblSDRClosedPositionsCount
             // 
             this.lblSDRClosedPositionsCount.AutoSize = true;
-            this.lblSDRClosedPositionsCount.Location = new System.Drawing.Point(382, 10);
+            this.lblSDRClosedPositionsCount.Location = new System.Drawing.Point(401, 10);
             this.lblSDRClosedPositionsCount.Name = "lblSDRClosedPositionsCount";
             this.lblSDRClosedPositionsCount.Size = new System.Drawing.Size(41, 13);
             this.lblSDRClosedPositionsCount.TabIndex = 29;
@@ -969,7 +1082,7 @@
             this.gbDDTicks.Size = new System.Drawing.Size(468, 275);
             this.gbDDTicks.TabIndex = 2;
             this.gbDDTicks.TabStop = false;
-            this.gbDDTicks.Text = "Ticks";
+            this.gbDDTicks.Text = "On ticks (length / percentage)";
             // 
             // chartDDTicks
             // 
@@ -989,7 +1102,7 @@
             this.gbDDPositions.Size = new System.Drawing.Size(463, 275);
             this.gbDDPositions.TabIndex = 3;
             this.gbDDPositions.TabStop = false;
-            this.gbDDPositions.Text = "Positions";
+            this.gbDDPositions.Text = "On positions (length / percentage)";
             // 
             // chartDDPositions
             // 
@@ -999,6 +1112,75 @@
             this.chartDDPositions.Name = "chartDDPositions";
             this.chartDDPositions.Size = new System.Drawing.Size(457, 181);
             this.chartDDPositions.TabIndex = 1;
+            // 
+            // tabSimR
+            // 
+            this.tabSimR.Controls.Add(this.splitR);
+            this.tabSimR.Location = new System.Drawing.Point(4, 22);
+            this.tabSimR.Name = "tabSimR";
+            this.tabSimR.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSimR.Size = new System.Drawing.Size(939, 277);
+            this.tabSimR.TabIndex = 6;
+            this.tabSimR.Text = "R";
+            this.tabSimR.UseVisualStyleBackColor = true;
+            // 
+            // splitR
+            // 
+            this.splitR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitR.IsSplitterFixed = true;
+            this.splitR.Location = new System.Drawing.Point(3, 3);
+            this.splitR.Name = "splitR";
+            // 
+            // splitR.Panel1
+            // 
+            this.splitR.Panel1.Controls.Add(this.groupBox1);
+            // 
+            // splitR.Panel2
+            // 
+            this.splitR.Panel2.Controls.Add(this.groupBox2);
+            this.splitR.Size = new System.Drawing.Size(933, 271);
+            this.splitR.SplitterDistance = 469;
+            this.splitR.TabIndex = 1;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.chartRValue);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(469, 271);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Ticks length / R profit";
+            // 
+            // chartRValue
+            // 
+            this.chartRValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartRValue.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartRValue.Location = new System.Drawing.Point(3, 16);
+            this.chartRValue.Name = "chartRValue";
+            this.chartRValue.Size = new System.Drawing.Size(463, 181);
+            this.chartRValue.TabIndex = 0;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.chartRDistribution);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(460, 271);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "R profit distribution";
+            // 
+            // chartRDistribution
+            // 
+            this.chartRDistribution.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chartRDistribution.Dock = System.Windows.Forms.DockStyle.Top;
+            this.chartRDistribution.Location = new System.Drawing.Point(3, 16);
+            this.chartRDistribution.Name = "chartRDistribution";
+            this.chartRDistribution.Size = new System.Drawing.Size(454, 181);
+            this.chartRDistribution.TabIndex = 0;
             // 
             // tabSimDataProfits
             // 
@@ -1037,7 +1219,7 @@
             this.gbProfitsValue.Size = new System.Drawing.Size(473, 277);
             this.gbProfitsValue.TabIndex = 3;
             this.gbProfitsValue.TabStop = false;
-            this.gbProfitsValue.Text = "Value";
+            this.gbProfitsValue.Text = "Ticks length / Value";
             // 
             // chartProfitValue
             // 
@@ -1057,7 +1239,7 @@
             this.gbProfitPcnt.Size = new System.Drawing.Size(462, 277);
             this.gbProfitPcnt.TabIndex = 3;
             this.gbProfitPcnt.TabStop = false;
-            this.gbProfitPcnt.Text = "Percentage";
+            this.gbProfitPcnt.Text = "Ticks length / Percentage";
             // 
             // chartProfitPcnt
             // 
@@ -1105,7 +1287,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.chartMonteCarloData);
+            this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(207, 3);
@@ -1113,22 +1295,219 @@
             this.panel2.Size = new System.Drawing.Size(729, 271);
             this.panel2.TabIndex = 1;
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.chartMonteCarloData);
+            this.panel4.Controls.Add(this.gbMonteCarloStreaksLosing);
+            this.panel4.Controls.Add(this.gbMonteCarloStreaksWinning);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(729, 178);
+            this.panel4.TabIndex = 2;
+            // 
+            // chartMonteCarloData
+            // 
+            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 0);
+            this.chartMonteCarloData.Name = "chartMonteCarloData";
+            this.chartMonteCarloData.Size = new System.Drawing.Size(473, 178);
+            this.chartMonteCarloData.TabIndex = 1;
+            // 
+            // gbMonteCarloStreaksLosing
+            // 
+            this.gbMonteCarloStreaksLosing.Controls.Add(this.chartMonteCarloStreaksLosing);
+            this.gbMonteCarloStreaksLosing.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMonteCarloStreaksLosing.Location = new System.Drawing.Point(473, 0);
+            this.gbMonteCarloStreaksLosing.Name = "gbMonteCarloStreaksLosing";
+            this.gbMonteCarloStreaksLosing.Size = new System.Drawing.Size(128, 178);
+            this.gbMonteCarloStreaksLosing.TabIndex = 2;
+            this.gbMonteCarloStreaksLosing.TabStop = false;
+            this.gbMonteCarloStreaksLosing.Text = "Losing streaks";
+            // 
+            // chartMonteCarloStreaksLosing
+            // 
+            this.chartMonteCarloStreaksLosing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloStreaksLosing.Location = new System.Drawing.Point(3, 16);
+            this.chartMonteCarloStreaksLosing.Name = "chartMonteCarloStreaksLosing";
+            this.chartMonteCarloStreaksLosing.Size = new System.Drawing.Size(122, 159);
+            this.chartMonteCarloStreaksLosing.TabIndex = 0;
+            // 
+            // gbMonteCarloStreaksWinning
+            // 
+            this.gbMonteCarloStreaksWinning.Controls.Add(this.chartMonteCarloStreaksWinning);
+            this.gbMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Right;
+            this.gbMonteCarloStreaksWinning.Location = new System.Drawing.Point(601, 0);
+            this.gbMonteCarloStreaksWinning.Name = "gbMonteCarloStreaksWinning";
+            this.gbMonteCarloStreaksWinning.Size = new System.Drawing.Size(128, 178);
+            this.gbMonteCarloStreaksWinning.TabIndex = 3;
+            this.gbMonteCarloStreaksWinning.TabStop = false;
+            this.gbMonteCarloStreaksWinning.Text = "Winning streaks";
+            // 
+            // chartMonteCarloStreaksWinning
+            // 
+            this.chartMonteCarloStreaksWinning.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartMonteCarloStreaksWinning.Location = new System.Drawing.Point(3, 16);
+            this.chartMonteCarloStreaksWinning.Name = "chartMonteCarloStreaksWinning";
+            this.chartMonteCarloStreaksWinning.Size = new System.Drawing.Size(122, 159);
+            this.chartMonteCarloStreaksWinning.TabIndex = 0;
+            // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.lblMonteCarloSimLongestWinningStreak);
+            this.panel3.Controls.Add(this.label44);
+            this.panel3.Controls.Add(this.lblMonteCarloSimLongestLosingStreak);
+            this.panel3.Controls.Add(this.label47);
+            this.panel3.Controls.Add(this.lblMonteCarloSimLongestDD);
+            this.panel3.Controls.Add(this.label43);
+            this.panel3.Controls.Add(this.lblMonteCarloSimMaxDD);
+            this.panel3.Controls.Add(this.label45);
+            this.panel3.Controls.Add(this.lblMonteCarloSimAvg);
+            this.panel3.Controls.Add(this.label40);
+            this.panel3.Controls.Add(this.lblMonteCarloSimWorst);
+            this.panel3.Controls.Add(this.label38);
+            this.panel3.Controls.Add(this.lblMonteCarloSimBest);
+            this.panel3.Controls.Add(this.label36);
             this.panel3.Controls.Add(this.lblMonteCarloSimLosses);
             this.panel3.Controls.Add(this.label34);
             this.panel3.Controls.Add(this.lblMonteCarloSimWins);
             this.panel3.Controls.Add(this.label32);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 178);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(729, 28);
+            this.panel3.Size = new System.Drawing.Size(729, 93);
             this.panel3.TabIndex = 0;
+            // 
+            // lblMonteCarloSimLongestWinningStreak
+            // 
+            this.lblMonteCarloSimLongestWinningStreak.AutoSize = true;
+            this.lblMonteCarloSimLongestWinningStreak.Location = new System.Drawing.Point(326, 56);
+            this.lblMonteCarloSimLongestWinningStreak.Name = "lblMonteCarloSimLongestWinningStreak";
+            this.lblMonteCarloSimLongestWinningStreak.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLongestWinningStreak.TabIndex = 43;
+            this.lblMonteCarloSimLongestWinningStreak.Text = "Wins:";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(210, 56);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(119, 13);
+            this.label44.TabIndex = 42;
+            this.label44.Text = "Longest winning streak:";
+            // 
+            // lblMonteCarloSimLongestLosingStreak
+            // 
+            this.lblMonteCarloSimLongestLosingStreak.AutoSize = true;
+            this.lblMonteCarloSimLongestLosingStreak.Location = new System.Drawing.Point(326, 43);
+            this.lblMonteCarloSimLongestLosingStreak.Name = "lblMonteCarloSimLongestLosingStreak";
+            this.lblMonteCarloSimLongestLosingStreak.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLongestLosingStreak.TabIndex = 41;
+            this.lblMonteCarloSimLongestLosingStreak.Text = "Wins:";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(210, 43);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(110, 13);
+            this.label47.TabIndex = 40;
+            this.label47.Text = "Longest losing streak:";
+            // 
+            // lblMonteCarloSimLongestDD
+            // 
+            this.lblMonteCarloSimLongestDD.AutoSize = true;
+            this.lblMonteCarloSimLongestDD.Location = new System.Drawing.Point(274, 21);
+            this.lblMonteCarloSimLongestDD.Name = "lblMonteCarloSimLongestDD";
+            this.lblMonteCarloSimLongestDD.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimLongestDD.TabIndex = 39;
+            this.lblMonteCarloSimLongestDD.Text = "Wins:";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(210, 21);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(67, 13);
+            this.label43.TabIndex = 38;
+            this.label43.Text = "Longest DD:";
+            // 
+            // lblMonteCarloSimMaxDD
+            // 
+            this.lblMonteCarloSimMaxDD.AutoSize = true;
+            this.lblMonteCarloSimMaxDD.Location = new System.Drawing.Point(274, 8);
+            this.lblMonteCarloSimMaxDD.Name = "lblMonteCarloSimMaxDD";
+            this.lblMonteCarloSimMaxDD.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimMaxDD.TabIndex = 37;
+            this.lblMonteCarloSimMaxDD.Text = "Wins:";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(210, 8);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(49, 13);
+            this.label45.TabIndex = 36;
+            this.label45.Text = "Max DD:";
+            // 
+            // lblMonteCarloSimAvg
+            // 
+            this.lblMonteCarloSimAvg.AutoSize = true;
+            this.lblMonteCarloSimAvg.Location = new System.Drawing.Point(55, 69);
+            this.lblMonteCarloSimAvg.Name = "lblMonteCarloSimAvg";
+            this.lblMonteCarloSimAvg.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimAvg.TabIndex = 35;
+            this.lblMonteCarloSimAvg.Text = "Wins:";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(6, 69);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(29, 13);
+            this.label40.TabIndex = 34;
+            this.label40.Text = "Avg:";
+            // 
+            // lblMonteCarloSimWorst
+            // 
+            this.lblMonteCarloSimWorst.AutoSize = true;
+            this.lblMonteCarloSimWorst.Location = new System.Drawing.Point(55, 56);
+            this.lblMonteCarloSimWorst.Name = "lblMonteCarloSimWorst";
+            this.lblMonteCarloSimWorst.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimWorst.TabIndex = 33;
+            this.lblMonteCarloSimWorst.Text = "Wins:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(6, 56);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(38, 13);
+            this.label38.TabIndex = 32;
+            this.label38.Text = "Worst:";
+            // 
+            // lblMonteCarloSimBest
+            // 
+            this.lblMonteCarloSimBest.AutoSize = true;
+            this.lblMonteCarloSimBest.Location = new System.Drawing.Point(55, 43);
+            this.lblMonteCarloSimBest.Name = "lblMonteCarloSimBest";
+            this.lblMonteCarloSimBest.Size = new System.Drawing.Size(34, 13);
+            this.lblMonteCarloSimBest.TabIndex = 31;
+            this.lblMonteCarloSimBest.Text = "Wins:";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(6, 43);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(31, 13);
+            this.label36.TabIndex = 30;
+            this.label36.Text = "Best:";
             // 
             // lblMonteCarloSimLosses
             // 
             this.lblMonteCarloSimLosses.AutoSize = true;
-            this.lblMonteCarloSimLosses.Location = new System.Drawing.Point(195, 8);
+            this.lblMonteCarloSimLosses.Location = new System.Drawing.Point(55, 21);
             this.lblMonteCarloSimLosses.Name = "lblMonteCarloSimLosses";
             this.lblMonteCarloSimLosses.Size = new System.Drawing.Size(34, 13);
             this.lblMonteCarloSimLosses.TabIndex = 29;
@@ -1137,7 +1516,7 @@
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(146, 8);
+            this.label34.Location = new System.Drawing.Point(6, 21);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(43, 13);
             this.label34.TabIndex = 28;
@@ -1146,7 +1525,7 @@
             // lblMonteCarloSimWins
             // 
             this.lblMonteCarloSimWins.AutoSize = true;
-            this.lblMonteCarloSimWins.Location = new System.Drawing.Point(46, 8);
+            this.lblMonteCarloSimWins.Location = new System.Drawing.Point(55, 8);
             this.lblMonteCarloSimWins.Name = "lblMonteCarloSimWins";
             this.lblMonteCarloSimWins.Size = new System.Drawing.Size(34, 13);
             this.lblMonteCarloSimWins.TabIndex = 27;
@@ -1163,6 +1542,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.edtMonteCarloTransactionsPerYear);
+            this.panel1.Controls.Add(this.label33);
             this.panel1.Controls.Add(this.btnMonteCarloSim);
             this.panel1.Controls.Add(this.edtMonteCarloAvgPcntLoss);
             this.panel1.Controls.Add(this.edtMonteCarloAvgPcntWin);
@@ -1180,12 +1561,43 @@
             this.panel1.Size = new System.Drawing.Size(204, 271);
             this.panel1.TabIndex = 0;
             // 
+            // edtMonteCarloTransactionsPerYear
+            // 
+            this.edtMonteCarloTransactionsPerYear.Location = new System.Drawing.Point(108, 126);
+            this.edtMonteCarloTransactionsPerYear.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.edtMonteCarloTransactionsPerYear.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.edtMonteCarloTransactionsPerYear.Name = "edtMonteCarloTransactionsPerYear";
+            this.edtMonteCarloTransactionsPerYear.Size = new System.Drawing.Size(79, 20);
+            this.edtMonteCarloTransactionsPerYear.TabIndex = 35;
+            this.edtMonteCarloTransactionsPerYear.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(12, 128);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(78, 13);
+            this.label33.TabIndex = 36;
+            this.label33.Text = "Trans. per year";
+            // 
             // btnMonteCarloSim
             // 
-            this.btnMonteCarloSim.Location = new System.Drawing.Point(15, 142);
+            this.btnMonteCarloSim.Location = new System.Drawing.Point(15, 155);
             this.btnMonteCarloSim.Name = "btnMonteCarloSim";
             this.btnMonteCarloSim.Size = new System.Drawing.Size(172, 23);
-            this.btnMonteCarloSim.TabIndex = 35;
+            this.btnMonteCarloSim.TabIndex = 36;
             this.btnMonteCarloSim.Text = "Simulate";
             this.btnMonteCarloSim.UseVisualStyleBackColor = true;
             this.btnMonteCarloSim.Click += new System.EventHandler(this.btnMonteCarloSim_Click);
@@ -1459,13 +1871,41 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // chartMonteCarloData
+            // lblSDRRProfitStdDev
             // 
-            this.chartMonteCarloData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartMonteCarloData.Location = new System.Drawing.Point(0, 28);
-            this.chartMonteCarloData.Name = "chartMonteCarloData";
-            this.chartMonteCarloData.Size = new System.Drawing.Size(729, 243);
-            this.chartMonteCarloData.TabIndex = 1;
+            this.lblSDRRProfitStdDev.AutoSize = true;
+            this.lblSDRRProfitStdDev.Location = new System.Drawing.Point(401, 186);
+            this.lblSDRRProfitStdDev.Name = "lblSDRRProfitStdDev";
+            this.lblSDRRProfitStdDev.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitStdDev.TabIndex = 75;
+            this.lblSDRRProfitStdDev.Text = "Avg";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(248, 186);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(76, 13);
+            this.label46.TabIndex = 74;
+            this.label46.Text = "R profit stddev";
+            // 
+            // lblSDRRProfitAvgToStdDev
+            // 
+            this.lblSDRRProfitAvgToStdDev.AutoSize = true;
+            this.lblSDRRProfitAvgToStdDev.Location = new System.Drawing.Point(401, 202);
+            this.lblSDRRProfitAvgToStdDev.Name = "lblSDRRProfitAvgToStdDev";
+            this.lblSDRRProfitAvgToStdDev.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitAvgToStdDev.TabIndex = 77;
+            this.lblSDRRProfitAvgToStdDev.Text = "Avg";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(248, 202);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(105, 13);
+            this.label49.TabIndex = 76;
+            this.label49.Text = "R profit avg / stddev";
             // 
             // FormMain
             // 
@@ -1503,6 +1943,13 @@
             this.splitDrawDowns.ResumeLayout(false);
             this.gbDDTicks.ResumeLayout(false);
             this.gbDDPositions.ResumeLayout(false);
+            this.tabSimR.ResumeLayout(false);
+            this.splitR.Panel1.ResumeLayout(false);
+            this.splitR.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitR)).EndInit();
+            this.splitR.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.tabSimDataProfits.ResumeLayout(false);
             this.splitProfits.Panel1.ResumeLayout(false);
             this.splitProfits.Panel2.ResumeLayout(false);
@@ -1514,10 +1961,14 @@
             this.tabSimDataLog.PerformLayout();
             this.tabSimMonteCarlo.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.gbMonteCarloStreaksLosing.ResumeLayout(false);
+            this.gbMonteCarloStreaksWinning.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloTransactionsPerYear)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntLoss)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloAvgPcntWin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtMonteCarloWinProb)).EndInit();
@@ -1653,6 +2104,43 @@
         private System.Windows.Forms.Label lblMonteCarloSimWins;
         private System.Windows.Forms.Label label32;
         private Controls.MonteCarlo.MonteCarloDataChart chartMonteCarloData;
+        private System.Windows.Forms.TabPage tabSimR;
+        private System.Windows.Forms.Label lblSDRRProfitAvg;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.SplitContainer splitR;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private Controls.PointChart.PointChart chartRValue;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private Controls.ColumnChart.ColumnChart chartRDistribution;
+        private System.Windows.Forms.Label lblMonteCarloSimAvg;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label lblMonteCarloSimWorst;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label lblMonteCarloSimBest;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label lblSDRTransactionsPerYear;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.NumericUpDown edtMonteCarloTransactionsPerYear;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label lblMonteCarloSimLongestDD;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label lblMonteCarloSimMaxDD;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label lblMonteCarloSimLongestWinningStreak;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label lblMonteCarloSimLongestLosingStreak;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.GroupBox gbMonteCarloStreaksLosing;
+        private Controls.MonteCarlo.MonteCarloStreaksGrid chartMonteCarloStreaksLosing;
+        private System.Windows.Forms.GroupBox gbMonteCarloStreaksWinning;
+        private Controls.MonteCarlo.MonteCarloStreaksGrid chartMonteCarloStreaksWinning;
+        private System.Windows.Forms.Label lblSDRRProfitAvgToStdDev;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label lblSDRRProfitStdDev;
+        private System.Windows.Forms.Label label46;
     }
 }
 

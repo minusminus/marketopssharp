@@ -3,7 +3,7 @@
     /// <summary>
     /// Bollinger Band result data
     /// </summary>
-    public struct BBData
+    public class BBData
     {
         public float[] SMA;
         public float[] BBL;

@@ -45,8 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="ChartAreaFactory.cs" />
+    <Compile Include="ColumnChart\ColumnChartData.cs" />
+    <Compile Include="ColumnChart\ColumnChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColumnChart\ColumnChart.Designer.cs">
+      <DependentUpon>ColumnChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\PriceVolumeChartPositionAnnotationsExtensions.cs" />
+    <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
+    <Compile Include="Extensions\SortableBindingListExtensions.cs" />
     <Compile Include="FormLongLastingWork.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +76,13 @@
     </Compile>
     <Compile Include="MonteCarlo\MonteCarloDataChart.Designer.cs">
       <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MonteCarlo\MonteCarloStreakDataMapper.cs" />
+    <Compile Include="MonteCarlo\MonteCarloStreaksGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MonteCarlo\MonteCarloStreaksGrid.Designer.cs">
+      <DependentUpon>MonteCarloStreaksGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="MsgDisplay.cs" />
     <Compile Include="PointChart\PointChart.cs">
@@ -122,6 +142,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SortableBindingList.cs" />
     <Compile Include="StockData\MOParamsEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,6 +178,9 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ColumnChart\ColumnChart.resx">
+      <DependentUpon>ColumnChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLongLastingWork.resx">
       <DependentUpon>FormLongLastingWork.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MonteCarlo\MonteCarloDataChart.resx">
       <DependentUpon>MonteCarloDataChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MonteCarlo\MonteCarloStreaksGrid.resx">
+      <DependentUpon>MonteCarloStreaksGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PointChart\PointChart.resx">
       <DependentUpon>PointChart.cs</DependentUpon>

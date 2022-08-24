@@ -31,8 +31,7 @@ namespace MarketOps.SystemExecutor
                 systemDefinition.SignalGeneratorOnOpen,
                 systemDefinition.SignalGeneratorOnClose,
                 systemDefinition.Commission,
-                systemDefinition.Slippage,
-                systemDefinition.MMPositionCloseCalculator);
+                systemDefinition.Slippage);
             processor.Process(systemState, tsFrom, tsTo);
         }
     }

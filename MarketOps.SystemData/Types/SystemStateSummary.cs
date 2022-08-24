@@ -16,6 +16,7 @@ namespace MarketOps.SystemData.Types
         public float FinalValueOnLastTick;
         public float FinalValueOnClosedPositions;
         public float CummYProfitPcntOnTicks;
+        public int TransactionsPerYear;
 
         public int ClosedPositionsCount;
         public int Wins;
@@ -31,7 +32,11 @@ namespace MarketOps.SystemData.Types
         public float AvgPcntLoss;
         public float ExpectedPositionValue;
         public float ExpectedUnitReturn;
+        public float AvgRProfit;
+        public float StdDevRProfit;
+        public float RProfitAvgToStdDev;
 
+        public List<RProfitDistribution> RProfitDistribution;
         public List<SystemDrawDown> DDTicks;
         public List<SystemDrawDown> DDClosedPositions;
 

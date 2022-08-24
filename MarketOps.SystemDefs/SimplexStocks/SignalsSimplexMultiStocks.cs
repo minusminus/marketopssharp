@@ -99,7 +99,7 @@ namespace MarketOps.SystemDefs.SimplexStocks
 
             SimplexStocksDataCalculator.Calculate(_fundsData, ts, _avgProfitRange, _avgChangeRange, _dataRange, _dataLoader);
 
-            float portfolioValue = new SystemValueCalculator().Calc(systemState, ts, _dataLoader);
+            float portfolioValue = SystemValueCalculator.Calc(systemState, ts, _dataLoader);
             float[] balance = SimplexExecutor.Execute(_fundsData,
                 portfolioValue, _acceptableSingleDD, _riskSigmaMultiplier, _maxSinglePositionSize, _maxPortfolioRisk, _truncateBalanceToNthPlace);
             result.Add(CreateSignal(balance, _dataRange, _fundsData));

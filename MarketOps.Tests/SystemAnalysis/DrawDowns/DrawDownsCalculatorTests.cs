@@ -1,96 +1,110 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
-using System.Linq;
 using MarketOps.SystemAnalysis.DrawDowns;
 using System.Collections.Generic;
-using MarketOps.SystemData.Types;
 
 namespace MarketOps.Tests.SystemAnalysis.DrawDowns
 {
     [TestFixture]
     public class DrawDownsCalculatorTests
     {
-        private List<SystemValue> CreateInput(float[] values) =>
-            Enumerable
-            .Range(0, values.Length)
-            .Select(i => new SystemValue() { TS = DateTime.Now.AddDays(i), Value = values[i] })
-            .ToList();
-
-        private void CheckOutput(List<SystemDrawDown> output, Tuple<float, float>[] expectedDDs)
+        private class DrawDown
         {
-            output.Count.ShouldBe(expectedDDs.Length);
-            for (int i = 0; i < expectedDDs.Length; i++)
-            {
-                output[i].TopValue.Value.ShouldBe(expectedDDs[i].Item1);
-                output[i].BottomValue.Value.ShouldBe(expectedDDs[i].Item2);
-            }
+            public int StartIndex;
+            public int LastIndex;
+            public int BottomIndex;
+            public float TopValue;
+            public float BottomValue;
         }
 
-        [Test]
-        public void Calculate_EmptyList__ReturnsEmptyList()
-        {
-            DrawDownsCalculator.Calculate(new List<SystemValue>()).ShouldBeEmpty();
-        }
+        private List<DrawDown> _drawDowns;
 
-        [Test]
-        public void Calculate_OneElement__ReturnsEmptyList()
-        {
-            DrawDownsCalculator.Calculate(CreateInput(new float[] { 1 })).ShouldBeEmpty();
-        }
-
-        [Test]
-        public void Calculate_EqualValues__ReturnsEmptyList()
-        {
-            DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 1, 1 })).ShouldBeEmpty();
-        }
-
-        [Test]
-        public void Calculate_RaisingValues__ReturnsEmptyList()
-        {
-            DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 4 })).ShouldBeEmpty();
-        }
-
-        [Test]
-        public void Calculate_FallingValues__ReturnsOneElement()
-        {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 4, 3, 2, 1 })),
-                new Tuple<float, float>[]
+        private void OnDrawDown(int startIndex, int lastIndex, int bottomIndex, float topValue, float bottomValue) =>
+            _drawDowns.Add(
+                new DrawDown()
                 {
-                    Tuple.Create(4f, 1f)
+                    StartIndex = startIndex,
+                    LastIndex = lastIndex,
+                    BottomIndex = bottomIndex,
+                    TopValue = topValue,
+                    BottomValue = bottomValue
                 });
+
+        [SetUp]
+        public void SetUp()
+        {
+            _drawDowns = new List<DrawDown>();
         }
 
         [Test]
-        public void Calculate_TwoDDs__ReturnsTwoDDs()
+        public void Calculate_EmptyArray__DoesNotReturnAnyDD()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 4, 3, 2, 6, 7, 8, 7, 5, 1, 3 })),
-                new Tuple<float, float>[]
-                {
-                    Tuple.Create(4f, 2f),
-                    Tuple.Create(8f, 1f),
-                });
+            DrawDownsCalculator.Calculate(new float[0], OnDrawDown);
+
+            _drawDowns.ShouldBeEmpty();
         }
 
         [Test]
-        public void Calculate_SawShapedFall__ReturnsCorrectly()
+        public void Calculate_DDExists_NoCallback__DoesNotReturnAnyDD()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 10, 9, 5, 6, 7, 8, 9, 6, 5, 4, 3 })),
-                new Tuple<float, float>[]
-                {
-                    Tuple.Create(10f, 3f)
-                });
+            DrawDownsCalculator.Calculate(new float[] { 10, 9, 8 }, null);
+
+            _drawDowns.ShouldBeEmpty();
         }
 
         [Test]
-        public void Calculate_SawShapedRaise__ReturnsCorrectly()
+        public void Calculate_OneItem__DoesNotReturnAnyDD()
         {
-            CheckOutput(DrawDownsCalculator.Calculate(CreateInput(new float[] { 1, 2, 3, 5, 4, 3, 4, 5, 6, 7, 10, 9, 8 })),
-                new Tuple<float, float>[]
-                {
-                    Tuple.Create(5f, 3f),
-                    Tuple.Create(10f, 8f),
-                });
+            DrawDownsCalculator.Calculate(new float[] { 1 }, OnDrawDown);
+
+            _drawDowns.ShouldBeEmpty();
+        }
+
+        [TestCase(new float[] { 1, 1, 1 })]
+        [TestCase(new float[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new float[] { 1, 2, 3, 3, 3 })]
+        [TestCase(new float[] { 1, 1, 2, 3, 3 })]
+        public void Calculate_AllNotDown__DoesNotReturnAnyDD(float[] data)
+        {
+            DrawDownsCalculator.Calculate(data, OnDrawDown);
+
+            _drawDowns.ShouldBeEmpty();
+        }
+
+        [TestCase(new float[] { 10, 9, 8, 7, 6 }, 0, 4, 4, 10, 6)]
+        [TestCase(new float[] { 10, 9, 8, 7, 6, 7, 8, 9 }, 0, 7, 4, 10, 6)]
+        [TestCase(new float[] { 10, 9, 8, 7, 8, 9, 8, 9 }, 0, 7, 3, 10, 7)]
+        [TestCase(new float[] { 10, 9, 8, 7, 8, 9, 10, 10 }, 0, 5, 3, 10, 7)]
+        [TestCase(new float[] { 10, 10, 8, 7, 8, 9, 10, 10 }, 1, 5, 3, 10, 7)]
+        public void Calculate_OneDD__ReturnsOneDD(float[] data, 
+            int expectedStartIndex, int expectedLastIndex, int expectedBottomIndex, float expectedTopValue, float expectedBottomVale)
+        {
+            DrawDownsCalculator.Calculate(data, OnDrawDown);
+
+            _drawDowns.Count.ShouldBe(1);
+            CheckDD(0, expectedStartIndex, expectedLastIndex, expectedBottomIndex, expectedTopValue, expectedBottomVale);
+        }
+
+        [TestCase(new float[] { 10, 9, 8, 9, 11, 10, 9, 8 }, 0, 3, 2, 10, 8, 4, 7, 7, 11, 8)]
+        [TestCase(new float[] { 10, 9, 8, 9, 11, 10, 9, 7, 12, 13 }, 0, 3, 2, 10, 8, 4, 7, 7, 11, 7)]
+        public void Calculate_TwoDDs__ReturnsTwoDDs(float[] data,
+            int expectedStartIndex, int expectedLastIndex, int expectedBottomIndex, float expectedTopValue, float expectedBottomVale,
+            int expectedStartIndex2, int expectedLastIndex2, int expectedBottomIndex2, float expectedTopValue2, float expectedBottomVale2)
+        {
+            DrawDownsCalculator.Calculate(data, OnDrawDown);
+
+            _drawDowns.Count.ShouldBe(2);
+            CheckDD(0, expectedStartIndex, expectedLastIndex, expectedBottomIndex, expectedTopValue, expectedBottomVale);
+            CheckDD(1, expectedStartIndex2, expectedLastIndex2, expectedBottomIndex2, expectedTopValue2, expectedBottomVale2);
+        }
+
+        private void CheckDD(int index, int expectedStartIndex, int expectedLastIndex, int expectedBottomIndex, float expectedTopValue, float expectedBottomVale)
+        {
+            _drawDowns[index].StartIndex.ShouldBe(expectedStartIndex);
+            _drawDowns[index].LastIndex.ShouldBe(expectedLastIndex);
+            _drawDowns[index].BottomIndex.ShouldBe(expectedBottomIndex);
+            _drawDowns[index].TopValue.ShouldBe(expectedTopValue);
+            _drawDowns[index].BottomValue.ShouldBe(expectedBottomVale);
         }
     }
 }

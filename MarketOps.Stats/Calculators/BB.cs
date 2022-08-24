@@ -1,29 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using MarketOps.Maths;
 
 namespace MarketOps.Stats.Calculators
 {
     /// <summary>
     /// Calculates Bollinger Bands on provided data
     /// </summary>
-    public class BB
+    public static class BB
     {
-        private bool CanCalculate(float[] data, int period, float sigmaWidht)
-        {
-            return (data.Length >= period) && (period > 0) && (sigmaWidht > 0);
-        }
+        public static BBData Calculate(float[] data, int period, float sigmaWidth) => 
+            CanCalculate(data, period, sigmaWidth)
+                ? CalculateBBData(data, period, sigmaWidth)
+                : new BBData() { SMA = new float[0], BBL = new float[0], BBH = new float[0] };
 
-        private float CalcStdDev(float[] data, float avg, int ixStart, int width)
+        private static BBData CalculateBBData(float[] data, int period, float sigmaWidth)
         {
-            float val = data.Skip(ixStart).Take(width).Sum(x => (x - avg)*(x - avg));
-            return (float) Math.Sqrt(val/(float) width);
-        }
-
-        public BBData Calculate(float[] data, int period, float sigmaWidht)
-        {
-            if (!CanCalculate(data, period, sigmaWidht))
-                return new BBData() {SMA = new float[0], BBL = new float[0], BBH = new float[0]};
-
             BBData res = new BBData();
             res.SMA = (new SMA()).Calculate(data, period);
             res.BBL = new float[res.SMA.Length];
@@ -31,12 +21,17 @@ namespace MarketOps.Stats.Calculators
 
             for (int i = 0; i < res.SMA.Length; i++)
             {
-                float stddev = CalcStdDev(data, res.SMA[i], i, period);
-                res.BBL[i] = res.SMA[i] - sigmaWidht*stddev;
-                res.BBH[i] = res.SMA[i] + sigmaWidht*stddev;
+                float stddev = StdDev.Calculate(data, res.SMA[i], i, period);
+                res.BBL[i] = res.SMA[i] - sigmaWidth * stddev;
+                res.BBH[i] = res.SMA[i] + sigmaWidth * stddev;
             }
 
             return res;
         }
+
+        private static bool CanCalculate(float[] data, int period, float sigmaWidth) => 
+            (data.Length >= period) 
+            && (period > 0) 
+            && (sigmaWidth > 0);
     }
 }

@@ -78,7 +78,7 @@ namespace MarketOps.SystemDefs.PriceCrossingSMA
                 ReversePosition = true,
                 Volume = (systemState.PositionsActive.Count > 0)
                     ? GetLastVolume(systemState)
-                    : _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice)
+                    : _signalVolumeCalculator.Calculate(systemState, _stock.Type, currentClosePrice, 0)
             };
 
         private float GetLastVolume(SystemState systemState)

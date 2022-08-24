@@ -43,7 +43,6 @@ namespace MarketOps.SystemDefs.BBTrend
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = null;
         }
     }
 }

@@ -1,30 +1,24 @@
 ﻿using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using System;
 
 namespace MarketOps.SystemExecutor.MM
 {
     /// <summary>
     /// Returns volume for all available cash.
     /// </summary>
-    public class MMSignalVolumeForAllCash : IMMSignalVolume
+    public class MMSignalVolumeForAllCash : MMSignalVolumeBase, IMMSignalVolume
     {
-        private readonly ICommission _commission;
-
         public MMSignalVolumeForAllCash(ICommission commission)
-        {
-            _commission = commission;
-        }
+            : base(commission)
+        { }
 
-        public float Calculate(SystemState systemState, StockType stockType, float price)
+        public float Calculate(SystemState systemState, StockType stockType, float price, float initialRisk)
         {
-            float res = (float)Math.Floor(systemState.Cash / price);
-            if (res <= 0) return 0;
-            float commission = _commission.Calculate(stockType, res, price);
+            float volume = CalculateVolume(systemState.Cash, price);
+            if (volume <= 0) return 0;
 
-            if (res * price + commission <= systemState.Cash) return res;
-            return res - (float)Math.Ceiling(commission / price);
+            return CorrectVolumeForAvailableCash(volume, price, CalculateCommission(stockType, price, volume), systemState.Cash);
         }
     }
 }

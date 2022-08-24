@@ -1,5 +1,6 @@
 ﻿using MarketOps.SystemAnalysis.DrawDowns;
 using MarketOps.SystemAnalysis.Equity;
+using MarketOps.SystemAnalysis.R;
 using MarketOps.SystemData.Types;
 using System;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             ProcessWinsLosses(summary, systemState);
             CalculateDrawDowns(summary, systemState);
             CalculateEquityDistribution(summary, systemState);
+            CalculateRProfit(summary, systemState);
             return summary;
         }
 
@@ -33,7 +35,8 @@ namespace MarketOps.SystemAnalysis.SystemSummary
             summary.FinalValueOnClosedPositions = systemState.ClosedPositionsEquity.LastOrDefault().Value;
 
             double yearsOfSim = (summary.StopTS - summary.StartTS).TotalDays / 365.0;
-            summary.CummYProfitPcntOnTicks = (float)Math.Pow(summary.FinalValueOnLastTick / summary.InitialValue, 1 / yearsOfSim) - 1f;
+            summary.CummYProfitPcntOnTicks = (float)CummulativeProfit.Calculate(summary.InitialValue, summary.FinalValueOnLastTick, yearsOfSim);
+            summary.TransactionsPerYear = (int)Math.Floor(systemState.PositionsClosed.Count / yearsOfSim);
         }
 
         private static void ProcessWinsLosses(SystemStateSummary summary, SystemState systemState) => 
@@ -41,13 +44,17 @@ namespace MarketOps.SystemAnalysis.SystemSummary
 
         private static void CalculateDrawDowns(SystemStateSummary summary, SystemState systemState)
         {
-            summary.DDTicks = DrawDownsCalculator.Calculate(systemState.Equity);
-            summary.DDClosedPositions = DrawDownsCalculator.Calculate(systemState.ClosedPositionsEquity);
+            SystemDrawDownsCalculator calculator = new SystemDrawDownsCalculator();
+            summary.DDTicks = calculator.Calculate(systemState.Equity);
+            summary.DDClosedPositions = calculator.Calculate(systemState.ClosedPositionsEquity);
         }
 
         private static void CalculateEquityDistribution(SystemStateSummary summary, SystemState systemState)
         {
             summary.EquityDistribution = EquityDistributionCalculator.Calculate(systemState.Equity);
         }
+
+        private static void CalculateRProfit(SystemStateSummary summary, SystemState systemState) =>
+            RProfitCalculator.Calculate(summary, systemState);
     }
 }

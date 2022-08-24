@@ -42,11 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>Properties\VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\DrawDownsExtensions.cs" />
+    <Compile Include="Extensions\FloatExtensions.cs" />
     <Compile Include="Extensions\ISystemDataLoaderExtensions.cs" />
     <Compile Include="Extensions\MoneyValueExtensions.cs" />
     <Compile Include="Extensions\PositionDirExtensions.cs" />
     <Compile Include="Extensions\PositionExtensions.cs" />
+    <Compile Include="Extensions\SystemCapitalUsageCalculator.cs" />
     <Compile Include="Extensions\SystemStateExtensions.cs" />
     <Compile Include="Extensions\SystemValueCalculator.cs" />
     <Compile Include="Interfaces\ICommission.cs" />
@@ -65,7 +71,9 @@
     <Compile Include="Types\Position.cs" />
     <Compile Include="Types\PositionCloseMode.cs" />
     <Compile Include="Types\PositionDir.cs" />
+    <Compile Include="Types\RProfitDistribution.cs" />
     <Compile Include="Types\Signal.cs" />
+    <Compile Include="Types\SignalInitialStopMode.cs" />
     <Compile Include="Types\SignalType.cs" />
     <Compile Include="Types\SystemConfiguration.cs" />
     <Compile Include="Types\SystemDataDefinition.cs" />

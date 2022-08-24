@@ -12,6 +12,14 @@ namespace MarketOps.Stats.Stats
     {
         public StatRangeChangePcnt(string chartArea) : base(chartArea) { }
 
+        public override void Calculate(StockPricesData data)
+        {
+            _data[StatRangeChangePcntData.RangeChange] = RangeChangePcnt.Calculate(data.C, _statParams.Get(StatRangeChangePcntParams.Range).As<int>());
+        }
+
+        protected override int GetBackBufferLength() => 
+            _statParams.Get(StatRangeChangePcntParams.Range).As<int>();
+
         protected override void InitializeData()
         {
             _name = "RangeChangePcnt";
@@ -23,16 +31,6 @@ namespace MarketOps.Stats.Stats
         protected override void InitializeStatParams()
         {
             _statParams.Set(StatRangeChangePcntParams.Range, 12);
-        }
-
-        protected override int GetBackBufferLength()
-        {
-            return _statParams.Get(StatRangeChangePcntParams.Range).As<int>();
-        }
-
-        public override void Calculate(StockPricesData data)
-        {
-            _data[StatRangeChangePcntData.RangeChange] = (new RangeChangePcnt()).Calculate(data.C, _statParams.Get(StatRangeChangePcntParams.Range).As<int>());
         }
     }
 }

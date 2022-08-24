@@ -40,7 +40,6 @@ namespace MarketOps.SystemDefs.SimplexFunds
             _signalGeneratorOnClose = signals;
             //_commission = null;
             //_slippage = null;
-            _mmPositionCloseCalculator = null;
         }
     }
 }

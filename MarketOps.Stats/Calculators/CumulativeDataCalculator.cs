@@ -8,11 +8,6 @@ namespace MarketOps.Stats.Calculators
     /// </summary>
     public class CumulativeDataCalculator
     {
-        private float GetInitialSum(int period, Func<int, float> getValue) =>
-            Enumerable.Range(0, period)
-            .Select(i => getValue(i))
-            .Sum();
-
         protected float[] CalculateCumulative(int dataLength, int period, Func<int, float>getValue )
         {
             float[] res = new float[dataLength - period + 1];
@@ -27,5 +22,10 @@ namespace MarketOps.Stats.Calculators
 
             return res;
         }
+
+        private float GetInitialSum(int period, Func<int, float> getValue) =>
+            Enumerable.Range(0, period)
+            .Select(i => getValue(i))
+            .Sum();
     }
 }

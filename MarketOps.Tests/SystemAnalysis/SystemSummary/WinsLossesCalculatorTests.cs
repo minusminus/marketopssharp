@@ -53,6 +53,7 @@ namespace MarketOps.Tests.SystemAnalysis.SystemSummary
             {
                 Direction = PositionDir.Long,
                 Open = 10,
+                EquityValueOnTickBeforeOpen = 1000,
                 Close = 9,
                 Volume = 1,
             }));
@@ -60,6 +61,7 @@ namespace MarketOps.Tests.SystemAnalysis.SystemSummary
             {
                 Direction = PositionDir.Long,
                 Open = 10,
+                EquityValueOnTickBeforeOpen = 1000,
                 Close = 20,
                 Volume = 1,
             });
@@ -85,9 +87,9 @@ namespace MarketOps.Tests.SystemAnalysis.SystemSummary
             _summary.SumWins.ShouldBe(10);
             _summary.SumLosses.ShouldBe(3);
             _summary.AvgWin.ShouldBe(10f);
-            _summary.AvgPcntWin.ShouldBe(1f);
+            _summary.AvgPcntWin.ShouldBe(0.01f);
             _summary.AvgLoss.ShouldBe(1f);
-            _summary.AvgPcntLoss.ShouldBe(-0.1f);
+            _summary.AvgPcntLoss.ShouldBe(-0.001f);
             _summary.AvgWinLossRatio.ShouldBe(10f);
             _summary.ExpectedPositionValue.ShouldBe(1.75f);
         }

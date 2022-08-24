@@ -1,4 +1,5 @@
-﻿using MarketOps.StockData.Interfaces;
+﻿using MarketOps.Maths;
+using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
 using System;
@@ -13,9 +14,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
         public static void Initialize(SimplexFundsData data, string[] fundsNames, IStockDataProvider dataProvider)
         {
             for (int i = 0; i < fundsNames.Length; i++)
-            {
                 data.Stocks[i] = dataProvider.GetStockDefinition(fundsNames[i]);
-            }
         }
 
         public static void Calculate(SimplexFundsData data, DateTime ts, int profitRange, int changeRange, StockDataRange dataRange, ISystemDataLoader dataLoader)
@@ -45,7 +44,7 @@ namespace MarketOps.SystemDefs.SimplexFunds
             double sum = 0;
             for (int i = 0; i < range; i++)
             {
-                double change = ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]);
+                double change = ChangeInPercent.Calculate(tbl[startIndex - i], tbl[startIndex - i - 1]);
                 if (operation != null)
                     change = operation(change);
                 sum += change;
@@ -58,12 +57,10 @@ namespace MarketOps.SystemDefs.SimplexFunds
             double sum = 0;
             for (int i = 0; i < range; i++)
             {
-                double value = Math.Abs(ChangeInPercent(tbl[startIndex - i], tbl[startIndex - i - 1]));
-                sum += (avgValue - value) * (avgValue - value);
+                double value = Math.Abs(ChangeInPercent.Calculate(tbl[startIndex - i], tbl[startIndex - i - 1]));
+                sum += (value - avgValue) * (value - avgValue);
             }
             return (double)Math.Sqrt(sum / (double)range);
         }
-
-        private static double ChangeInPercent(double current, double prev) => (prev != 0) ? (current - prev) / prev : 0;
     }
 }

@@ -42,15 +42,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="CummulativeProfit.cs" />
     <Compile Include="DrawDowns\DrawDownsCalculator.cs" />
+    <Compile Include="DrawDowns\SystemDrawDownsCalculator.cs" />
     <Compile Include="Equity\EquityDistributionCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloCalculator.cs" />
+    <Compile Include="MonteCarlo\MonteCarloConsts.cs" />
+    <Compile Include="MonteCarlo\MonteCarloMaxDrawDownCalculator.cs" />
     <Compile Include="MonteCarlo\MonteCarloResult.cs" />
+    <Compile Include="MonteCarlo\MonteCarloDataGenerator.cs" />
+    <Compile Include="MonteCarlo\MonteCarloAnalyzer.cs" />
+    <Compile Include="MonteCarlo\MonteCarloStreakData.cs" />
+    <Compile Include="MonteCarlo\MonteCarloStreaksCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="R\RProfitCalculator.cs" />
     <Compile Include="SystemSummary\SystemStateSummaryCalculator.cs" />
     <Compile Include="SystemSummary\WinsLossesCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6b571f05-d6c9-489e-b432-77bc2410f460}</Project>
+      <Name>MarketOps.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.SystemData\MarketOps.SystemData.csproj">
       <Project>{1719a4ed-27a2-44b0-9f75-a61e0ff26a3d}</Project>
       <Name>MarketOps.SystemData</Name>

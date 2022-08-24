@@ -267,6 +267,7 @@ namespace MarketOps
             DisplaySummary(summary);
             ShowPositions(systemState);
             ShowEquityCharts(systemState);
+            ShowRCharts(systemState, summary);
             ShowDDCharts(summary);
             ShowProfitCharts(systemState);
         }
@@ -281,6 +282,7 @@ namespace MarketOps
             lblSDRFinalValueOnClosedPositions.Text = summary.FinalValueOnClosedPositions.ToDisplay();
             lblSDRFinalValueOnLastTick.Text = summary.FinalValueOnLastTick.ToDisplay();
             lblSDRProfitPcntOnTicks.Text = summary.CummYProfitPcntOnTicks.ToDisplayPcnt();
+            lblSDRTransactionsPerYear.Text = $"{summary.TransactionsPerYear}";
 
             lblSDRClosedPositionsCount.Text = summary.ClosedPositionsCount.ToDisplay();
             lblSDRWins.Text = summary.Wins.ToDisplay();
@@ -296,6 +298,9 @@ namespace MarketOps
             lblSDRAvgWinLossRatio.Text = summary.AvgLoss != 0 ? summary.AvgWinLossRatio.ToDisplay() : "---";
             lblSDRExpectedUnitReturn.Text = summary.AvgLoss != 0 ? summary.ExpectedUnitReturn.ToDisplay() : "---";
             lblSDRExpectedPositionValue.Text = summary.AvgLoss != 0 ? summary.ExpectedPositionValue.ToDisplay() : "---";
+            lblSDRRProfitAvg.Text = summary.AvgRProfit.ToDisplay();
+            lblSDRRProfitStdDev.Text = summary.StdDevRProfit.ToDisplay();
+            lblSDRRProfitAvgToStdDev.Text = summary.RProfitAvgToStdDev.ToDisplay();
 
             lblSDRMaxDDOnTicks.Text = summary.DDTicks.MaxDD().ToDisplayPcnt();
             lblSDRMaxDDOnPositions.Text = summary.DDClosedPositions.MaxDD().ToDisplayPcnt();
@@ -306,6 +311,7 @@ namespace MarketOps
             edtMonteCarloWinProb.Value = (decimal)summary.WinProbability;
             edtMonteCarloAvgPcntWin.Value = (decimal)(100f * summary.AvgPcntWin);
             edtMonteCarloAvgPcntLoss.Value = (decimal)(100f * summary.AvgPcntLoss);
+            edtMonteCarloTransactionsPerYear.Value = (decimal)(summary.TransactionsPerYear >= 1 ? summary.TransactionsPerYear : 1);
         }
 
         private void ShowPositions(SystemState systemState)
@@ -315,8 +321,17 @@ namespace MarketOps
 
         private void ShowEquityCharts(SystemState systemState)
         {
-            chartEquity.LoadData(systemState.Equity);
-            chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity);
+            chartEquity.LoadData(systemState.Equity, systemState.EquityCapitalUsage);
+            chartEquityOnPositions.LoadData(systemState.ClosedPositionsEquity, null);
+        }
+
+        private void ShowRCharts(SystemState systemState, SystemStateSummary summary)
+        {
+            const string SimulationRProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
+            const string SimulationRProfitDistributionValueTooltipFormat = "#VALX{N2}, Count: #VAL";
+
+            chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat);
+            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), SimulationRProfitDistributionValueTooltipFormat);
         }
 
         private void ShowDDCharts(SystemStateSummary summary)
@@ -393,11 +408,22 @@ namespace MarketOps
                 (int)edtMonteCarloLength.Value,
                 (float)edtMonteCarloWinProb.Value,
                 (float)edtMonteCarloAvgPcntWin.Value / 100f,
-                -(float)edtMonteCarloAvgPcntLoss.Value / 100f
+                -(float)edtMonteCarloAvgPcntLoss.Value / 100f,
+                (int)edtMonteCarloTransactionsPerYear.Value
                 );
+
             lblMonteCarloSimWins.Text = $"{result.Wins} ({result.WinsPcnt.ToDisplayPcnt()})";
             lblMonteCarloSimLosses.Text = $"{result.Losses} ({result.LossesPcnt.ToDisplayPcnt()})";
+            lblMonteCarloSimBest.Text = $"{result.BestCase.ToDisplay()} ({result.BestCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimWorst.Text = $"{result.WorstCase.ToDisplay()} ({result.WorstCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimAvg.Text = $"{result.AverageCase.ToDisplay()} ({result.AverageCaseYPcnt.ToDisplayPcnt()} Ycumm.)";
+            lblMonteCarloSimMaxDD.Text = $"{result.MaxDrawDown.ToDisplayPcnt()}";
+            lblMonteCarloSimLongestDD.Text = $"{result.LongestDrawDown} ticks";
+            lblMonteCarloSimLongestLosingStreak.Text = $"{(result.LosingStreaks.Count > 0 ? result.LosingStreaks.Last().Length : 0)}";
+            lblMonteCarloSimLongestWinningStreak.Text = $"{(result.WinningStreaks.Count > 0 ? result.WinningStreaks.Last().Length : 0)}";
             chartMonteCarloData.LoadData(result);
+            chartMonteCarloStreaksLosing.LoadData(result.LosingStreaks);
+            chartMonteCarloStreaksWinning.LoadData(result.WinningStreaks);
         }
     }
 }

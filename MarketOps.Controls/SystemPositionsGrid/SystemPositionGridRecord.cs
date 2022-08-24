@@ -21,6 +21,8 @@ namespace MarketOps.Controls.SystemPositionsGrid
         public float Volume { get; }
         public int Ticks { get; }
         public float Profit { get; }
+        public float R { get; }
+        public float RProfit { get; }
 
         public readonly Position Position;
 
@@ -40,6 +42,8 @@ namespace MarketOps.Controls.SystemPositionsGrid
             Volume = pos.Volume;
             Ticks = pos.TicksActive;
             Profit = pos.Value();
+            R = pos.R;
+            RProfit = pos.RProfit;
         }
     }
 }

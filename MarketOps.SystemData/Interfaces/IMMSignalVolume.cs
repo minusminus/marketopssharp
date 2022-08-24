@@ -8,6 +8,6 @@ namespace MarketOps.SystemData.Interfaces
     /// </summary>
     public interface IMMSignalVolume
     {
-        float Calculate(SystemState systemState, StockType stockType, float price);
+        float Calculate(SystemState systemState, StockType stockType, float price, float initialRisk);
     }
 }

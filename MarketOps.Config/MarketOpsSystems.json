@@ -95,5 +95,116 @@
     "ClassLibrary": "MarketOps.SystemDefs.dll",
     "ParamsDefaults": [
     ]
+  },
+  {
+    "Description": "LongBBTrend Stocks",
+    "ClassName": "MarketOps.SystemDefs.LongBBTrendStocks.LongBBTrendStocks",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "SANPL"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
+  },
+  {
+    "Description": "LongBBTrend Multi Stocks",
+    "ClassName": "MarketOps.SystemDefs.LongBBTrendStocks.LongBBTrendMultiStocks",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
+  },
+  {
+    "Description": "LongBBTrend FW20",
+    "ClassName": "MarketOps.SystemDefs.LongBBTrendStocks.LongBBTrendFW20",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "FW20"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
+  },
+  {
+    "Description": ".StrongBBTrend Stocks MW",
+    "ClassName": "MarketOps.SystemDefs.StrongBBTrendStocks.StrongBBTrendStocksMW",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
+  },
+  {
+    "Description": "StrongBBTrend Stocks MD",
+    "ClassName": "MarketOps.SystemDefs.StrongBBTrendStocks.StrongBBTrendStocksMD",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+      {
+        "Param": "StockName",
+        "Value": "KGHM"
+      },
+      {
+        "Param": "BB period",
+        "Value": "5"
+      },
+      {
+        "Param": "BB sigma width",
+        "Value": "2"
+      },
+      {
+        "Param": "ATR width",
+        "Value": "10"
+      }
+    ]
   }
 ]

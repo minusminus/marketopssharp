@@ -1,59 +1,73 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MarketOps.SystemData.Types;
-
-namespace MarketOps.SystemAnalysis.DrawDowns
+﻿namespace MarketOps.SystemAnalysis.DrawDowns
 {
     /// <summary>
-    /// System drawdowns calculator.
-    /// Drawdown is active until next value is higher then its top
+    /// Calculates drawdown with flooding algorithm.
+    /// Drawdown is active until next value is higher then its top.
+    /// Callsback on finished drawdown.
     /// </summary>
-    public static class DrawDownsCalculator
+    internal static class DrawDownsCalculator
     {
-        public static List<SystemDrawDown> Calculate(List<SystemValue> equity)
-        {
-            if (equity.Count <= 1) return new List<SystemDrawDown>();
+        public delegate void OnDrawDown(int startIndex, int lastIndex, int bottomIndex, float topValue, float bottomValue);
 
-            SystemValue lastValue = equity[0];
-            SystemDrawDown lastDD = null;
-            return equity
-                .Skip(1)
-                .Select(currValue => ProcessSystemValue(currValue, ref lastValue, ref lastDD))
-                .Where(o => o != null)
-                .ToList();
+        private class DrawDownInfo
+        {
+            public int StartIndex;
+            public int LastIndex;
+            public int BottomIndex;
+            public float TopValue;
+            public float BottomValue;
         }
 
-        private static SystemDrawDown ProcessSystemValue(SystemValue currValue, ref SystemValue lastValue, ref SystemDrawDown lastDD)
+        public static void Calculate(float[] data, OnDrawDown onDrawDown)
         {
-            SystemDrawDown currDD = UpdateDD(CreateNewDDIfRequired(CloseDDIfRequired(lastDD, currValue), currValue, lastValue), currValue);
-            lastValue = currValue;
-            if ((currDD == null) || (currDD == lastDD)) return null;
-            lastDD = currDD;
-            return currDD;
+            if (data.Length == 0) return;
+
+            DrawDownInfo ddInfo = new DrawDownInfo();
+            StartNewDrawDown(ddInfo, 0, data[0]);
+            ProcessData(data, onDrawDown, ddInfo);
+            CallOnFinishedDrawDown(ddInfo, onDrawDown);
         }
 
-        private static SystemDrawDown CloseDDIfRequired(SystemDrawDown currDD, SystemValue currValue) =>
-            (currDD?.TopValue.Value < currValue.Value) ? null : currDD;
-
-        private static SystemDrawDown CreateNewDDIfRequired(SystemDrawDown currDD, SystemValue currValue, SystemValue lastValue) => 
-            (currDD == null) && (currValue.Value < lastValue.Value) ? CreateNewDD(lastValue, currValue) : currDD;
-
-        private static SystemDrawDown UpdateDD(SystemDrawDown currDD, SystemValue currValue)
+        private static void ProcessData(float[] data, OnDrawDown onDrawDown, DrawDownInfo ddInfo)
         {
-            if (currDD == null) return null;
-            if (currDD.BottomValue.Value > currValue.Value)
-                currDD.BottomValue = currValue;
-            currDD.LastTS = currValue.TS;
-            currDD.Ticks++;
-            return currDD;
+            for (int i = 1; i < data.Length; i++)
+                ProcessValue(i, data[i], ddInfo, onDrawDown);
         }
 
-        private static SystemDrawDown CreateNewDD(SystemValue lastValue, SystemValue currValue) =>
-            new SystemDrawDown()
+        private static void ProcessValue(int currentIndex, float currentValue, DrawDownInfo ddInfo, OnDrawDown onDrawDown)
+        {
+            if (ddInfo.TopValue > currentValue)
+                UpdateCurrentDrawDown(ddInfo, currentIndex, currentValue);
+            else
             {
-                TopValue = lastValue,
-                BottomValue = currValue,
-                Ticks = 0
-            };
+                CallOnFinishedDrawDown(ddInfo, onDrawDown);
+                StartNewDrawDown(ddInfo, currentIndex, currentValue);
+            }
+        }
+
+        private static void StartNewDrawDown(DrawDownInfo ddInfo, int startIndex, float value)
+        {
+            ddInfo.StartIndex = startIndex;
+            ddInfo.BottomIndex = startIndex;
+            ddInfo.LastIndex = -1;
+            ddInfo.TopValue = value;
+            ddInfo.BottomValue = value;
+        }
+
+        private static void UpdateCurrentDrawDown(DrawDownInfo ddInfo, int currentIndex, float currentValue)
+        {
+            ddInfo.LastIndex = currentIndex;
+            if (ddInfo.BottomValue > currentValue)
+            {
+                ddInfo.BottomIndex = currentIndex;
+                ddInfo.BottomValue = currentValue;
+            }
+        }
+
+        private static void CallOnFinishedDrawDown(DrawDownInfo ddInfo, OnDrawDown onDrawDown)
+        {
+            if (ddInfo.LastIndex == -1) return;
+            onDrawDown?.Invoke(ddInfo.StartIndex, ddInfo.LastIndex, ddInfo.BottomIndex, ddInfo.TopValue, ddInfo.BottomValue);
+        }
     }
 }

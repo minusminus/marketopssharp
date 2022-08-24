@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -37,6 +36,8 @@
             this.StockName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Dir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Profit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.R = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RProfit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TSOpen = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Open = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OpenCommission = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,9 +46,7 @@
             this.CloseCommission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ticks = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.srcPositions = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).BeginInit();
             this.SuspendLayout();
             // 
             // dbgPositions
@@ -55,13 +54,14 @@
             this.dbgPositions.AllowUserToAddRows = false;
             this.dbgPositions.AllowUserToDeleteRows = false;
             this.dbgPositions.AllowUserToResizeRows = false;
-            this.dbgPositions.AutoGenerateColumns = false;
             this.dbgPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dbgPositions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.LP,
             this.StockName,
             this.Dir,
             this.Profit,
+            this.R,
+            this.RProfit,
             this.TSOpen,
             this.Open,
             this.OpenCommission,
@@ -70,7 +70,6 @@
             this.CloseCommission,
             this.Volume,
             this.Ticks});
-            this.dbgPositions.DataSource = this.srcPositions;
             this.dbgPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dbgPositions.Location = new System.Drawing.Point(0, 0);
             this.dbgPositions.Name = "dbgPositions";
@@ -88,6 +87,7 @@
             this.dbgPositions.Size = new System.Drawing.Size(1085, 274);
             this.dbgPositions.TabIndex = 0;
             this.dbgPositions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dbgPositions_CellDoubleClick);
+            this.dbgPositions.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dbgPositions_RowPrePaint);
             // 
             // LP
             // 
@@ -124,6 +124,22 @@
             this.Profit.Name = "Profit";
             this.Profit.ReadOnly = true;
             this.Profit.Width = 70;
+            // 
+            // R
+            // 
+            this.R.DataPropertyName = "R";
+            this.R.HeaderText = "R value";
+            this.R.Name = "R";
+            this.R.ReadOnly = true;
+            this.R.Width = 70;
+            // 
+            // RProfit
+            // 
+            this.RProfit.DataPropertyName = "RProfit";
+            this.RProfit.HeaderText = "R profit";
+            this.RProfit.Name = "RProfit";
+            this.RProfit.ReadOnly = true;
+            this.RProfit.Width = 50;
             // 
             // TSOpen
             // 
@@ -195,7 +211,6 @@
             this.Name = "SystemPositionsGrid";
             this.Size = new System.Drawing.Size(1085, 274);
             ((System.ComponentModel.ISupportInitialize)(this.dbgPositions)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.srcPositions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -203,11 +218,12 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dbgPositions;
-        private System.Windows.Forms.BindingSource srcPositions;
         private System.Windows.Forms.DataGridViewTextBoxColumn LP;
         private System.Windows.Forms.DataGridViewTextBoxColumn StockName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dir;
         private System.Windows.Forms.DataGridViewTextBoxColumn Profit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn R;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RProfit;
         private System.Windows.Forms.DataGridViewTextBoxColumn TSOpen;
         private System.Windows.Forms.DataGridViewTextBoxColumn Open;
         private System.Windows.Forms.DataGridViewTextBoxColumn OpenCommission;

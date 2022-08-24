@@ -45,6 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\VersionInfo\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
     <Compile Include="Commission\CommissionNone.cs" />
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
     <Compile Include="Extensions\VolumeExtensions.cs" />
@@ -52,8 +55,12 @@
     <Compile Include="MM\MMCloseCalculatorNone.cs" />
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnClose.cs" />
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnOpen.cs" />
+    <Compile Include="MM\MMSignalVolumeBase.cs" />
+    <Compile Include="MM\MMSignalVolumeByTakenRiskPercent.cs" />
     <Compile Include="MM\MMSignalVolumeForAllCash.cs" />
+    <Compile Include="MM\MMSignalVolumeForSystemValuePercent.cs" />
     <Compile Include="MM\MMSignalVolumeOneItem.cs" />
+    <Compile Include="MM\MMTrailingStopMinMaxOfN.cs" />
     <Compile Include="Processor\ClosePriceSelector.cs" />
     <Compile Include="Processor\ClosingPositionSelector.cs" />
     <Compile Include="Processor\OpenPriceSelector.cs" />
@@ -74,6 +81,10 @@
     <Compile Include="Processor\SystemProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketOps.Math\MarketOps.Maths.csproj">
+      <Project>{6b571f05-d6c9-489e-b432-77bc2410f460}</Project>
+      <Name>MarketOps.Maths</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>

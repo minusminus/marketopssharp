@@ -7,20 +7,20 @@ using MarketOps.StockData.Extensions;
 namespace MarketOps.Tests.StockData
 {
     [TestFixture]
-    public class StockPricesDataFindByTSTests
+    public class StockPricesDataExtensionsTests
     {
         private readonly DateTime TestStartTS = DateTime.Now;
-        const int TESTDATALEN = 3;
+        private const int TestDataLength = 3;
 
         private StockPricesData CreateTestObj()
         {
             StockPricesData res = new StockPricesData(3);
-            Array.Copy(new float[TESTDATALEN] { 10, 20, 30 }, res.O, TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 100, 200, 300 }, res.H, TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 1, 2, 3 }, res.L, TESTDATALEN);
-            Array.Copy(new float[TESTDATALEN] { 10, 20, 30 }, res.C, TESTDATALEN);
-            Array.Copy(new long[TESTDATALEN] { 1, 2, 3 }, res.V, TESTDATALEN);
-            Array.Copy(new DateTime[TESTDATALEN] { TestStartTS.AddDays(-2), TestStartTS.AddDays(-1), TestStartTS }, res.TS, TESTDATALEN);
+            Array.Copy(new float[TestDataLength] { 10, 20, 30 }, res.O, TestDataLength);
+            Array.Copy(new float[TestDataLength] { 100, 200, 300 }, res.H, TestDataLength);
+            Array.Copy(new float[TestDataLength] { 1, 2, 3 }, res.L, TestDataLength);
+            Array.Copy(new float[TestDataLength] { 10, 20, 30 }, res.C, TestDataLength);
+            Array.Copy(new long[TestDataLength] { 1, 2, 3 }, res.V, TestDataLength);
+            Array.Copy(new DateTime[TestDataLength] { TestStartTS.AddDays(-2), TestStartTS.AddDays(-1), TestStartTS }, res.TS, TestDataLength);
             return res;
         }
 
@@ -28,9 +28,9 @@ namespace MarketOps.Tests.StockData
         public void FindByTS_ValuesOnList__ReturnsItemIndex()
         {
             StockPricesData d = CreateTestObj();
-            d.FindByTS(TestStartTS).ShouldBe(TESTDATALEN - 1, "last");
-            d.FindByTS(TestStartTS.AddDays(-1)).ShouldBe(TESTDATALEN - 2, "mid");
-            d.FindByTS(TestStartTS.AddDays(-2)).ShouldBe(TESTDATALEN - 3, "first");
+            d.FindByTS(TestStartTS).ShouldBe(TestDataLength - 1, "last");
+            d.FindByTS(TestStartTS.AddDays(-1)).ShouldBe(TestDataLength - 2, "mid");
+            d.FindByTS(TestStartTS.AddDays(-2)).ShouldBe(TestDataLength - 3, "first");
         }
 
         [Test]
@@ -55,9 +55,9 @@ namespace MarketOps.Tests.StockData
         public void FindByTSGE_ValueOnList__ReturnsItemIndex()
         {
             StockPricesData d = CreateTestObj();
-            d.FindByTSGE(TestStartTS).ShouldBe(TESTDATALEN - 1, "last");
-            d.FindByTSGE(TestStartTS.AddDays(-1)).ShouldBe(TESTDATALEN - 2, "mid");
-            d.FindByTSGE(TestStartTS.AddDays(-2)).ShouldBe(TESTDATALEN - 3, "first");
+            d.FindByTSGE(TestStartTS).ShouldBe(TestDataLength - 1, "last");
+            d.FindByTSGE(TestStartTS.AddDays(-1)).ShouldBe(TestDataLength - 2, "mid");
+            d.FindByTSGE(TestStartTS.AddDays(-2)).ShouldBe(TestDataLength - 3, "first");
         }
 
         [Test]
@@ -82,9 +82,9 @@ namespace MarketOps.Tests.StockData
         public void FindByTSLE_ValueOnList__ReturnsItemIndex()
         {
             StockPricesData d = CreateTestObj();
-            d.FindByTSLE(TestStartTS).ShouldBe(TESTDATALEN - 1, "last");
-            d.FindByTSLE(TestStartTS.AddDays(-1)).ShouldBe(TESTDATALEN - 2, "mid");
-            d.FindByTSLE(TestStartTS.AddDays(-2)).ShouldBe(TESTDATALEN - 3, "first");
+            d.FindByTSLE(TestStartTS).ShouldBe(TestDataLength - 1, "last");
+            d.FindByTSLE(TestStartTS.AddDays(-1)).ShouldBe(TestDataLength - 2, "mid");
+            d.FindByTSLE(TestStartTS.AddDays(-2)).ShouldBe(TestDataLength - 3, "first");
         }
 
         [Test]
@@ -103,6 +103,26 @@ namespace MarketOps.Tests.StockData
         public void FindByTSLE_ValueOutOfRangeRight_ReturnsLastIndex()
         {
             CreateTestObj().FindByTSLE(TestStartTS.AddDays(100)).ShouldBe(2);
+        }
+
+        [TestCase(2, 3, 1)]
+        [TestCase(2, 2, 2)]
+        [TestCase(1, 2, 1)]
+        [TestCase(1, 1, 2)]
+        [TestCase(0, 1, 1)]
+        public void MinOfL__ReturnsCorrectly(int startIndex, int length, float expected)
+        {
+            CreateTestObj().MinOfL(startIndex, length).ShouldBe(expected);
+        }
+
+        [TestCase(2, 3, 300)]
+        [TestCase(2, 2, 300)]
+        [TestCase(1, 2, 200)]
+        [TestCase(1, 1, 200)]
+        [TestCase(0, 1, 100)]
+        public void MaxOfH__ReturnsCorrectly(int startIndex, int length, float expected)
+        {
+            CreateTestObj().MaxOfH(startIndex, length).ShouldBe(expected);
         }
     }
 }

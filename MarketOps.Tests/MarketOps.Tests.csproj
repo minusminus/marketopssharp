@@ -164,6 +164,7 @@
     <Compile Include="SystemExecutor\Extensions\VolumeExtensionsTests.cs" />
     <Compile Include="SystemExecutor\GPW\CommissionGPWBossaTests.cs" />
     <Compile Include="SystemExecutor\GPW\GPWTickOpsTests.cs" />
+    <Compile Include="SystemExecutor\PositionsBalance\EqualRiskPositionsBalancerTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorNoneTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnCloseTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />

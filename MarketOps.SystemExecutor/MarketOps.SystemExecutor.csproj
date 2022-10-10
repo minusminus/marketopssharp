@@ -52,6 +52,7 @@
     <Compile Include="DataLoaders\BufferedDataLoader.cs" />
     <Compile Include="Extensions\VolumeExtensions.cs" />
     <Compile Include="GPW\CommissionGPWBossa.cs" />
+    <Compile Include="PositionsBalance\EqualRiskPositionsBalancer.cs" />
     <Compile Include="MM\MMCloseCalculatorNone.cs" />
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnClose.cs" />
     <Compile Include="MM\MMCloseCalculatorTicksPassedOnOpen.cs" />

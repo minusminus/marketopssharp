@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\VersionInfo\VersionInfo.cs">
-      <Link>Properties\VersionInfo.cs</Link>
+      <Link>VersionInfo.cs</Link>
     </Compile>
     <Compile Include="BBTrendFunds\BBTrendFunds.cs" />
     <Compile Include="BBTrendFunds\BBTrendFundsData.cs" />

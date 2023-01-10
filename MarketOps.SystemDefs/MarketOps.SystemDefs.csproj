@@ -72,6 +72,9 @@
     <Compile Include="LongBBTrendStocks\SignalsLongBBTrendMultiStocks.cs" />
     <Compile Include="LongBBTrendStocks\SignalsLongBBTrendStocks.cs" />
     <Compile Include="ModNCounter.cs" />
+    <Compile Include="NTopFunds\NTopFunds.cs" />
+    <Compile Include="NTopFunds\NTopFundsParams.cs" />
+    <Compile Include="NTopFunds\SignalsNTopFunds.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMA.cs" />
     <Compile Include="PriceCrossingSMA\PriceCrossingSMAParams.cs" />
     <Compile Include="PriceCrossingSMA\SignalsPriceCrossingSMA.cs" />

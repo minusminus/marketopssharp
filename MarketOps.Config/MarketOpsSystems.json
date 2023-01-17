@@ -206,5 +206,12 @@
         "Value": "10"
       }
     ]
+  },
+  {
+    "Description": "N Top Funds",
+    "ClassName": "MarketOps.SystemDefs.NTopFunds.NTopFunds",
+    "ClassLibrary": "MarketOps.SystemDefs.dll",
+    "ParamsDefaults": [
+    ]
   }
 ]

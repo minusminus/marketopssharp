@@ -67,9 +67,17 @@ namespace MarketOps.SystemDefs.NTopFunds
             NTopFundsDataCalculator.Calculate(_fundsData, ts, _avgProfitRange, _avgProfitRange, _dataRange, _dataLoader);
 
             float portfolioValue = SystemValueCalculator.Calc(systemState, ts, _dataLoader);
-
+            int[] selectedTop = GetTopN();
 
             return result;
         }
+
+        public int[] GetTopN() => 
+            _fundsNames
+                .Select((_, i) => i)
+                .Where(i => (i > 0) && _fundsData.Active[i])
+                .OrderBy(i => _fundsData.Profit[i])
+                .Take(_n)
+                .ToArray();
     }
 }

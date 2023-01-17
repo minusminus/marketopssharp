@@ -12,7 +12,7 @@ namespace MarketOps.SystemDefs.NTopFunds
         public readonly double[] Prices;
         public readonly double[] AvgChange;
         //public readonly double[] AvgChangeSigma;
-        public readonly double[] AvgProfit;
+        public readonly double[] Profit;
 
         public NTopFundsData(int length)
         {
@@ -21,7 +21,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             Prices = new double[length];
             AvgChange = new double[length];
             //AvgChangeSigma = new double[length];
-            AvgProfit = new double[length];
+            Profit = new double[length];
         }
     }
 }

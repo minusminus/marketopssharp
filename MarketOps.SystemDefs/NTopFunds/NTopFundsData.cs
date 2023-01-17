@@ -8,20 +8,20 @@ namespace MarketOps.SystemDefs.NTopFunds
     internal class NTopFundsData
     {
         public readonly StockDefinition[] Stocks;
-        //public readonly bool[] Active;
-        //public readonly double[] Prices;
-        //public readonly double[] AvgChange;
+        public readonly bool[] Active;
+        public readonly double[] Prices;
+        public readonly double[] AvgChange;
         //public readonly double[] AvgChangeSigma;
-        //public readonly double[] AvgProfit;
+        public readonly double[] AvgProfit;
 
         public NTopFundsData(int length)
         {
             Stocks = new StockDefinition[length];
-            //Active = new bool[length];
-            //Prices = new double[length];
-            //AvgChange = new double[length];
+            Active = new bool[length];
+            Prices = new double[length];
+            AvgChange = new double[length];
             //AvgChangeSigma = new double[length];
-            //AvgProfit = new double[length];
+            AvgProfit = new double[length];
         }
     }
 }

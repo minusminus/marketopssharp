@@ -23,6 +23,8 @@ namespace MarketOps.SystemDefs.NTopFunds
             _systemExecutionLogger = systemExecutionLogger;
 
             SystemParams.Set(NTopFundsParams.N, 3);
+            SystemParams.Set(NTopFundsParams.AvgProfitRange, 3);
+            SystemParams.Set(NTopFundsParams.AvgChangeRange, 3);
         }
 
         public override void Prepare()

@@ -1,6 +1,7 @@
 ﻿using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
+using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
 using System;
@@ -15,6 +16,8 @@ namespace MarketOps.SystemDefs.NTopFunds
     internal class SignalsNTopFunds : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private readonly int _n;
+        private int _avgProfitRange;
+        private int _avgChangeRange;
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
@@ -31,6 +34,8 @@ namespace MarketOps.SystemDefs.NTopFunds
         public SignalsNTopFunds(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger, MOParams systemParams)
         {
             _n = systemParams.Get(NTopFundsParams.N).As<int>();
+            _avgProfitRange = systemParams.Get(NTopFundsParams.AvgProfitRange).As<int>();
+            _avgChangeRange = systemParams.Get(NTopFundsParams.AvgChangeRange).As<int>();
 
             _dataLoader = dataLoader;
             _systemExecutionLogger = systemExecutionLogger;
@@ -58,6 +63,11 @@ namespace MarketOps.SystemDefs.NTopFunds
         public List<Signal> GenerateOnClose(DateTime ts, int leadingIndex, SystemState systemState)
         {
             List<Signal> result = new List<Signal>();
+
+            NTopFundsDataCalculator.Calculate(_fundsData, ts, _avgProfitRange, _avgProfitRange, _dataRange, _dataLoader);
+
+            float portfolioValue = SystemValueCalculator.Calc(systemState, ts, _dataLoader);
+
 
             return result;
         }

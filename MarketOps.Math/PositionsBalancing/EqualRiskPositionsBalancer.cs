@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System;
 
-namespace MarketOps.SystemExecutor.PositionsBalance
+namespace MarketOps.Maths.PositionsBalancing
 {
     /// <summary>
     /// Calculates positions balance based on provided expected risk.

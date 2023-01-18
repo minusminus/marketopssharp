@@ -1,9 +1,9 @@
-﻿using MarketOps.SystemExecutor.PositionsBalance;
+﻿using MarketOps.Maths.PositionsBalancing;
 using NUnit.Framework;
 using Shouldly;
 using System;
 
-namespace MarketOps.Tests.SystemExecutor.PositionsBalance
+namespace MarketOps.Tests.Maths.PositionsBalancing
 {
     [TestFixture]
     public class EqualRiskPositionsBalancerTests

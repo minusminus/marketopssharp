@@ -76,7 +76,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             _fundsNames
                 .Select((_, i) => i)
                 .Where(i => (i > 0) && _fundsData.Active[i])
-                .OrderBy(i => _fundsData.Profit[i])
+                .OrderByDescending(i => _fundsData.Profit[i])
                 .Take(_n)
                 .ToArray();
     }

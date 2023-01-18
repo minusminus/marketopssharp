@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.4.3.1\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.4.3.1\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="..\packages\Shouldly.4.1.0\build\Shouldly.props" Condition="Exists('..\packages\Shouldly.4.1.0\build\Shouldly.props')" />
   <Import Project="..\packages\NUnit.3.13.3\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -164,7 +165,7 @@
     <Compile Include="SystemExecutor\Extensions\VolumeExtensionsTests.cs" />
     <Compile Include="SystemExecutor\GPW\CommissionGPWBossaTests.cs" />
     <Compile Include="SystemExecutor\GPW\GPWTickOpsTests.cs" />
-    <Compile Include="SystemExecutor\PositionsBalance\EqualRiskPositionsBalancerTests.cs" />
+    <Compile Include="Maths\PositionsBalancing\EqualRiskPositionsBalancerTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorNoneTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnCloseTests.cs" />
     <Compile Include="SystemExecutor\MM\MMCloseCalculatorTicksPassedOnOpenTests.cs" />
@@ -259,6 +260,7 @@
     <Error Condition="!Exists('..\packages\NUnit.3.13.3\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.13.3\build\NUnit.props'))" />
     <Error Condition="!Exists('..\packages\Shouldly.4.1.0\build\Shouldly.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Shouldly.4.1.0\build\Shouldly.props'))" />
     <Error Condition="!Exists('..\packages\EmptyFiles.4.1.0\build\EmptyFiles.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EmptyFiles.4.1.0\build\EmptyFiles.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.4.3.1\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.4.3.1\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
   <Import Project="..\packages\EmptyFiles.4.1.0\build\EmptyFiles.targets" Condition="Exists('..\packages\EmptyFiles.4.1.0\build\EmptyFiles.targets')" />
 </Project>

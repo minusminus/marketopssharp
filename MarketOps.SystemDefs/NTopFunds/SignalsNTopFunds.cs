@@ -107,7 +107,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             void ConvertPositionSizeToBalanceInPercent(float[] balance)
             {
                 for (int i = 0; i < balance.Length; i++)
-                    balance[i] = balance[i] * (float)fundsData.Prices[selectedTop[i]] / equityValue;
+                    balance[i] = (balance[i] * (float)fundsData.Prices[selectedTop[i]] / equityValue).TruncateTo2ndPlace();
             }
         }
 

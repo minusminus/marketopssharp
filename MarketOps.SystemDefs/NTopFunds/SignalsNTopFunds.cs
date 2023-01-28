@@ -19,6 +19,7 @@ namespace MarketOps.SystemDefs.NTopFunds
         private readonly int _n;
         private int _avgProfitRange;
         private int _avgChangeRange;
+        private float _aggressivePartSize;
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
@@ -37,6 +38,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             _n = systemParams.Get(NTopFundsParams.N).As<int>();
             _avgProfitRange = systemParams.Get(NTopFundsParams.AvgProfitRange).As<int>();
             _avgChangeRange = systemParams.Get(NTopFundsParams.AvgChangeRange).As<int>();
+            _aggressivePartSize = 0.6f;
 
             _dataLoader = dataLoader;
             _systemExecutionLogger = systemExecutionLogger;
@@ -65,30 +67,39 @@ namespace MarketOps.SystemDefs.NTopFunds
         {
             List<Signal> result = new List<Signal>();
 
-            NTopFundsDataCalculator.Calculate(_fundsData, ts, _avgProfitRange, _avgProfitRange, _dataRange, _dataLoader);
+            NTopFundsDataCalculator.Calculate(_fundsData, ts, _avgProfitRange, _avgChangeRange, _dataRange, _dataLoader);
 
             float portfolioValue = SystemValueCalculator.Calc(systemState, ts, _dataLoader);
             int[] selectedTop = GetTopN();
             float[] balance = new float[0];
             if (selectedTop.Length > 0)
-            {
-                balance = CalculateBalance(selectedTop, portfolioValue, _fundsData);
-                result.Add(CreateSignal(selectedTop, balance, _dataRange, _fundsData));
-            }
+                balance = CalculateBalance(selectedTop, _aggressivePartSize, portfolioValue, _fundsData);
+            //AddPassiveItemToBalance();
+            result.Add(CreateSignal(selectedTop, balance, _dataRange, _fundsData));
 
             LogData(ts, selectedTop, balance);
             return result;
+
+            void AddPassiveItemToBalance()
+            {
+                float passiveBalance = (1.0f - balance.Sum()).TruncateTo2ndPlace();
+                Array.Resize(ref selectedTop, selectedTop.Length + 1);
+                Array.Resize(ref balance, balance.Length + 1);
+                selectedTop[selectedTop.Length - 1] = 0;
+                balance[balance.Length - 1] = passiveBalance;
+            }
         }
 
-        private int[] GetTopN() => 
+        private int[] GetTopN() =>
             _fundsNames
                 .Select((_, i) => i)
                 .Where(i => (i > 0) && _fundsData.Active[i])
+                .Where(i => _fundsData.Profit[i] > 0)
                 .OrderByDescending(i => _fundsData.Profit[i])
                 .Take(_n)
                 .ToArray();
 
-        private float[] CalculateBalance(int[] selectedTop, float equityValue, NTopFundsData fundsData)
+        private float[] CalculateBalance(int[] selectedTop, float aggressivePartSize, float equityValue, NTopFundsData fundsData)
         {
             float[] newBalance = EqualRiskPositionsBalancer.Calculate(GetExpectedRisks(), GetPrices(), equityValue);
             ConvertPositionSizeToBalanceInPercent(newBalance);
@@ -107,20 +118,25 @@ namespace MarketOps.SystemDefs.NTopFunds
             void ConvertPositionSizeToBalanceInPercent(float[] balance)
             {
                 for (int i = 0; i < balance.Length; i++)
-                    balance[i] = (balance[i] * (float)fundsData.Prices[selectedTop[i]] / equityValue).TruncateTo2ndPlace();
+                    balance[i] = (aggressivePartSize * balance[i] * (float)fundsData.Prices[selectedTop[i]] / equityValue).TruncateTo2ndPlace();
             }
         }
 
-        private Signal CreateSignal(int[] selectedTop, float[] newBalance, StockDataRange dataRange, NTopFundsData fundsData) =>
-            new Signal()
+        private Signal CreateSignal(int[] selectedTop, float[] newBalance, StockDataRange dataRange, NTopFundsData fundsData)
+        {
+            return new Signal()
             {
                 DataRange = dataRange,
                 IntradayInterval = 0,
                 Type = SignalType.EnterOnOpen,
                 Direction = PositionDir.Long,
                 Rebalance = true,
-                NewBalance = selectedTop.Select((i, index) => (fundsData.Stocks[i], newBalance[index])).ToList()
+                NewBalance = GetBalanceFromSelected()
             };
+
+            List<(StockDefinition, float)> GetBalanceFromSelected() =>
+                selectedTop.Select((i, index) => (fundsData.Stocks[i], newBalance[index])).ToList();
+        }
 
         private void LogData(DateTime ts, int[] selectedTop, float[] balance)
         {
@@ -130,8 +146,10 @@ namespace MarketOps.SystemDefs.NTopFunds
                 );
 
             IEnumerable<string> BalancesToStrings() =>
-                selectedTop
-                    .Select((i, index) => $"{_fundsNames[i]}: {100f * balance[index]:F2}");
+                 selectedTop.Select((i, index) => FormatBalance(_fundsNames[i], balance[index]));
+
+            string FormatBalance(string fundName, float fundBalance) =>
+                $"{fundName}: {100f * fundBalance:F2}";
         }
     }
 }

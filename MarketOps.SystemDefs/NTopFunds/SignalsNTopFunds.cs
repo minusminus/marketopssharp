@@ -142,7 +142,7 @@ namespace MarketOps.SystemDefs.NTopFunds
         {
             _systemExecutionLogger.Add(
                 $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
-                + $"selected: {string.Join(", ", BalancesToStrings())} | risks: {string.Join(", ", RiskPercentage())}" + Environment.NewLine
+                + $"selected: {string.Join(", ", BalancesToStrings())} | exp. risks: {string.Join(", ", ExpectedRisks())}" + Environment.NewLine
                 );
 
             IEnumerable<string> BalancesToStrings() =>
@@ -151,11 +151,11 @@ namespace MarketOps.SystemDefs.NTopFunds
             string FormatBalance(string fundName, float fundBalance) =>
                 $"{fundName}: {100f * fundBalance:F2}";
 
-            IEnumerable<string> RiskPercentage() =>
+            IEnumerable<string> ExpectedRisks() =>
                 selectedTop.Select((i, index) =>
                 {
                     //double risk = (_fundsData.Risk[i] * _fundsData.Prices[i] * balance[index] * equityValue) / (_fundsData.Prices[i] * equityValue);
-                    double risk = (_fundsData.Risk[i] * balance[index]);
+                    double risk = _fundsData.Risk[i] * balance[index];
                     return $"{100f * risk:F2}";
                 });
         }

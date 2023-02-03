@@ -30,7 +30,7 @@ namespace MarketOps.SystemDefs.NTopFunds
 
                 data.Prices[i] = spData.C[dataIndex];
                 data.Profit[i] = AvgChangeInPercent(spData.C, dataIndex, profitRange, null);
-                data.AvgChange[i] = AvgChangeInPercent(spData.C, dataIndex, changeRange, Math.Abs);
+                data.Risk[i] = AvgChangeInPercent(spData.C, dataIndex, changeRange, Math.Abs);
                 //data.AvgChangeSigma[i] = StdDev(spData.C, dataIndex, changeRange, data.AvgChange[i]);
             }
         }

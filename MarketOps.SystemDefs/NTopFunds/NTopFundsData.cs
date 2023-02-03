@@ -10,7 +10,7 @@ namespace MarketOps.SystemDefs.NTopFunds
         public readonly StockDefinition[] Stocks;
         public readonly bool[] Active;
         public readonly double[] Prices;
-        public readonly double[] AvgChange;
+        public readonly double[] Risk;
         //public readonly double[] AvgChangeSigma;
         public readonly double[] Profit;
 
@@ -19,7 +19,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             Stocks = new StockDefinition[length];
             Active = new bool[length];
             Prices = new double[length];
-            AvgChange = new double[length];
+            Risk = new double[length];
             //AvgChangeSigma = new double[length];
             Profit = new double[length];
         }

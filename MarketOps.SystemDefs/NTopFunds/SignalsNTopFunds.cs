@@ -74,10 +74,10 @@ namespace MarketOps.SystemDefs.NTopFunds
             float[] balance = new float[0];
             if (selectedTop.Length > 0)
                 balance = CalculateBalance(selectedTop, _aggressivePartSize, portfolioValue, _fundsData);
-            //AddPassiveItemToBalance();
+            AddPassiveItemToBalance();
             result.Add(CreateSignal(selectedTop, balance, _dataRange, _fundsData));
 
-            LogData(ts, selectedTop, balance);
+            LogData(ts, selectedTop, balance, portfolioValue);
             return result;
 
             void AddPassiveItemToBalance()
@@ -107,7 +107,7 @@ namespace MarketOps.SystemDefs.NTopFunds
 
             float[] GetExpectedRisks() =>
                 selectedTop
-                .Select(i => (float)fundsData.AvgChange[i])
+                .Select(i => (float)fundsData.Risk[i])
                 .ToArray();
 
             float[] GetPrices() =>
@@ -138,11 +138,11 @@ namespace MarketOps.SystemDefs.NTopFunds
                 selectedTop.Select((i, index) => (fundsData.Stocks[i], newBalance[index])).ToList();
         }
 
-        private void LogData(DateTime ts, int[] selectedTop, float[] balance)
+        private void LogData(DateTime ts, int[] selectedTop, float[] balance, float equityValue)
         {
             _systemExecutionLogger.Add(
                 $"{ts.Date:yyyy-MM-dd}:" + Environment.NewLine
-                + "selected: " + string.Join(", ", BalancesToStrings()) + Environment.NewLine
+                + $"selected: {string.Join(", ", BalancesToStrings())} | risks: {string.Join(", ", RiskPercentage())}" + Environment.NewLine
                 );
 
             IEnumerable<string> BalancesToStrings() =>
@@ -150,6 +150,14 @@ namespace MarketOps.SystemDefs.NTopFunds
 
             string FormatBalance(string fundName, float fundBalance) =>
                 $"{fundName}: {100f * fundBalance:F2}";
+
+            IEnumerable<string> RiskPercentage() =>
+                selectedTop.Select((i, index) =>
+                {
+                    //double risk = (_fundsData.Risk[i] * _fundsData.Prices[i] * balance[index] * equityValue) / (_fundsData.Prices[i] * equityValue);
+                    double risk = (_fundsData.Risk[i] * balance[index]);
+                    return $"{100f * risk:F2}";
+                });
         }
     }
 }

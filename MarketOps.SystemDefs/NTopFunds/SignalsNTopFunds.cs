@@ -101,8 +101,8 @@ namespace MarketOps.SystemDefs.NTopFunds
 
         private float[] CalculateBalance(int[] selectedTop, float aggressivePartSize, float equityValue, NTopFundsData fundsData)
         {
-            float[] newBalance = EqualRiskPositionsBalancer.Calculate(GetExpectedRisks(), GetPrices(), equityValue);
-            ConvertPositionSizeToBalanceInPercent(newBalance);
+            float[] newBalance = EqualRiskPercentageBalancer.Calculate(GetExpectedRisks());
+            ScaleBalanceToAggressivePart(newBalance);
             return newBalance;
 
             float[] GetExpectedRisks() =>
@@ -110,15 +110,10 @@ namespace MarketOps.SystemDefs.NTopFunds
                 .Select(i => (float)fundsData.Risk[i])
                 .ToArray();
 
-            float[] GetPrices() =>
-                selectedTop
-                .Select(i => (float)fundsData.Prices[i])
-                .ToArray();
-
-            void ConvertPositionSizeToBalanceInPercent(float[] balance)
+            void ScaleBalanceToAggressivePart(float[] balance)
             {
                 for (int i = 0; i < balance.Length; i++)
-                    balance[i] = (aggressivePartSize * balance[i] * (float)fundsData.Prices[selectedTop[i]] / equityValue).TruncateTo2ndPlace();
+                    balance[i] = (aggressivePartSize * balance[i]).TruncateTo2ndPlace();
             }
         }
 

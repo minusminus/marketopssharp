@@ -5,6 +5,7 @@ namespace MarketOps.Maths.PositionsBalancing
 {
     /// <summary>
     /// Calculates positions balance based on provided expected risk.
+    /// Risk should be provided in values, not in percents.
     /// Returns balanced sizes of positions.
     /// All positions will have equal risk after balance.
     /// </summary>

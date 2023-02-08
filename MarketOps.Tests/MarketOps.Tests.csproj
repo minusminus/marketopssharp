@@ -118,6 +118,7 @@
     <Compile Include="Maths\ChangeInPercentTests.cs" />
     <Compile Include="Maths\DivisionTests.cs" />
     <Compile Include="Maths\PercentChangesTests.cs" />
+    <Compile Include="Maths\PositionsBalancing\EqualRiskPercentageBalancerTests.cs" />
     <Compile Include="Maths\StdDevTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\Calculators\ATRTests.cs" />

@@ -30,6 +30,7 @@ namespace MarketOps.SystemDefs.NTopFunds
 
                 data.Prices[i] = spData.C[dataIndex];
                 data.Profit[i] = AvgChangeInPercent(spData.C, dataIndex, profitRange, null);
+                //data.Profit[i] = PercentChange(spData.C, dataIndex, profitRange);
                 data.Risk[i] = AvgChangeInPercent(spData.C, dataIndex, changeRange, Math.Abs);
                 //data.AvgChangeSigma[i] = StdDev(spData.C, dataIndex, changeRange, data.AvgChange[i]);
             }
@@ -50,5 +51,8 @@ namespace MarketOps.SystemDefs.NTopFunds
             }
             return sum / (double)range;
         }
+
+        private static double PercentChange(float[] tbl, int startIndex, int range) => 
+            ChangeInPercent.Calculate(tbl[startIndex], tbl[startIndex - range - 1]);
     }
 }

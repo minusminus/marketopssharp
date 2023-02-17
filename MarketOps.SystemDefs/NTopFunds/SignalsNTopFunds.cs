@@ -1,13 +1,14 @@
 ﻿using MarketOps.Maths.PositionsBalancing;
+using MarketOps.Stats.Stats;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace MarketOps.SystemDefs.NTopFunds
 {
@@ -20,6 +21,7 @@ namespace MarketOps.SystemDefs.NTopFunds
         private int _avgProfitRange;
         private int _avgChangeRange;
         private float _aggressivePartSize;
+        private int _aggressiveSmaLength;
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
@@ -39,11 +41,16 @@ namespace MarketOps.SystemDefs.NTopFunds
             _avgProfitRange = systemParams.Get(NTopFundsParams.AvgProfitRange).As<int>();
             _avgChangeRange = systemParams.Get(NTopFundsParams.AvgChangeRange).As<int>();
             _aggressivePartSize = 0.6f;
+            _aggressiveSmaLength = 10;
 
             _dataLoader = dataLoader;
             _systemExecutionLogger = systemExecutionLogger;
             _dataRange = StockDataRange.Monthly;
             _fundsData = new NTopFundsData(_fundsNames.Length);
+
+            for (int i = 0; i < _fundsNames.Length; i++)
+                _fundsData.StatsSMA[i] = (StatSMA)new StatSMA("")
+                    .SetParam(StatSMAParams.Period, new MOParamInt() { Value = _aggressiveSmaLength });
 
             NTopFundsDataCalculator.Initialize(_fundsData, _fundsNames, dataProvider);
         }
@@ -57,7 +64,7 @@ namespace MarketOps.SystemDefs.NTopFunds
                     {
                         stock = def,
                         dataRange = _dataRange,
-                        stats = new List<StockStat>() { }
+                        stats = new List<StockStat>() { _fundsData.StatsSMA[i] }
                     };
                 })
                 .ToList()
@@ -70,7 +77,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             NTopFundsDataCalculator.Calculate(_fundsData, ts, _avgProfitRange, _avgChangeRange, _dataRange, _dataLoader);
 
             float portfolioValue = SystemValueCalculator.Calc(systemState, ts, _dataLoader);
-            int[] selectedTop = GetTopN();
+            int[] selectedTop = GetTopN(ts);
             float[] balance = new float[0];
             if (selectedTop.Length > 0)
                 balance = CalculateBalance(selectedTop, _aggressivePartSize, portfolioValue, _fundsData);
@@ -90,14 +97,22 @@ namespace MarketOps.SystemDefs.NTopFunds
             }
         }
 
-        private int[] GetTopN() =>
+        private int[] GetTopN(DateTime ts) =>
             _fundsNames
                 .Select((_, i) => i)
                 .Where(i => (i > 0) && _fundsData.Active[i])
                 .Where(i => _fundsData.Profit[i] > 0)
+                //.Where(i => PriceOverSMA(i, ts))
                 .OrderByDescending(i => _fundsData.Profit[i])
                 .Take(_n)
                 .ToArray();
+
+        private bool PriceOverSMA(int stockIndex, DateTime ts)
+        {
+            if (!_dataLoader.GetWithIndex(_fundsNames[stockIndex], _dataRange, ts, _fundsData.StatsSMA[stockIndex].BackBufferLength, out var spData, out int dataIndex))
+                return false;
+            return (spData.C[dataIndex] > _fundsData.StatsSMA[stockIndex].Data(StatSMAData.SMA)[dataIndex - _fundsData.StatsSMA[stockIndex].BackBufferLength]);
+        }
 
         private float[] CalculateBalance(int[] selectedTop, float aggressivePartSize, float equityValue, NTopFundsData fundsData)
         {

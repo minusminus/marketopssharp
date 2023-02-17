@@ -1,4 +1,5 @@
-﻿using MarketOps.StockData.Types;
+﻿using MarketOps.Stats.Stats;
+using MarketOps.StockData.Types;
 
 namespace MarketOps.SystemDefs.NTopFunds
 {
@@ -13,6 +14,7 @@ namespace MarketOps.SystemDefs.NTopFunds
         public readonly double[] Risk;
         //public readonly double[] AvgChangeSigma;
         public readonly double[] Profit;
+        public readonly StatSMA[] StatsSMA;
 
         public NTopFundsData(int length)
         {
@@ -22,6 +24,7 @@ namespace MarketOps.SystemDefs.NTopFunds
             Risk = new double[length];
             //AvgChangeSigma = new double[length];
             Profit = new double[length];
+            StatsSMA = new StatSMA[length];
         }
     }
 }

@@ -72,7 +72,12 @@
     <Compile Include="LongBBTrendStocks\SignalsLongBBTrendMultiStocks.cs" />
     <Compile Include="LongBBTrendStocks\SignalsLongBBTrendStocks.cs" />
     <Compile Include="ModNCounter.cs" />
+    <Compile Include="NTopFundsAll\NTopFundsAllData.cs" />
+    <Compile Include="NTopFundsAll\NTopFundsAllDataCalculator.cs" />
+    <Compile Include="NTopFundsAll\NTopFundsAllParams.cs" />
+    <Compile Include="NTopFundsAll\SignalsNTopFundsAll.cs" />
     <Compile Include="NTopFunds\NTopFunds.cs" />
+    <Compile Include="NTopFundsAll\NTopFundsAll.cs" />
     <Compile Include="NTopFunds\NTopFundsData.cs" />
     <Compile Include="NTopFunds\NTopFundsDataCalculator.cs" />
     <Compile Include="NTopFunds\NTopFundsParams.cs" />

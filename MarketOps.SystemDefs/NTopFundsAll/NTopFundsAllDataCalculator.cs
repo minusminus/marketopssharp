@@ -11,10 +11,10 @@ namespace MarketOps.SystemDefs.NTopFundsAll
     /// </summary>
     internal static class NTopFundsAllDataCalculator
     {
-        public static void Initialize(NTopFundsAllData data, string[] fundsNames, IStockDataProvider dataProvider)
+        public static void Initialize(NTopFundsAllData data, NTFADefinition ntfaDefinitions, IStockDataProvider dataProvider)
         {
-            for (int i = 0; i < fundsNames.Length; i++)
-                data.Stocks[i] = dataProvider.GetStockDefinition(fundsNames[i]);
+            for (int i = 0; i < ntfaDefinitions.Length; i++)
+                data.Stocks[i] = dataProvider.GetStockDefinition(ntfaDefinitions[i].Name);
         }
 
         public static void Calculate(NTopFundsAllData data, DateTime ts, int profitRange, int changeRange, StockDataRange dataRange, ISystemDataLoader dataLoader)

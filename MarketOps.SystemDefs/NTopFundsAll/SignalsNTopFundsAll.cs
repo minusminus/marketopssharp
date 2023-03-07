@@ -18,21 +18,17 @@ namespace MarketOps.SystemDefs.NTopFundsAll
     internal class SignalsNTopFundsAll : ISystemDataDefinitionProvider, ISignalGeneratorOnClose
     {
         private readonly int _n;
-        private int _avgProfitRange;
-        private int _avgChangeRange;
-        private float _aggressivePartSize;
-        private int _aggressiveSmaLength;
+        private readonly int _avgProfitRange;
+        private readonly int _avgChangeRange;
+        private readonly float _aggressivePartSize;
+        private readonly int _aggressiveSmaLength;
 
         private readonly ISystemDataLoader _dataLoader;
         private readonly ISystemExecutionLogger _systemExecutionLogger;
         private readonly StockDataRange _dataRange;
         private readonly NTopFundsAllData _fundsData;
 
-        private readonly string[] _fundsNames = { "PKO014",
-            "PKO009", "PKO010", "PKO013", "PKO015", "PKO018", "PKO019", "PKO021",
-            "PKO025", "PKO026", "PKO027", "PKO028", "PKO029", "PKO057",
-            "PKO072", "PKO073", "PKO074", "PKO097", "PKO098", "PKO909",
-            "PKO910", "PKO913", "PKO918", "PKO919", "PKO925"};
+        private readonly NTFADefinition _ntfaDefinition = new NTFADefinition();
 
 
         public SignalsNTopFundsAll(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger, MOParams systemParams)
@@ -46,13 +42,13 @@ namespace MarketOps.SystemDefs.NTopFundsAll
             _dataLoader = dataLoader;
             _systemExecutionLogger = systemExecutionLogger;
             _dataRange = StockDataRange.Monthly;
-            _fundsData = new NTopFundsAllData(_fundsNames.Length);
+            _fundsData = new NTopFundsAllData(_ntfaDefinition.Length);
 
-            for (int i = 0; i < _fundsNames.Length; i++)
+            for (int i = 0; i < _ntfaDefinition.Length; i++)
                 _fundsData.StatsSMA[i] = (StatSMA)new StatSMA("")
                     .SetParam(StatSMAParams.Period, new MOParamInt() { Value = _aggressiveSmaLength });
 
-            NTopFundsAllDataCalculator.Initialize(_fundsData, _fundsNames, dataProvider);
+            NTopFundsAllDataCalculator.Initialize(_fundsData, _ntfaDefinition, dataProvider);
         }
 
         public SystemDataDefinition GetDataDefinition() => new SystemDataDefinition()
@@ -98,7 +94,7 @@ namespace MarketOps.SystemDefs.NTopFundsAll
         }
 
         private int[] GetTopN(DateTime ts) =>
-            _fundsNames
+            _ntfaDefinition.BalancedStocks
                 .Select((_, i) => i)
                 //.Where(i => (i > 0) && _fundsData.Active[i])
                 .Where(i => _fundsData.Active[i])
@@ -110,7 +106,7 @@ namespace MarketOps.SystemDefs.NTopFundsAll
 
         private bool PriceOverSMA(int stockIndex, DateTime ts)
         {
-            if (!_dataLoader.GetWithIndex(_fundsNames[stockIndex], _dataRange, ts, _fundsData.StatsSMA[stockIndex].BackBufferLength, out var spData, out int dataIndex))
+            if (!_dataLoader.GetWithIndex(_ntfaDefinition[stockIndex].Name, _dataRange, ts, _fundsData.StatsSMA[stockIndex].BackBufferLength, out var spData, out int dataIndex))
                 return false;
             return (spData.C[dataIndex] > _fundsData.StatsSMA[stockIndex].Data(StatSMAData.SMA)[dataIndex - _fundsData.StatsSMA[stockIndex].BackBufferLength]);
         }
@@ -123,7 +119,7 @@ namespace MarketOps.SystemDefs.NTopFundsAll
 
             float[] GetExpectedRisks() =>
                 selectedTop
-                .Select(i => (float)fundsData.Risk[i])
+                .Select(i => (float)(fundsData.Risk[i] * _ntfaDefinition[i].RiskMultiplier))
                 .ToArray();
 
             void ScaleBalanceToAggressivePart(float[] balance)
@@ -157,7 +153,7 @@ namespace MarketOps.SystemDefs.NTopFundsAll
                 );
 
             IEnumerable<string> BalancesToStrings() =>
-                 selectedTop.Select((i, index) => FormatBalance(_fundsNames[i], balance[index]));
+                 selectedTop.Select((i, index) => FormatBalance(_ntfaDefinition[i].Name, balance[index]));
 
             string FormatBalance(string fundName, float fundBalance) =>
                 $"{fundName}: {100f * fundBalance:F2}";

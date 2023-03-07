@@ -74,6 +74,7 @@
     <Compile Include="ModNCounter.cs" />
     <Compile Include="NTopFundsAll\NTopFundsAllData.cs" />
     <Compile Include="NTopFundsAll\NTopFundsAllDataCalculator.cs" />
+    <Compile Include="NTopFundsAll\NTFADefinition.cs" />
     <Compile Include="NTopFundsAll\NTopFundsAllParams.cs" />
     <Compile Include="NTopFundsAll\SignalsNTopFundsAll.cs" />
     <Compile Include="NTopFunds\NTopFunds.cs" />

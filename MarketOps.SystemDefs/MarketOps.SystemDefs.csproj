@@ -72,9 +72,11 @@
     <Compile Include="LongBBTrendStocks\SignalsLongBBTrendMultiStocks.cs" />
     <Compile Include="LongBBTrendStocks\SignalsLongBBTrendStocks.cs" />
     <Compile Include="ModNCounter.cs" />
+    <Compile Include="NTopFundsAll\Definitions\NTFAMbankPko.cs" />
+    <Compile Include="NTopFundsAll\Definitions\NTFAOriginalPko.cs" />
     <Compile Include="NTopFundsAll\NTopFundsAllData.cs" />
     <Compile Include="NTopFundsAll\NTopFundsAllDataCalculator.cs" />
-    <Compile Include="NTopFundsAll\NTFADefinition.cs" />
+    <Compile Include="NTopFundsAll\Definitions\NTFADefinition.cs" />
     <Compile Include="NTopFundsAll\NTopFundsAllParams.cs" />
     <Compile Include="NTopFundsAll\SignalsNTopFundsAll.cs" />
     <Compile Include="NTopFunds\NTopFunds.cs" />

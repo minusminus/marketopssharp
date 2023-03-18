@@ -6,6 +6,7 @@ using MarketOps.StockData.Types;
 using MarketOps.SystemData.Extensions;
 using MarketOps.SystemData.Interfaces;
 using MarketOps.SystemData.Types;
+using MarketOps.SystemDefs.NTopFundsAll.Definitions;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -28,7 +29,7 @@ namespace MarketOps.SystemDefs.NTopFundsAll
         private readonly StockDataRange _dataRange;
         private readonly NTopFundsAllData _fundsData;
 
-        private readonly NTFADefinition _ntfaDefinition = new NTFADefinition();
+        private readonly NTFADefinition _ntfaDefinition = new NTFAMbankPko();
 
 
         public SignalsNTopFundsAll(ISystemDataLoader dataLoader, IStockDataProvider dataProvider, ISystemExecutionLogger systemExecutionLogger, MOParams systemParams)

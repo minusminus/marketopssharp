@@ -2,6 +2,7 @@
 using MarketOps.StockData.Interfaces;
 using MarketOps.StockData.Types;
 using MarketOps.SystemData.Interfaces;
+using MarketOps.SystemDefs.NTopFundsAll.Definitions;
 using System;
 
 namespace MarketOps.SystemDefs.NTopFundsAll

@@ -7,10 +7,10 @@
     /// </summary>
     internal static class VersionInfo
     {
-        public const string AssemblyVersion = "1.2";
-        public const string AssemblyFileVersion = "1.2.0.0";
+        public const string AssemblyVersion = "1.3";
+        public const string AssemblyFileVersion = "1.3.0.0";
 
         public const string AssemblyProduct = "MarketOps";
-        public const string AssemblyCopyright = "Copyright © Michał Śmiechowski 2022";
+        public const string AssemblyCopyright = "Copyright © Michał Śmiechowski 2023";
     }
 }

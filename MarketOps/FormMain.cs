@@ -62,6 +62,7 @@ namespace MarketOps
             dbgPositions.OnPositionClick += dbgPositions_OnPositionClick;
 
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.Text = $"{Application.ProductName} v {Application.ProductVersion}";
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
             InitializeSim();

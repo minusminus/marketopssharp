@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartPoints = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.plotPoints = new ScottPlot.FormsPlot();
             ((System.ComponentModel.ISupportInitialize)(this.chartPoints)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +52,6 @@
             chartArea1.AxisY.MajorTickMark.LineColor = System.Drawing.Color.DarkGray;
             chartArea1.Name = "areaPoints";
             this.chartPoints.ChartAreas.Add(chartArea1);
-            this.chartPoints.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartPoints.Location = new System.Drawing.Point(0, 0);
             this.chartPoints.Name = "chartPoints";
             series1.ChartArea = "areaPoints";
@@ -61,14 +60,24 @@
             series1.XValueMember = "X";
             series1.YValueMembers = "Y";
             this.chartPoints.Series.Add(series1);
-            this.chartPoints.Size = new System.Drawing.Size(408, 275);
+            this.chartPoints.Size = new System.Drawing.Size(167, 68);
             this.chartPoints.TabIndex = 0;
             this.chartPoints.Text = "chart1";
+            this.chartPoints.Visible = false;
+            // 
+            // plotPoints
+            // 
+            this.plotPoints.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.plotPoints.Location = new System.Drawing.Point(0, 0);
+            this.plotPoints.Name = "plotPoints";
+            this.plotPoints.Size = new System.Drawing.Size(408, 275);
+            this.plotPoints.TabIndex = 1;
             // 
             // PointChart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.plotPoints);
             this.Controls.Add(this.chartPoints);
             this.Name = "PointChart";
             this.Size = new System.Drawing.Size(408, 275);
@@ -80,5 +89,6 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart chartPoints;
+        private ScottPlot.FormsPlot plotPoints;
     }
 }

@@ -328,16 +328,15 @@ namespace MarketOps
 
         private void ShowRCharts(SystemState systemState, SystemStateSummary summary)
         {
-            const string SimulationRProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
-            const string SimulationRProfitDistributionValueTooltipFormat = "#VALX{N2}, Count: #VAL";
+            const string SimulationRProfitValueTooltipFormat = "{0:N2}, Length: {1}";
 
             chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat);
-            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), SimulationRProfitDistributionValueTooltipFormat);
+            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), 0.5);
         }
 
         private void ShowDDCharts(SystemStateSummary summary)
         {
-            const string SimulationDDTooltipFormat = "#VALX{N2}%, Length: #VAL";
+            const string SimulationDDTooltipFormat = "{0:N2}%, Length: {1}";
 
             chartDDTicks.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDTicks), SimulationDDTooltipFormat);
             chartDDPositions.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDClosedPositions), SimulationDDTooltipFormat);
@@ -345,8 +344,8 @@ namespace MarketOps
 
         private void ShowProfitCharts(SystemState systemState)
         {
-            const string SimulationProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
-            const string SimulationProfitPcntTooltipFormat = "#VALX{N2}%, Length: #VAL";
+            const string SimulationProfitValueTooltipFormat = "{0:N2}, Length: {1}";
+            const string SimulationProfitPcntTooltipFormat = "{0:N2}%, Length: {1}";
 
             chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitValueTooltipFormat);
             chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitPcntTooltipFormat);

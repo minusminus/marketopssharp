@@ -1,19 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using MarketOps.Controls.ChartsUtils;
+using ScottPlot.Plottable;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MarketOps.Controls.ColumnChart
 {
     public partial class ColumnChart : UserControl
     {
+        private BarPlot _barPlot;
+
         public ColumnChart()
         {
             InitializeComponent();
+            plotColumns.Plot.SetUpPlotArea();
         }
 
-        public void LoadData(List<ColumnChartData> data, string seriesTooltip)
+        public void LoadData(List<ColumnChartData> data, double barWidth)
         {
-            chartColumns.DataSource = data;
-            chartColumns.Series["seriesColumns"].ToolTip = seriesTooltip;
+            double[] positions = data.Select(p => (double)p.X).ToArray();
+            double[] values = data.Select(p => (double)p.Y).ToArray();
+
+            plotColumns.Plot.Clear();
+            _barPlot = plotColumns.Plot.AddBar(values, positions);
+            _barPlot.BarWidth = barWidth * 0.8;
+            _barPlot.ShowValuesAboveBars = true;
+            _barPlot.Font.Size = PlotConsts.TooltipTextSize;
+            _barPlot.Font.Color = PlotConsts.AxisTextColor;
+            plotColumns.Plot.SetAxisLimits(yMin: 0);
+
+            plotColumns.Refresh();
         }
     }
 }

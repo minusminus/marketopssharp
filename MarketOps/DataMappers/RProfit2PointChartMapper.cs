@@ -10,10 +10,13 @@ namespace MarketOps.DataMappers
     /// </summary>
     internal static class RProfit2PointChartMapper
     {
-        public static List<PointChartData> Map(List<Position> input) =>
-            input.Select(CreateNewDataObject).ToList();
+        public static PointChartData Map(List<Position> input) =>
+            new PointChartData(input.GetX(), input.GetY());
 
-        private static PointChartData CreateNewDataObject(Position pos) =>
-            new RProfitPointChartData(pos);
+        private static double[] GetX(this List<Position> input) =>
+            input.Select(x => (double)x.RProfit).ToArray();
+
+        private static double[] GetY(this List<Position> input) =>
+            input.Select(x => (double)x.TicksActive).ToArray();
     }
 }

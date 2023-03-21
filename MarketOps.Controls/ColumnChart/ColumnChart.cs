@@ -1,7 +1,5 @@
 ﻿using MarketOps.Controls.ChartsUtils;
 using ScottPlot.Plottable;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace MarketOps.Controls.ColumnChart
@@ -16,14 +14,11 @@ namespace MarketOps.Controls.ColumnChart
             plotColumns.Plot.SetUpPlotArea();
         }
 
-        public void LoadData(List<ColumnChartData> data, double barWidth)
+        public void LoadData(ColumnChartData data, double barTickWidth)
         {
-            double[] positions = data.Select(p => (double)p.X).ToArray();
-            double[] values = data.Select(p => (double)p.Y).ToArray();
-
             plotColumns.Plot.Clear();
-            _barPlot = plotColumns.Plot.AddBar(values, positions);
-            _barPlot.BarWidth = barWidth * 0.8;
+            _barPlot = plotColumns.Plot.AddBar(data.Values, data.Positions);
+            _barPlot.BarWidth = barTickWidth * 0.8;
             _barPlot.ShowValuesAboveBars = true;
             _barPlot.Font.Size = PlotConsts.TooltipTextSize;
             _barPlot.Font.Color = PlotConsts.AxisTextColor;

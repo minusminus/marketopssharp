@@ -3,12 +3,15 @@
     /// <summary>
     /// Column chart data object.
     /// </summary>
-    public abstract class ColumnChartData
+    public class ColumnChartData
     {
-        protected float _x;
-        protected int _y;
+        public readonly double[] Positions;
+        public readonly double[] Values;
 
-        public float X => _x;
-        public int Y => _y;
+        public ColumnChartData(double[] positions, double[] values)
+        {
+            Positions = positions;
+            Values = values;
+        }
     }
 }

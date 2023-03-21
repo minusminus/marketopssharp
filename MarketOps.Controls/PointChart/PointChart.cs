@@ -1,7 +1,5 @@
 ﻿using MarketOps.Controls.ChartsUtils;
 using ScottPlot.Plottable;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace MarketOps.Controls.PointChart
@@ -22,15 +20,12 @@ namespace MarketOps.Controls.PointChart
             plotPoints.Plot.SetUpPlotArea();
         }
 
-        public void LoadData(List<PointChartData> data, string tooltipFormat)
+        public void LoadData(PointChartData data, string tooltipFormat)
         {
             _tooltipFormat = tooltipFormat;
 
-            double[] x = data.Select(p => (double)p.X).ToArray();
-            double[] y = data.Select(p => (double)p.Y).ToArray();
-
             plotPoints.Plot.Clear();
-            _scatter = plotPoints.Plot.AddScatter(x, y, lineWidth: 0);
+            _scatter = plotPoints.Plot.AddScatter(data.X, data.Y, lineWidth: 0);
             _tooltip = plotPoints.Plot.CreateTooltip();
 
             plotPoints.Refresh();

@@ -10,8 +10,8 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
         public readonly int Count;
         public readonly int Length;
 
-        public readonly float[][] Data;
-        public readonly float[] AverageData;
+        public readonly double[][] Data;
+        public readonly double[] AverageData;
 
         public int Wins, Losses;
         public float WinsPcnt, LossesPcnt;
@@ -29,10 +29,10 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
         {
             Count = count;
             Length = length;
-            Data = new float[count][];
+            Data = new double[count][];
             for (int i = 0; i < count; i++)
-                Data[i] = new float[length];
-            AverageData = new float[length];
+                Data[i] = new double[length];
+            AverageData = new double[length];
         }
     }
 }

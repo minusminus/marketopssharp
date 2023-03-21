@@ -7,14 +7,14 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
     /// </summary>
     internal static class MonteCarloDataGenerator
     {
-        public static void Generate(float[][] data, float winProbability, float avgPcntWin, float avgPcntLoss)
+        public static void Generate(double[][] data, float winProbability, float avgPcntWin, float avgPcntLoss)
         {
             Random randomGenerator = new Random();
             for (int i = 0; i < data.Length; i++)
                 CalculateSingleRow(data[i], winProbability, avgPcntWin, avgPcntLoss, randomGenerator);
         }
 
-        private static void CalculateSingleRow(float[] data, float winProbability, float avgPcntWin, float avgPcntLoss, Random randomGenerator)
+        private static void CalculateSingleRow(double[] data, float winProbability, float avgPcntWin, float avgPcntLoss, Random randomGenerator)
         {
             data[0] = MonteCarloConsts.InitialValue;
             for (int i = 1; i < data.Length; i++)

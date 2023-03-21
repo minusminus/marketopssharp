@@ -1,6 +1,6 @@
-﻿using MarketOps.SystemAnalysis.MonteCarlo;
+﻿using MarketOps.Controls.ChartsUtils;
+using MarketOps.SystemAnalysis.MonteCarlo;
 using System.Drawing;
-using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 
 namespace MarketOps.Controls.MonteCarlo
@@ -10,47 +10,32 @@ namespace MarketOps.Controls.MonteCarlo
         public MonteCarloDataChart()
         {
             InitializeComponent();
+            plotData.Plot.SetUpPlotArea();
         }
 
         public void LoadData(MonteCarloResult data)
         {
-            chartData.Series.Clear();
-            DrawDataSeries(data.Data);
-            DrawAverageDataSerie(data.AverageData);
+            plotData.Plot.Clear();
+            DrawSeries(data.Data);
+            DrawAverageSerie(data.AverageData);
+
+            plotData.Refresh();
         }
 
-        private void DrawDataSeries(float[][] data)
+        private void DrawSeries(double[][] data)
         {
             for (int i = 0; i < data.Length; i++)
-                AddDataRow(CreateDataSeries(i), data[i]);
+                AddSerie(data[i], 1, Color.LightSteelBlue);
         }
 
-        private void DrawAverageDataSerie(float[] row) => 
-            AddDataRow(CreateAverageDataSeries(), row);
+        private void DrawAverageSerie(double[] row) =>
+            AddSerie(row, 2, Color.LightCoral);
 
-        private Series CreateDataSeries(int rowIndex) =>
-            CreateSeries($"series{rowIndex}", Color.LightSteelBlue, 1);
-
-        private Series CreateAverageDataSeries() => 
-            CreateSeries("seriesAverageData", Color.LightCoral, 2);
-
-        private void AddDataRow(Series series, float[] row)
+        private void AddSerie(double[] data, double lineWidth, Color color)
         {
-            for (int i = 0; i < row.Length; i++)
-                series.Points.AddXY(i, row[i]);
-        }
-
-        private Series CreateSeries(string name, Color color, int lineWidth)
-        {
-            Series series = chartData.Series.Add(name);
-            series.ChartArea = "areaData";
-            series.ChartType = SeriesChartType.Line;
-            series.Color = color;
-            series.BorderWidth = lineWidth;
-            series.IsXValueIndexed = true;
-            series.XValueType = ChartValueType.Int32;
-            series.YValueType = ChartValueType.Single;
-            return series;
+            var signal = plotData.Plot.AddSignal(data);
+            signal.Color = color;
+            signal.LineWidth = lineWidth;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
             public int Length;
         }
 
-        public static void Calculate(float[][] data, out List<MonteCarloStreakData> resultWinningStreaks, out List<MonteCarloStreakData> resultLosingStreaks)
+        public static void Calculate(double[][] data, out List<MonteCarloStreakData> resultWinningStreaks, out List<MonteCarloStreakData> resultLosingStreaks)
         {
             Dictionary<int, MonteCarloStreakData> winningStreaks = new Dictionary<int, MonteCarloStreakData>();
             Dictionary<int, MonteCarloStreakData> losingStreaks = new Dictionary<int, MonteCarloStreakData>();
@@ -29,7 +29,7 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
             resultLosingStreaks = GetOrderedListOfStreaks(losingStreaks);
         }
 
-        private static void CalculateForSingleRow(float[] row, Dictionary<int, MonteCarloStreakData> winningStreaks, Dictionary<int, MonteCarloStreakData> losingStreaks)
+        private static void CalculateForSingleRow(double[] row, Dictionary<int, MonteCarloStreakData> winningStreaks, Dictionary<int, MonteCarloStreakData> losingStreaks)
         {
             CurrentStreak currentStreak = new CurrentStreak();
             InitializeCurrentStreak(currentStreak, row[1], row[0]);
@@ -46,7 +46,7 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
             UpdateStreakCount(GetStreaks(currentStreak.Direction, winningStreaks, losingStreaks), currentStreak.Length);
         }
 
-        private static void InitializeCurrentStreak(CurrentStreak currentStreak, float secondValue, float firstValue)
+        private static void InitializeCurrentStreak(CurrentStreak currentStreak, double secondValue, double firstValue)
         {
             currentStreak.Direction = GetDirection(secondValue, firstValue);
             currentStreak.Length = 1;
@@ -63,7 +63,7 @@ namespace MarketOps.SystemAnalysis.MonteCarlo
                 streaks.Add(length, new MonteCarloStreakData() { Length = length, Count = 1 });
         }
 
-        private static StreakDirection GetDirection(float current, float previous) =>
+        private static StreakDirection GetDirection(double current, double previous) =>
             (current > previous) ? StreakDirection.Up : StreakDirection.Down;
 
         private static List<MonteCarloStreakData> GetOrderedListOfStreaks(Dictionary<int, MonteCarloStreakData> streaks) => 

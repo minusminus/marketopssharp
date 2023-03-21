@@ -23,7 +23,7 @@
                 for (int column = 0; column < data.Length; column++)
                     data.AverageData[column] += data.Data[row][column];
             for (int column = 0; column < data.Length; column++)
-                data.AverageData[column] /= (float)data.Count;
+                data.AverageData[column] /= (double)data.Count;
         }
 
         private static void CalculateWinsAndLosses(MonteCarloResult data)
@@ -38,21 +38,21 @@
 
         private static void SelectBestWorstAverageCase(MonteCarloResult data)
         {
-            data.AverageCase = data.AverageData[data.Length - 1];
-            data.BestCase = data.Data[0][data.Length - 1];
-            data.WorstCase = data.Data[0][data.Length - 1];
+            data.AverageCase = (float)data.AverageData[data.Length - 1];
+            data.BestCase = (float)data.Data[0][data.Length - 1];
+            data.WorstCase = (float)data.Data[0][data.Length - 1];
             for (int i = 1; i < data.Count; i++)
             {
                 if (data.Data[i][data.Length - 1] > data.BestCase)
-                    data.BestCase = data.Data[i][data.Length - 1];
+                    data.BestCase = (float)data.Data[i][data.Length - 1];
                 if (data.Data[i][data.Length - 1] < data.WorstCase)
-                    data.WorstCase = data.Data[i][data.Length - 1];
+                    data.WorstCase = (float)data.Data[i][data.Length - 1];
             }
         }
         private static void CalculateCummulativeYProfitBestWorstAverageCase(MonteCarloResult data, int transactionsPerYear)
         {
-            float CummYProfit(float finalValue) =>
-                (float)CummulativeProfit.Calculate(MonteCarloConsts.InitialValue, finalValue, (double)data.Length / (double)transactionsPerYear);
+            float CummYProfit(double finalValue) =>
+                (float)CummulativeProfit.Calculate(MonteCarloConsts.InitialValue, finalValue, (float)data.Length / (float)transactionsPerYear);
 
             data.AverageCaseYPcnt = CummYProfit(data.AverageCase);
             data.BestCaseYPcnt = CummYProfit(data.BestCase);

@@ -1,62 +1,61 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using MarketOps.Controls.ChartsUtils;
+using MarketOps.SystemData.Types;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using MarketOps.Controls.ChartsUtils;
-using MarketOps.SystemData.Types;
 
 namespace MarketOps.Controls.SystemEquity
 {
     public partial class SystemEquityChart : UserControl
     {
-        private ChartArea _areaEquity => chartEquity.ChartAreas["areaEquity"];
-        private ChartArea _areaCapitalUsage => chartEquity.ChartAreas["areaCapitalUsage"];
-        private Series _seriesEquity => chartEquity.Series["seriesEquity"];
-        private Series _seriesCapitalUsage => chartEquity.Series["seriesCapitalUsage"];
-        private Title _titleCapitalUsage => chartEquity.Titles["titleCapitalUsage"];
+        private readonly PlotsAxisXSynchronizer _axisSynchronizer;
 
         public SystemEquityChart()
         {
             InitializeComponent();
-            _areaCapitalUsage.AxisY.Minimum = 0;
-            _areaCapitalUsage.AxisY.Maximum = 100;
-            _titleCapitalUsage.Visible = false;
+            _axisSynchronizer = new PlotsAxisXSynchronizer(plotEquity, plotCapitalUsage);
+
+            plotEquity.Plot.SetUpPlotArea();
+            plotEquity.Plot.XAxis.DateTimeFormat(true);
+
+            plotCapitalUsage.Plot.SetUpPlotArea();
+            plotCapitalUsage.Plot.SetAxisLimitsY(0, 100);
+            plotCapitalUsage.Plot.SetUpBottomPlotXAxis();
+            plotCapitalUsage.Configuration.LockVerticalAxis = true;
+            plotCapitalUsage.Plot.Title("Capital usage [%]", false, PlotConsts.AxisTextColor, 10);
+            //plotCapitalUsage.Visible = false;
         }
 
         public void LoadData(List<SystemValue> equity, List<SystemValue> equityCapitalUsage)
         {
-            ResizeChartAreas(equityCapitalUsage != null);
-            LoadEquity(equity);
+            plotEquity.Plot.Clear();
+            plotCapitalUsage.Plot.Clear();
+
+            AddEquity(equity);
             if (equityCapitalUsage != null)
-                LoadEquityCapitalUsage(equityCapitalUsage);
+            {
+                plotCapitalUsage.Visible = true;
+                AddCapitalUsage(equityCapitalUsage);
+            }
+
+            plotEquity.Refresh();
+            plotCapitalUsage.Refresh();
         }
 
-        private void ResizeChartAreas(bool capitalUsageProvided)
+        private void AddEquity(List<SystemValue> equity)
         {
-            _areaCapitalUsage.Visible = capitalUsageProvided;
-            _titleCapitalUsage.Visible = capitalUsageProvided;
-            if (!capitalUsageProvided)
-                _areaEquity.Position.Height = 100;
+            double[] x = equity.Select(sv => sv.TS.ToOADate()).ToArray();
+            double[] y = equity.Select(sv => (double)sv.Value).ToArray();
+
+            plotEquity.Plot.AddScatterLines(x, y, PlotConsts.FirstLineColor);
         }
 
-        private void LoadEquity(List<SystemValue> equity)
+        private void AddCapitalUsage(List<SystemValue> equityCapitalUsage)
         {
-            var data = equity
-                .Select(x => new SystemValueMapper(x))
-                .ToList();
-            chartEquity.DataSource = data;
-            dbgEquity.DataSource = data;
-            chartEquity.DataBind();
-        }
+            double[] x = equityCapitalUsage.Select(cu => cu.TS.ToOADate()).ToArray();
+            double[] y = equityCapitalUsage.Select(cu => 100.0 * cu.Value).ToArray();
 
-        private void LoadEquityCapitalUsage(List<SystemValue> equityCapitalUsage)
-        {
-            Series series = _seriesCapitalUsage;
-            series.Points.Clear();
-            for (int i = 0; i < equityCapitalUsage.Count; i++)
-                series.Points.AddXY(equityCapitalUsage[i].TS, 100.0f * equityCapitalUsage[i].Value);
-            //series.Color = Color.Red;
+            plotCapitalUsage.Plot.AddScatterLines(x, y, PlotConsts.SecondLineColor);
         }
     }
 }

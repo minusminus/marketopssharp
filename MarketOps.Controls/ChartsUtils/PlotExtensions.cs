@@ -19,6 +19,12 @@ namespace MarketOps.Controls.ChartsUtils
             plot.Layout(padding: 0);
         }
 
+        public static void SetUpBottomPlotXAxis(this Plot plot)
+        {
+            plot.XAxis.SetSizeLimit(PlotConsts.BottomPlotXTicksSize, PlotConsts.BottomPlotXTicksSize);
+            plot.XAxis.Ticks(false);
+        }
+
         public static Tooltip CreateTooltip(this Plot plot)
         {
             var result = plot.AddTooltip(" ", 0, 0);

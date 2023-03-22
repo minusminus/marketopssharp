@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using MarketOps.Controls.ChartsUtils;
 using MarketOps.SystemData.Types;
 
 namespace MarketOps.Controls.SystemEquity

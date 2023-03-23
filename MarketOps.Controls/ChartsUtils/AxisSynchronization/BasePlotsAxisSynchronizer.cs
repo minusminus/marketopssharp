@@ -1,7 +1,7 @@
 ﻿using ScottPlot;
 using System;
 
-namespace MarketOps.Controls.ChartsUtils
+namespace MarketOps.Controls.ChartsUtils.AxisSynchronization
 {
     /// <summary>
     /// Base mechanism for plots axis synchronization.

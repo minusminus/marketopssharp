@@ -8,15 +8,12 @@ namespace MarketOps.Controls.PointChart
     {
         private ScatterPlot _scatter;
         private Tooltip _tooltip;
-        private bool _mouseOverPlot;
-        private int _lastHitIndex;
+        private PlotTooltipMover _tooltipMover;
         private string _tooltipFormat;
 
         public PointChart()
         {
             InitializeComponent();
-            _mouseOverPlot = false;
-            _lastHitIndex = -1;
             plotPoints.Plot.SetUpPlotArea();
         }
 
@@ -24,42 +21,21 @@ namespace MarketOps.Controls.PointChart
         {
             _tooltipFormat = tooltipFormat;
 
+            _tooltipMover?.UnlinkPlot();
+            _tooltipMover = null;
             plotPoints.Plot.Clear();
+
             _scatter = plotPoints.Plot.AddScatter(data.X, data.Y, lineWidth: 0);
             _tooltip = plotPoints.Plot.CreateTooltip();
+            _tooltipMover = new PlotTooltipMover(plotPoints, _tooltip, GetNearestPoint, GetTooltipLabel);
 
             plotPoints.Refresh();
         }
 
-        private void plotPoints_MouseEnter(object sender, System.EventArgs e)
-        {
-            _mouseOverPlot = true;
-        }
+        private (double x, double y, int index) GetNearestPoint((double x, double y) mouseCoords, double xyRatio) => 
+            _scatter.GetPointNearest(mouseCoords.x, mouseCoords.y, xyRatio);
 
-        private void plotPoints_MouseLeave(object sender, System.EventArgs e)
-        {
-            _mouseOverPlot = false;
-            _tooltip.IsVisible = false;
-            _lastHitIndex = -1;
-            plotPoints.Refresh();
-        }
-
-        private void plotPoints_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!_mouseOverPlot) return;
-
-            var mouseCoords = plotPoints.GetMouseCoordinates();
-            double xyRatio = plotPoints.Plot.XAxis.Dims.PxPerUnit / plotPoints.Plot.YAxis.Dims.PxPerUnit;
-            var pos = _scatter.GetPointNearest(mouseCoords.x, mouseCoords.y, xyRatio);
-            if (_lastHitIndex == pos.index) return;
-
-            _lastHitIndex = pos.index;
-            _tooltip.IsVisible = true;
-            _tooltip.X = _scatter.Xs[pos.index];
-            _tooltip.Y = _scatter.Ys[pos.index];
-            _tooltip.Label = string.Format(_tooltipFormat, _scatter.Xs[pos.index], _scatter.Ys[pos.index]);
-
-            plotPoints.Refresh();
-        }
+        private string GetTooltipLabel((double x, double y, int index) nearestPoint) =>
+            string.Format(_tooltipFormat, _scatter.Xs[nearestPoint.index], _scatter.Ys[nearestPoint.index]);
     }
 }

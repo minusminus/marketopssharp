@@ -38,9 +38,6 @@
             this.plotPoints.Name = "plotPoints";
             this.plotPoints.Size = new System.Drawing.Size(408, 275);
             this.plotPoints.TabIndex = 1;
-            this.plotPoints.MouseEnter += new System.EventHandler(this.plotPoints_MouseEnter);
-            this.plotPoints.MouseLeave += new System.EventHandler(this.plotPoints_MouseLeave);
-            this.plotPoints.MouseMove += new System.Windows.Forms.MouseEventHandler(this.plotPoints_MouseMove);
             // 
             // PointChart
             // 

@@ -1,6 +1,6 @@
 ﻿using ScottPlot;
 
-namespace MarketOps.Controls.ChartsUtils
+namespace MarketOps.Controls.ChartsUtils.AxisSynchronization
 {
     /// <summary>
     /// Synchronizes plots on X axis only.
@@ -9,7 +9,7 @@ namespace MarketOps.Controls.ChartsUtils
     {
         public PlotsAxisXSynchronizer(params FormsPlot[] formsPlots) : base(formsPlots) { }
 
-        protected override void SetLimits(FormsPlot formsPlot, AxisLimits newAxisLimits) => 
+        protected override void SetLimits(FormsPlot formsPlot, AxisLimits newAxisLimits) =>
             formsPlot.Plot.SetAxisLimitsX(newAxisLimits.XMin, newAxisLimits.XMax);
     }
 }

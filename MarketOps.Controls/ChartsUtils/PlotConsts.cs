@@ -7,8 +7,8 @@ namespace MarketOps.Controls.ChartsUtils
     /// </summary>
     internal static class PlotConsts
     {
-        public static readonly Color FirstLineColor = Color.Blue;
-        public static readonly Color SecondLineColor = Color.Orange;
+        public static readonly Color PrimaryLineColor = Color.DodgerBlue;
+        public static readonly Color SecondaryLineColor = Color.Orange;
 
         public static readonly Color AxisColor = Color.LightGray;
         public static readonly Color AxisTextColor = Color.DarkGray;

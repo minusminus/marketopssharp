@@ -72,8 +72,9 @@
     <Compile Include="ChartAreaFactory.cs" />
     <Compile Include="ChartsUtils\PlotConsts.cs" />
     <Compile Include="ChartsUtils\PlotExtensions.cs" />
-    <Compile Include="ChartsUtils\BasePlotsAxisSynchronizer.cs" />
-    <Compile Include="ChartsUtils\PlotsAxisXSynchronizer.cs" />
+    <Compile Include="ChartsUtils\AxisSynchronization\BasePlotsAxisSynchronizer.cs" />
+    <Compile Include="ChartsUtils\AxisSynchronization\PlotsAxisXSynchronizer.cs" />
+    <Compile Include="ChartsUtils\PlotTooltipMover.cs" />
     <Compile Include="ColumnChart\ColumnChartData.cs" />
     <Compile Include="ColumnChart\ColumnChart.cs">
       <SubType>UserControl</SubType>

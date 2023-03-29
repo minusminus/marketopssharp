@@ -1,5 +1,6 @@
 ﻿using ScottPlot.Plottable;
 using ScottPlot;
+using System.Drawing;
 
 namespace MarketOps.Controls.ChartsUtils
 {
@@ -23,6 +24,12 @@ namespace MarketOps.Controls.ChartsUtils
         {
             plot.XAxis.SetSizeLimit(PlotConsts.BottomPlotXTicksSize, PlotConsts.BottomPlotXTicksSize);
             plot.XAxis.Ticks(false);
+        }
+
+        public static void AddVerticalLines(this Plot plot, in double[] verticalLines, Color color)
+        {
+            for (int i = 0; i < verticalLines.Length; i++)
+                plot.AddVerticalLine(x: verticalLines[i], color: color);
         }
 
         public static Tooltip CreateTooltip(this Plot plot)

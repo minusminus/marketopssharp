@@ -62,7 +62,7 @@ namespace MarketOps
             dbgPositions.OnPositionClick += dbgPositions_OnPositionClick;
 
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
-            this.Text = $"{Application.ProductName} v {Application.ProductVersion}";
+            this.Text = $"{Application.ProductName} [v {Application.ProductVersion}]";
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
             InitializeSim();
@@ -330,8 +330,8 @@ namespace MarketOps
         {
             const string SimulationRProfitValueTooltipFormat = "{0:N2}, Length: {1}";
 
-            chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat);
-            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), 0.5);
+            chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat, 0);
+            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), 0.5, 0);
         }
 
         private void ShowDDCharts(SystemStateSummary summary)
@@ -347,8 +347,8 @@ namespace MarketOps
             const string SimulationProfitValueTooltipFormat = "{0:N2}, Length: {1}";
             const string SimulationProfitPcntTooltipFormat = "{0:N2}%, Length: {1}";
 
-            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitValueTooltipFormat);
-            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitPcntTooltipFormat);
+            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitValueTooltipFormat, 0);
+            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitPcntTooltipFormat, 0);
         }
 
         private void LoadConfig()

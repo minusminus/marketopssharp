@@ -17,7 +17,7 @@ namespace MarketOps.Controls.PointChart
             plotPoints.Plot.SetUpPlotArea();
         }
 
-        public void LoadData(PointChartData data, string tooltipFormat)
+        public void LoadData(PointChartData data, string tooltipFormat, params double[] verticalLines)
         {
             _tooltipFormat = tooltipFormat;
 
@@ -25,7 +25,8 @@ namespace MarketOps.Controls.PointChart
             _tooltipMover = null;
             plotPoints.Plot.Clear();
 
-            _scatter = plotPoints.Plot.AddScatter(data.X, data.Y, lineWidth: 0);
+            plotPoints.Plot.AddVerticalLines(verticalLines, PlotConsts.SecondaryPointColor);
+            _scatter = plotPoints.Plot.AddScatter(data.X, data.Y, lineWidth: 0, color: PlotConsts.PrimaryPointColor);
             _tooltip = plotPoints.Plot.CreateTooltip();
             _tooltipMover = new PlotTooltipMover(plotPoints, _tooltip, GetNearestPoint, GetTooltipLabel);
 

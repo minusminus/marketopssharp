@@ -54,7 +54,7 @@ namespace MarketOps.DataProvider.Pg
 
             StockPricesData res = tmp.ToStockPricesData();
             res.Range = dataRange;
-            res.IntrradayInterval = intradayInterval;
+            res.IntradayInterval = intradayInterval;
             return res;
         }
 

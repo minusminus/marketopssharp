@@ -83,9 +83,9 @@ namespace MarketOps.StockData.Extensions
                 case StockDataRange.Daily:
                     return "daily";
                 case StockDataRange.Intraday:
-                    return data.IntrradayInterval%60 == 0
-                        ? $"intra {data.IntrradayInterval/60}h"
-                        : $"intra {data.IntrradayInterval}min";
+                    return data.IntradayInterval%60 == 0
+                        ? $"intra {data.IntradayInterval/60}h"
+                        : $"intra {data.IntradayInterval}min";
                 case StockDataRange.Tick:
                     return "ticks";
             }

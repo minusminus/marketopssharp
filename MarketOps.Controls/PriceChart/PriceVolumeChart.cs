@@ -4,21 +4,75 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketOps.Controls.ChartsUtils;
+using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
+using ScottPlot;
+using ScottPlot.Plottable;
 
 namespace MarketOps.Controls.PriceChart
 {
     public partial class PriceVolumeChart : UserControl
     {
+        private FinancePlot _plotPrices;
+        private BarPlot _plotVolume;
+        private readonly PlotsAxisXSynchronizer _axisSynchronizer;
+
         public PriceVolumeChart()
         {
             InitializeComponent();
             DoubleBuffered = true;
             SetChartMode(PriceVolumeChartMode.Candles);
-            PVChart.MouseWheel += PVChart_MouseWheel;
-            pnlCursorDataValues.BackColor = PVChart.BackColor;
-            PrepareNamedImages();
+            //PVChart.MouseWheel += PVChart_MouseWheel;
+            //pnlCursorDataValues.BackColor = PVChart.BackColor;
+            //PrepareNamedImages();
+            _axisSynchronizer = new PlotsAxisXSynchronizer(plotPrices, plotVolume);
+
+            const float yAxisSizeLimit = 50;
+
+            plotPrices.Plot.SetUpPlotArea();
+            plotPrices.Plot.YAxis.SetSizeLimit(yAxisSizeLimit, yAxisSizeLimit);
+            plotPrices.Plot.XAxis.DateTimeFormat(true);
+            plotPrices.RightClicked -= plotPrices.DefaultRightClickEvent;
+
+            plotVolume.Plot.SetUpPlotArea();
+            plotVolume.Plot.SetUpBottomPlotXAxis();
+            plotVolume.Plot.YAxis.SetSizeLimit(yAxisSizeLimit, yAxisSizeLimit);
+            plotVolume.Configuration.LockVerticalAxis = true;
+        }
+
+        public void LoadData(StockPricesData data)
+        {
+            plotPrices.Plot.Clear();
+            plotVolume.Plot.Clear();
+
+            OHLC[] ohlc = CreateOHLCData(data);
+            _plotPrices = plotPrices.Plot.AddCandlesticks(ohlc);
+            _plotPrices.ColorUp = PlotConsts.CandleColorUp;
+            _plotPrices.ColorDown = PlotConsts.CandleColorDown;
+            _plotPrices.WickColor = PlotConsts.CandleColorDown;
+            _plotPrices.Sequential = true;
+
+            string[] pricesTicks = data.TS.Select(ts => ts.ToString()).ToArray();
+            plotPrices.Plot.XTicks(pricesTicks);
+
+            double[] volume = data.V.Select(x => (double)x).ToArray();
+            _plotVolume = plotVolume.Plot.AddBar(volume, PlotConsts.PrimaryPointColor);
+            _plotVolume.BarWidth = 0.6;
+
+            plotPrices.Refresh();
+            plotVolume.Refresh();
+        }
+
+        private OHLC[] CreateOHLCData(StockPricesData data)
+        {
+            return Enumerable.Range(0, data.Length)
+                .Select(i => MapToOHLC(i))
+                .ToArray();
+
+            OHLC MapToOHLC(int index) =>
+                //new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1, (double)data.V[index]);
+                new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate());
         }
 
         #region public properties and events
@@ -46,60 +100,60 @@ namespace MarketOps.Controls.PriceChart
         #region internal events
         private void PVChart_MouseMove(object sender, MouseEventArgs e)
         {
-            if (PricesCandles.Points.Count == 0) return;
+            //if (PricesCandles.Points.Count == 0) return;
 
-            UpdateAreasCursors(e.Location);
-            int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
-            OnChartValueSelected?.Invoke(xSelectedIndex);
-            SetPriceAreaToolTips(e.Location);
+            //UpdateAreasCursors(e.Location);
+            //int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
+            //OnChartValueSelected?.Invoke(xSelectedIndex);
+            //SetPriceAreaToolTips(e.Location);
         }
 
         private void PVChart_MouseWheel(object sender, MouseEventArgs e)
         {
-            Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
-            Tuple<double, double> zoom = (new ChartZoomCalculator()).CalculateZoom(e.Delta < 0,
-                ModifierKeys.HasFlag(Keys.Control), ax, e.Location);
-            using (new SuspendDrawingUpdate(PVChart))
-            {
-                ax.ScaleView.Zoom(zoom.Item1, zoom.Item2);
-                SetYViewRange();
-            }
-            PVChart_MouseMove(sender, e);
-            SetPriceAreaToolTips(e.Location);
+            //Axis ax = PVChart.ChartAreas["areaPrices"].AxisX;
+            //Tuple<double, double> zoom = (new ChartZoomCalculator()).CalculateZoom(e.Delta < 0,
+            //    ModifierKeys.HasFlag(Keys.Control), ax, e.Location);
+            //using (new SuspendDrawingUpdate(PVChart))
+            //{
+            //    ax.ScaleView.Zoom(zoom.Item1, zoom.Item2);
+            //    SetYViewRange();
+            //}
+            //PVChart_MouseMove(sender, e);
+            //SetPriceAreaToolTips(e.Location);
         }
 
         private void PVChart_MouseEnter(object sender, EventArgs e)
         {
-            if (!PVChart.Focused)
-                PVChart.Focus();
+            //if (!PVChart.Focused)
+            //    PVChart.Focus();
         }
 
         private void PVChart_MouseLeave(object sender, EventArgs e)
         {
-            if (PVChart.Focused)
-                PVChart.Parent.Focus();
+            //if (PVChart.Focused)
+            //    PVChart.Parent.Focus();
         }
 
         private void PVChart_AxisViewChanged(object sender, ViewEventArgs e)
         {
-            if (!Equals(e.Axis, PVChart.ChartAreas["areaPrices"].AxisX)) return;
-            using (new SuspendDrawingUpdate(PVChart))
-                SetYViewRange();
+            //if (!Equals(e.Axis, PVChart.ChartAreas["areaPrices"].AxisX)) return;
+            //using (new SuspendDrawingUpdate(PVChart))
+            //    SetYViewRange();
         }
 
         private void PVChart_DoubleClick(object sender, EventArgs e)
         {
-            ChartArea currentArea = FindAreaUnderCursor(PVChart.PointToClient(Control.MousePosition));
-            if (currentArea == null) return;
-            OnAreaDoubleClick?.Invoke(currentArea.Name);
+            //ChartArea currentArea = FindAreaUnderCursor(PVChart.PointToClient(Control.MousePosition));
+            //if (currentArea == null) return;
+            //OnAreaDoubleClick?.Invoke(currentArea.Name);
         }
         #endregion
 
-        public void ClearAllSeriesData()
-        {
-            foreach (var series in PVChart.Series)
-                series.Points.Clear();
-        }
+        //public void ClearAllSeriesData()
+        //{
+        //    foreach (var series in PVChart.Series)
+        //        series.Points.Clear();
+        //}
 
         public Series GetSeries(string seriesName)
         {
@@ -153,49 +207,49 @@ namespace MarketOps.Controls.PriceChart
             PVChart.ChartAreas["areaPrices"].AxisY.IsReversed = reversed;
         }
 
-        private void UpdateAreasCursors(Point cursorLocation)
-        {
-            foreach (var area in PVChart.ChartAreas)
-            {
-                if (area.CursorX.IsUserEnabled)
-                    area.CursorX.SetCursorPixelPosition(cursorLocation, true);
-                if (area.CursorY.IsUserEnabled)
-                    area.CursorY.SetCursorPixelPosition(cursorLocation, true);
-            }
-        }
+        //private void UpdateAreasCursors(Point cursorLocation)
+        //{
+        //    foreach (var area in PVChart.ChartAreas)
+        //    {
+        //        if (area.CursorX.IsUserEnabled)
+        //            area.CursorX.SetCursorPixelPosition(cursorLocation, true);
+        //        if (area.CursorY.IsUserEnabled)
+        //            area.CursorY.SetCursorPixelPosition(cursorLocation, true);
+        //    }
+        //}
 
-        private void SetPriceAreaToolTips(Point cursorLocation)
-        {
-            int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
-            ChartArea currentArea = FindAreaUnderCursor(cursorLocation);
-            if (currentArea == null)
-            {
-                HidePriceAreaToolTips();
-                return;
-            }
+        //private void SetPriceAreaToolTips(Point cursorLocation)
+        //{
+        //    int xSelectedIndex = (int)PVChart.ChartAreas["areaPrices"].CursorX.Position - 1;
+        //    ChartArea currentArea = FindAreaUnderCursor(cursorLocation);
+        //    if (currentArea == null)
+        //    {
+        //        HidePriceAreaToolTips();
+        //        return;
+        //    }
 
-            if (cursorLocation.Y >= 0)
-            {
-                int ypos = cursorLocation.Y;
-                double yval = currentArea.AxisY.PixelPositionToValue(ypos);
-                if (yval < currentArea.AxisY.ScaleView.ViewMinimum)
-                {
-                    yval = currentArea.AxisY.ScaleView.ViewMinimum;
-                    ypos = (int)((float)PVChart.Height * (currentArea.AxisY.ValueToPosition(yval)) / 100F);
-                }
-                lblValueValue.Text = OnGetAxisYToolTip?.Invoke(yval);
-            }
-            if (xSelectedIndex >= 0)
-            {
-                lblTSValue.Text = OnGetAxisXToolTip?.Invoke(xSelectedIndex);
-            }
-        }
+        //    if (cursorLocation.Y >= 0)
+        //    {
+        //        int ypos = cursorLocation.Y;
+        //        double yval = currentArea.AxisY.PixelPositionToValue(ypos);
+        //        if (yval < currentArea.AxisY.ScaleView.ViewMinimum)
+        //        {
+        //            yval = currentArea.AxisY.ScaleView.ViewMinimum;
+        //            ypos = (int)((float)PVChart.Height * (currentArea.AxisY.ValueToPosition(yval)) / 100F);
+        //        }
+        //        lblValueValue.Text = OnGetAxisYToolTip?.Invoke(yval);
+        //    }
+        //    if (xSelectedIndex >= 0)
+        //    {
+        //        lblTSValue.Text = OnGetAxisXToolTip?.Invoke(xSelectedIndex);
+        //    }
+        //}
 
-        private ChartArea FindAreaUnderCursor(Point cursorLocation)
-        {
-            float positionHeight = 100F*(float) cursorLocation.Y/(float) PVChart.Height;
-            return PVChart.ChartAreas.FirstOrDefault(area => positionHeight < (area.Position.Y + area.Position.Height));
-        }
+        //private ChartArea FindAreaUnderCursor(Point cursorLocation)
+        //{
+        //    float positionHeight = 100F*(float) cursorLocation.Y/(float) PVChart.Height;
+        //    return PVChart.ChartAreas.FirstOrDefault(area => positionHeight < (area.Position.Y + area.Position.Height));
+        //}
 
         public void HidePriceAreaToolTips()
         {
@@ -227,10 +281,10 @@ namespace MarketOps.Controls.PriceChart
             }
         }
 
-        private void PrepareNamedImages()
-        {
-            foreach (var img in PositionOpenCloseImages.Images)
-                PVChart.Images.Add(new NamedImage(img.Key, img.Value));
-        }
+        //private void PrepareNamedImages()
+        //{
+        //    foreach (var img in PositionOpenCloseImages.Images)
+        //        PVChart.Images.Add(new NamedImage(img.Key, img.Value));
+        //}
     }
 }

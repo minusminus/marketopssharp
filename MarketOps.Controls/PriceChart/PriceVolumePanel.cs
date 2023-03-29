@@ -142,12 +142,13 @@ namespace MarketOps.Controls.PriceChart
         {
             using (new SuspendDrawingUpdate(chartPV))
             {
-                chartPV.LoadStockData(_currentData.Prices);
-                foreach (var stat in _currentData.Stats)
-                    chartPV.AppendStockStatData(_currentData.Prices, stat);
-                chartPV.SetYViewRange();
-                RecreatePositionsAnnotations();
-                RecreatePositionsTrailingStops();
+                chartPV.LoadData(_currentData.Prices);
+                //chartPV.LoadStockData(_currentData.Prices);
+                //foreach (var stat in _currentData.Stats)
+                //    chartPV.AppendStockStatData(_currentData.Prices, stat);
+                //chartPV.SetYViewRange();
+                //RecreatePositionsAnnotations();
+                //RecreatePositionsTrailingStops();
             }
         }
 
@@ -155,9 +156,10 @@ namespace MarketOps.Controls.PriceChart
         {
             using (new SuspendDrawingUpdate(chartPV))
             {
-                chartPV.PrependStockData(newData);
-                foreach (var stat in _currentData.Stats)
-                    chartPV.PrependStockStatData(_currentData.Prices, stat);
+                chartPV.LoadData(newData);
+                //chartPV.PrependStockData(newData);
+                //foreach (var stat in _currentData.Stats)
+                //    chartPV.PrependStockStatData(_currentData.Prices, stat);
             }
         }
 

@@ -43,7 +43,7 @@ namespace MarketOps.Tests.SystemExecutor.DataLoaders
             return new StockPricesData(2)
             {
                 Range = dataRange,
-                IntrradayInterval = intradayInterval,
+                IntradayInterval = intradayInterval,
                 TS =
                 {
                     [0] = tsFrom,
@@ -79,7 +79,7 @@ namespace MarketOps.Tests.SystemExecutor.DataLoaders
                     return new StockPricesData(0)
                     {
                         Range = StockDataRange.Daily,
-                        IntrradayInterval = 0
+                        IntradayInterval = 0
                     };
                 });
         }

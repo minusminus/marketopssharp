@@ -19,7 +19,7 @@ namespace MarketOps.StockData
                 case StockDataRange.Daily:
                     return ts.AddDays(-1);
                 case StockDataRange.Intraday:
-                    return ts.AddMinutes(-data.IntrradayInterval);
+                    return ts.AddMinutes(-data.IntradayInterval);
                 case StockDataRange.Tick:
                     return ts.AddMinutes(-1);
             }

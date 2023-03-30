@@ -128,6 +128,9 @@
     <Compile Include="ChartsUtils\ChartYViewRangeCalculator.cs" />
     <Compile Include="PriceChart\ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
+    <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
+    <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
+    <Compile Include="PriceChart\DateTimeTicks\DateTimeTicksProviderFactory.cs" />
     <Compile Include="PriceChart\FormEditStockStatParams.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +144,7 @@
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </Compile>
     <Compile Include="PositionChangeChecker.cs" />
+    <Compile Include="PriceChart\IDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\PositionOpenCloseImages.cs" />
     <Compile Include="PriceChart\PriceVolumeChart.cs">
       <SubType>UserControl</SubType>

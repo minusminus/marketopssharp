@@ -140,9 +140,9 @@ namespace MarketOps.Controls.PriceChart
 
         private void ReloadCurrentData()
         {
-            using (new SuspendDrawingUpdate(chartPV))
+            //using (new SuspendDrawingUpdate(chartPV))
             {
-                chartPV.LoadData(_currentData.Prices);
+                chartPV.LoadData(_currentData.Prices, _currentData.Stats);
                 //chartPV.LoadStockData(_currentData.Prices);
                 //foreach (var stat in _currentData.Stats)
                 //    chartPV.AppendStockStatData(_currentData.Prices, stat);
@@ -154,9 +154,9 @@ namespace MarketOps.Controls.PriceChart
 
         private void PrependData(StockPricesData newData)
         {
-            using (new SuspendDrawingUpdate(chartPV))
+            //using (new SuspendDrawingUpdate(chartPV))
             {
-                chartPV.LoadData(newData);
+                chartPV.LoadData(newData, _currentData.Stats);
                 //chartPV.PrependStockData(newData);
                 //foreach (var stat in _currentData.Stats)
                 //    chartPV.PrependStockStatData(_currentData.Prices, stat);
@@ -277,8 +277,7 @@ namespace MarketOps.Controls.PriceChart
         private bool EditStat(StockStat stat)
         {
             using (FormEditStockStatParams frm = new FormEditStockStatParams())
-                if (!frm.Execute(stat)) return false;
-            return true;
+                return frm.Execute(stat);
         }
 
         private void CalculateStatAndRefreshChartData(StockStat stat)

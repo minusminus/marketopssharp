@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketOps.Controls.ChartsUtils;
 using MarketOps.Controls.ChartsUtils.AxisSynchronization;
+using MarketOps.Controls.PriceChart.DateTimeTicks;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 using ScottPlot;
@@ -14,54 +16,57 @@ namespace MarketOps.Controls.PriceChart
 {
     public partial class PriceVolumeChart : UserControl
     {
+        const float YAxisSizeLimit = 50;
+
         private FinancePlot _plotPrices;
         private BarPlot _plotVolume;
         private readonly PlotsAxisXSynchronizer _axisSynchronizer;
+        private IDateTimeTicksProvider _datetimeTicksProvider;
 
         public PriceVolumeChart()
         {
             InitializeComponent();
-            DoubleBuffered = true;
+            //DoubleBuffered = true;
             SetChartMode(PriceVolumeChartMode.Candles);
             //PVChart.MouseWheel += PVChart_MouseWheel;
             //pnlCursorDataValues.BackColor = PVChart.BackColor;
             //PrepareNamedImages();
-            _axisSynchronizer = new PlotsAxisXSynchronizer(plotPrices, plotVolume);
+            _axisSynchronizer = new PlotsAxisXSynchronizer(chartPrices, chartVolume);
 
-            const float yAxisSizeLimit = 50;
+            chartPrices.Plot.SetUpPlotArea();
+            chartPrices.Plot.YAxis.SetSizeLimit(YAxisSizeLimit, YAxisSizeLimit);
+            chartPrices.Plot.XAxis.DateTimeFormat(true);
+            chartPrices.RightClicked -= chartPrices.DefaultRightClickEvent;
 
-            plotPrices.Plot.SetUpPlotArea();
-            plotPrices.Plot.YAxis.SetSizeLimit(yAxisSizeLimit, yAxisSizeLimit);
-            plotPrices.Plot.XAxis.DateTimeFormat(true);
-            plotPrices.RightClicked -= plotPrices.DefaultRightClickEvent;
-
-            plotVolume.Plot.SetUpPlotArea();
-            plotVolume.Plot.SetUpBottomPlotXAxis();
-            plotVolume.Plot.YAxis.SetSizeLimit(yAxisSizeLimit, yAxisSizeLimit);
-            plotVolume.Configuration.LockVerticalAxis = true;
+            chartVolume.Plot.SetUpPlotArea();
+            chartVolume.Plot.SetUpBottomPlotXAxis();
+            chartVolume.Plot.YAxis.SetSizeLimit(YAxisSizeLimit, YAxisSizeLimit);
+            chartVolume.Configuration.LockVerticalAxis = true;
         }
 
-        public void LoadData(StockPricesData data)
+        public void LoadData(StockPricesData data, IReadOnlyList<StockStat> stats)
         {
-            plotPrices.Plot.Clear();
-            plotVolume.Plot.Clear();
+            chartPrices.Plot.Clear();
+            chartVolume.Plot.Clear();
+            _datetimeTicksProvider = DateTimeTicksProviderFactory.Get(data.Range);
 
             OHLC[] ohlc = CreateOHLCData(data);
-            _plotPrices = plotPrices.Plot.AddCandlesticks(ohlc);
+            _plotPrices = chartPrices.Plot.AddCandlesticks(ohlc);
             _plotPrices.ColorUp = PlotConsts.CandleColorUp;
             _plotPrices.ColorDown = PlotConsts.CandleColorDown;
             _plotPrices.WickColor = PlotConsts.CandleColorDown;
             _plotPrices.Sequential = true;
 
-            string[] pricesTicks = data.TS.Select(ts => ts.ToString()).ToArray();
-            plotPrices.Plot.XTicks(pricesTicks);
+            //todo: dedykowany mechanizm generowania tekstu tików daty dla ciaglego wyswietlania ohlc
+            //string[] pricesTicks = data.TS.Select(ts => ts.ToString()).ToArray();
+            //chartPrices.Plot.XTicks(pricesTicks);
 
             double[] volume = data.V.Select(x => (double)x).ToArray();
-            _plotVolume = plotVolume.Plot.AddBar(volume, PlotConsts.PrimaryPointColor);
+            _plotVolume = chartVolume.Plot.AddBar(volume, PlotConsts.PrimaryPointColor);
             _plotVolume.BarWidth = 0.6;
 
-            plotPrices.Refresh();
-            plotVolume.Refresh();
+            chartPrices.Refresh();
+            chartVolume.Refresh();
         }
 
         private OHLC[] CreateOHLCData(StockPricesData data)

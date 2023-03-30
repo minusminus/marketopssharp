@@ -41,8 +41,8 @@
             this.lblTSValue = new System.Windows.Forms.Label();
             this.lblTSInfo = new System.Windows.Forms.Label();
             this.pnlCharts = new System.Windows.Forms.Panel();
-            this.plotPrices = new ScottPlot.FormsPlot();
-            this.plotVolume = new ScottPlot.FormsPlot();
+            this.chartPrices = new ScottPlot.FormsPlot();
+            this.chartVolume = new ScottPlot.FormsPlot();
             ((System.ComponentModel.ISupportInitialize)(this.PVChart)).BeginInit();
             this.pnlCursorDataValues.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -202,29 +202,29 @@
             // 
             // pnlCharts
             // 
-            this.pnlCharts.Controls.Add(this.plotPrices);
-            this.pnlCharts.Controls.Add(this.plotVolume);
+            this.pnlCharts.Controls.Add(this.chartPrices);
+            this.pnlCharts.Controls.Add(this.chartVolume);
             this.pnlCharts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCharts.Location = new System.Drawing.Point(0, 30);
             this.pnlCharts.Name = "pnlCharts";
             this.pnlCharts.Size = new System.Drawing.Size(430, 272);
             this.pnlCharts.TabIndex = 2;
             // 
-            // plotPrices
+            // chartPrices
             // 
-            this.plotPrices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.plotPrices.Location = new System.Drawing.Point(0, 0);
-            this.plotPrices.Name = "plotPrices";
-            this.plotPrices.Size = new System.Drawing.Size(430, 213);
-            this.plotPrices.TabIndex = 0;
+            this.chartPrices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartPrices.Location = new System.Drawing.Point(0, 0);
+            this.chartPrices.Name = "chartPrices";
+            this.chartPrices.Size = new System.Drawing.Size(430, 213);
+            this.chartPrices.TabIndex = 0;
             // 
-            // plotVolume
+            // chartVolume
             // 
-            this.plotVolume.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.plotVolume.Location = new System.Drawing.Point(0, 213);
-            this.plotVolume.Name = "plotVolume";
-            this.plotVolume.Size = new System.Drawing.Size(430, 59);
-            this.plotVolume.TabIndex = 1;
+            this.chartVolume.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.chartVolume.Location = new System.Drawing.Point(0, 213);
+            this.chartVolume.Name = "chartVolume";
+            this.chartVolume.Size = new System.Drawing.Size(430, 59);
+            this.chartVolume.TabIndex = 1;
             // 
             // PriceVolumeChart
             // 
@@ -252,7 +252,7 @@
         private System.Windows.Forms.Label lblTSValue;
         private System.Windows.Forms.Label lblTSInfo;
         private System.Windows.Forms.Panel pnlCharts;
-        private ScottPlot.FormsPlot plotPrices;
-        private ScottPlot.FormsPlot plotVolume;
+        private ScottPlot.FormsPlot chartPrices;
+        private ScottPlot.FormsPlot chartVolume;
     }
 }

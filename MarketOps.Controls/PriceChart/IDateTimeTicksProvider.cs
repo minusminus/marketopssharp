@@ -1,4 +1,4 @@
-﻿using ScottPlot.Renderable;
+﻿using ScottPlot;
 using System;
 
 namespace MarketOps.Controls.PriceChart
@@ -8,6 +8,6 @@ namespace MarketOps.Controls.PriceChart
     /// </summary>
     internal interface IDateTimeTicksProvider
     {
-        (string[] values, double[] positions) Get(DateTime[] ts, Axis xAxis);
+        (string[] values, double[] positions) Get(in DateTime[] tsArray, in AxisLimits axisLimits);
     }
 }

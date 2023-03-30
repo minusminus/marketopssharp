@@ -22,6 +22,7 @@ namespace MarketOps.Controls.PriceChart
         private BarPlot _plotVolume;
         private readonly PlotsAxisXSynchronizer _axisSynchronizer;
         private IDateTimeTicksProvider _datetimeTicksProvider;
+        private StockPricesData _currentData;
 
         public PriceVolumeChart()
         {
@@ -37,6 +38,7 @@ namespace MarketOps.Controls.PriceChart
             chartPrices.Plot.YAxis.SetSizeLimit(YAxisSizeLimit, YAxisSizeLimit);
             chartPrices.Plot.XAxis.DateTimeFormat(true);
             chartPrices.RightClicked -= chartPrices.DefaultRightClickEvent;
+            chartPrices.AxesChanged += OnAxesChangedPricesTicksProvider;
 
             chartVolume.Plot.SetUpPlotArea();
             chartVolume.Plot.SetUpBottomPlotXAxis();
@@ -49,6 +51,7 @@ namespace MarketOps.Controls.PriceChart
             chartPrices.Plot.Clear();
             chartVolume.Plot.Clear();
             _datetimeTicksProvider = DateTimeTicksProviderFactory.Get(data.Range);
+            _currentData = data;
 
             OHLC[] ohlc = CreateOHLCData(data);
             _plotPrices = chartPrices.Plot.AddCandlesticks(ohlc);
@@ -56,10 +59,6 @@ namespace MarketOps.Controls.PriceChart
             _plotPrices.ColorDown = PlotConsts.CandleColorDown;
             _plotPrices.WickColor = PlotConsts.CandleColorDown;
             _plotPrices.Sequential = true;
-
-            //todo: dedykowany mechanizm generowania tekstu tików daty dla ciaglego wyswietlania ohlc
-            //string[] pricesTicks = data.TS.Select(ts => ts.ToString()).ToArray();
-            //chartPrices.Plot.XTicks(pricesTicks);
 
             double[] volume = data.V.Select(x => (double)x).ToArray();
             _plotVolume = chartVolume.Plot.AddBar(volume, PlotConsts.PrimaryPointColor);
@@ -78,6 +77,22 @@ namespace MarketOps.Controls.PriceChart
             OHLC MapToOHLC(int index) =>
                 //new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1, (double)data.V[index]);
                 new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate());
+        }
+
+        private void OnAxesChangedPricesTicksProvider(object sender, EventArgs e)
+        {
+            if (_currentData == null) return;
+            if ((FormsPlot)sender != chartPrices) return;
+            var ticks = _datetimeTicksProvider.Get(_currentData.TS, chartPrices.Plot.GetAxisLimits());
+            chartPrices.Configuration.AxesChangedEventEnabled = false;
+            try
+            {
+                chartPrices.Plot.XTicks(ticks.positions, ticks.values);
+                chartPrices.Refresh();
+            } finally
+            {
+                chartPrices.Configuration.AxesChangedEventEnabled = true;
+            }
         }
 
         #region public properties and events

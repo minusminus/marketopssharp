@@ -1,7 +1,7 @@
 ﻿using ScottPlot;
 using System;
 
-namespace MarketOps.Controls.PriceChart
+namespace MarketOps.Controls.PriceChart.PVChart
 {
     /// <summary>
     /// Interface for mechanism providing datetime ticks string values for price chart.

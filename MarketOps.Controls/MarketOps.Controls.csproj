@@ -70,6 +70,7 @@
       <Link>VersionInfo.cs</Link>
     </Compile>
     <Compile Include="ChartAreaFactory.cs" />
+    <Compile Include="ChartsUtils\FormsPlotExtensions.cs" />
     <Compile Include="ChartsUtils\PlotConsts.cs" />
     <Compile Include="ChartsUtils\PlotExtensions.cs" />
     <Compile Include="ChartsUtils\AxisSynchronization\BasePlotsAxisSynchronizer.cs" />
@@ -126,7 +127,6 @@
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="ChartsUtils\ChartYViewRangeCalculator.cs" />
-    <Compile Include="PriceChart\ChartZoomCalculator.cs" />
     <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
     <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
@@ -144,21 +144,22 @@
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </Compile>
     <Compile Include="PositionChangeChecker.cs" />
-    <Compile Include="PriceChart\IDateTimeTicksProvider.cs" />
+    <Compile Include="PriceChart\PVChart\IDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\PositionOpenCloseImages.cs" />
-    <Compile Include="PriceChart\PriceVolumeChart.cs">
+    <Compile Include="PriceChart\PVChart\PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PriceChart\PriceVolumeChart.Designer.cs">
+    <Compile Include="PriceChart\PVChart\PriceVolumeChart.Designer.cs">
       <DependentUpon>PriceVolumeChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="PriceChart\PriceVolumeChartMode.cs" />
+    <Compile Include="PriceChart\PVChart\PriceVolumeChartMode.cs" />
     <Compile Include="PriceChart\PriceVolumePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PriceChart\PriceVolumePanel.Designer.cs">
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="PriceChart\StockStatsManagement\StockStatsManager.cs" />
     <Compile Include="PriceChart\StockStatSticker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -229,7 +230,7 @@
     <EmbeddedResource Include="PriceChart\FormSelectDataRange.resx">
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PriceChart\PriceVolumeChart.resx">
+    <EmbeddedResource Include="PriceChart\PVChart\PriceVolumeChart.resx">
       <DependentUpon>PriceVolumeChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PriceChart\PriceVolumePanel.resx">

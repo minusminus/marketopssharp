@@ -1,5 +1,6 @@
 ﻿using ScottPlot;
 using System;
+using System.Collections.Generic;
 
 namespace MarketOps.Controls.ChartsUtils.AxisSynchronization
 {
@@ -8,21 +9,27 @@ namespace MarketOps.Controls.ChartsUtils.AxisSynchronization
     /// </summary>
     internal abstract class BasePlotsAxisSynchronizer
     {
-        private readonly FormsPlot[] _formsPlots;
+        private readonly List<FormsPlot> _formsPlots = new List<FormsPlot>();
 
         public BasePlotsAxisSynchronizer(params FormsPlot[] formsPlots)
         {
-            _formsPlots = formsPlots;
-            SetPlotsEventHandlers();
+            for (int i = 0; i < formsPlots.Length; i++)
+                Add(formsPlots[i]);
+        }
+
+        public void Add(FormsPlot formsPlot)
+        {
+            _formsPlots.Add(formsPlot);
+            formsPlot.AxesChanged += OnAxesChanged;
+        }
+
+        public void Remove(FormsPlot formsPlot)
+        {
+            if (!_formsPlots.Remove(formsPlot)) return;
+            formsPlot.AxesChanged -= OnAxesChanged;
         }
 
         protected abstract void SetLimits(FormsPlot formsPlot, AxisLimits newAxisLimits);
-
-        private void SetPlotsEventHandlers()
-        {
-            foreach (var formsPlot in _formsPlots)
-                formsPlot.AxesChanged += OnAxesChanged;
-        }
 
         private void OnAxesChanged(object sender, EventArgs e)
         {

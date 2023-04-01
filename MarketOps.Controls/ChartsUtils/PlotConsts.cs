@@ -21,5 +21,7 @@ namespace MarketOps.Controls.ChartsUtils
         public const float AxisTextSize = 8;
         public const float TooltipTextSize = 10;
         public const float BottomPlotXTicksSize = 5;
+
+        public const string PricesAreaName = "areaPrices";  //for backward compatibility, to remove in future version
     }
 }

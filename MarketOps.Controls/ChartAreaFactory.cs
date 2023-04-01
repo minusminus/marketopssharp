@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using MarketOps.Controls.ChartsUtils;
+using System.Drawing;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketOps.Controls
@@ -15,7 +16,7 @@ namespace MarketOps.Controls
 
             return new ChartArea(areaName)
             {
-                AlignWithChartArea = "areaPrices",
+                AlignWithChartArea = PlotConsts.PricesAreaName,
                 AxisX =
                 {
                     IsLabelAutoFit = false,

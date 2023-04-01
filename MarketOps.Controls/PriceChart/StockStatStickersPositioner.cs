@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using MarketOps.Controls.PriceChart.PVChart;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MarketOps.Controls.PriceChart
 {
     /// <summary>
-    /// Manages positions of StockStat stickers on chart areas.
+    /// Manages positions of StockStat stickers on PriceVolumeChart.
     /// </summary>
     internal class StockStatStickersPositioner
     {

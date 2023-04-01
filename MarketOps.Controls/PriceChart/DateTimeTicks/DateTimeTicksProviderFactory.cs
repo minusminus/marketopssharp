@@ -1,4 +1,5 @@
-﻿using MarketOps.StockData.Types;
+﻿using MarketOps.Controls.PriceChart.PVChart;
+using MarketOps.StockData.Types;
 using System;
 
 namespace MarketOps.Controls.PriceChart.DateTimeTicks

@@ -1,4 +1,6 @@
-﻿namespace MarketOps.Controls.PriceChart
+﻿using MarketOps.Controls.PriceChart.PVChart;
+
+namespace MarketOps.Controls.PriceChart
 {
     partial class PriceVolumePanel
     {
@@ -45,7 +47,7 @@
             this.cmnChart = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miStatsOnPriceChart = new System.Windows.Forms.ToolStripMenuItem();
             this.miAdditionalStats = new System.Windows.Forms.ToolStripMenuItem();
-            this.chartPV = new MarketOps.Controls.PriceChart.PriceVolumeChart();
+            this.chartPV = new MarketOps.Controls.PriceChart.PVChart.PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
             this.cmnChart.SuspendLayout();

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms.DataVisualization.Charting;
-using MarketOps.Controls.PriceChart;
+using MarketOps.Controls.PriceChart.PVChart;
 using System.Collections.Generic;
 using MarketOps.SystemData.Types;
 using System;

@@ -1,4 +1,5 @@
-﻿using ScottPlot;
+﻿using MarketOps.Controls.PriceChart.PVChart;
+using ScottPlot;
 using System;
 
 namespace MarketOps.Controls.PriceChart.DateTimeTicks

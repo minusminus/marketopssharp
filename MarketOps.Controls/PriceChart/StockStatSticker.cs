@@ -10,14 +10,12 @@ namespace MarketOps.Controls.PriceChart
         private readonly StockStat _stat;
         private readonly IStockStatsInfoGenerator _statsInfoGenerator;
 
-        #region public properties and events
         public StockStat Stat => _stat;
 
         public delegate void StickerDoubleClick(StockStatSticker sticker, StockStat stat);
         public event StickerDoubleClick OnStickerDoubleClick;
         public delegate void StickerMouseClick(StockStatSticker sticker, StockStat stat, MouseEventArgs e);
         public event StickerMouseClick OnStickerMouseClick;
-        #endregion
 
         public StockStatSticker(StockStat stat, IStockStatsInfoGenerator statsInfoGenerator)
         {
@@ -33,14 +31,10 @@ namespace MarketOps.Controls.PriceChart
             BackColor = _stat.DataColor[0];
         }
 
-        private void lblInfo_DoubleClick(object sender, EventArgs e)
-        {
+        private void lblInfo_DoubleClick(object sender, EventArgs e) => 
             OnStickerDoubleClick?.Invoke(this, _stat);
-        }
 
-        private void lblInfo_MouseClick(object sender, MouseEventArgs e)
-        {
+        private void lblInfo_MouseClick(object sender, MouseEventArgs e) => 
             OnStickerMouseClick?.Invoke(this, _stat, e);
-        }
     }
 }

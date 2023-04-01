@@ -8,6 +8,8 @@ using MarketOps.StockData.Types;
 using MarketOps.Config.Stats;
 using MarketOps.SystemData.Types;
 using MarketOps.StockData;
+using MarketOps.Controls.ChartsUtils;
+using MarketOps.Controls.PriceChart.PVChart;
 
 namespace MarketOps.Controls.PriceChart
 {
@@ -72,7 +74,6 @@ namespace MarketOps.Controls.PriceChart
             _currentData.Prices = _currentData.Prices.Merge(newData);
             RecalculateStats();
             PrependData(newData);
-            chartPV.ResetZoom();
             DisplayCurrentStockInfo();
         }
 
@@ -84,7 +85,6 @@ namespace MarketOps.Controls.PriceChart
             _currentData.Prices = OnGetData.Invoke(_currentData, frm.TsFrom, frm.TsTo);
             RecalculateStats();
             ReloadCurrentData();
-            chartPV.ResetZoom();
             DisplayCurrentStockInfo();
         }
 
@@ -174,7 +174,6 @@ namespace MarketOps.Controls.PriceChart
             _currentInfoGenerator = infoGenerator;
             _currentStatsInfoGenerator = statsInfoGenerator;
             ReloadCurrentData();
-            chartPV.ResetZoom();
             DisplayCurrentStockInfo();
         }
 
@@ -238,7 +237,7 @@ namespace MarketOps.Controls.PriceChart
 
         private void OnClickPriceChartStat(object sender, EventArgs e)
         {
-            StockStat stat = StatsFactories.PriceChart.Get(sender.ToString(), "areaPrices");
+            StockStat stat = StatsFactories.PriceChart.Get(sender.ToString(), PlotConsts.PricesAreaName);
             if (!EditStat(stat)) return;
             AddStat(stat);
             CalculateStatAndRefreshChartData(stat);
@@ -267,7 +266,7 @@ namespace MarketOps.Controls.PriceChart
         {
             if (e.Button == MouseButtons.Middle)
             {
-                if (stat.ChartArea != "areaPrices")
+                if (stat.ChartArea != PlotConsts.PricesAreaName)
                     chartPV.RemoveArea(stat.ChartArea);
                 RemoveStat(sticker, stat);
                 Refresh();

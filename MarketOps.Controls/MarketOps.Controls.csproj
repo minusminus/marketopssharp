@@ -144,8 +144,11 @@
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </Compile>
     <Compile Include="PositionChangeChecker.cs" />
+    <Compile Include="PriceChart\PVChart\AdditionalChartsManager.cs" />
     <Compile Include="PriceChart\PVChart\IDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\PositionOpenCloseImages.cs" />
+    <Compile Include="PriceChart\PVChart\PlotsDataMapper.cs" />
+    <Compile Include="PriceChart\PVChart\PlotsFormatter.cs" />
     <Compile Include="PriceChart\PVChart\PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -159,7 +162,7 @@
     <Compile Include="PriceChart\PriceVolumePanel.Designer.cs">
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="PriceChart\StockStatsManagement\StockStatsManager.cs" />
+    <Compile Include="PriceChart\PVChart\StockStatsManager.cs" />
     <Compile Include="PriceChart\StockStatSticker.cs">
       <SubType>UserControl</SubType>
     </Compile>

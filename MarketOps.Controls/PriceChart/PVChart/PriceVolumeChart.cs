@@ -6,21 +6,17 @@ using System.Windows.Forms.DataVisualization.Charting;
 using MarketOps.Controls.ChartsUtils;
 using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.Controls.PriceChart.DateTimeTicks;
-using MarketOps.Controls.PriceChart.StockStatsManagement;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 using ScottPlot;
-using ScottPlot.Plottable;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
     public partial class PriceVolumeChart : UserControl
     {
-        const float YAxisSizeLimit = 50;
-
-        private readonly List<FormsPlot> _additionalCharts = new List<FormsPlot>();
         private readonly PlotsAxisXSynchronizer _axisSynchronizer;
         private readonly StockStatsManager _stockStatsManager;
+        private readonly AdditionalChartsManager _additionalChartsManager;
         private IDateTimeTicksProvider _datetimeTicksProvider;
         private StockPricesData _currentData;
 
@@ -35,12 +31,13 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _stockStatsManager.OnAdditionalStatAdded += OnAdditionalStatAdded;
             _stockStatsManager.OnPriceStatRemoved += OnPriceStatRemoved;
             _stockStatsManager.OnAdditionalStatRemoved += OnAdditionalStatRemoved;
+            _additionalChartsManager = new AdditionalChartsManager(_axisSynchronizer);
 
-            SetUpFormsPlot(chartPrices);
+            chartPrices.SetUpFormsPlot();
             chartPrices.Plot.XAxis.DateTimeFormat(true);
             chartPrices.AxesChanged += OnAxesChangedPricesTicksProvider;
 
-            SetUpAdditionalFormsPlot(chartVolume);
+            chartVolume.SetUpAdditionalFormsPlot();
         }
 
         public void LoadData(StockPricesData data, IReadOnlyList<StockStat> stats)
@@ -50,82 +47,37 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _datetimeTicksProvider = DateTimeTicksProviderFactory.Get(data.Range);
             _currentData = data;
 
-            SetUpPricesPlot(chartPrices.Plot.AddCandlesticks(CreateOHLCData(data)));
-            SetUpVolumePlot(chartVolume.Plot.AddBar(CreateVolumeData(data)));
+            chartPrices.Plot
+                .AddCandlesticks(data.MapToOHLCData())
+                .SetUpPricesPlot();
+            chartVolume.Plot
+                .AddBar(data.MapToVolumeData())
+                .SetUpVolumePlot();
 
             foreach (var stat in stats)
                 AddStockStat(stat);
 
             RefreshAllCharts();
-
-            void SetUpPricesPlot(FinancePlot plot)
-            {
-                plot.ColorUp = PlotConsts.CandleColorUp;
-                plot.ColorDown = PlotConsts.CandleColorDown;
-                plot.WickColor = PlotConsts.CandleColorDown;
-                plot.Sequential = true;
-            }
-
-            void SetUpVolumePlot(BarPlot plot)
-            {
-                plot.Color = PlotConsts.PrimaryPointColor;
-                plot.BarWidth = 0.6;
-            }
         }
 
         public void AddStockStat(StockStat stat)
         {
             _stockStatsManager.Add(stat);
-
-            FormsPlot chart = new FormsPlot();
-            _axisSynchronizer.Add(chart);
-        }
-
-        private void SetUpFormsPlot(FormsPlot formsPlot)
-        {
-            formsPlot.Plot.SetUpPlotArea();
-            formsPlot.RemoveDefaultRightClickEvent();
-            formsPlot.Plot.YAxis.SetSizeLimit(YAxisSizeLimit, YAxisSizeLimit);
-        }
-
-        private void SetUpAdditionalFormsPlot(FormsPlot formsPlot)
-        {
-            SetUpFormsPlot(formsPlot);
-            formsPlot.Plot.SetUpBottomPlotXAxis();
-            formsPlot.Configuration.LockVerticalAxis = true;
         }
 
         private void ClearAllCharts()
         {
             chartPrices.Plot.Clear();
             chartVolume.Plot.Clear();
-            foreach (var chart in _additionalCharts)
-                RemoveAndReleaseChartControl(chart);
+            _additionalChartsManager.Clear();
         }
 
         private void RefreshAllCharts()
         {
             chartPrices.Refresh();
             chartVolume.Refresh();
-            foreach (var chart in _additionalCharts)
-                chart.Refresh();
+            _additionalChartsManager.RefreshAll();
         }
-
-        private OHLC[] CreateOHLCData(StockPricesData data)
-        {
-            return Enumerable.Range(0, data.Length)
-                .Select(i => MapToOHLC(i))
-                .ToArray();
-
-            OHLC MapToOHLC(int index) =>
-                //new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1, (double)data.V[index]);
-                new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate());
-        }
-
-        private double[] CreateVolumeData(StockPricesData data) =>
-            data.V
-                .Select(x => (double)x)
-                .ToArray();
 
         private void OnAxesChangedPricesTicksProvider(object sender, EventArgs e)
         {
@@ -151,6 +103,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private void OnAdditionalStatAdded(StockStat stat)
         {
             //dodanie nowego FormsPlot do _additionalCharts i narysowanie na nim wykresow StockStat
+            FormsPlot chart = _additionalChartsManager.Add();
         }
 
         private void OnPriceStatRemoved(StockStat stat, int index)
@@ -160,14 +113,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private void OnAdditionalStatRemoved(StockStat stat, int index)
         {
-            RemoveAndReleaseChartControl(_additionalCharts[index]);
-        }
-
-        private void RemoveAndReleaseChartControl(FormsPlot chart)
-        {
-            _axisSynchronizer.Remove(chart);
-            chart.Visible = false;
-            chart.Dispose();
+            _additionalChartsManager.Remove(index);
         }
 
         #region public properties and events

@@ -20,6 +20,8 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private IDateTimeTicksProvider _datetimeTicksProvider;
         private StockPricesData _currentData;
 
+        private double[] _statsXs;
+
         public PriceVolumeChart()
         {
             InitializeComponent();
@@ -53,6 +55,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             chartVolume.Plot
                 .AddBar(data.MapToVolumeData())
                 .SetUpVolumePlot();
+            _statsXs = DataGen.Consecutive(_currentData.Length);
 
             foreach (var stat in stats)
                 AddStockStat(stat);
@@ -65,11 +68,17 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _stockStatsManager.Add(stat);
         }
 
+        public void RemoveStockStat(StockStat stat)
+        {
+            _stockStatsManager.Remove(stat);
+        }
+
         private void ClearAllCharts()
         {
             chartPrices.Plot.Clear();
             chartVolume.Plot.Clear();
             _additionalChartsManager.Clear();
+            _stockStatsManager.Clear();
         }
 
         private void RefreshAllCharts()
@@ -97,13 +106,15 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private void OnPriceStatAdded(StockStat stat)
         {
-            //dodanie nowych plotow na wykresie ceny
+            chartPrices.Plot.DrawStat(stat, _statsXs);
         }
 
         private void OnAdditionalStatAdded(StockStat stat)
         {
-            //dodanie nowego FormsPlot do _additionalCharts i narysowanie na nim wykresow StockStat
             FormsPlot chart = _additionalChartsManager.Add();
+            chart.SetUpAdditionalFormsPlot();
+            chart.DisplayOnControlsBottom(pnlCharts, chartVolume.Height);
+            chart.Plot.DrawStat(stat, _statsXs);
         }
 
         private void OnPriceStatRemoved(StockStat stat, int index)
@@ -120,11 +131,11 @@ namespace MarketOps.Controls.PriceChart.PVChart
         public PriceVolumeChartMode ChartMode { get; private set; }
 
         public Chart PVChartControl => PVChart;
-        public ChartAreaCollection ChartAreas => PVChart.ChartAreas;
+        //public ChartAreaCollection ChartAreas => PVChart.ChartAreas;
         public Series PricesCandles => PVChart.Series["dataPricesCandles"];
         public Series PricesLine => PVChart.Series["dataPricesLine"];
         public Series TrailingStopL => PVChart.Series["dataTrailingStopL"];
-        public Series Volume => PVChart.Series["dataVolume"];
+        //public Series Volume => PVChart.Series["dataVolume"];
 
         public delegate void ChartValueSelected(int selectedIndex);
         public event ChartValueSelected OnChartValueSelected;
@@ -146,20 +157,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             //UpdateAreasCursors(e.Location);
             //int xSelectedIndex = (int)PVChart.ChartAreas[PlotConsts.PriceAreaName].CursorX.Position - 1;
             //OnChartValueSelected?.Invoke(xSelectedIndex);
-            //SetPriceAreaToolTips(e.Location);
-        }
-
-        private void PVChart_MouseWheel(object sender, MouseEventArgs e)
-        {
-            //Axis ax = PVChart.ChartAreas[PlotConsts.PriceAreaName].AxisX;
-            //Tuple<double, double> zoom = (new ChartZoomCalculator()).CalculateZoom(e.Delta < 0,
-            //    ModifierKeys.HasFlag(Keys.Control), ax, e.Location);
-            //using (new SuspendDrawingUpdate(PVChart))
-            //{
-            //    ax.ScaleView.Zoom(zoom.Item1, zoom.Item2);
-            //    SetYViewRange();
-            //}
-            //PVChart_MouseMove(sender, e);
             //SetPriceAreaToolTips(e.Location);
         }
 
@@ -195,19 +192,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             return PVChart.Series[seriesName];
         }
 
-        public void AddStatSeries(StockStat stat)
-        {
-            StockStatSeriesFactory factory = new StockStatSeriesFactory();
-            for (int i = 0; i < stat.DataCount; i++)
-                PVChart.Series.Add(factory.CreateSeries(stat, i));
-        }
-
-        public void RemoveStatSeries(StockStat stat)
-        {
-            for (int i = 0; i < stat.DataCount; i++)
-                PVChart.Series.Remove(PVChart.Series.FindByName(stat.ChartSeriesName(i)));
-        }
-
         public void SetChartMode(PriceVolumeChartMode newMode)
         {
             ChartMode = newMode;
@@ -225,30 +209,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             lblTSValue.Text = "";
             lblValueValue.Text = "";
-        }
-
-        public void CreateNewArea(string areaName)
-        {
-            PVChart.ChartAreas.Add((new ChartAreaFactory()).CreateArea(areaName, 20F));
-            ResizeAreas(20F);
-        }
-
-        public void RemoveArea(string areaName)
-        {
-            PVChart.ChartAreas.RemoveAt(PVChart.ChartAreas.IndexOf(areaName));
-            ResizeAreas(20F);
-        }
-
-        private void ResizeAreas(float positionModifier)
-        {
-            ChartArea areaPrices = PVChart.ChartAreas[PlotConsts.PricesAreaName];
-            areaPrices.Position.Height = 80F - ((PVChart.ChartAreas.Count - 2) * positionModifier);
-            for (int i = 0; i < PVChart.ChartAreas.Count; i++)
-            {
-                ChartArea area = PVChart.ChartAreas[i];
-                if (area.Name == PlotConsts.PricesAreaName) continue;
-                area.Position.Y = areaPrices.Position.Height + ((i - 1) * positionModifier);
-            }
         }
     }
 }

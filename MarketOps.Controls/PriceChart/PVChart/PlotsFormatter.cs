@@ -1,6 +1,7 @@
 ﻿using MarketOps.Controls.ChartsUtils;
 using ScottPlot.Plottable;
 using ScottPlot;
+using System.Windows.Forms;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
@@ -20,9 +21,17 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public static void SetUpAdditionalFormsPlot(this FormsPlot formsPlot)
         {
-            SetUpFormsPlot(formsPlot);
+            formsPlot.SetUpFormsPlot();
             formsPlot.Plot.SetUpBottomPlotXAxis();
             formsPlot.Configuration.LockVerticalAxis = true;
+        }
+
+        public static void DisplayOnControlsBottom(this FormsPlot formsPlot, Control parent, int height)
+        {
+            formsPlot.Height = height;
+            formsPlot.Parent = parent;
+            formsPlot.Dock = DockStyle.Bottom;
+            formsPlot.Visible = true;
         }
 
         public static void SetUpPricesPlot(this FinancePlot plot)

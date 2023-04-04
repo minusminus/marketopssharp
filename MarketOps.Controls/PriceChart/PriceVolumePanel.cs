@@ -193,7 +193,7 @@ namespace MarketOps.Controls.PriceChart
         #region stats
         public void AddStat(StockStat stat)
         {
-            chartPV.AddStatSeries(stat);
+            chartPV.AddStockStat(stat);
             _currentData.Stats.Add(stat);
             StockStatSticker sticker = new StockStatSticker(stat, _currentStatsInfoGenerator);
             sticker.OnStickerDoubleClick += OnStatStickerDoubleClick;
@@ -203,7 +203,7 @@ namespace MarketOps.Controls.PriceChart
 
         public void RemoveStat(StockStatSticker sticker, StockStat stat)
         {
-            chartPV.RemoveStatSeries(stat);
+            chartPV.RemoveStockStat(stat);
             _currentData.Stats.Remove(stat);
             _stickerPositioner.Remove(sticker);
         }
@@ -238,7 +238,6 @@ namespace MarketOps.Controls.PriceChart
 
             StockStat stat = StatsFactories.Additional.Get(sender.ToString(), newAreaName);
             if (!EditStat(stat)) return;
-            chartPV.CreateNewArea(newAreaName);
             AddStat(stat);
             CalculateStatAndRefreshChartData(stat);
         }
@@ -255,8 +254,6 @@ namespace MarketOps.Controls.PriceChart
         {
             if (e.Button == MouseButtons.Middle)
             {
-                if (stat.ChartArea != PlotConsts.PricesAreaName)
-                    chartPV.RemoveArea(stat.ChartArea);
                 RemoveStat(sticker, stat);
                 Refresh();
             }
@@ -272,7 +269,7 @@ namespace MarketOps.Controls.PriceChart
         {
             stat.Calculate(CurrentData.Prices);
             RefreshData();
-            Refresh();
+            //Refresh();
         }
         #endregion
     }

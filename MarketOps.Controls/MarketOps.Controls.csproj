@@ -149,6 +149,7 @@
     <Compile Include="PriceChart\PositionOpenCloseImages.cs" />
     <Compile Include="PriceChart\PVChart\PlotsDataMapper.cs" />
     <Compile Include="PriceChart\PVChart\PlotsFormatter.cs" />
+    <Compile Include="PriceChart\PVChart\PriceChartStatsManager.cs" />
     <Compile Include="PriceChart\PVChart\PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -163,6 +164,7 @@
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="PriceChart\PVChart\StatDrawer.cs" />
+    <Compile Include="PriceChart\PVChart\StatsRemover.cs" />
     <Compile Include="PriceChart\PVChart\StockStatsManager.cs" />
     <Compile Include="PriceChart\StockStatSticker.cs">
       <SubType>UserControl</SubType>

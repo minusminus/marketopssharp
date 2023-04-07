@@ -228,8 +228,8 @@ namespace MarketOps.Controls.PriceChart
         {
             StockStat stat = StatsFactories.PriceChart.Get(sender.ToString(), PlotConsts.PricesAreaName);
             if (!EditStat(stat)) return;
+            CalculateStat(stat);
             AddStat(stat);
-            CalculateStatAndRefreshChartData(stat);
         }
 
         private void OnClickAdditionalStat(object sender, EventArgs e)
@@ -238,16 +238,16 @@ namespace MarketOps.Controls.PriceChart
 
             StockStat stat = StatsFactories.Additional.Get(sender.ToString(), newAreaName);
             if (!EditStat(stat)) return;
+            CalculateStat(stat);
             AddStat(stat);
-            CalculateStatAndRefreshChartData(stat);
         }
 
         private void OnStatStickerDoubleClick(StockStatSticker sticker, StockStat stat)
         {
             if (!EditStat(stat)) return;
             sticker.UpdateStatInfo();
+            CalculateStat(stat);
             chartPV.UpdateStatSeriesDefinition(stat);
-            CalculateStatAndRefreshChartData(stat);
         }
 
         private void OnStatStickerClick(StockStatSticker sticker, StockStat stat, MouseEventArgs e)
@@ -264,12 +264,9 @@ namespace MarketOps.Controls.PriceChart
             using (FormEditStockStatParams frm = new FormEditStockStatParams())
                 return frm.Execute(stat);
         }
-
-        private void CalculateStatAndRefreshChartData(StockStat stat)
+        private void CalculateStat(StockStat stat)
         {
             stat.Calculate(CurrentData.Prices);
-            RefreshData();
-            //Refresh();
         }
         #endregion
     }

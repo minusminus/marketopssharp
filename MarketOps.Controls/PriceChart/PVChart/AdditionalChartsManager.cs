@@ -1,5 +1,4 @@
-﻿using MarketOps.Controls.ChartsUtils;
-using MarketOps.Controls.ChartsUtils.AxisSynchronization;
+﻿using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using ScottPlot;
 using System.Collections.Generic;
 

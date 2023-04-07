@@ -2,6 +2,7 @@
 using ScottPlot.Plottable;
 using ScottPlot;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
@@ -10,10 +11,13 @@ namespace MarketOps.Controls.PriceChart.PVChart
     /// </summary>
     internal static class StatDrawer
     {
-        public static void DrawStat(this Plot plot, StockStat stat, in double[] xs)
+        public static void DrawStat(this Plot plot, StockStat stat, in double[] xs, List<ScatterPlot> createdPlots = null)
         {
             for (int i = 0; i < stat.DataCount; i++)
-                plot.DrawSeriesData(stat, i, xs);
+            {
+                var series = plot.DrawSeriesData(stat, i, xs);
+                createdPlots?.Add(series);
+            }
         }
 
         private static ScatterPlot DrawSeriesData(this Plot plot, StockStat stat, int seriesIndex, in double[] xs)

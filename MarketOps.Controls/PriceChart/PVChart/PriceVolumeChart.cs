@@ -17,6 +17,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private readonly PlotsAxisXSynchronizer _axisSynchronizer;
         private readonly StockStatsManager _stockStatsManager;
         private readonly AdditionalChartsManager _additionalChartsManager;
+        private readonly PriceChartStatsManager _priceStatsManager;
         private IDateTimeTicksProvider _datetimeTicksProvider;
         private StockPricesData _currentData;
 
@@ -34,6 +35,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _stockStatsManager.OnPriceStatRemoved += OnPriceStatRemoved;
             _stockStatsManager.OnAdditionalStatRemoved += OnAdditionalStatRemoved;
             _additionalChartsManager = new AdditionalChartsManager(_axisSynchronizer);
+            _priceStatsManager = new PriceChartStatsManager();
 
             chartPrices.SetUpFormsPlot();
             chartPrices.Plot.XAxis.DateTimeFormat(true);
@@ -78,6 +80,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             chartPrices.Plot.Clear();
             chartVolume.Plot.Clear();
             _additionalChartsManager.Clear();
+            _priceStatsManager.Clear();
             _stockStatsManager.Clear();
         }
 
@@ -106,7 +109,9 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private void OnPriceStatAdded(StockStat stat)
         {
-            chartPrices.Plot.DrawStat(stat, _statsXs);
+            var statCharts = _priceStatsManager.Add(stat);
+            chartPrices.Plot.DrawStat(stat, _statsXs, statCharts.ChartSeries);
+            chartPrices.Refresh();
         }
 
         private void OnAdditionalStatAdded(StockStat stat)
@@ -119,7 +124,9 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private void OnPriceStatRemoved(StockStat stat, int index)
         {
-            //usuniecie plotow na wykresie ceny
+            chartPrices.Plot.RemoveStats(_priceStatsManager.Charts[index].ChartSeries);
+            _priceStatsManager.Remove(index);
+            chartPrices.Refresh();
         }
 
         private void OnAdditionalStatRemoved(StockStat stat, int index)

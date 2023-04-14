@@ -11,6 +11,8 @@ namespace MarketOps.Controls.ChartsUtils.AxisSynchronization
     {
         private readonly List<FormsPlot> _formsPlots = new List<FormsPlot>();
 
+        public bool Enabled = true;
+
         public BasePlotsAxisSynchronizer(params FormsPlot[] formsPlots)
         {
             for (int i = 0; i < formsPlots.Length; i++)
@@ -33,6 +35,8 @@ namespace MarketOps.Controls.ChartsUtils.AxisSynchronization
 
         private void OnAxesChanged(object sender, EventArgs e)
         {
+            if (!Enabled) return;
+
             FormsPlot changedPlot = (FormsPlot)sender;
             var newAxisLimits = changedPlot.Plot.GetAxisLimits();
 

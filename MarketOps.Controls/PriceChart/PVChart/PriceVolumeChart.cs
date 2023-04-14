@@ -66,23 +66,31 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public void LoadData(StockPricesData data, IReadOnlyList<StockStat> stats)
         {
-            ClearAllCharts();
-            _stockStatsManager.Clear();
-            _datetimeTicksProvider = DateTimeTicksProviderFactory.Get(data.Range);
-            _currentData = data;
+            _axisSynchronizer.Enabled = false;
+            try
+            {
+                ClearAllCharts();
+                _stockStatsManager.Clear();
+                _datetimeTicksProvider = DateTimeTicksProviderFactory.Get(data.Range);
+                _currentData = data;
 
-            chartPrices.Plot
-                .AddCandlesticks(data.MapToOHLCData())
-                .SetUpPricesPlot();
-            chartVolume.Plot
-                .AddBar(data.MapToVolumeData())
-                .SetUpVolumePlot();
-            _statsXs = DataGen.Consecutive(_currentData.Length);
+                chartPrices.Plot
+                    .AddCandlesticks(data.MapToOHLCData())
+                    .SetUpPricesPlot();
+                chartVolume.Plot
+                    .AddBar(data.MapToVolumeData())
+                    .SetUpVolumePlot();
+                _statsXs = DataGen.Consecutive(_currentData.Length);
 
-            foreach (var stat in stats)
-                AddStockStat(stat);
+                foreach (var stat in stats)
+                    AddStockStat(stat);
 
-            RefreshAllCharts();
+                RefreshAllCharts();
+            }
+            finally
+            {
+                _axisSynchronizer.Enabled = true;
+            }
         }
 
         private void ClearAllCharts()
@@ -105,6 +113,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             if (_currentData == null) return;
             if ((FormsPlot)sender != chartPrices) return;
+
             var ticks = _datetimeTicksProvider.Get(_currentData.TS, chartPrices.Plot.GetAxisLimits());
             chartPrices.Configuration.AxesChangedEventEnabled = false;
             try

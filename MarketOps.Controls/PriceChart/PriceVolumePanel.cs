@@ -15,21 +15,6 @@ namespace MarketOps.Controls.PriceChart
 {
     public partial class PriceVolumePanel : UserControl
     {
-        public PriceVolumePanel()
-        {
-            InitializeComponent();
-            btnPriceChartCandle.Checked = true;
-            lblStockInfo.Text = "";
-            lblSelectedInfo.Text = "";
-            lblStatSelectedInfo.Text = "";
-            chartPV.OnChartValueSelected += OnChartValueSelected;
-            chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
-            chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
-            PrepareStatsContextMenuItems();
-
-            _stickerPositioner = new StockStatStickersPositioner(chartPV);
-        }
-
         #region internal data
         private StockDisplayData _currentData;
         private IStockInfoGenerator _currentInfoGenerator;
@@ -51,6 +36,21 @@ namespace MarketOps.Controls.PriceChart
         public delegate void RecalculateStockStats(StockDisplayData currentData);
         public event RecalculateStockStats OnRecalculateStockStats;
         #endregion
+
+        public PriceVolumePanel()
+        {
+            InitializeComponent();
+            btnPriceChartCandle.Checked = true;
+            lblStockInfo.Text = "";
+            lblSelectedInfo.Text = "";
+            lblStatSelectedInfo.Text = "";
+            chartPV.OnChartValueSelected += OnChartValueSelected;
+            chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
+            chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
+            PrepareStatsContextMenuItems();
+
+            _stickerPositioner = new StockStatStickersPositioner(chartPV);
+        }
 
         #region button actions
         private void btnPriceChartLine_CheckedChanged(object sender, EventArgs e)
@@ -95,14 +95,14 @@ namespace MarketOps.Controls.PriceChart
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            RefreshData();
+            ReloadCurrentData();
         }
         #endregion
 
         #region form events
         private void PriceVolumePanel_Resize(object sender, EventArgs e)
         {
-            _stickerPositioner.RepositionStickers();
+            RepositionStatStickers();
         }
         #endregion
 
@@ -141,7 +141,9 @@ namespace MarketOps.Controls.PriceChart
 
         private void ReloadCurrentData()
         {
+            UnlinkStatStickers();
             chartPV.LoadData(_currentData.Prices, _currentData.Stats);
+            RepositionStatStickers();
             //using (new SuspendDrawingUpdate(chartPV))
             //{
                 //chartPV.LoadStockData(_currentData.Prices);
@@ -158,6 +160,12 @@ namespace MarketOps.Controls.PriceChart
             lblStockInfo.Text = _currentInfoGenerator.GetStockInfo(_currentData);
         }
 
+        private void RepositionStatStickers() => 
+            _stickerPositioner.RepositionStickers();
+
+        private void UnlinkStatStickers() =>
+            _stickerPositioner.UnlinkStickers();
+
         public void LoadData(StockDisplayData data, IStockInfoGenerator infoGenerator, IStockStatsInfoGenerator statsInfoGenerator)
         {
             _currentData = data;
@@ -165,11 +173,6 @@ namespace MarketOps.Controls.PriceChart
             _currentStatsInfoGenerator = statsInfoGenerator;
             ReloadCurrentData();
             DisplayCurrentStockInfo();
-        }
-
-        public void RefreshData()
-        {
-            ReloadCurrentData();
         }
 
         #region positions

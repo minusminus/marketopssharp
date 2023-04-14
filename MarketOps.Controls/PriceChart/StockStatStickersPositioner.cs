@@ -21,15 +21,15 @@ namespace MarketOps.Controls.PriceChart
             _chart = chart;
         }
 
-        public void Add(StockStatSticker sticker)
+        public void Add(in StockStatSticker sticker)
         {
             _stickers.Add(sticker);
             RepositionStickers();
         }
 
-        public void Remove(StockStatSticker sticker)
+        public void Remove(in StockStatSticker sticker)
         {
-            sticker.Parent = null;
+            UnlinkSticker(sticker);
             _stickers.Remove(sticker);
             RepositionStickers();
         }
@@ -49,7 +49,11 @@ namespace MarketOps.Controls.PriceChart
             }
         }
 
-        private static void RepositionSticker(StockStatSticker sticker, FormsPlot parentChart, ref int nextLeftPos)
+        public void UnlinkStickers() =>
+            _stickers
+                .ForEach(sticker => UnlinkSticker(sticker));
+
+        private static void RepositionSticker(in StockStatSticker sticker, in FormsPlot parentChart, ref int nextLeftPos)
         {
             sticker.Parent = parentChart;
             sticker.BringToFront();
@@ -57,5 +61,8 @@ namespace MarketOps.Controls.PriceChart
             sticker.Left = nextLeftPos;
             nextLeftPos += StickerSpace + sticker.Width;
         }
+
+        private static void UnlinkSticker(in StockStatSticker sticker) =>
+            sticker.Parent = null;
     }
 }

@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using MarketOps.Controls.ChartsUtils;
 using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.Controls.PriceChart.DateTimeTicks;
-using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
 using ScottPlot;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
+    public delegate void PriceVolumeChartValueSelected(int selectedIndex);
+    public delegate string PriceVolumeChartGetAxisXToolTip(int selectedIndex);
+    public delegate string PriceVolumeChartGetAxisYToolTip(double selectedValue);
+    public delegate void PriceVolumeChartAreaDoubleClick(string areaName);
+
     public partial class PriceVolumeChart : UserControl
     {
         private readonly PlotsAxisXSynchronizer _axisSynchronizer;
@@ -23,6 +26,20 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private double[] _statsXs;
 
+        #region public properties and events
+        public PriceVolumeChartMode ChartMode { get; private set; }
+
+        //public Chart PVChartControl => PVChart;
+        //public Series PricesCandles => PVChart.Series["dataPricesCandles"];
+        //public Series PricesLine => PVChart.Series["dataPricesLine"];
+        //public Series TrailingStopL => PVChart.Series["dataTrailingStopL"];
+
+        public event PriceVolumeChartValueSelected OnChartValueSelected;
+        public event PriceVolumeChartGetAxisXToolTip OnGetAxisXToolTip;
+        public event PriceVolumeChartGetAxisYToolTip OnGetAxisYToolTip;
+        public event PriceVolumeChartAreaDoubleClick OnAreaDoubleClick;
+        #endregion
+
         public PriceVolumeChart()
         {
             InitializeComponent();
@@ -32,6 +49,8 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _stockStatsManager = new StockStatsManager();
             _stockStatsManager.OnPriceStatAdded += OnPriceStatAdded;
             _stockStatsManager.OnAdditionalStatAdded += OnAdditionalStatAdded;
+            _stockStatsManager.OnPriceStatUpdated += OnPriceStatUpdated;
+            _stockStatsManager.OnAdditionalStatUpdated += OnAdditionalStatUpdated;
             _stockStatsManager.OnPriceStatRemoved += OnPriceStatRemoved;
             _stockStatsManager.OnAdditionalStatRemoved += OnAdditionalStatRemoved;
             _additionalChartsManager = new AdditionalChartsManager(_axisSynchronizer);
@@ -65,15 +84,14 @@ namespace MarketOps.Controls.PriceChart.PVChart
             RefreshAllCharts();
         }
 
-        public void AddStockStat(StockStat stat)
-        {
+        public void AddStockStat(StockStat stat) => 
             _stockStatsManager.Add(stat);
-        }
 
-        public void RemoveStockStat(StockStat stat)
-        {
+        public void UpdateStockStat(StockStat stat) => 
+            _stockStatsManager.Update(stat);
+
+        public void RemoveStockStat(StockStat stat) => 
             _stockStatsManager.Remove(stat);
-        }
 
         private void ClearAllCharts()
         {
@@ -120,6 +138,23 @@ namespace MarketOps.Controls.PriceChart.PVChart
             chart.SetUpAdditionalFormsPlot();
             chart.DisplayOnControlsBottom(pnlCharts, chartVolume.Height);
             chart.Plot.DrawStat(stat, _statsXs);
+            chart.Refresh();
+        }
+
+        private void OnPriceStatUpdated(StockStat stat, int index)
+        {
+            var statCharts = _priceStatsManager.Charts[index];
+            chartPrices.Plot.RemoveStats(statCharts.ChartSeries);
+            chartPrices.Plot.DrawStat(stat, _statsXs, statCharts.ChartSeries);
+            chartPrices.Refresh();
+        }
+
+        private void OnAdditionalStatUpdated(StockStat stat, int index)
+        {
+            FormsPlot chart = _additionalChartsManager.Charts[index];
+            chart.Plot.Clear();
+            chart.Plot.DrawStat(stat, _statsXs);
+            chart.Refresh();
         }
 
         private void OnPriceStatRemoved(StockStat stat, int index)
@@ -134,27 +169,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _additionalChartsManager.Remove(index);
         }
 
-        #region public properties and events
-        public PriceVolumeChartMode ChartMode { get; private set; }
-
-        public Chart PVChartControl => PVChart;
-        //public ChartAreaCollection ChartAreas => PVChart.ChartAreas;
-        public Series PricesCandles => PVChart.Series["dataPricesCandles"];
-        public Series PricesLine => PVChart.Series["dataPricesLine"];
-        public Series TrailingStopL => PVChart.Series["dataTrailingStopL"];
-        //public Series Volume => PVChart.Series["dataVolume"];
-
-        public delegate void ChartValueSelected(int selectedIndex);
-        public event ChartValueSelected OnChartValueSelected;
-
-        public delegate string GetAxisXToolTip(int selectedIndex);
-        public event GetAxisXToolTip OnGetAxisXToolTip;
-        public delegate string GetAxisYToolTip(double selectedValue);
-        public event GetAxisYToolTip OnGetAxisYToolTip;
-
-        public delegate void AreaDoubleClick(string areaName);
-        public event AreaDoubleClick OnAreaDoubleClick;
-        #endregion
+        /* ============================== cut here ============================================== */
 
         #region internal events
         private void PVChart_MouseMove(object sender, MouseEventArgs e)
@@ -179,13 +194,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             //    PVChart.Parent.Focus();
         }
 
-        private void PVChart_AxisViewChanged(object sender, ViewEventArgs e)
-        {
-            //if (!Equals(e.Axis, PVChart.ChartAreas[PlotConsts.PriceAreaName].AxisX)) return;
-            //using (new SuspendDrawingUpdate(PVChart))
-            //    SetYViewRange();
-        }
-
         private void PVChart_DoubleClick(object sender, EventArgs e)
         {
             //ChartArea currentArea = FindAreaUnderCursor(PVChart.PointToClient(Control.MousePosition));
@@ -202,14 +210,14 @@ namespace MarketOps.Controls.PriceChart.PVChart
         public void SetChartMode(PriceVolumeChartMode newMode)
         {
             ChartMode = newMode;
-            PricesCandles.Enabled = (newMode == PriceVolumeChartMode.Candles);
-            PricesLine.Enabled = (newMode == PriceVolumeChartMode.Lines);
-            PricesLine.XValueType = ChartValueType.Date;
+            //PricesCandles.Enabled = (newMode == PriceVolumeChartMode.Candles);
+            //PricesLine.Enabled = (newMode == PriceVolumeChartMode.Lines);
+            //PricesLine.XValueType = ChartValueType.Date;
         }
 
         public void ReversePricesYAxis(bool reversed)
         {
-            PVChart.ChartAreas[PlotConsts.PricesAreaName].AxisY.IsReversed = reversed;
+            //PVChart.ChartAreas[PlotConsts.PricesAreaName].AxisY.IsReversed = reversed;
         }
 
         public void HidePriceAreaToolTips()

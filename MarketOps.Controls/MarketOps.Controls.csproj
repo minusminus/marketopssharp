@@ -127,7 +127,6 @@
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="ChartsUtils\ChartYViewRangeCalculator.cs" />
-    <Compile Include="Extensions\PriceVolumeChartExtensions.cs" />
     <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTicksProviderFactory.cs" />

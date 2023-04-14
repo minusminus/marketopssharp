@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace MarketOps.Controls.PriceChart.PVChart
 {
     internal delegate void StockStatAdded(StockStat stat);
+    internal delegate void StockStatUpdated(StockStat stat, int index);
     internal delegate void StockStatRemoved(StockStat stat, int index);
 
     /// <summary>
@@ -17,6 +18,8 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public event StockStatAdded OnPriceStatAdded;
         public event StockStatAdded OnAdditionalStatAdded;
+        public event StockStatUpdated OnPriceStatUpdated;
+        public event StockStatUpdated OnAdditionalStatUpdated;
         public event StockStatRemoved OnPriceStatRemoved;
         public event StockStatRemoved OnAdditionalStatRemoved;
 
@@ -31,6 +34,21 @@ namespace MarketOps.Controls.PriceChart.PVChart
             {
                 statsList.Add(stat);
                 addEvent?.Invoke(stat);
+            }
+        }
+
+        public void Update(StockStat stat)
+        {
+            if (IsPricesStat(stat))
+                FindStatOnList(PricesStats, OnPriceStatUpdated);
+            else
+                FindStatOnList(AdditionalStats, OnAdditionalStatUpdated);
+
+            void FindStatOnList(List<StockStat> statsList, StockStatUpdated updateEvent)
+            {
+                int index = statsList.IndexOf(stat);
+                if (index > -1)
+                    updateEvent?.Invoke(stat, index);
             }
         }
 

@@ -117,8 +117,9 @@ namespace MarketOps.Controls.PriceChart
 
         private string GetTrailingStopInfo(int selectedIndex)
         {
-            if ((!chartPV.TrailingStopL.Enabled) || chartPV.TrailingStopL.Points[selectedIndex].IsEmpty) return string.Empty;
-            return $"Trailing Stop: {DataFormatting.FormatPrice(_currentData.Stock.Type, chartPV.TrailingStopL.Points[selectedIndex].YValues[0])}";
+            //if ((!chartPV.TrailingStopL.Enabled) || chartPV.TrailingStopL.Points[selectedIndex].IsEmpty) return string.Empty;
+            //return $"Trailing Stop: {DataFormatting.FormatPrice(_currentData.Stock.Type, chartPV.TrailingStopL.Points[selectedIndex].YValues[0])}";
+            return "Trailing Stop: info to do";
         }
 
         private string OnGetAxisXToolTip(int selectedIndex)
@@ -191,7 +192,7 @@ namespace MarketOps.Controls.PriceChart
         #endregion
 
         #region stats
-        public void AddStat(StockStat stat)
+        private void AddStat(StockStat stat)
         {
             chartPV.AddStockStat(stat);
             _currentData.Stats.Add(stat);
@@ -201,7 +202,13 @@ namespace MarketOps.Controls.PriceChart
             _stickerPositioner.Add(sticker);
         }
 
-        public void RemoveStat(StockStatSticker sticker, StockStat stat)
+        private void UpdateStat(StockStat stat, StockStatSticker sticker)
+        {
+            sticker.UpdateStatInfo();
+            chartPV.UpdateStockStat(stat);
+        }
+
+        private void RemoveStat(StockStat stat, StockStatSticker sticker)
         {
             chartPV.RemoveStockStat(stat);
             _currentData.Stats.Remove(stat);
@@ -245,16 +252,15 @@ namespace MarketOps.Controls.PriceChart
         private void OnStatStickerDoubleClick(StockStatSticker sticker, StockStat stat)
         {
             if (!EditStat(stat)) return;
-            sticker.UpdateStatInfo();
             CalculateStat(stat);
-            chartPV.UpdateStatSeriesDefinition(stat);
+            UpdateStat(stat, sticker);
         }
 
         private void OnStatStickerClick(StockStatSticker sticker, StockStat stat, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle)
             {
-                RemoveStat(sticker, stat);
+                RemoveStat(stat, sticker);
                 Refresh();
             }
         }
@@ -264,10 +270,9 @@ namespace MarketOps.Controls.PriceChart
             using (FormEditStockStatParams frm = new FormEditStockStatParams())
                 return frm.Execute(stat);
         }
-        private void CalculateStat(StockStat stat)
-        {
+
+        private void CalculateStat(StockStat stat) => 
             stat.Calculate(CurrentData.Prices);
-        }
         #endregion
     }
 }

@@ -87,6 +87,7 @@
     <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
     <Compile Include="Extensions\SortableBindingListExtensions.cs" />
+    <Compile Include="Extensions\StockStatExtensions.cs" />
     <Compile Include="FormLongLastingWork.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +162,9 @@
     </Compile>
     <Compile Include="PriceChart\PriceVolumePanel.Designer.cs">
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceChart\PVChart\PriceVolumeChart_StatsManagement.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PriceChart\PVChart\StatDrawer.cs" />
     <Compile Include="PriceChart\PVChart\StatsRemover.cs" />

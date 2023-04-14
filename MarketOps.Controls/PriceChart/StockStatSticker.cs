@@ -5,6 +5,9 @@ using MarketOps.StockData.Types;
 
 namespace MarketOps.Controls.PriceChart
 {
+    public delegate void StatStickerDoubleClick(StockStatSticker sticker, StockStat stat);
+    public delegate void StatStickerMouseClick(StockStatSticker sticker, StockStat stat, MouseEventArgs e);
+
     public partial class StockStatSticker : UserControl
     {
         private readonly StockStat _stat;
@@ -12,10 +15,8 @@ namespace MarketOps.Controls.PriceChart
 
         public StockStat Stat => _stat;
 
-        public delegate void StickerDoubleClick(StockStatSticker sticker, StockStat stat);
-        public event StickerDoubleClick OnStickerDoubleClick;
-        public delegate void StickerMouseClick(StockStatSticker sticker, StockStat stat, MouseEventArgs e);
-        public event StickerMouseClick OnStickerMouseClick;
+        public event StatStickerDoubleClick OnStickerDoubleClick;
+        public event StatStickerMouseClick OnStickerMouseClick;
 
         public StockStatSticker(StockStat stat, IStockStatsInfoGenerator statsInfoGenerator)
         {

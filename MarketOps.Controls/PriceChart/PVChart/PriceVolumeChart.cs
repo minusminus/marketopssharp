@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using MarketOps.Controls.ChartsUtils;
 using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.Controls.PriceChart.DateTimeTicks;
 using MarketOps.StockData.Types;
@@ -28,6 +26,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
+        public int AdditionalChartsCount => _additionalChartsManager.Charts.Count;
 
         //public Chart PVChartControl => PVChart;
         //public Series PricesCandles => PVChart.Series["dataPricesCandles"];
@@ -46,6 +45,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             SetChartMode(PriceVolumeChartMode.Candles);
             //pnlCursorDataValues.BackColor = chartPrices.BackColor;
             _axisSynchronizer = new PlotsAxisXSynchronizer(chartPrices, chartVolume);
+
             _stockStatsManager = new StockStatsManager();
             _stockStatsManager.OnPriceStatAdded += OnPriceStatAdded;
             _stockStatsManager.OnAdditionalStatAdded += OnAdditionalStatAdded;
@@ -53,6 +53,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _stockStatsManager.OnAdditionalStatUpdated += OnAdditionalStatUpdated;
             _stockStatsManager.OnPriceStatRemoved += OnPriceStatRemoved;
             _stockStatsManager.OnAdditionalStatRemoved += OnAdditionalStatRemoved;
+
             _additionalChartsManager = new AdditionalChartsManager(_axisSynchronizer);
             _priceStatsManager = new PriceChartStatsManager();
 
@@ -84,15 +85,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             RefreshAllCharts();
         }
 
-        public void AddStockStat(StockStat stat) => 
-            _stockStatsManager.Add(stat);
-
-        public void UpdateStockStat(StockStat stat) => 
-            _stockStatsManager.Update(stat);
-
-        public void RemoveStockStat(StockStat stat) => 
-            _stockStatsManager.Remove(stat);
-
         private void ClearAllCharts()
         {
             chartPrices.Plot.Clear();
@@ -123,50 +115,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             {
                 chartPrices.Configuration.AxesChangedEventEnabled = true;
             }
-        }
-
-        private void OnPriceStatAdded(StockStat stat)
-        {
-            var statCharts = _priceStatsManager.Add(stat);
-            chartPrices.Plot.DrawStat(stat, _statsXs, statCharts.ChartSeries);
-            chartPrices.Refresh();
-        }
-
-        private void OnAdditionalStatAdded(StockStat stat)
-        {
-            FormsPlot chart = _additionalChartsManager.Add();
-            chart.SetUpAdditionalFormsPlot();
-            chart.DisplayOnControlsBottom(pnlCharts, chartVolume.Height);
-            chart.Plot.DrawStat(stat, _statsXs);
-            chart.Refresh();
-        }
-
-        private void OnPriceStatUpdated(StockStat stat, int index)
-        {
-            var statCharts = _priceStatsManager.Charts[index];
-            chartPrices.Plot.RemoveStats(statCharts.ChartSeries);
-            chartPrices.Plot.DrawStat(stat, _statsXs, statCharts.ChartSeries);
-            chartPrices.Refresh();
-        }
-
-        private void OnAdditionalStatUpdated(StockStat stat, int index)
-        {
-            FormsPlot chart = _additionalChartsManager.Charts[index];
-            chart.Plot.Clear();
-            chart.Plot.DrawStat(stat, _statsXs);
-            chart.Refresh();
-        }
-
-        private void OnPriceStatRemoved(StockStat stat, int index)
-        {
-            chartPrices.Plot.RemoveStats(_priceStatsManager.Charts[index].ChartSeries);
-            _priceStatsManager.Remove(index);
-            chartPrices.Refresh();
-        }
-
-        private void OnAdditionalStatRemoved(StockStat stat, int index)
-        {
-            _additionalChartsManager.Remove(index);
         }
 
         /* ============================== cut here ============================================== */
@@ -201,11 +149,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             //OnAreaDoubleClick?.Invoke(currentArea.Name);
         }
         #endregion
-
-        public Series GetSeries(string seriesName)
-        {
-            return PVChart.Series[seriesName];
-        }
 
         public void SetChartMode(PriceVolumeChartMode newMode)
         {

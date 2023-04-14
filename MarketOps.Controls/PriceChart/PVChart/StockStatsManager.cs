@@ -1,4 +1,4 @@
-﻿using MarketOps.Controls.ChartsUtils;
+﻿using MarketOps.Controls.Extensions;
 using MarketOps.StockData.Types;
 using System.Collections.Generic;
 
@@ -25,7 +25,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public void Add(StockStat stat)
         {
-            if (IsPricesStat(stat))
+            if (stat.IsPricesStat())
                 AddStatToList(PricesStats, OnPriceStatAdded);
             else
                 AddStatToList(AdditionalStats, OnAdditionalStatAdded);
@@ -39,7 +39,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public void Update(StockStat stat)
         {
-            if (IsPricesStat(stat))
+            if (stat.IsPricesStat())
                 FindStatOnList(PricesStats, OnPriceStatUpdated);
             else
                 FindStatOnList(AdditionalStats, OnAdditionalStatUpdated);
@@ -54,7 +54,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public void Remove(StockStat stat)
         {
-            if (IsPricesStat(stat))
+            if (stat.IsPricesStat())
                 RemoveStatFromList(PricesStats, OnPriceStatRemoved);
             else
                 RemoveStatFromList(AdditionalStats, OnAdditionalStatRemoved);
@@ -73,8 +73,5 @@ namespace MarketOps.Controls.PriceChart.PVChart
             PricesStats.Clear();
             AdditionalStats.Clear();
         }
-
-        private static bool IsPricesStat(StockStat stat) =>
-            stat.ChartArea == PlotConsts.PricesAreaName;
     }
 }

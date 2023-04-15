@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnLoad = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dataPumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +50,10 @@
             this.tcSimulationData = new System.Windows.Forms.TabControl();
             this.tabSimDataResults = new System.Windows.Forms.TabPage();
             this.pnlSimDataResults = new System.Windows.Forms.Panel();
+            this.lblSDRRProfitAvgToStdDev = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.lblSDRRProfitStdDev = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.lblSDRTransactionsPerYear = new System.Windows.Forms.Label();
@@ -181,10 +184,6 @@
             this.btnSim = new System.Windows.Forms.Button();
             this.dtpSimFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpSimTo = new System.Windows.Forms.DateTimePicker();
-            this.lblSDRRProfitStdDev = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.lblSDRRProfitAvgToStdDev = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
             this.menuMain.SuspendLayout();
             this.tcCharts.SuspendLayout();
             this.pnlCharts.SuspendLayout();
@@ -248,16 +247,6 @@
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(19, 430);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // menuMain
             // 
@@ -326,7 +315,6 @@
             this.pnlCharts.Controls.Add(this.cbStockDataRange);
             this.pnlCharts.Controls.Add(this.edtStockName);
             this.pnlCharts.Controls.Add(this.btnLoad);
-            this.pnlCharts.Controls.Add(this.button1);
             this.pnlCharts.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlCharts.Location = new System.Drawing.Point(0, 0);
             this.pnlCharts.Name = "pnlCharts";
@@ -537,6 +525,42 @@
             this.pnlSimDataResults.Name = "pnlSimDataResults";
             this.pnlSimDataResults.Size = new System.Drawing.Size(933, 271);
             this.pnlSimDataResults.TabIndex = 0;
+            // 
+            // lblSDRRProfitAvgToStdDev
+            // 
+            this.lblSDRRProfitAvgToStdDev.AutoSize = true;
+            this.lblSDRRProfitAvgToStdDev.Location = new System.Drawing.Point(401, 202);
+            this.lblSDRRProfitAvgToStdDev.Name = "lblSDRRProfitAvgToStdDev";
+            this.lblSDRRProfitAvgToStdDev.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitAvgToStdDev.TabIndex = 77;
+            this.lblSDRRProfitAvgToStdDev.Text = "Avg";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(248, 202);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(105, 13);
+            this.label49.TabIndex = 76;
+            this.label49.Text = "R profit avg / stddev";
+            // 
+            // lblSDRRProfitStdDev
+            // 
+            this.lblSDRRProfitStdDev.AutoSize = true;
+            this.lblSDRRProfitStdDev.Location = new System.Drawing.Point(401, 186);
+            this.lblSDRRProfitStdDev.Name = "lblSDRRProfitStdDev";
+            this.lblSDRRProfitStdDev.Size = new System.Drawing.Size(26, 13);
+            this.lblSDRRProfitStdDev.TabIndex = 75;
+            this.lblSDRRProfitStdDev.Text = "Avg";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(248, 186);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(76, 13);
+            this.label46.TabIndex = 74;
+            this.label46.Text = "R profit stddev";
             // 
             // label39
             // 
@@ -1871,42 +1895,6 @@
             this.dtpSimTo.Size = new System.Drawing.Size(97, 20);
             this.dtpSimTo.TabIndex = 2;
             // 
-            // lblSDRRProfitStdDev
-            // 
-            this.lblSDRRProfitStdDev.AutoSize = true;
-            this.lblSDRRProfitStdDev.Location = new System.Drawing.Point(401, 186);
-            this.lblSDRRProfitStdDev.Name = "lblSDRRProfitStdDev";
-            this.lblSDRRProfitStdDev.Size = new System.Drawing.Size(26, 13);
-            this.lblSDRRProfitStdDev.TabIndex = 75;
-            this.lblSDRRProfitStdDev.Text = "Avg";
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(248, 186);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(76, 13);
-            this.label46.TabIndex = 74;
-            this.label46.Text = "R profit stddev";
-            // 
-            // lblSDRRProfitAvgToStdDev
-            // 
-            this.lblSDRRProfitAvgToStdDev.AutoSize = true;
-            this.lblSDRRProfitAvgToStdDev.Location = new System.Drawing.Point(401, 202);
-            this.lblSDRRProfitAvgToStdDev.Name = "lblSDRRProfitAvgToStdDev";
-            this.lblSDRRProfitAvgToStdDev.Size = new System.Drawing.Size(26, 13);
-            this.lblSDRRProfitAvgToStdDev.TabIndex = 77;
-            this.lblSDRRProfitAvgToStdDev.Text = "Avg";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(248, 202);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(105, 13);
-            this.label49.TabIndex = 76;
-            this.label49.Text = "R profit avg / stddev";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1985,7 +1973,6 @@
 
         #endregion
         private System.Windows.Forms.Button btnLoad;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem dataPumpToolStripMenuItem;

@@ -78,17 +78,23 @@ namespace MarketOps
         #region price chart events
         private StockPricesData OnGetChartData(StockDisplayData displayData, DateTime tsFrom, DateTime tsTo)
         {
-            displayData.TsFrom = tsFrom;
-            displayData.TsTo = tsTo;
-            return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            var stockPricesData = _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            displayData.TsFrom = DateTimeMin(tsFrom, stockPricesData.TS[0]);
+            displayData.TsTo = DateTimeMin(tsTo, stockPricesData.TS[stockPricesData.TS.Length - 1]);
+            return stockPricesData;
         }
 
         private StockPricesData OnPrependChartData(StockDisplayData displayData)
         {
-            DateTime ts = DateTimeOperations.OneTickBefore(displayData.TsFrom, displayData.Prices);
-            displayData.TsFrom = ts.AddDays(-1).AddYears(-1);
-            return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, displayData.TsFrom, ts);
+            DateTime tsTo = DateTimeOperations.OneTickBefore(displayData.TsFrom, displayData.Prices);
+            DateTime tsFrom = tsTo.AddDays(-1).AddYears(-1);
+            var stockPricesData = _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom, tsTo);
+            displayData.TsFrom = DateTimeMin(tsFrom, stockPricesData.TS[0]);
+            return stockPricesData;
         }
+
+        private static DateTime DateTimeMin(DateTime dt1, DateTime dt2) =>
+            (dt1 < dt2) ? dt1 : dt2;
 
         private void OnRecalculateStockStats(StockDisplayData displayData)
         {
@@ -179,14 +185,6 @@ namespace MarketOps
         private void tcCharts_Deselected(object sender, TabControlEventArgs e)
         {
             e.TabPage?.HidePriceAreaToolTips();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //PriceVolumePanel pvp = (PriceVolumePanel)tcCharts.TabPages[0].Controls.Find("pvp", true)[0];
-            //StockStat stat = new StatATR("");
-            //stat.Calculate(pvp.CurrentData.Prices);
-            //pvp.Chart.TestAddStat(stat);
         }
 
         private void dataPumpToolStripMenuItem_Click(object sender, EventArgs e)

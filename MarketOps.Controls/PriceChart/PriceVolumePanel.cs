@@ -13,6 +13,10 @@ using MarketOps.Controls.PriceChart.PVChart;
 
 namespace MarketOps.Controls.PriceChart
 {
+    public delegate StockPricesData GetAdditionalData(StockDisplayData currentData);
+    public delegate StockPricesData GetData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo);
+    public delegate void RecalculateStockStats(StockDisplayData currentData);
+
     public partial class PriceVolumePanel : UserControl
     {
         #region internal data
@@ -27,13 +31,8 @@ namespace MarketOps.Controls.PriceChart
         public PriceVolumeChart Chart => chartPV;
         public StockDisplayData CurrentData => _currentData;
 
-        public delegate StockPricesData GetAdditionalData(StockDisplayData currentData);
         public event GetAdditionalData OnPrependData;
-
-        public delegate StockPricesData GetData(StockDisplayData currentData, DateTime tsFrom, DateTime tsTo);
         public event GetData OnGetData;
-
-        public delegate void RecalculateStockStats(StockDisplayData currentData);
         public event RecalculateStockStats OnRecalculateStockStats;
         #endregion
 

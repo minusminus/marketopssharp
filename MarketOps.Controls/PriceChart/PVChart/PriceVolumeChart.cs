@@ -42,6 +42,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         public PriceVolumeChart()
         {
             InitializeComponent();
+            DoubleBuffered = true;
             SetChartMode(PriceVolumeChartMode.Candles);
             //pnlCursorDataValues.BackColor = chartPrices.BackColor;
             _axisSynchronizer = new PlotsAxisXSynchronizer(chartPrices, chartVolume);
@@ -86,11 +87,22 @@ namespace MarketOps.Controls.PriceChart.PVChart
                     AddStockStat(stat);
 
                 RefreshAllCharts();
+                ResizePriceChartToWorkaroundContentDrawingProblem();
             }
             finally
             {
                 _axisSynchronizer.Enabled = true;
             }
+        }
+
+        private void ResizePriceChartToWorkaroundContentDrawingProblem()
+        {
+            using (var suspender = new SuspendDrawingUpdate(this))
+            {
+                chartPrices.Dock = DockStyle.None;
+                chartPrices.Dock = DockStyle.Fill;
+            }
+            chartPrices.Invalidate();
         }
 
         private void ClearAllCharts()

@@ -143,6 +143,7 @@ namespace MarketOps.Controls.PriceChart
             UnlinkStatStickers();
             chartPV.LoadData(_currentData.Prices, _currentData.Stats);
             RepositionStatStickers();
+            RecreatePositionsAnnotations();
             //using (new SuspendDrawingUpdate(chartPV))
             //{
                 //chartPV.LoadStockData(_currentData.Prices);

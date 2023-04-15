@@ -11,7 +11,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
     /// </summary>
     public partial class PriceVolumeChart
     {
-        public void AddPositionsAnnotations(List<Position> positions)
+        public void AddPositionsAnnotations(IReadOnlyList<Position> positions)
         {
             foreach (var position in positions)
                 AddPositionAnnotation(position);
@@ -20,44 +20,53 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private void AddPositionAnnotation(Position position)
         {
-            AddAnnotation(_currentData.FindByTS(position.TSOpen), true, position.Direction, PlotConsts.PositionAnnotationOpenColor);
-            AddAnnotation(_currentData.FindByTS(position.TSClose), false, position.Direction, PlotConsts.PositionAnnotationCloseColor);
+            AddAnnotation(_currentData.FindByTS(position.TSOpen), position.Open, true, position.Direction);
+            AddAnnotation(_currentData.FindByTS(position.TSClose), position.Close, false, position.Direction);
         }
 
-        private void AddAnnotation(int index, bool openAnotation, PositionDir dir, Color color)
+        private void AddAnnotation(int index, float price, bool openAnotation, PositionDir dir)
         {
-            const float margin = 5;
-
             chartPrices.Plot.AddMarker(
                 x: index,
-                y: GetY(),
-                shape: GetShape(),
-                size: 10,
-                color: color
-                );
+                y: GetAnnotationY(index, openAnotation, dir),
+                shape: GetAnnotationShape(openAnotation, dir),
+                size: PlotConsts.PositionAnnotationSize,
+                color: GetAnnotationColor(openAnotation));
 
-            double GetY()
-            {
-                if (dir == PositionDir.Long)
-                {
-                    return openAnotation
-                        ? _currentData.L[index] - margin
-                        : _currentData.H[index] + margin;
-                }
-                else
-                {
-                    return openAnotation
-                        ? _currentData.H[index] + margin
-                        : _currentData.L[index] - margin;
-                }
-            }
+            chartPrices.Plot.AddLine(
+                (double)index - PlotConsts.PositionAnnotationPriceLevelLineMargin, 
+                price, 
+                (double)index + PlotConsts.PositionAnnotationPriceLevelLineMargin, 
+                price, 
+                GetAnnotationColor(openAnotation), 
+                PlotConsts.PositionAnnotationPriceLevelLineWidth);
+        }
 
-            ScottPlot.MarkerShape GetShape()
-            {
-                return (dir == PositionDir.Long)
+        private double GetAnnotationY(int index, bool openAnotation, PositionDir dir)
+        {
+            if (dir == PositionDir.Long)
+                return openAnotation
+                    ? _currentData.L[index] - PlotConsts.PositionAnnotationMargin
+                    : _currentData.H[index] + PlotConsts.PositionAnnotationMargin;
+            else
+                return openAnotation
+                    ? _currentData.H[index] + PlotConsts.PositionAnnotationMargin
+                    : _currentData.L[index] - PlotConsts.PositionAnnotationMargin;
+        }
+
+        private static ScottPlot.MarkerShape GetAnnotationShape(bool openAnotation, PositionDir dir)
+        {
+            if (dir == PositionDir.Long)
+                return openAnotation
                     ? ScottPlot.MarkerShape.filledTriangleUp
                     : ScottPlot.MarkerShape.filledTriangleDown;
-            }
+            else
+                return openAnotation
+                    ? ScottPlot.MarkerShape.filledTriangleDown
+                    : ScottPlot.MarkerShape.filledTriangleUp;
         }
+
+        private static Color GetAnnotationColor(bool openAnotation) =>
+            openAnotation ? PlotConsts.PositionAnnotationOpenColor : PlotConsts.PositionAnnotationCloseColor;
     }
 }

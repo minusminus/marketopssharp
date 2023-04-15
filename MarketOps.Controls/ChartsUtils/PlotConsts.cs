@@ -24,6 +24,10 @@ namespace MarketOps.Controls.ChartsUtils
 
         public static readonly Color PositionAnnotationOpenColor = Color.Green;
         public static readonly Color PositionAnnotationCloseColor = Color.Red;
+        public const float PositionAnnotationMargin = 5;
+        public const double PositionAnnotationSize = 10;
+        public const double PositionAnnotationPriceLevelLineMargin = 0.55;
+        public const float PositionAnnotationPriceLevelLineWidth = 2;
 
         public const string PricesAreaName = "areaPrices";  //for backward compatibility, to remove in future version
     }

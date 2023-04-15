@@ -17,7 +17,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
             OHLC MapToOHLC(int index) =>
                 //new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1, (double)data.V[index]);
-                new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate());
+                new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1);
         }
 
         public static double[] MapToVolumeData(this StockPricesData data) =>

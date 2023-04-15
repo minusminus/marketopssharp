@@ -22,6 +22,9 @@ namespace MarketOps.Controls.ChartsUtils
         public const float TooltipTextSize = 10;
         public const float BottomPlotXTicksSize = 5;
 
+        public static readonly Color PositionAnnotationOpenColor = Color.Green;
+        public static readonly Color PositionAnnotationCloseColor = Color.Red;
+
         public const string PricesAreaName = "areaPrices";  //for backward compatibility, to remove in future version
     }
 }

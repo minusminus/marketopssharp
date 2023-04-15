@@ -32,11 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ScottPlot, Version=4.1.61.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ScottPlot.4.1.61\lib\net462\ScottPlot.dll</HintPath>
+    <Reference Include="ScottPlot, Version=4.1.63.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.4.1.63\lib\net462\ScottPlot.dll</HintPath>
     </Reference>
-    <Reference Include="ScottPlot.WinForms, Version=4.1.61.0, Culture=neutral, PublicKeyToken=5df1dfa5321e734b, processorArchitecture=MSIL">
-      <HintPath>..\packages\ScottPlot.WinForms.4.1.61\lib\net48\ScottPlot.WinForms.dll</HintPath>
+    <Reference Include="ScottPlot.WinForms, Version=4.1.63.0, Culture=neutral, PublicKeyToken=5df1dfa5321e734b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.WinForms.4.1.63\lib\net48\ScottPlot.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -83,7 +83,6 @@
     <Compile Include="ColumnChart\ColumnChart.Designer.cs">
       <DependentUpon>ColumnChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\PriceVolumeChartPositionAnnotationsExtensions.cs" />
     <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
     <Compile Include="Extensions\SortableBindingListExtensions.cs" />
@@ -162,6 +161,9 @@
     </Compile>
     <Compile Include="PriceChart\PriceVolumePanel.Designer.cs">
       <DependentUpon>PriceVolumePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PriceChart\PVChart\PriceVolumeChart_AnnotationsManagement.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PriceChart\PVChart\PriceVolumeChart_StatsManagement.cs">
       <SubType>UserControl</SubType>

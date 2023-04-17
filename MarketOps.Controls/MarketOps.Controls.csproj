@@ -55,7 +55,6 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,7 +68,6 @@
     <Compile Include="..\VersionInfo\VersionInfo.cs">
       <Link>VersionInfo.cs</Link>
     </Compile>
-    <Compile Include="ChartAreaFactory.cs" />
     <Compile Include="ChartsUtils\FormsPlotExtensions.cs" />
     <Compile Include="ChartsUtils\PlotConsts.cs" />
     <Compile Include="ChartsUtils\PlotExtensions.cs" />
@@ -125,7 +123,6 @@
     <Compile Include="PriceChart\ChartAxisValueLabel.Designer.cs">
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChartsUtils\ChartYViewRangeCalculator.cs" />
     <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTicksProviderFactory.cs" />
@@ -192,7 +189,6 @@
     <Compile Include="StockData\MOParamsEditor.Designer.cs">
       <DependentUpon>MOParamsEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="StockStatSeriesFactory.cs" />
     <Compile Include="SuspendDrawingUpdate.cs" />
     <Compile Include="SystemEquity\SystemEquityChart.cs">
       <SubType>UserControl</SubType>

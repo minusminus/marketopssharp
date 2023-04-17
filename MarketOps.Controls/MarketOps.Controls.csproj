@@ -83,7 +83,6 @@
     <Compile Include="ColumnChart\ColumnChart.Designer.cs">
       <DependentUpon>ColumnChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\PriceVolumeChartTrailingStopsExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
     <Compile Include="Extensions\SortableBindingListExtensions.cs" />
     <Compile Include="Extensions\StockStatExtensions.cs" />
@@ -165,6 +164,9 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PriceChart\PVChart\PriceVolumeChart_StatsManagement.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PriceChart\PVChart\PriceVolumeChart_TrailingStopsManagement.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PriceChart\PVChart\StatDrawer.cs" />

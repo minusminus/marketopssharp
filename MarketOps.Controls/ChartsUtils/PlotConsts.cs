@@ -29,6 +29,8 @@ namespace MarketOps.Controls.ChartsUtils
         public const double PositionAnnotationPriceLevelLineMargin = 0.55;
         public const float PositionAnnotationPriceLevelLineWidth = 2;
 
+        public static readonly Color PositionsTrailingStopsColor = Color.PaleVioletRed;
+
         public const string PricesAreaName = "areaPrices";  //for backward compatibility, to remove in future version
     }
 }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using MarketOps.Controls.Extensions;
+﻿using MarketOps.Config.Stats;
+using MarketOps.Controls.ChartsUtils;
+using MarketOps.Controls.PriceChart.PVChart;
 using MarketOps.Controls.Types;
 using MarketOps.StockData.Extensions;
 using MarketOps.StockData.Types;
-using MarketOps.Config.Stats;
-using MarketOps.SystemData.Types;
 using MarketOps.StockData;
-using MarketOps.Controls.ChartsUtils;
-using MarketOps.Controls.PriceChart.PVChart;
+using MarketOps.SystemData.Types;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System;
 
 namespace MarketOps.Controls.PriceChart
 {
@@ -141,18 +140,11 @@ namespace MarketOps.Controls.PriceChart
         private void ReloadCurrentData()
         {
             UnlinkStatStickers();
-            chartPV.LoadData(_currentData.Prices, _currentData.Stats);
+            chartPV.LoadData(_currentData.Prices, _currentData.Stats, false);
             RepositionStatStickers();
             RecreatePositionsAnnotations();
-            //using (new SuspendDrawingUpdate(chartPV))
-            //{
-                //chartPV.LoadStockData(_currentData.Prices);
-                //foreach (var stat in _currentData.Stats)
-                //    chartPV.AppendStockStatData(_currentData.Prices, stat);
-                //chartPV.SetYViewRange();
-                //RecreatePositionsAnnotations();
-                //RecreatePositionsTrailingStops();
-            //}
+            RecreatePositionsTrailingStops();
+            chartPV.RefreshAllCharts();
         }
 
         private void DisplayCurrentStockInfo()
@@ -181,6 +173,7 @@ namespace MarketOps.Controls.PriceChart
             _currentData.Positions.AddRange(positions);
             RecreatePositionsAnnotations();
             RecreatePositionsTrailingStops();
+            chartPV.RefreshAllCharts();
         }
 
         private void RecreatePositionsAnnotations()

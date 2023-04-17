@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using MarketOps.Controls.ChartsUtils.AxisSynchronization;
+﻿using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.Controls.PriceChart.DateTimeTicks;
 using MarketOps.StockData.Types;
 using ScottPlot;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using System;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
@@ -65,7 +65,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             chartVolume.SetUpAdditionalFormsPlot();
         }
 
-        public void LoadData(StockPricesData data, IReadOnlyList<StockStat> stats)
+        public void LoadData(StockPricesData data, IReadOnlyList<StockStat> stats, bool refreshCharts = true)
         {
             _axisSynchronizer.Enabled = false;
             try
@@ -86,7 +86,8 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 foreach (var stat in stats)
                     AddStockStat(stat);
 
-                RefreshAllCharts();
+                if (refreshCharts)
+                    RefreshAllCharts();
                 ResizePriceChartToWorkaroundContentDrawingProblem();
             }
             finally
@@ -114,7 +115,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _stockStatsManager.Clear();
         }
 
-        private void RefreshAllCharts()
+        public void RefreshAllCharts()
         {
             chartPrices.Refresh();
             chartVolume.Refresh();

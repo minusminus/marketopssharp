@@ -15,7 +15,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             foreach (var position in positions)
                 AddPositionAnnotation(position);
-            chartPrices.Refresh();
         }
 
         private void AddPositionAnnotation(Position position)

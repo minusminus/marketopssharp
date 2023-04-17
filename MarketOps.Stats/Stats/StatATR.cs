@@ -18,7 +18,7 @@ namespace MarketOps.Stats.Stats
         }
 
         protected override int GetBackBufferLength() => 
-            _statParams.Get(StatATRParams.Period).As<int>();
+            _statParams.Get(StatATRParams.Period).As<int>() + 1;
 
         protected override void InitializeData()
         {

@@ -8,7 +8,7 @@ namespace MarketOps.Stats.Calculators
     /// </summary>
     public class CumulativeDataCalculator
     {
-        protected float[] CalculateCumulative(int dataLength, int period, Func<int, float>getValue )
+        protected float[] CalculateCumulative(int dataLength, int period, Func<int, float>getValue)
         {
             float[] res = new float[dataLength - period + 1];
 

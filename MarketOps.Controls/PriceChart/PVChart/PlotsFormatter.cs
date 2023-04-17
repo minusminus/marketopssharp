@@ -34,12 +34,18 @@ namespace MarketOps.Controls.PriceChart.PVChart
             formsPlot.Visible = true;
         }
 
-        public static void SetUpPricesPlot(this FinancePlot plot)
+        public static void SetUpPriceCandlesPlot(this FinancePlot plot)
         {
             plot.ColorUp = PlotConsts.CandleColorUp;
             plot.ColorDown = PlotConsts.CandleColorDown;
             plot.WickColor = PlotConsts.CandleColorDown;
             plot.Sequential = true;
+        }
+
+        public static void SetUpPriceClosePlot(this ScatterPlot plot)
+        {
+            plot.LineWidth = 1;
+            plot.LineColor = PlotConsts.CloseLineColor;
         }
 
         public static void SetUpVolumePlot(this BarPlot plot)

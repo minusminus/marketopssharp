@@ -5,6 +5,7 @@ using ScottPlot;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
+using ScottPlot.Plottable;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
@@ -23,6 +24,8 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private StockPricesData _currentData;
 
         private double[] _statsXs;
+        private FinancePlot _ohlcPlot;
+        private ScatterPlot _closePlot;
 
         #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
@@ -43,7 +46,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             InitializeComponent();
             DoubleBuffered = true;
-            SetChartMode(PriceVolumeChartMode.Candles);
+            ChartMode = PriceVolumeChartMode.Candles;
             //pnlCursorDataValues.BackColor = chartPrices.BackColor;
             _axisSynchronizer = new PlotsAxisXSynchronizer(chartPrices, chartVolume);
 
@@ -75,13 +78,15 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 _datetimeTicksProvider = DateTimeTicksProviderFactory.Get(data.Range);
                 _currentData = data;
 
-                chartPrices.Plot
-                    .AddCandlesticks(data.MapToOHLCData())
-                    .SetUpPricesPlot();
+                _statsXs = DataGen.Consecutive(_currentData.Length);
+                _ohlcPlot = chartPrices.Plot.AddCandlesticks(data.MapToOHLCData());
+                _ohlcPlot.SetUpPriceCandlesPlot();
+                _closePlot = chartPrices.Plot.AddScatterLines(_statsXs, data.MapToCloseData());
+                _closePlot.SetUpPriceClosePlot();
+                SetChartMode(ChartMode, false);
                 chartVolume.Plot
                     .AddBar(data.MapToVolumeData())
                     .SetUpVolumePlot();
-                _statsXs = DataGen.Consecutive(_currentData.Length);
 
                 foreach (var stat in stats)
                     AddStockStat(stat);
@@ -94,6 +99,17 @@ namespace MarketOps.Controls.PriceChart.PVChart
             {
                 _axisSynchronizer.Enabled = true;
             }
+        }
+
+        public void SetChartMode(PriceVolumeChartMode newMode, bool refreshChart = true)
+        {
+            ChartMode = newMode;
+            if (_ohlcPlot != null)
+                _ohlcPlot.IsVisible = (ChartMode == PriceVolumeChartMode.Candles);
+            if (_closePlot != null)
+                _closePlot.IsVisible = (ChartMode == PriceVolumeChartMode.Lines);
+            if (refreshChart)
+                chartPrices.Refresh();
         }
 
         private void ResizePriceChartToWorkaroundContentDrawingProblem()
@@ -171,14 +187,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
             //OnAreaDoubleClick?.Invoke(currentArea.Name);
         }
         #endregion
-
-        public void SetChartMode(PriceVolumeChartMode newMode)
-        {
-            ChartMode = newMode;
-            //PricesCandles.Enabled = (newMode == PriceVolumeChartMode.Candles);
-            //PricesLine.Enabled = (newMode == PriceVolumeChartMode.Lines);
-            //PricesLine.XValueType = ChartValueType.Date;
-        }
 
         public void ReversePricesYAxis(bool reversed)
         {

@@ -15,6 +15,7 @@ namespace MarketOps.Controls.ChartsUtils
 
         public static readonly Color CandleColorUp = Color.White;
         public static readonly Color CandleColorDown = Color.Black;
+        public static readonly Color CloseLineColor = Color.RoyalBlue;
 
         public static readonly Color AxisColor = Color.LightGray;
         public static readonly Color AxisTextColor = Color.DarkGray;

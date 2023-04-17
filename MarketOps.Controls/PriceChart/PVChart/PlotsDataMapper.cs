@@ -20,6 +20,11 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1);
         }
 
+        public static double[] MapToCloseData(this StockPricesData data) =>
+            data.C
+                .Select(x => (double)x)
+                .ToArray();
+
         public static double[] MapToVolumeData(this StockPricesData data) =>
             data.V
                 .Select(x => (double)x)

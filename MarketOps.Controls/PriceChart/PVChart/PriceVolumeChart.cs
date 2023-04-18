@@ -1,11 +1,11 @@
 ﻿using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.Controls.PriceChart.DateTimeTicks;
 using MarketOps.StockData.Types;
+using ScottPlot.Plottable;
 using ScottPlot;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
-using ScottPlot.Plottable;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
@@ -61,7 +61,10 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
             _additionalChartsManager = new AdditionalChartsManager(_axisSynchronizer);
             _priceStatsManager = new PriceChartStatsManager();
+            
             _crosshairManager = new CrosshairManager();
+            _crosshairManager.OnCrosshairVisibilityChanged += OnCrosshairVisibilityChanged;
+            _crosshairManager.OnVerticalPositionTooltip += OnCrosshairPositionTooltip;
 
             chartPrices.SetUpFormsPlot();
             chartPrices.Plot.XAxis.DateTimeFormat(true);
@@ -160,6 +163,14 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 chartPrices.Configuration.AxesChangedEventEnabled = true;
             }
         }
+
+        private void OnCrosshairVisibilityChanged(FormsPlot chart) => 
+            chart.Refresh();
+
+        private string OnCrosshairPositionTooltip(double value) => 
+            (value >= 0) && (OnGetAxisXToolTip != null)
+                ? OnGetAxisXToolTip.Invoke((int)Math.Round(value))
+                : string.Empty;
 
         /* ============================== cut here ============================================== */
 

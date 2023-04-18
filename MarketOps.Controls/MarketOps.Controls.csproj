@@ -117,13 +117,7 @@
     </Compile>
     <Compile Include="PointChart\PointChartData.cs" />
     <Compile Include="Extensions\TabPageExtensions.cs" />
-    <Compile Include="PriceChart\ChartAxisValueLabel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PriceChart\ChartAxisValueLabel.Designer.cs">
-      <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PriceChart\CrosshairManager.cs" />
+    <Compile Include="PriceChart\PVChart\CrosshairManager.cs" />
     <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTicksProviderFactory.cs" />
@@ -229,9 +223,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PointChart\PointChart.resx">
       <DependentUpon>PointChart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PriceChart\ChartAxisValueLabel.resx">
-      <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PriceChart\FormEditStockStatParams.resx">
       <DependentUpon>FormEditStockStatParams.cs</DependentUpon>

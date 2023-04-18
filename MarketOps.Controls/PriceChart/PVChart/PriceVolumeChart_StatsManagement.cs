@@ -40,6 +40,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             chart.SetUpAdditionalFormsPlot();
             chart.DisplayOnControlsBottom(pnlCharts, chartVolume.Height);
             chart.Plot.DrawStat(stat, _statsXs);
+            _crosshairManager.Add(chart, false);
             chart.Refresh();
         }
 
@@ -68,6 +69,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private void OnAdditionalStatRemoved(StockStat stat, int index)
         {
+            _crosshairManager.Remove(_additionalChartsManager.Charts[index]);
             _additionalChartsManager.Remove(index);
         }
     }

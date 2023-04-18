@@ -20,6 +20,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private readonly StockStatsManager _stockStatsManager;
         private readonly AdditionalChartsManager _additionalChartsManager;
         private readonly PriceChartStatsManager _priceStatsManager;
+        private readonly CrosshairManager _crosshairManager;
         private IDateTimeTicksProvider _datetimeTicksProvider;
         private StockPricesData _currentData;
 
@@ -60,6 +61,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
             _additionalChartsManager = new AdditionalChartsManager(_axisSynchronizer);
             _priceStatsManager = new PriceChartStatsManager();
+            _crosshairManager = new CrosshairManager();
 
             chartPrices.SetUpFormsPlot();
             chartPrices.Plot.XAxis.DateTimeFormat(true);
@@ -84,9 +86,12 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 _closePlot = chartPrices.Plot.AddScatterLines(_statsXs, data.MapToCloseData());
                 _closePlot.SetUpPriceClosePlot();
                 SetChartMode(ChartMode, false);
+                _crosshairManager.Add(chartPrices, true);
+
                 chartVolume.Plot
                     .AddBar(data.MapToVolumeData())
                     .SetUpVolumePlot();
+                _crosshairManager.Add(chartVolume, false);
 
                 foreach (var stat in stats)
                     AddStockStat(stat);
@@ -126,6 +131,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             chartPrices.Plot.Clear();
             chartVolume.Plot.Clear();
+            _crosshairManager.Clear();
             _additionalChartsManager.Clear();
             _priceStatsManager.Clear();
             _stockStatsManager.Clear();

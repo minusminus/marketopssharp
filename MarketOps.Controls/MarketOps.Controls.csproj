@@ -123,6 +123,7 @@
     <Compile Include="PriceChart\ChartAxisValueLabel.Designer.cs">
       <DependentUpon>ChartAxisValueLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="PriceChart\CrosshairManager.cs" />
     <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTicksProviderFactory.cs" />

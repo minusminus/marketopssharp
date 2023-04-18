@@ -53,5 +53,15 @@ namespace MarketOps.Controls.PriceChart.PVChart
             plot.Color = PlotConsts.PrimaryPointColor;
             plot.BarWidth = 0.6;
         }
+
+        public static void SetUpCrosshair(this Crosshair plot)
+        {
+            plot.IgnoreAxisAuto = true;
+            plot.LineWidth = 1;
+            plot.Color = PlotConsts.CrosshairColor;
+            plot.LineStyle = LineStyle.Dot;
+            plot.VerticalLine.PositionLabelFont.Size = PlotConsts.CrosshairTextSize;
+            plot.HorizontalLine.PositionLabelFont.Size = PlotConsts.CrosshairTextSize;
+        }
     }
 }

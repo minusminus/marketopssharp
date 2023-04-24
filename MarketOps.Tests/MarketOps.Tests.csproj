@@ -126,6 +126,7 @@
     <Compile Include="Stats\Calculators\BBTests.cs" />
     <Compile Include="Stats\Calculators\CumulativeDataCalculatorTests.cs" />
     <Compile Include="Stats\Calculators\HeikinAshiOCTests.cs" />
+    <Compile Include="Stats\Calculators\HeikinAshiTests.cs" />
     <Compile Include="Stats\Calculators\HLChannelTests.cs" />
     <Compile Include="Stats\Calculators\RangeChangePcntTests.cs" />
     <Compile Include="Stats\Calculators\RingBufferCalculatorTests.cs" />

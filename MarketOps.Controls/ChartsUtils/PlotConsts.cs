@@ -17,6 +17,9 @@ namespace MarketOps.Controls.ChartsUtils
         public static readonly Color CandleColorDown = Color.Black;
         public static readonly Color CloseLineColor = Color.RoyalBlue;
 
+        public static readonly Color HeikinAshiCandleColorUp = Color.FromArgb(127, 0, 127, 0);
+        public static readonly Color HeikinAshiCandleColorDown = Color.FromArgb(127, 127, 0, 0);
+
         public static readonly Color AxisColor = Color.LightGray;
         public static readonly Color AxisTextColor = Color.DarkGray;
         public const float AxisTextSize = 8;

@@ -1,4 +1,5 @@
-﻿using MarketOps.StockData.Types;
+﻿using MarketOps.Stats.Calculators;
+using MarketOps.StockData.Types;
 using ScottPlot;
 using System.Linq;
 
@@ -17,6 +18,23 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
             OHLC MapToOHLC(int index) =>
                 //new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1, (double)data.V[index]);
+                new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1);
+        }
+
+        public static OHLC[] MapToOHLCData(this HeikinAshiData data)
+        {
+            //ScottPlot can't skip rendering this OHLC element
+            //so it is set like this until ScottPlot will be able to skip OHLC elements like double.NaN
+            var firstEmptyElement = new OHLC[] { new OHLC(data.O[0], data.O[0], data.O[0], data.O[0], 0, 1) };
+
+            return firstEmptyElement
+                .Concat(
+                    Enumerable.Range(0, data.O.Length)
+                        .Select(i => MapToOHLC(i))
+                )
+                .ToArray();
+
+            OHLC MapToOHLC(int index) =>
                 new OHLC(data.O[index], data.H[index], data.L[index], data.C[index], data.TS[index].ToOADate(), 1);
         }
 

@@ -42,6 +42,13 @@ namespace MarketOps.Controls.PriceChart.PVChart
             plot.Sequential = true;
         }
 
+        public static void SetUpPriceHeikinAshiPlot(this FinancePlot plot)
+        {
+            plot.ColorUp = PlotConsts.HeikinAshiCandleColorUp;
+            plot.ColorDown = PlotConsts.HeikinAshiCandleColorDown;
+            plot.Sequential = true;
+        }
+
         public static void SetUpPriceClosePlot(this ScatterPlot plot)
         {
             plot.LineWidth = 1;

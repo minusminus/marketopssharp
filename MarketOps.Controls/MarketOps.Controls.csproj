@@ -257,6 +257,10 @@
       <Project>{a7360268-1f6d-4878-aa27-ea365f11e0a7}</Project>
       <Name>MarketOps.Config</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MarketOps.Stats\MarketOps.Stats.csproj">
+      <Project>{34199084-BE88-45C5-84DA-8A2D00AC9BD2}</Project>
+      <Name>MarketOps.Stats</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketOps.StockData\MarketOps.StockData.csproj">
       <Project>{302b5831-ece5-4043-a944-1d8814c8f78e}</Project>
       <Name>MarketOps.StockData</Name>

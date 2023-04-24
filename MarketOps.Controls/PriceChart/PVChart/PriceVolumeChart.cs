@@ -7,6 +7,7 @@ using ScottPlot;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
+using MarketOps.Stats.Calculators;
 
 namespace MarketOps.Controls.PriceChart.PVChart
 {
@@ -27,6 +28,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         private double[] _statsXs;
         private FinancePlot _ohlcPlot;
+        private FinancePlot _haPlot;
         private ScatterPlot _closePlot;
 
         public PriceVolumeChartMode ChartMode { get; private set; }
@@ -81,6 +83,9 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 _statsXs = DataGen.Consecutive(_currentData.Length);
                 _ohlcPlot = chartPrices.Plot.AddCandlesticks(data.MapToOHLCData());
                 _ohlcPlot.SetUpPriceCandlesPlot();
+                var haData = HeikinAshi.Calculate(data);
+                _haPlot = chartPrices.Plot.AddCandlesticks(haData.MapToOHLCData());
+                _haPlot.SetUpPriceHeikinAshiPlot();
                 _closePlot = chartPrices.Plot.AddScatterLines(_statsXs, data.MapToCloseData());
                 _closePlot.SetUpPriceClosePlot();
                 SetChartMode(ChartMode, false);

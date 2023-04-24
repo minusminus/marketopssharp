@@ -1,5 +1,6 @@
 ﻿using MarketOps.Controls.ChartsUtils.AxisSynchronization;
 using MarketOps.Controls.PriceChart.DateTimeTicks;
+using MarketOps.Controls.PriceChart.PVChart.Managers;
 using MarketOps.StockData.Types;
 using ScottPlot.Plottable;
 using ScottPlot;
@@ -12,7 +13,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
     public delegate void PriceVolumeChartValueSelected(int selectedIndex);
     public delegate string PriceVolumeChartGetAxisXToolTip(int selectedIndex);
     public delegate string PriceVolumeChartGetAxisYToolTip(double selectedValue);
-    public delegate void PriceVolumeChartAreaDoubleClick(string areaName);
+    //public delegate void PriceVolumeChartAreaDoubleClick(string areaName);
 
     public partial class PriceVolumeChart : UserControl
     {
@@ -28,20 +29,13 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private FinancePlot _ohlcPlot;
         private ScatterPlot _closePlot;
 
-        #region public properties and events
         public PriceVolumeChartMode ChartMode { get; private set; }
         public int AdditionalChartsCount => _additionalChartsManager.Charts.Count;
-
-        //public Chart PVChartControl => PVChart;
-        //public Series PricesCandles => PVChart.Series["dataPricesCandles"];
-        //public Series PricesLine => PVChart.Series["dataPricesLine"];
-        //public Series TrailingStopL => PVChart.Series["dataTrailingStopL"];
 
         public event PriceVolumeChartValueSelected OnChartValueSelected;
         public event PriceVolumeChartGetAxisXToolTip OnGetAxisXToolTip;
         public event PriceVolumeChartGetAxisYToolTip OnGetAxisYToolTip;
-        public event PriceVolumeChartAreaDoubleClick OnAreaDoubleClick;
-        #endregion
+        //public event PriceVolumeChartAreaDoubleClick OnAreaDoubleClick;
 
         public PriceVolumeChart()
         {
@@ -65,6 +59,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _crosshairManager = new CrosshairManager();
             _crosshairManager.OnCrosshairVisibilityChanged += OnCrosshairVisibilityChanged;
             _crosshairManager.OnVerticalPositionTooltip += OnCrosshairPositionTooltip;
+            _crosshairManager.OnVerticalValueChanged += OnCrosshairVerticalValueChanged;
 
             chartPrices.SetUpFormsPlot();
             chartPrices.Plot.XAxis.DateTimeFormat(true);
@@ -120,6 +115,18 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 chartPrices.Refresh();
         }
 
+        public void RefreshAllCharts()
+        {
+            chartPrices.Refresh();
+            chartVolume.Refresh();
+            _additionalChartsManager.RefreshAll();
+        }
+
+        public void ReversePricesYAxis(bool reversed)
+        {
+            //PVChart.ChartAreas[PlotConsts.PricesAreaName].AxisY.IsReversed = reversed;
+        }
+
         private void ResizePriceChartToWorkaroundContentDrawingProblem()
         {
             using (var suspender = new SuspendDrawingUpdate(this))
@@ -138,13 +145,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             _additionalChartsManager.Clear();
             _priceStatsManager.Clear();
             _stockStatsManager.Clear();
-        }
-
-        public void RefreshAllCharts()
-        {
-            chartPrices.Refresh();
-            chartVolume.Refresh();
-            _additionalChartsManager.RefreshAll();
+            ClearTrailingStopsData();
         }
 
         private void OnAxesChangedPricesTicksProvider(object sender, EventArgs e)
@@ -172,48 +173,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 ? OnGetAxisXToolTip.Invoke((int)Math.Round(value))
                 : string.Empty;
 
-        /* ============================== cut here ============================================== */
-
-        #region internal events
-        private void PVChart_MouseMove(object sender, MouseEventArgs e)
-        {
-            //if (PricesCandles.Points.Count == 0) return;
-
-            //UpdateAreasCursors(e.Location);
-            //int xSelectedIndex = (int)PVChart.ChartAreas[PlotConsts.PriceAreaName].CursorX.Position - 1;
-            //OnChartValueSelected?.Invoke(xSelectedIndex);
-            //SetPriceAreaToolTips(e.Location);
-        }
-
-        private void PVChart_MouseEnter(object sender, EventArgs e)
-        {
-            //if (!PVChart.Focused)
-            //    PVChart.Focus();
-        }
-
-        private void PVChart_MouseLeave(object sender, EventArgs e)
-        {
-            //if (PVChart.Focused)
-            //    PVChart.Parent.Focus();
-        }
-
-        private void PVChart_DoubleClick(object sender, EventArgs e)
-        {
-            //ChartArea currentArea = FindAreaUnderCursor(PVChart.PointToClient(Control.MousePosition));
-            //if (currentArea == null) return;
-            //OnAreaDoubleClick?.Invoke(currentArea.Name);
-        }
-        #endregion
-
-        public void ReversePricesYAxis(bool reversed)
-        {
-            //PVChart.ChartAreas[PlotConsts.PricesAreaName].AxisY.IsReversed = reversed;
-        }
-
-        public void HidePriceAreaToolTips()
-        {
-            lblTSValue.Text = "";
-            lblValueValue.Text = "";
-        }
+        private void OnCrosshairVerticalValueChanged(int selectedIndex) => 
+            OnChartValueSelected?.Invoke(selectedIndex);
     }
 }

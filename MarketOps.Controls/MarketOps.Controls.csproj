@@ -116,8 +116,7 @@
       <DependentUpon>PointChart.cs</DependentUpon>
     </Compile>
     <Compile Include="PointChart\PointChartData.cs" />
-    <Compile Include="Extensions\TabPageExtensions.cs" />
-    <Compile Include="PriceChart\PVChart\CrosshairManager.cs" />
+    <Compile Include="PriceChart\PVChart\Managers\CrosshairManager.cs" />
     <Compile Include="PriceChart\DateTimeTicks\BaseDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTickDatePart.cs" />
     <Compile Include="PriceChart\DateTimeTicks\DateTimeTicksProviderFactory.cs" />
@@ -134,11 +133,11 @@
       <DependentUpon>FormSelectDataRange.cs</DependentUpon>
     </Compile>
     <Compile Include="PositionChangeChecker.cs" />
-    <Compile Include="PriceChart\PVChart\AdditionalChartsManager.cs" />
+    <Compile Include="PriceChart\PVChart\Managers\AdditionalChartsManager.cs" />
     <Compile Include="PriceChart\PVChart\IDateTimeTicksProvider.cs" />
     <Compile Include="PriceChart\PVChart\PlotsDataMapper.cs" />
     <Compile Include="PriceChart\PVChart\PlotsFormatter.cs" />
-    <Compile Include="PriceChart\PVChart\PriceChartStatsManager.cs" />
+    <Compile Include="PriceChart\PVChart\Managers\PriceChartStatsManager.cs" />
     <Compile Include="PriceChart\PVChart\PriceVolumeChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -163,7 +162,7 @@
     </Compile>
     <Compile Include="PriceChart\PVChart\StatDrawer.cs" />
     <Compile Include="PriceChart\PVChart\StatsRemover.cs" />
-    <Compile Include="PriceChart\PVChart\StockStatsManager.cs" />
+    <Compile Include="PriceChart\PVChart\Managers\StockStatsManager.cs" />
     <Compile Include="PriceChart\StockStatSticker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -275,17 +274,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\downarrow_green.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\downarrow_red.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\uparrow_green.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\uparrow_red.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

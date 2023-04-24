@@ -295,7 +295,6 @@
             this.tcCharts.Size = new System.Drawing.Size(1005, 667);
             this.tcCharts.TabIndex = 10;
             this.tcCharts.TabStop = false;
-            this.tcCharts.Deselected += new System.Windows.Forms.TabControlEventHandler(this.tcCharts_Deselected);
             this.tcCharts.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tcCharts_MouseClick);
             // 
             // tabPage1

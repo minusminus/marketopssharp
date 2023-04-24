@@ -2,7 +2,7 @@
 using MarketOps.StockData.Types;
 using System.Collections.Generic;
 
-namespace MarketOps.Controls.PriceChart.PVChart
+namespace MarketOps.Controls.PriceChart.PVChart.Managers
 {
     internal delegate void StockStatAdded(StockStat stat);
     internal delegate void StockStatUpdated(StockStat stat, int index);

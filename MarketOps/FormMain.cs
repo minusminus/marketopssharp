@@ -182,11 +182,6 @@ namespace MarketOps
                 tcCharts.RemoveClickedTab(e);
         }
 
-        private void tcCharts_Deselected(object sender, TabControlEventArgs e)
-        {
-            e.TabPage?.HidePriceAreaToolTips();
-        }
-
         private void dataPumpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string dlPath = Path.Combine(

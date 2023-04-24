@@ -2,7 +2,7 @@
 using ScottPlot.Plottable;
 using System.Collections.Generic;
 
-namespace MarketOps.Controls.PriceChart.PVChart
+namespace MarketOps.Controls.PriceChart.PVChart.Managers
 {
     internal class PriceChartStat
     {
@@ -29,7 +29,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
             return result;
         }
 
-        public void Remove(int index) => 
+        public void Remove(int index) =>
             Charts.RemoveAt(index);
 
         public void Clear()

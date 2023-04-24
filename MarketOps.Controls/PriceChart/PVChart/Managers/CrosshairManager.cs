@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
 
-namespace MarketOps.Controls.PriceChart.PVChart
+namespace MarketOps.Controls.PriceChart.PVChart.Managers
 {
     internal delegate void CrosshairVisibilityChanged(FormsPlot chart);
     internal delegate string CrosshairPositionTooltip(double value);
+    internal delegate void CrosshairVerticalValueChanged(int selectedIndex);
 
     /// <summary>
     /// Manages Crosshair plots on FormsPlot objects.
@@ -17,8 +18,11 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private readonly List<FormsPlot> _charts = new List<FormsPlot>();
         private readonly List<Crosshair> _crosshairs = new List<Crosshair>();
 
+        private int _lastVerticalValueIndex = int.MinValue;
+
         public event CrosshairVisibilityChanged OnCrosshairVisibilityChanged;
         public event CrosshairPositionTooltip OnVerticalPositionTooltip;
+        public event CrosshairVerticalValueChanged OnVerticalValueChanged;
 
         public void Add(FormsPlot chart, bool verticalLabel)
         {
@@ -49,6 +53,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             while (_charts.Count > 0)
                 Remove(0);
+            _lastVerticalValueIndex = int.MinValue;
         }
 
         private void LinkEvents(FormsPlot chart)
@@ -71,14 +76,6 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private void OnCrosshairMouseLeave(object sender, EventArgs e) =>
             SetCrosshairVisibility(false);
 
-        private string VerticalPositionFormatter(double value) => 
-            OnVerticalPositionTooltip != null
-                ? OnVerticalPositionTooltip(value)
-                : value.ToString();
-
-        private int FindChartIndex(FormsPlot chart) =>
-            _charts.IndexOf(chart);
-
         private void OnCrosshairMouseMove(object sender, MouseEventArgs e)
         {
             FormsPlot chart = (FormsPlot)sender;
@@ -87,6 +84,8 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
             for (int i = 0; i < _charts.Count; i++)
                 MoveCrosshair(i, mouseCoords.x, mouseCoords.y, senderIndex);
+            
+            ExecuteVerticalValueChanged(mouseCoords.x);
         }
 
         private void MoveCrosshair(int index, double x, double y, int senderIndex)
@@ -95,10 +94,18 @@ namespace MarketOps.Controls.PriceChart.PVChart
             crossPlot.X = x;
             crossPlot.Y = y;
 
-            crossPlot.HorizontalLine.IsVisible = index == senderIndex;
+            crossPlot.HorizontalLine.IsVisible = (index == senderIndex);
 
             _charts[index].Refresh();
         }
+
+        private string VerticalPositionFormatter(double value) =>
+            OnVerticalPositionTooltip != null
+                ? OnVerticalPositionTooltip(value)
+                : value.ToString();
+
+        private int FindChartIndex(FormsPlot chart) =>
+            _charts.IndexOf(chart);
 
         private void SetCrosshairVisibility(bool visible)
         {
@@ -107,6 +114,14 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 _crosshairs[i].IsVisible = visible;
                 OnCrosshairVisibilityChanged?.Invoke(_charts[i]);
             }
+        }
+
+        private void ExecuteVerticalValueChanged(double x)
+        {
+            int verticalValue = (int)Math.Round(x);
+            if (verticalValue == _lastVerticalValueIndex) return;
+            _lastVerticalValueIndex = verticalValue;
+            OnVerticalValueChanged?.Invoke(verticalValue);
         }
     }
 }

@@ -2,7 +2,7 @@
 using ScottPlot;
 using System.Collections.Generic;
 
-namespace MarketOps.Controls.PriceChart.PVChart
+namespace MarketOps.Controls.PriceChart.PVChart.Managers
 {
     /// <summary>
     /// Manages additional FormsPlot objects.

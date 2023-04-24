@@ -12,12 +12,20 @@ namespace MarketOps.Controls.PriceChart.PVChart
     /// </summary>
     public partial class PriceVolumeChart
     {
+        private double[] _trailingStopsData;
+        public double[] TrailingStopsData => _trailingStopsData;
+
         public void AddPositionsTrailingStops(List<Position> positions)
         {
-            double[] trailingStopsData = CreateEmptyTrailingStopSerie();
+            _trailingStopsData = CreateEmptyTrailingStopSerie();
             foreach (var position in positions)
-                AddPositionTrailingStopData(trailingStopsData, position);
-            AddPosiotnsTrailingStopsLine(trailingStopsData);
+                AddPositionTrailingStopData(_trailingStopsData, position);
+            AddPosiotnsTrailingStopsLine(_trailingStopsData);
+        }
+
+        private void ClearTrailingStopsData()
+        {
+            _trailingStopsData = null;
         }
 
         private double[] CreateEmptyTrailingStopSerie() =>

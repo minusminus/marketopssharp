@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using MarketOps.Controls.Extensions;
 
 namespace MarketOps.Extensions
 {
@@ -13,7 +12,6 @@ namespace MarketOps.Extensions
             for (int i = 0; i < tabControl.TabCount; i++)
                 if (tabControl.GetTabRect(i).Contains(e.Location))
                 {
-                    tabControl.TabPages[i].HidePriceAreaToolTips();
                     tabControl.TabPages.RemoveAt(i);
                     return;
                 }

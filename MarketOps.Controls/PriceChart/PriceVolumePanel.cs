@@ -39,9 +39,9 @@ namespace MarketOps.Controls.PriceChart
         {
             InitializeComponent();
             btnPriceChartCandle.Checked = true;
-            lblStockInfo.Text = "";
-            lblSelectedInfo.Text = "";
-            lblStatSelectedInfo.Text = "";
+            lblStockInfo.Text = string.Empty;
+            lblSelectedInfo.Text = string.Empty;
+            lblStatSelectedInfo.Text = string.Empty;
             chartPV.OnChartValueSelected += OnChartValueSelected;
             chartPV.OnGetAxisXToolTip += OnGetAxisXToolTip;
             chartPV.OnGetAxisYToolTip += OnGetAxisYToolTip;
@@ -115,20 +115,19 @@ namespace MarketOps.Controls.PriceChart
 
         private string GetTrailingStopInfo(int selectedIndex)
         {
-            //if ((!chartPV.TrailingStopL.Enabled) || chartPV.TrailingStopL.Points[selectedIndex].IsEmpty) return string.Empty;
-            //return $"Trailing Stop: {DataFormatting.FormatPrice(_currentData.Stock.Type, chartPV.TrailingStopL.Points[selectedIndex].YValues[0])}";
-            return "Trailing Stop: info to do";
+            if ((chartPV.TrailingStopsData == null) || double.IsNaN(chartPV.TrailingStopsData[selectedIndex])) return string.Empty;
+            return $"Trailing Stop: {DataFormatting.FormatPrice(_currentData.Stock.Type, chartPV.TrailingStopsData[selectedIndex])}";
         }
 
         private string OnGetAxisXToolTip(int selectedIndex)
         {
-            if ((_currentData == null) || (selectedIndex < 0) || (selectedIndex >= _currentData.Prices.Length)) return "";
+            if ((_currentData == null) || (selectedIndex < 0) || (selectedIndex >= _currentData.Prices.Length)) return string.Empty;
             return _currentInfoGenerator.GetAxisXToolTip(_currentData, selectedIndex);
         }
 
         private string OnGetAxisYToolTip(double selectedValue)
         {
-            if (_currentData == null) return "";
+            if (_currentData == null) return string.Empty;
             return _currentInfoGenerator.GetAxisYToolTip(_currentData, selectedValue);
         }
 

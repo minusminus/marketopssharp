@@ -81,6 +81,7 @@
     <Compile Include="ColumnChart\ColumnChart.Designer.cs">
       <DependentUpon>ColumnChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\CheckBoxExtensions.cs" />
     <Compile Include="Extensions\ShowDialogExtensions.cs" />
     <Compile Include="Extensions\SortableBindingListExtensions.cs" />
     <Compile Include="Extensions\StockStatExtensions.cs" />

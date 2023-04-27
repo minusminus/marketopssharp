@@ -9,6 +9,7 @@ using MarketOps.SystemData.Types;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
+using MarketOps.Controls.Extensions;
 
 namespace MarketOps.Controls.PriceChart
 {
@@ -53,16 +54,22 @@ namespace MarketOps.Controls.PriceChart
         #region button actions
         private void btnPriceChartLine_CheckedChanged(object sender, EventArgs e)
         {
-            if (!btnPriceChartLine.Checked) return;
-            btnPriceChartCandle.Checked = false;
-            chartPV.SetChartMode(PriceVolumeChartMode.Lines);
+            chartPV.ChartMode.Lines = btnPriceChartLine.Checked;
+            btnPriceChartCandle.SetCheckedWithoutEventCall(chartPV.ChartMode.Candles, btnPriceChartCandle_CheckedChanged);
+            chartPV.UpdatePriceChartVisibility();
         }
 
         private void btnPriceChartCandle_CheckedChanged(object sender, EventArgs e)
         {
-            if (!btnPriceChartCandle.Checked) return;
-            btnPriceChartLine.Checked = false;
-            chartPV.SetChartMode(PriceVolumeChartMode.Candles);
+            chartPV.ChartMode.Candles = btnPriceChartCandle.Checked;
+            btnPriceChartLine.SetCheckedWithoutEventCall(chartPV.ChartMode.Lines, btnPriceChartLine_CheckedChanged);
+            chartPV.UpdatePriceChartVisibility();
+        }
+
+        private void btnPriceChartHA_CheckedChanged(object sender, EventArgs e)
+        {
+            chartPV.ChartMode.HeikinAshi = btnPriceChartHA.Checked;
+            chartPV.UpdatePriceChartVisibility();
         }
 
         private void btnPrependData_Click(object sender, EventArgs e)

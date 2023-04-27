@@ -31,7 +31,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         private FinancePlot _haPlot;
         private ScatterPlot _closePlot;
 
-        public PriceVolumeChartMode ChartMode { get; private set; }
+        public readonly PriceVolumeChartMode ChartMode = new PriceVolumeChartMode();
         public int AdditionalChartsCount => _additionalChartsManager.Charts.Count;
 
         public event PriceVolumeChartValueSelected OnChartValueSelected;
@@ -43,7 +43,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
         {
             InitializeComponent();
             DoubleBuffered = true;
-            ChartMode = PriceVolumeChartMode.Candles;
+            ChartMode.Candles = true;
             //pnlCursorDataValues.BackColor = chartPrices.BackColor;
             _axisSynchronizer = new PlotsAxisXSynchronizer(chartPrices, chartVolume);
 
@@ -88,7 +88,7 @@ namespace MarketOps.Controls.PriceChart.PVChart
                 _haPlot.SetUpPriceHeikinAshiPlot();
                 _closePlot = chartPrices.Plot.AddScatterLines(_statsXs, data.MapToCloseData());
                 _closePlot.SetUpPriceClosePlot();
-                SetChartMode(ChartMode, false);
+                UpdatePriceChartVisibility(false);
                 _crosshairManager.Add(chartPrices, true);
 
                 chartVolume.Plot
@@ -109,13 +109,15 @@ namespace MarketOps.Controls.PriceChart.PVChart
             }
         }
 
-        public void SetChartMode(PriceVolumeChartMode newMode, bool refreshChart = true)
+        public void UpdatePriceChartVisibility(bool refreshChart = true)
         {
-            ChartMode = newMode;
             if (_ohlcPlot != null)
-                _ohlcPlot.IsVisible = (ChartMode == PriceVolumeChartMode.Candles);
+                _ohlcPlot.IsVisible = ChartMode.Candles;
             if (_closePlot != null)
-                _closePlot.IsVisible = (ChartMode == PriceVolumeChartMode.Lines);
+                _closePlot.IsVisible = ChartMode.Lines;
+            if (_haPlot != null)
+                _haPlot.IsVisible = ChartMode.HeikinAshi;
+
             if (refreshChart)
                 chartPrices.Refresh();
         }

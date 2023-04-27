@@ -33,6 +33,7 @@ namespace MarketOps.Controls.PriceChart
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PriceVolumePanel));
             this.pnlButtons = new System.Windows.Forms.Panel();
+            this.btnPriceChartHA = new System.Windows.Forms.CheckBox();
             this.btnMirrorChart = new System.Windows.Forms.CheckBox();
             this.ilIcons = new System.Windows.Forms.ImageList(this.components);
             this.btnDataRange = new System.Windows.Forms.Button();
@@ -55,6 +56,7 @@ namespace MarketOps.Controls.PriceChart
             // 
             // pnlButtons
             // 
+            this.pnlButtons.Controls.Add(this.btnPriceChartHA);
             this.pnlButtons.Controls.Add(this.btnMirrorChart);
             this.pnlButtons.Controls.Add(this.btnDataRange);
             this.pnlButtons.Controls.Add(this.btnPrependData);
@@ -66,6 +68,19 @@ namespace MarketOps.Controls.PriceChart
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Size = new System.Drawing.Size(606, 32);
             this.pnlButtons.TabIndex = 0;
+            // 
+            // btnPriceChartHA
+            // 
+            this.btnPriceChartHA.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnPriceChartHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPriceChartHA.Image = ((System.Drawing.Image)(resources.GetObject("btnPriceChartHA.Image")));
+            this.btnPriceChartHA.Location = new System.Drawing.Point(392, 4);
+            this.btnPriceChartHA.Name = "btnPriceChartHA";
+            this.btnPriceChartHA.Size = new System.Drawing.Size(32, 24);
+            this.btnPriceChartHA.TabIndex = 8;
+            this.btnPriceChartHA.TabStop = false;
+            this.btnPriceChartHA.UseVisualStyleBackColor = true;
+            this.btnPriceChartHA.CheckedChanged += new System.EventHandler(this.btnPriceChartHA_CheckedChanged);
             // 
             // btnMirrorChart
             // 
@@ -207,18 +222,18 @@ namespace MarketOps.Controls.PriceChart
             this.miAdditionalStats});
             this.cmnChart.Name = "cmnChart";
             this.cmnChart.ShowImageMargin = false;
-            this.cmnChart.Size = new System.Drawing.Size(144, 48);
+            this.cmnChart.Size = new System.Drawing.Size(151, 48);
             // 
             // miStatsOnPriceChart
             // 
             this.miStatsOnPriceChart.Name = "miStatsOnPriceChart";
-            this.miStatsOnPriceChart.Size = new System.Drawing.Size(143, 22);
+            this.miStatsOnPriceChart.Size = new System.Drawing.Size(150, 22);
             this.miStatsOnPriceChart.Text = "Stats on price chart";
             // 
             // miAdditionalStats
             // 
             this.miAdditionalStats.Name = "miAdditionalStats";
-            this.miAdditionalStats.Size = new System.Drawing.Size(143, 22);
+            this.miAdditionalStats.Size = new System.Drawing.Size(150, 22);
             this.miAdditionalStats.Text = "Additional stats";
             // 
             // chartPV
@@ -266,5 +281,6 @@ namespace MarketOps.Controls.PriceChart
         private System.Windows.Forms.ToolStripMenuItem miStatsOnPriceChart;
         private System.Windows.Forms.ToolStripMenuItem miAdditionalStats;
         private System.Windows.Forms.ImageList ilIcons;
+        private System.Windows.Forms.CheckBox btnPriceChartHA;
     }
 }

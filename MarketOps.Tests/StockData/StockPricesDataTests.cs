@@ -10,7 +10,7 @@ namespace MarketOps.Tests.StockData
         private void CheckCreatedObject(StockPricesData obj, int expectedLength)
         {
             obj.Range.ShouldBe(StockDataRange.Undefined);
-            obj.IntrradayInterval.ShouldBe(0);
+            obj.IntradayInterval.ShouldBe(0);
             obj.O.Length.ShouldBe(expectedLength);
             obj.H.Length.ShouldBe(expectedLength);
             obj.L.Length.ShouldBe(expectedLength);

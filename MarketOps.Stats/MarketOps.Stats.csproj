@@ -51,6 +51,8 @@
     <Compile Include="Calculators\BBData.cs" />
     <Compile Include="Calculators\BB.cs" />
     <Compile Include="Calculators\CumulativeDataCalculator.cs" />
+    <Compile Include="Calculators\HeikinAshi.cs" />
+    <Compile Include="Calculators\HeikinAshiData.cs" />
     <Compile Include="Calculators\HeikinAshiOC.cs" />
     <Compile Include="Calculators\HeikinAshiOCData.cs" />
     <Compile Include="Calculators\HLChannel.cs" />

@@ -59,7 +59,7 @@ namespace MarketOps.Tests.DataProvider.Pg
         {
             StockPricesData data = TestObj.GetPricesData(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(2017, 1, 1), new DateTime(2018, 1, 1));
             data.Range.ShouldBe(StockDataRange.Daily);
-            data.IntrradayInterval.ShouldBe(0);
+            data.IntradayInterval.ShouldBe(0);
             data.Length.ShouldBeGreaterThan(0);
             for (int i = 1; i < data.Length; i++)
                 data.TS[i].ShouldBeGreaterThan(data.TS[i - 1]);
@@ -70,7 +70,7 @@ namespace MarketOps.Tests.DataProvider.Pg
         {
             StockPricesData data = TestObj.GetPricesData(TestObj.GetStockDefinition(STOCKID_WIG), StockDataRange.Daily, 0, new DateTime(1980, 1, 1), new DateTime(1981, 1, 1));
             data.Range.ShouldBe(StockDataRange.Daily);
-            data.IntrradayInterval.ShouldBe(0);
+            data.IntradayInterval.ShouldBe(0);
             data.Length.ShouldBe(0);
         }
 

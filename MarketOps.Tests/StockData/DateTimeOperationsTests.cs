@@ -18,14 +18,14 @@ namespace MarketOps.Tests.StockData
         public void OneTickBefore__ReturnsCorrectly(int tsY, int tsM, int tsD, int tsH, int tsMM, StockDataRange stockDataRange, int interadayInterval
             , int etsY, int etsM, int etsD, int etsH, int etsMM)
         {
-            DateTimeOperations.OneTickBefore(new DateTime(tsY, tsM, tsD, tsH, tsMM, 0), new StockPricesData(0) { Range = stockDataRange, IntrradayInterval = interadayInterval })
+            DateTimeOperations.OneTickBefore(new DateTime(tsY, tsM, tsD, tsH, tsMM, 0), new StockPricesData(0) { Range = stockDataRange, IntradayInterval = interadayInterval })
                 .ShouldBe(new DateTime(etsY, etsM, etsD, etsH, etsMM, 0));
         }
 
         [Test]
         public void OneTickBefore_UndefinedRange__Throws()
         {
-            Should.Throw<ArgumentException>(() => DateTimeOperations.OneTickBefore(DateTime.Now, new StockPricesData(0) { Range = StockDataRange.Undefined, IntrradayInterval = 0 }));
+            Should.Throw<ArgumentException>(() => DateTimeOperations.OneTickBefore(DateTime.Now, new StockPricesData(0) { Range = StockDataRange.Undefined, IntradayInterval = 0 }));
         }
     }
 }

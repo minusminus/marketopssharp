@@ -10,10 +10,13 @@ namespace MarketOps.DataMappers
     /// </summary>
     internal static class RProfitDistribution2ColumnChartMapper
     {
-        public static List<ColumnChartData> Map(List<RProfitDistribution> input) =>
-            input.Select(CreateNewDataObject).ToList();
+        public static ColumnChartData Map(List<RProfitDistribution> input) => 
+            new ColumnChartData(input.GetPositions(), input.GetValues());
 
-        private static ColumnChartData CreateNewDataObject(RProfitDistribution profitDistribution) =>
-            new RProfitDistributionColumnChartData(profitDistribution);
+        private static double[] GetPositions(this List<RProfitDistribution> input) =>
+            input.Select(x => (double)x.R).ToArray();
+
+        private static double[] GetValues(this List<RProfitDistribution> input) =>
+            input.Select(x => (double)x.Count).ToArray();
     }
 }

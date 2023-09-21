@@ -62,6 +62,7 @@ namespace MarketOps
             dbgPositions.OnPositionClick += dbgPositions_OnPositionClick;
 
             this.Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            this.Text = $"{Application.ProductName} [v {Application.ProductVersion}]";
             tcCharts.TabPages.Clear();
             PrepareStockDataRangeSource();
             InitializeSim();
@@ -77,17 +78,23 @@ namespace MarketOps
         #region price chart events
         private StockPricesData OnGetChartData(StockDisplayData displayData, DateTime tsFrom, DateTime tsTo)
         {
-            displayData.TsFrom = tsFrom;
-            displayData.TsTo = tsTo;
-            return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            var stockPricesData = _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom.AddDays(-1), tsTo);
+            displayData.TsFrom = DateTimeMin(tsFrom, stockPricesData.TS[0]);
+            displayData.TsTo = DateTimeMin(tsTo, stockPricesData.TS[stockPricesData.TS.Length - 1]);
+            return stockPricesData;
         }
 
         private StockPricesData OnPrependChartData(StockDisplayData displayData)
         {
-            DateTime ts = DateTimeOperations.OneTickBefore(displayData.TsFrom, displayData.Prices);
-            displayData.TsFrom = ts.AddDays(-1).AddYears(-1);
-            return _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, displayData.TsFrom, ts);
+            DateTime tsTo = DateTimeOperations.OneTickBefore(displayData.TsFrom, displayData.Prices);
+            DateTime tsFrom = tsTo.AddDays(-1).AddYears(-1);
+            var stockPricesData = _dataProvider.GetPricesData(displayData.Stock, displayData.Prices.Range, 0, tsFrom, tsTo);
+            displayData.TsFrom = DateTimeMin(tsFrom, stockPricesData.TS[0]);
+            return stockPricesData;
         }
+
+        private static DateTime DateTimeMin(DateTime dt1, DateTime dt2) =>
+            (dt1 < dt2) ? dt1 : dt2;
 
         private void OnRecalculateStockStats(StockDisplayData displayData)
         {
@@ -173,19 +180,6 @@ namespace MarketOps
         {
             if (e.Button == MouseButtons.Middle)
                 tcCharts.RemoveClickedTab(e);
-        }
-
-        private void tcCharts_Deselected(object sender, TabControlEventArgs e)
-        {
-            e.TabPage?.HidePriceAreaToolTips();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //PriceVolumePanel pvp = (PriceVolumePanel)tcCharts.TabPages[0].Controls.Find("pvp", true)[0];
-            //StockStat stat = new StatATR("");
-            //stat.Calculate(pvp.CurrentData.Prices);
-            //pvp.Chart.TestAddStat(stat);
         }
 
         private void dataPumpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -327,16 +321,15 @@ namespace MarketOps
 
         private void ShowRCharts(SystemState systemState, SystemStateSummary summary)
         {
-            const string SimulationRProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
-            const string SimulationRProfitDistributionValueTooltipFormat = "#VALX{N2}, Count: #VAL";
+            const string SimulationRProfitValueTooltipFormat = "{0:N2}, Length: {1}";
 
-            chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat);
-            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), SimulationRProfitDistributionValueTooltipFormat);
+            chartRValue.LoadData(RProfit2PointChartMapper.Map(systemState.PositionsClosed), SimulationRProfitValueTooltipFormat, 0);
+            chartRDistribution.LoadData(RProfitDistribution2ColumnChartMapper.Map(summary.RProfitDistribution), 0.5, 0);
         }
 
         private void ShowDDCharts(SystemStateSummary summary)
         {
-            const string SimulationDDTooltipFormat = "#VALX{N2}%, Length: #VAL";
+            const string SimulationDDTooltipFormat = "{0:N2}%, Length: {1}";
 
             chartDDTicks.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDTicks), SimulationDDTooltipFormat);
             chartDDPositions.LoadData(SystemDrawDown2PointChartMapper.Map(summary.DDClosedPositions), SimulationDDTooltipFormat);
@@ -344,11 +337,11 @@ namespace MarketOps
 
         private void ShowProfitCharts(SystemState systemState)
         {
-            const string SimulationProfitValueTooltipFormat = "#VALX{N2}, Length: #VAL";
-            const string SimulationProfitPcntTooltipFormat = "#VALX{N2}%, Length: #VAL";
+            const string SimulationProfitValueTooltipFormat = "{0:N2}, Length: {1}";
+            const string SimulationProfitPcntTooltipFormat = "{0:N2}%, Length: {1}";
 
-            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitValueTooltipFormat);
-            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitPcntTooltipFormat);
+            chartProfitValue.LoadData(Profit2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitValueTooltipFormat, 0);
+            chartProfitPcnt.LoadData(ProfitPcnt2PointChartMapper.Map(systemState.PositionsClosed), SimulationProfitPcntTooltipFormat, 0);
         }
 
         private void LoadConfig()

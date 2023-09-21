@@ -9,7 +9,7 @@ namespace MarketOps.StockData.Types
     public class StockPricesData
     {
         public StockDataRange Range;
-        public int IntrradayInterval;
+        public int IntradayInterval;
 
         public float[] O;
         public float[] H;
@@ -23,14 +23,14 @@ namespace MarketOps.StockData.Types
         public StockPricesData(int length)
         {
             Range = StockDataRange.Undefined;
-            IntrradayInterval = 0;
+            IntradayInterval = 0;
             CreateTables(length);
         }
 
         public StockPricesData(StockPricesData data, int length)
         {
             Range = data.Range;
-            IntrradayInterval = data.IntrradayInterval;
+            IntradayInterval = data.IntradayInterval;
             CreateTables(length);
         }
 

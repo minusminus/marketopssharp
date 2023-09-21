@@ -47,6 +47,8 @@
     <Compile Include="ChangeInPercent.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="PercentChanges.cs" />
+    <Compile Include="PositionsBalancing\EqualRiskPercentageBalancer.cs" />
+    <Compile Include="PositionsBalancing\EqualRiskPositionsBalancer.cs" />
     <Compile Include="StdDev.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

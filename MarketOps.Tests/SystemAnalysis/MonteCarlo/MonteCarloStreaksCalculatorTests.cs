@@ -12,9 +12,9 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
         [Test]
         public void Calculate_AllUp__CalculatesCorrectly()
         {
-            float[][] testData = new float[2][];
-            testData[0] = new float[5] { 1, 2, 3, 4, 5 };
-            testData[1] = new float[5] { 10, 20, 30, 40, 50 };
+            double[][] testData = new double[2][];
+            testData[0] = new double[5] { 1, 2, 3, 4, 5 };
+            testData[1] = new double[5] { 10, 20, 30, 40, 50 };
 
             MonteCarloStreaksCalculator.Calculate(testData, out var winningStreaks, out var losingStreaks);
 
@@ -27,9 +27,9 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
         [Test]
         public void Calculate_AllDown__CalculatesCorrectly()
         {
-            float[][] testData = new float[2][];
-            testData[0] = new float[5] { 5, 4, 3, 2, 1 };
-            testData[1] = new float[5] { 50, 40, 30, 20, 10 };
+            double[][] testData = new double[2][];
+            testData[0] = new double[5] { 5, 4, 3, 2, 1 };
+            testData[1] = new double[5] { 50, 40, 30, 20, 10 };
 
             MonteCarloStreaksCalculator.Calculate(testData, out var winningStreaks, out var losingStreaks);
 
@@ -42,10 +42,10 @@ namespace MarketOps.Tests.SystemAnalysis.MonteCarlo
         [Test]
         public void Calculate_MixedCase__CalculatesCorrectly()
         {
-            float[][] testData = new float[3][];
-            testData[0] = new float[5] { 1, 2, 3, 2, 1 };
-            testData[1] = new float[5] { 9, 8, 7, 8, 8 };
-            testData[2] = new float[5] { 1, 2, 1, 2, 1 };
+            double[][] testData = new double[3][];
+            testData[0] = new double[5] { 1, 2, 3, 2, 1 };
+            testData[1] = new double[5] { 9, 8, 7, 8, 8 };
+            testData[2] = new double[5] { 1, 2, 1, 2, 1 };
 
             MonteCarloStreaksCalculator.Calculate(testData, out var winningStreaks, out var losingStreaks);
 

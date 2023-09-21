@@ -1,4 +1,6 @@
-﻿namespace MarketOps.Controls.PriceChart
+﻿using MarketOps.Controls.PriceChart.PVChart;
+
+namespace MarketOps.Controls.PriceChart
 {
     partial class PriceVolumePanel
     {
@@ -31,6 +33,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PriceVolumePanel));
             this.pnlButtons = new System.Windows.Forms.Panel();
+            this.btnPriceChartHA = new System.Windows.Forms.CheckBox();
             this.btnMirrorChart = new System.Windows.Forms.CheckBox();
             this.ilIcons = new System.Windows.Forms.ImageList(this.components);
             this.btnDataRange = new System.Windows.Forms.Button();
@@ -45,7 +48,7 @@
             this.cmnChart = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.miStatsOnPriceChart = new System.Windows.Forms.ToolStripMenuItem();
             this.miAdditionalStats = new System.Windows.Forms.ToolStripMenuItem();
-            this.chartPV = new MarketOps.Controls.PriceChart.PriceVolumeChart();
+            this.chartPV = new MarketOps.Controls.PriceChart.PVChart.PriceVolumeChart();
             this.pnlButtons.SuspendLayout();
             this.pnlInfo.SuspendLayout();
             this.cmnChart.SuspendLayout();
@@ -53,6 +56,7 @@
             // 
             // pnlButtons
             // 
+            this.pnlButtons.Controls.Add(this.btnPriceChartHA);
             this.pnlButtons.Controls.Add(this.btnMirrorChart);
             this.pnlButtons.Controls.Add(this.btnDataRange);
             this.pnlButtons.Controls.Add(this.btnPrependData);
@@ -64,6 +68,19 @@
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Size = new System.Drawing.Size(606, 32);
             this.pnlButtons.TabIndex = 0;
+            // 
+            // btnPriceChartHA
+            // 
+            this.btnPriceChartHA.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnPriceChartHA.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPriceChartHA.Image = ((System.Drawing.Image)(resources.GetObject("btnPriceChartHA.Image")));
+            this.btnPriceChartHA.Location = new System.Drawing.Point(392, 4);
+            this.btnPriceChartHA.Name = "btnPriceChartHA";
+            this.btnPriceChartHA.Size = new System.Drawing.Size(32, 24);
+            this.btnPriceChartHA.TabIndex = 8;
+            this.btnPriceChartHA.TabStop = false;
+            this.btnPriceChartHA.UseVisualStyleBackColor = true;
+            this.btnPriceChartHA.CheckedChanged += new System.EventHandler(this.btnPriceChartHA_CheckedChanged);
             // 
             // btnMirrorChart
             // 
@@ -205,18 +222,18 @@
             this.miAdditionalStats});
             this.cmnChart.Name = "cmnChart";
             this.cmnChart.ShowImageMargin = false;
-            this.cmnChart.Size = new System.Drawing.Size(144, 48);
+            this.cmnChart.Size = new System.Drawing.Size(151, 48);
             // 
             // miStatsOnPriceChart
             // 
             this.miStatsOnPriceChart.Name = "miStatsOnPriceChart";
-            this.miStatsOnPriceChart.Size = new System.Drawing.Size(143, 22);
+            this.miStatsOnPriceChart.Size = new System.Drawing.Size(150, 22);
             this.miStatsOnPriceChart.Text = "Stats on price chart";
             // 
             // miAdditionalStats
             // 
             this.miAdditionalStats.Name = "miAdditionalStats";
-            this.miAdditionalStats.Size = new System.Drawing.Size(143, 22);
+            this.miAdditionalStats.Size = new System.Drawing.Size(150, 22);
             this.miAdditionalStats.Text = "Additional stats";
             // 
             // chartPV
@@ -264,5 +281,6 @@
         private System.Windows.Forms.ToolStripMenuItem miStatsOnPriceChart;
         private System.Windows.Forms.ToolStripMenuItem miAdditionalStats;
         private System.Windows.Forms.ImageList ilIcons;
+        private System.Windows.Forms.CheckBox btnPriceChartHA;
     }
 }

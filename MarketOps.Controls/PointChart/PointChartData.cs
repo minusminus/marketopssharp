@@ -3,12 +3,15 @@
     /// <summary>
     /// PointChart data object
     /// </summary>
-    public abstract class PointChartData
+    public class PointChartData
     {
-        protected float _x;
-        protected int _y;
+        public readonly double[] X;
+        public readonly double[] Y;
 
-        public float X => _x;
-        public int Y => _y;
+        public PointChartData(double[] x, double[] y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }

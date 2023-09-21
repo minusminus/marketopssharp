@@ -23,6 +23,9 @@ namespace MarketOps.Controls.PriceChart.PVChart
 
         public static OHLC[] MapToOHLCData(this HeikinAshiData data)
         {
+            if (data.C.Length == 0)
+                return new OHLC[0];
+
             //ScottPlot can't skip rendering this OHLC element
             //so it is set like this until ScottPlot will be able to skip OHLC elements like double.NaN
             var firstEmptyElement = new OHLC[] { new OHLC(data.O[0], data.O[0], data.O[0], data.O[0], 0, 1) };
